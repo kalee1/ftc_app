@@ -17,7 +17,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @TeleOp(name="TestBot: Teleop Tank", group="TestBot")
 @Disabled
-public class TestBotTeleop extends OpMode{
+public class TestBotTeleop extends OpMode
+{
 
     /* Declare OpMode members. */
     TestBot robot = new TestBot(); // use the class created to define a Pushbot's hardware
