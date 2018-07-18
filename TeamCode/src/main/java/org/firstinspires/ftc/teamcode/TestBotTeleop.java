@@ -16,7 +16,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 
 @TeleOp(name="TestBot: Teleop Tank", group="TestBot")
-@Disabled
 public class TestBotTeleop extends OpMode
 {
 
@@ -56,11 +55,11 @@ public class TestBotTeleop extends OpMode
      */
     @Override
     public void loop() {
-        double left;
-        double right;
+        float left;
+        float right;
 
         // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
-        left = -gamepad1.left_stick_y;
+        left = gamepad1.left_stick_y;
         right = -gamepad1.right_stick_y;
 
         robot.leftDrive.setPower(left);
