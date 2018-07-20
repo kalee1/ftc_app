@@ -51,6 +51,7 @@ public class TestBotAuto extends OpMode
 
         switch (state)
         {
+            // Drive Forward indefinitely
             case 0:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
                 robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
@@ -59,6 +60,7 @@ public class TestBotAuto extends OpMode
                 robot.rightDrive.setPower(0.5);
                 state++;
                 break;
+            // Stop after set distance
             case 1:
                 if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 100 )
                 {
@@ -67,6 +69,7 @@ public class TestBotAuto extends OpMode
                     state++;
                 }
                 break;
+            // Drive Backward indefinitely 
             case 2:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
                 robot.rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -75,6 +78,7 @@ public class TestBotAuto extends OpMode
                 robot.rightDrive.setPower(0.5);
                 state++;
                 break;
+            // Stop After Set Distance
             case 3:
                 if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 100 )
                 {
