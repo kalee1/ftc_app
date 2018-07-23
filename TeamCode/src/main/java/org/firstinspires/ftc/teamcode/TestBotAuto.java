@@ -6,11 +6,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 @Autonomous(name="TestBot: Auto with State Machine", group="TestBot")
-@Disabled
+
 public class TestBotAuto extends OpMode
 {
     /* Declare OpMode members. */
-    TestBot robot = new TestBot(); // use the class created to define a Pushbot's hardware
+    TestBot robot = new TestBot(); // use the class created to define a Testbot's hardware
     int state = 0;  // used to represent the current state in the state machine
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -26,14 +26,6 @@ public class TestBotAuto extends OpMode
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
-    }
-
-    /*
-     * Code to run REPEATEDLY after the driver hits INIT, but before they hit PLAY
-     */
-    @Override
-    public void init_loop() {
-
     }
 
     /*
@@ -62,7 +54,7 @@ public class TestBotAuto extends OpMode
                 break;
             // Stop after set distance
             case 1:
-                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 100 )
+                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 500 )
                 {
                     robot.leftDrive.setPower(0.0);
                     robot.rightDrive.setPower(0.0);
@@ -80,7 +72,7 @@ public class TestBotAuto extends OpMode
                 break;
             // Stop After Set Distance
             case 3:
-                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 100 )
+                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 500 )
                 {
                     robot.leftDrive.setPower(0.0);
                     robot.rightDrive.setPower(0.0);
