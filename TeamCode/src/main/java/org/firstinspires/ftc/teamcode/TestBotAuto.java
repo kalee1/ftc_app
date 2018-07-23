@@ -69,7 +69,7 @@ public class TestBotAuto extends OpMode
                     state++;
                 }
                 break;
-            // Drive Backward indefinitely 
+            // Drive Backward indefinitely
             case 2:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
                 robot.rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
