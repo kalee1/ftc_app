@@ -1,14 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
-@Autonomous(name="TestBot: Auto with State Machine", group="TestBot")
+@Autonomous(name="TestBot: Auto No Encoder with State Machine", group="TestBot")
 
-public class TestBotAuto extends OpMode
+public class TestBotAutoNoEncoder extends OpMode
 {
     /* Declare OpMode members. */
     TestBot robot = new TestBot(); // use the class created to define a Testbot's hardware
@@ -28,9 +27,9 @@ public class TestBotAuto extends OpMode
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
 
-        // Set all motors to use RUN_USING_ENCODERS if encoders are installed.
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        // Set all motors to use RUN_WITHOUT_ENCODERS.
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
     }
 
     /*
@@ -52,14 +51,14 @@ public class TestBotAuto extends OpMode
             case 0:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
                 robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                initialPosition = robot.leftDrive.getCurrentPosition();
+                resetStartTime();
                 robot.leftDrive.setPower(0.5);
                 robot.rightDrive.setPower(0.5);
                 state++;
                 break;
             // Stop after set distance
             case 1:
-                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 500 )
+                if ( getRuntime() > 2 )
                 {
                     robot.leftDrive.setPower(0.0);
                     robot.rightDrive.setPower(0.0);
@@ -70,14 +69,14 @@ public class TestBotAuto extends OpMode
             case 2:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
                 robot.rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
-                initialPosition = robot.leftDrive.getCurrentPosition();
+                resetStartTime();
                 robot.leftDrive.setPower(0.5);
                 robot.rightDrive.setPower(0.5);
                 state++;
                 break;
             // Stop After Set Distance
             case 3:
-                if ( (robot.leftDrive.getCurrentPosition() - initialPosition) > 500 )
+                if ( getRuntime() > 2 )
                 {
                     robot.leftDrive.setPower(0.0);
                     robot.rightDrive.setPower(0.0);
