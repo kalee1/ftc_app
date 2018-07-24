@@ -51,7 +51,7 @@ public class TestBotAuto extends OpMode
             // Drive Forward indefinitely
             case 0:
                 robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-                robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+                robot.rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
                 initialPosition = robot.leftDrive.getCurrentPosition();
                 robot.leftDrive.setPower(0.5);
                 robot.rightDrive.setPower(0.5);
