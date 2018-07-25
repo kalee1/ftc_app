@@ -16,18 +16,35 @@ public class TestBotAutoSquare extends OpMode
 
 //////////////////////////
 
-    void driveStraight(double power, double distance)
+    void driveForward(double power)
     {
-        robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.rightDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.leftDrive.setDirection(DcMotorSimple.Direction.REVERSE);
+        robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
         initialPosition = robot.leftDrive.getCurrentPosition();
         robot.leftDrive.setPower(power);
         robot.rightDrive.setPower(power);
+    }
+
+/////////////////////////
+
+    void turn(double power)
+    {
+        robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
+        initialPosition = robot.leftDrive.getCurrentPosition();
+        robot.leftDrive.setPower(power);
+        robot.rightDrive.setPower(power);
+    }
+
+//////////////////////////
+
+    void driveStraight(double power, double distance)
+    {
+        driveForward(power);
 
         if((robot.leftDrive.getCurrentPosition() - initialPosition) > distance )
         {
-            robot.leftDrive.setPower(0.0);
-            robot.rightDrive.setPower(0.0);
+            stopMotors();
         }
     }
 
@@ -35,19 +52,20 @@ public class TestBotAutoSquare extends OpMode
 
     void turnCorner(double power, double distance)
     {
-        robot.leftDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
-        initialPosition = robot.leftDrive.getCurrentPosition();
-        robot.leftDrive.setPower(power);
-        robot.rightDrive.setPower(power);
+        turn(power);
 
         if((robot.leftDrive.getCurrentPosition() - initialPosition) > distance)
         {
-            robot.leftDrive.setPower(0.0);
-            robot.rightDrive.setPower(0.0);
+            stopMotors();
         }
     }
 
+
+    void stopMotors()
+    {
+        robot.leftDrive.setPower(0.0);
+        robot.rightDrive.setPower(0.0);
+    }
 
 
     /**
@@ -136,11 +154,9 @@ public class TestBotAutoSquare extends OpMode
                         robot.rightDrive.setDirection(DcMotorSimple.Direction.FORWARD);
                         robot.leftDrive.setPower(1);
                         robot.rightDrive.setPower(1);
-                        state++;
                     }
                 }
-                robot.leftDrive.setPower(0.0);
-                robot.rightDrive.setPower(0.0);
+                stopMotors();
                 break;
             default:
                 break;
