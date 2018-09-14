@@ -8,6 +8,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Chassis
 {
+
+    public void joystickDrive(double xStick, double yStick)
+    {
+    }
+
+    public void forwardDrive(double distance)
+    {
+    }
+
+    public void reverseDrive(double distance)
+    {
+    }
+
     public void init(HardwareMap hwMap)
     {
 
