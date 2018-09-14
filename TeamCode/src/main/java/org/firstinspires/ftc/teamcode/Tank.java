@@ -15,6 +15,12 @@ public class Tank extends Chassis
     private DcMotor rFront = null;
     private DcMotor lFront = null;
 
+    public void stop()
+    {
+        rFront.setPower(0.0);
+        lFront.setPower(0.0);
+    }
+
     @Override
     public void init(HardwareMap hwMap)
     {

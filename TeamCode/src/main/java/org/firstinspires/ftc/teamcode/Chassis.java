@@ -21,6 +21,10 @@ public class Chassis
     {
     }
 
+    public void stop()
+    {
+    }
+
     public void init(HardwareMap hwMap)
     {
 
