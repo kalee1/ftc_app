@@ -13,7 +13,7 @@ public class Chassis
     {
     }
 
-    public void forwardDrive(double distance)
+    public void forwardDrive(double distance, double power)
     {
     }
 
