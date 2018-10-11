@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+
 /**
  * Created by andrew on 9/13/18.
  */
@@ -32,6 +33,10 @@ public class RuckusBot
         depoDeposit.init(hwMap);
         sauron.init(hwMap); //darkness is coming. Can you feel it? ;)
         area51.init(hwMap);
+    }
+
+    public void joystickDrive(double xStick, double yStick)
+    {
     }
 
 
