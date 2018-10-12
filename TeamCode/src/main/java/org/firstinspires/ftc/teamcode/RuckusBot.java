@@ -11,7 +11,7 @@ public class RuckusBot
 {
     Chassis theChassis =  null;
     MarkDeploy depoDeposit = new MarkDeploy();
-    FieldVision sauron = new FieldVision();
+    FieldVision theEyeOfSauron = new FieldVision();
     MineralProcessing area51 = new MineralProcessing();
 
     public RuckusBot(String chassisType)
@@ -31,7 +31,7 @@ public class RuckusBot
     {
         theChassis.init(hwMap);
         depoDeposit.init(hwMap);
-        sauron.init(hwMap); //darkness is coming. Can you feel it? ;)
+        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
         area51.init(hwMap);
     }
 

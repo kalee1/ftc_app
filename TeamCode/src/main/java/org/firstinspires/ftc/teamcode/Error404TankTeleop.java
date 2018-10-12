@@ -52,6 +52,7 @@ public class Error404TankTeleop extends OpMode
     {
 
         robot.joystickDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
+        robot.theEyeOfSauron.goldMineralPosition();
 
     }
 
