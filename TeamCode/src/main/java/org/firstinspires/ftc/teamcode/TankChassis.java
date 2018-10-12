@@ -19,10 +19,10 @@ public class TankChassis extends Chassis
     @Override
     public void init(HardwareMap hwMap)
     {
-        rFront = hwMap.get(DcMotor.class, "rightFront");
+        rFront = hwMap.get(DcMotor.class, "right_drive");
         rFront.setDirection(DcMotorSimple.Direction.FORWARD);
-        lFront = hwMap.get(DcMotor.class, "leftFront");
-        lFront.setDirection(DcMotorSimple.Direction.FORWARD);
+        lFront = hwMap.get(DcMotor.class, "left_drive");
+        lFront.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
 
@@ -35,8 +35,8 @@ public class TankChassis extends Chassis
      * */
     public void forwardDrive(double distance, double power)
     {
-        rFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        lFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        rFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        lFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         rFront.setPower(power);
         lFront.setPower(power);
 
