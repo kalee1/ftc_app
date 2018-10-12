@@ -37,6 +37,7 @@ public class RuckusBot
 
     public void joystickDrive(double xStick, double yStick)
     {
+        theChassis.joystickDrive(xStick, yStick);
     }
 
 

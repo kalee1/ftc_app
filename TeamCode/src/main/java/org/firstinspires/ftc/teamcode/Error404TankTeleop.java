@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp(name="Error404 Tank Teleop", group="Teleop")
 
 /**
- * @author Error 404 Team Name Not Found
+ * @author Error 404: Team Name Not Found
  * @see OpMode
  */
 public class Error404TankTeleop extends OpMode
@@ -50,8 +50,6 @@ public class Error404TankTeleop extends OpMode
     @Override
     public void loop()
     {
-
-
 
     }
 
