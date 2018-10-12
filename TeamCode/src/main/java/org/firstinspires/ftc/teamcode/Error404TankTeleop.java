@@ -51,6 +51,8 @@ public class Error404TankTeleop extends OpMode
     public void loop()
     {
 
+        robot.joystickDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
+
     }
 
     /*

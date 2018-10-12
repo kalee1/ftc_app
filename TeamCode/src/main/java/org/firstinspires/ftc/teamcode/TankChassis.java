@@ -43,9 +43,10 @@ public class TankChassis extends Chassis
         ticksToInches(distance);
     }
 
-    public void joystickDrive(double xStick, double yStick)
+    public void joystickDrive(double leftStick, double rightStick)
     {
-        
+        lFront.setPower(leftStick);
+        rFront.setPower(rightStick);
     }
 
     public void stop()
