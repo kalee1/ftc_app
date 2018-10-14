@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="Error404 Tank Teleop", group="Teleop")
 
@@ -50,9 +51,16 @@ public class Error404TankTeleop extends OpMode
     @Override
     public void loop()
     {
+        double lStick = gamepad1.left_stick_y;
+        double rStick = gamepad1.right_stick_y;
 
-        robot.joystickDrive(gamepad1.left_stick_y, gamepad1.right_stick_y);
-        robot.theEyeOfSauron.goldMineralPosition();
+
+        double powerClip = .6;
+        lStick = Range.clip(lStick, -powerClip, powerClip);
+        rStick = Range.clip(rStick, -powerClip, powerClip);
+        robot.joystickDrive(lStick, rStick);
+
+ //       robot.theEyeOfSauron.goldMineralPosition();
 
     }
 
