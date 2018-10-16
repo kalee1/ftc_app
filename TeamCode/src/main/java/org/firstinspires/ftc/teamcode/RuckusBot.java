@@ -31,7 +31,7 @@ public class RuckusBot
     {
         theChassis.init(hwMap);
         depoDeposit.init(hwMap);
-        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
+        //theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
         area51.init(hwMap);
     }
 

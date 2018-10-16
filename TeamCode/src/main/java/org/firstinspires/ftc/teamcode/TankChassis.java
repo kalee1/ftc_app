@@ -23,19 +23,19 @@ public class TankChassis extends Chassis
     {
         try {
             rFront = hwMap.dcMotor.get("rightFront");
-            rFront.setDirection(DcMotorSimple.Direction.FORWARD);
+            rFront.setDirection(DcMotorSimple.Direction.REVERSE);
         } catch (Exception p_exeception) {
             rFront = null;
         }
         try {
             lFront = hwMap.dcMotor.get("leftFront");
-            lFront.setDirection(DcMotorSimple.Direction.REVERSE);
+            lFront.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Exception p_exeception) {
             lFront = null;
         }
         try {
             rRear = hwMap.dcMotor.get("rightRear");
-            lFront.setDirection(DcMotorSimple.Direction.REVERSE);
+            rRear.setDirection(DcMotorSimple.Direction.REVERSE);
         } catch (Exception p_exeception) {
             rRear = null;
         }
