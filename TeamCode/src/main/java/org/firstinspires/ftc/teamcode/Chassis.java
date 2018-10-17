@@ -25,12 +25,7 @@ public class Chassis
     {
     }
 
-    public void pointTurnRight(double heading, double power)
-    {
-
-    }
-
-    public void pointTurnLeft(double heading, double power)
+    public void pointTurn(double heading, double power)
     {
 
     }

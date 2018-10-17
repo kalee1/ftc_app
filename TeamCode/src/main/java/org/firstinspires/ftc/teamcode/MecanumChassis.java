@@ -126,26 +126,69 @@ public class MecanumChassis extends Chassis
     }
 
     @Override
-    public void pointTurnRight(double heading, double power)
+    public void pointTurn(double heading, double power)
     {
+        //If the power input is positive, turn right
+        if(power>0)
+        {
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            setPower(power);
+        }
+        //If the power input is negative, turn left.
+        else if(power<0)
+        {
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            setPower(power);
+        }
+        //If the power input is null, stop the motors.
+        else if(power==0){
+            stopMotors();
+        }
+    }
+
+    /**
+     * The strafe method moves the robot left or right depending on whether the power input is positive or negative.
+     *
+     * @param power  How fast the robot will move.
+     * @param heading  At what heading the robot will move.
+     */
+    public void strafe(double power, double heading)
+    {
+        //If the power input is positive, strafe right
+        if(power>0)
+        {
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            setPower(power);
+        }
+        //If the power input is negative, strafe left.
+        else if(power<0)
+        {
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
+            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
+            setPower(power);
+        }
+        //If the power input is null, stop the motors.
+        else if(power==0){
+            stopMotors();
+        }
 
     }
 
-    @Override
-    public void pointTurnLeft(double heading, double power)
-    {
-
-    }
-
-    public void strafeRight(double power, double heading)
-    {
-
-    }
-
-    public void strafeLeft(double power, double heading)
-    {
-
-    }
 
     /**
      * This method takes the command values from the x- and y-axes of the left and right joysticks
