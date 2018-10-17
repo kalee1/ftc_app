@@ -35,9 +35,9 @@ public class RuckusBot
         area51.init(hwMap);
     }
 
-    public void joystickDrive(double leftStick, double rightStick)
+    public void joystickDrive(double leftStickX,double leftStickY, double rightStickX, double rightStickY)
     {
-        theChassis.joystickDrive(leftStick, rightStick);
+        theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
     }
 
 

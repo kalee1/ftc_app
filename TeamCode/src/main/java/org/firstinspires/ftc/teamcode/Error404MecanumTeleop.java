@@ -1,24 +1,21 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Error404 Tank Teleop", group="Teleop")
+@TeleOp(name="Error404 Mecanum Teleop", group="Teleop")
+
 
 /**
  * @author Error 404: Team Name Not Found
  * @see OpMode
  */
-public class Error404TankTeleop extends OpMode
+public class Error404MecanumTeleop extends OpMode
 {
 
     /* Declare OpMode members. */
-    RuckusBot robot = new RuckusBot("TankChassis"); // use the class created to define a Testbot's hardware
+    RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     int state = 0;  // used to represent the current state in the state machine
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -34,7 +31,7 @@ public class Error404TankTeleop extends OpMode
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
 
     }
 
@@ -51,13 +48,14 @@ public class Error404TankTeleop extends OpMode
     @Override
     public void loop()
     {
+        double lStickX = gamepad1.left_stick_x;
+        double rStickX = gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
         double rStickY = gamepad1.right_stick_y;
 
+        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY);
 
-        robot.joystickDrive(0.0, lStickY ,0.0, rStickY);
-
-        //       robot.theEyeOfSauron.goldMineralPosition();
+        //robot.theEyeOfSauron.goldMineralPosition();
 
     }
 
@@ -67,5 +65,4 @@ public class Error404TankTeleop extends OpMode
     @Override
     public void stop() {
     }
-
 }

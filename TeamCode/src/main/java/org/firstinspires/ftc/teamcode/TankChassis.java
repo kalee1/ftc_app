@@ -56,7 +56,8 @@ public class TankChassis extends Chassis
      * @param distance  A double that is the distance in inches to drive
      * @param power  A double that is the power at which to drive
      * */
-    public void forwardDrive(double distance, double power)
+    @Override
+    public void drive(double distance, double power)
     {
         if(rFront != null)
         {
@@ -85,30 +86,32 @@ public class TankChassis extends Chassis
         ticksToInches(distance);
     }
 
-    public void joystickDrive(double leftStick, double rightStick)
+    @Override
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
     {
         if(rFront != null)
         {
-            rFront.setPower(rightStick);
+            rFront.setPower(rightStickY);
         }
 
         if(lFront != null)
         {
-            lFront.setPower(leftStick);
+            lFront.setPower(leftStickY);
         }
 
         if(rRear != null)
         {
-            rRear.setPower(rightStick);
+            rRear.setPower(rightStickY);
         }
 
         if(lRear != null)
         {
-            lRear.setPower(leftStick);
+            lRear.setPower(leftStickY);
         }
     }
 
-    public void stop()
+    @Override
+    public void stopMotors()
     {
         double power = 0.0;
         if(rFront != null)
