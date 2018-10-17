@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 /**
  * Created by andrew on 9/13/18.
+ *
+ * @author Error 404: Team Name Not Found
+ * @see Chassis
  */
 
 public class TankChassis extends Chassis
