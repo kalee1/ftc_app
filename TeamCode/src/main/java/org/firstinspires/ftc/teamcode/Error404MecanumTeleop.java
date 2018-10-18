@@ -48,10 +48,14 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void loop()
     {
-        double lStickX = gamepad1.left_stick_x;
-        double rStickX = gamepad1.right_stick_x;
+        double lStickX = -gamepad1.left_stick_x;
+        double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
         double rStickY = gamepad1.right_stick_y;
+
+        telemetry.addData("1: leftX", lStickX);
+        telemetry.addData("2: leftY", lStickY);
+        telemetry.addData("3: rightX", rStickX);
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY);
 

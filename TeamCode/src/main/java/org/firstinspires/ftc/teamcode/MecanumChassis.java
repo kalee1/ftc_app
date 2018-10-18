@@ -40,7 +40,7 @@ public class MecanumChassis extends Chassis
         }
         try {
             rRearMotor = hwMap.dcMotor.get("rightRear");
-            rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+            rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Exception p_exeception) {
             rRearMotor = null;
         }
@@ -125,6 +125,13 @@ public class MecanumChassis extends Chassis
         }
     }
 
+    /**
+     * The pointTurn method turns the robot left or right depeinging on whether the power input is
+     * positive or negative.
+     *
+     * @param heading  The direction in which the robot will move.
+     * @param power  The power at which the robot will move.
+     */
     @Override
     public void pointTurn(double heading, double power)
     {
@@ -206,10 +213,10 @@ public class MecanumChassis extends Chassis
     @Override
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
     {
-        double rightFront = (leftStickY+rightStickX+leftStickX); //these are the calculations need to make a simple
-        double leftFront = (leftStickY-rightStickX-leftStickX);  // mecaccnum drive. The left joystick controls moving
-        double rightRear=  (leftStickY+rightStickX-leftStickX);  //straight forward/backward and straight sideways. The
-        double leftRear = (leftStickY-rightStickX+leftStickX);   //right joystick controls turning.
+        double rightFront = (-leftStickY+rightStickX+leftStickX); //these are the calculations need to make a simple
+        double leftFront = (leftStickY+rightStickX+leftStickX);   // mecaccnum drive. The left joystick controls moving
+        double rightRear=  (-leftStickY+rightStickX-leftStickX);  //straight forward/backward and straight sideways. The
+        double leftRear = (leftStickY+rightStickX-leftStickX);    //right joystick controls turning.
 
 
         //Find the largest command value given and assign it to max.
