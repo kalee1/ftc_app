@@ -36,7 +36,8 @@ public class Error404Autonomus extends OpMode
      * Code to run ONCE when the driver hits PLAY
      */
     @Override
-    public void start() {
+    public void start()
+    {
     }
 
     /*
@@ -52,6 +53,8 @@ public class Error404Autonomus extends OpMode
      * Code to run ONCE after the driver hits STOP
      */
     @Override
-    public void stop() {
+    public void stop()
+    {
+        robot.stop();
     }
 }

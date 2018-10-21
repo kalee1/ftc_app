@@ -53,151 +53,6 @@ public class MecanumChassis extends Chassis
     }
 
     /**
-     * setMode sets all four drive motors to a specified mode. There are three mode choices:
-     * 1) RUN_USING_ENCODERS,
-     * 2) RUN_WITHOUT_ENCODERS, and
-     * 3) RUN_TO_POSITION.
-     *
-     * @param mode The type of mode the motors will will run with.
-     */
-    public void setMode(DcMotor.RunMode mode)
-    {
-        if(rFrontMotor != null){rFrontMotor.setMode(mode);}
-        if(lFrontMotor != null){lFrontMotor.setMode(mode);}
-        if(rRearMotor != null) {rRearMotor.setMode(mode);}
-        if(lRearMotor != null){lRearMotor.setMode(mode);}
-    }
-
-    /**
-     * setDirection sets all four drive motors to a specified direction. There are two direction choices:
-     * 1) FORWARD and
-     * 2) REVERSE.
-     *
-     * @param direction  The direction the motors will use.
-     */
-    public void setDirection(DcMotorSimple.Direction direction)
-    {
-        if(rFrontMotor != null){rFrontMotor.setDirection(direction);}
-        if(lFrontMotor != null){lFrontMotor.setDirection(direction);}
-        if(rRearMotor != null) {rRearMotor.setDirection(direction);}
-        if(lRearMotor != null){lRearMotor.setDirection(direction);}
-    }
-
-    /**
-     * setPower set all four drive motors to a specified power.
-     *
-     * @param power  The power the motors will run at.
-     */
-    public void setPower(double power)
-    {
-        if(rFrontMotor != null) {rFrontMotor.setPower(power);}
-        if(lFrontMotor != null) {lFrontMotor.setPower(power);}
-        if(rRearMotor != null) {rRearMotor.setPower(power);}
-        if(lRearMotor != null) {lRearMotor.setPower(power);}
-
-    }
-
-
-    /**
-     * The drive method moves the four drive motors on the robot and will move the robot forward or
-     * backward depending on whenther it recieved a positive or negative power value.
-     *
-     * @param distance  How far the robot will drive.
-     * @param power  How fast the robot will drive.
-     */
-    @Override
-    public void drive(double distance, double power)
-    {
-        if(power>0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            setDirection(DcMotorSimple.Direction.FORWARD);
-            setPower(power);
-        }
-        else if(power<0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            setDirection(DcMotorSimple.Direction.REVERSE);
-            setPower(power);
-        }
-        else if(power==0){
-            stopMotors();
-        }
-    }
-
-    /**
-     * The pointTurn method turns the robot left or right depeinging on whether the power input is
-     * positive or negative.
-     *
-     * @param heading  The direction in which the robot will move.
-     * @param power  The power at which the robot will move.
-     */
-    @Override
-    public void pointTurn(double heading, double power)
-    {
-        //If the power input is positive, turn right
-        if(power>0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            setPower(power);
-        }
-        //If the power input is negative, turn left.
-        else if(power<0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            setPower(power);
-        }
-        //If the power input is null, stop the motors.
-        else if(power==0){
-            stopMotors();
-        }
-    }
-
-    /**
-     * The strafe method moves the robot left or right depending on whether the power input is positive or negative.
-     *
-     * @param power  How fast the robot will move.
-     * @param heading  At what heading the robot will move.
-     */
-    public void strafe(double power, double heading)
-    {
-        //If the power input is positive, strafe right
-        if(power>0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            setPower(power);
-        }
-        //If the power input is negative, strafe left.
-        else if(power<0)
-        {
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            if(rFrontMotor != null){rFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(lFrontMotor != null){lFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);}
-            if(rRearMotor != null) {rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            if(lRearMotor != null){lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);}
-            setPower(power);
-        }
-        //If the power input is null, stop the motors.
-        else if(power==0){
-            stopMotors();
-        }
-
-    }
-
-
-    /**
      * This method takes the command values from the x- and y-axes of the left and right joysticks
      * on the gamepad and converts them to motor speed commands. The code then makes sure that the
      * command values don't exceed a magnitude of 1.
@@ -213,10 +68,13 @@ public class MecanumChassis extends Chassis
     @Override
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
     {
-        double rightFront = (-leftStickY+rightStickX+leftStickX); //these are the calculations need to make a simple
-        double leftFront = (leftStickY+rightStickX+leftStickX);   // mecaccnum drive. The left joystick controls moving
-        double rightRear=  (-leftStickY+rightStickX-leftStickX);  //straight forward/backward and straight sideways. The
-        double leftRear = (leftStickY+rightStickX-leftStickX);    //right joystick controls turning.
+        // These are the calculations need to make a simple mecaccnum drive.
+        // The left joystick controls moving straight forward/backward and straight sideways.
+        // The right joystick control turning.
+        double rightFront = (-leftStickY+rightStickX+leftStickX);
+        double leftFront = (leftStickY+rightStickX+leftStickX);
+        double rightRear=  (-leftStickY+rightStickX-leftStickX);
+        double leftRear = (leftStickY+rightStickX-leftStickX);
 
 
         //Find the largest command value given and assign it to max.
@@ -244,6 +102,39 @@ public class MecanumChassis extends Chassis
 
 
     /**
+     * The drive method moves the four drive motors on the robot and will move the robot forward or
+     * backward depending on whenther it recieved a positive or negative power value.
+     *
+     * @param distance  How far the robot will drive.
+     * @param power  How fast the robot will drive.
+     */
+    @Override
+    public void drive(double power, double distance)
+    {
+        // Haven't figured out how to incorporate distnace yet...
+
+        // Call joystickDrive using the power parameter as a simulated joystick command
+        joystickDrive(0, power,0,0);
+     }
+
+    /**
+     * The pointTurn method turns the robot left or right depeinging on whether the power input is
+     * positive or negative.
+     *
+     * @param heading  The direction in which the robot will move.
+     * @param power  The power at which the robot will move.
+     */
+    @Override
+    public void pointTurn(double power, double heading)
+    {
+        // Haven't figured out how to incorporate heading yet...
+
+        // Call joystickDrive using the power parameter as a simulated joystick command
+        joystickDrive(0, 0,power,0);
+
+    }
+
+    /**
      * Stop all four drive motors by setting their power to zero.
      */
     @Override
@@ -251,5 +142,68 @@ public class MecanumChassis extends Chassis
     {
         setPower(0.0);
     }
+
+    /**
+     * The strafe method moves the robot left or right depending on whether the power input is positive or negative.
+     *
+     * @param power  How fast the robot will move.
+     * @param heading  At what heading the robot will move.
+     */
+    public void strafe(double power, double heading)  //joystickDrive(power,0,0,0)
+    {
+        // Haven't figured out how to incorporate heading yet...
+
+        // Call joystickDrive using the power parameter as a simulated joystick command
+        joystickDrive(power, 0,0,0);
+    }
+
+    /**
+     * setMode sets all four drive motors to a specified mode. There are three mode choices:
+     * 1) RUN_USING_ENCODERS,
+     * 2) RUN_WITHOUT_ENCODERS, and
+     * 3) RUN_TO_POSITION.
+     *
+     * @param mode The type of mode the motors will will run with.
+     */
+    private void setMode(DcMotor.RunMode mode)
+    {
+        if(rFrontMotor != null){rFrontMotor.setMode(mode);}
+        if(lFrontMotor != null){lFrontMotor.setMode(mode);}
+        if(rRearMotor != null) {rRearMotor.setMode(mode);}
+        if(lRearMotor != null){lRearMotor.setMode(mode);}
+    }
+
+    /**
+     * setDirection sets all four drive motors to a specified direction. There are two direction choices:
+     * 1) FORWARD and
+     * 2) REVERSE.
+     *
+     * @param direction  The direction the motors will use.
+     */
+    private void setDirection(DcMotorSimple.Direction direction)
+    {
+        if(rFrontMotor != null){rFrontMotor.setDirection(direction);}
+        if(lFrontMotor != null){lFrontMotor.setDirection(direction);}
+        if(rRearMotor != null) {rRearMotor.setDirection(direction);}
+        if(lRearMotor != null){lRearMotor.setDirection(direction);}
+    }
+
+    /**
+     * setPower set all four drive motors to a specified power.
+     *
+     * @param power  The power the motors will run at.
+     */
+    private void setPower(double power)
+    {
+        if(rFrontMotor != null) {rFrontMotor.setPower(power);}
+        if(lFrontMotor != null) {lFrontMotor.setPower(power);}
+        if(rRearMotor != null) {rRearMotor.setPower(power);}
+        if(lRearMotor != null) {lRearMotor.setPower(power);}
+
+    }
+
+
+
+
 
 }
