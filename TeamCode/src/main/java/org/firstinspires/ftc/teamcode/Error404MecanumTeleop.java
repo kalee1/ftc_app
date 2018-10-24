@@ -26,7 +26,7 @@ public class Error404MecanumTeleop extends OpMode
     public void init()
     {
         /* Initialize the hardware variables.
-         * The init() method of the hardware class does all the work here
+         * The init\ method of the hardware class does all the work here
          */
         robot.init(hardwareMap);
 
