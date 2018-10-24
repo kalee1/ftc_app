@@ -12,6 +12,10 @@
 apply from: '../build.common.gradle'
 android {
     compileSdkVersion 23
+<<<<<<< HEAD
+=======
+    buildToolsVersion '27.0.3'
+>>>>>>> 604ab4ef74e11139c29c960bdb6eaa357fff6714
 }
 dependencies {
 }

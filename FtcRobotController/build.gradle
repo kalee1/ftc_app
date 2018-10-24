@@ -3,17 +3,17 @@
 //
 apply plugin: 'com.android.library'
 android {
-
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 19
+        targetSdkVersion 23
     }
-
     compileSdkVersion 23
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+    buildToolsVersion '27.0.3'
+    productFlavors {
     }
 }
 repositories {
@@ -24,4 +24,15 @@ repositories {
 apply from: 'build.release.gradle'
 
 dependencies {
+<<<<<<< HEAD
+=======
+}
+
+allprojects {
+    repositories {
+        // The order in which you list these repositories matter.
+        google()
+        jcenter()
+    }
+>>>>>>> 604ab4ef74e11139c29c960bdb6eaa357fff6714
 }

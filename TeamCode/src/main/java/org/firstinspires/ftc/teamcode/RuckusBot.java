@@ -4,15 +4,15 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 /**
- * Created by andrew on 9/13/18.
+ *
+ * @author Error 404: Team Name Not Found
  */
-
 public class RuckusBot
 {
     Chassis theChassis =  null;
-    MarkDeploy depoDeposit = new MarkDeploy();
-    FieldVision theEyeOfSauron = new FieldVision();
-    MineralProcessing area51 = new MineralProcessing();
+//    MarkDeploy depoDeposit = new MarkDeploy();
+//    FieldVision theEyeOfSauron = new FieldVision();
+//    MineralProcessing area51 = new MineralProcessing();
 
     public RuckusBot(String chassisType)
     {
@@ -30,14 +30,19 @@ public class RuckusBot
     public void init(HardwareMap hwMap)
     {
         theChassis.init(hwMap);
-        depoDeposit.init(hwMap);
-        //theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
-        area51.init(hwMap);
+//        depoDeposit.init(hwMap);
+//        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
+//        area51.init(hwMap);
     }
 
-    public void joystickDrive(double leftStickX,double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
+    }
+
+    public void stop()
+    {
+        theChassis.stopMotors();
     }
 
 

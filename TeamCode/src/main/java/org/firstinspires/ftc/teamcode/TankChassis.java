@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 /**
- * Created by andrew on 9/13/18.
  *
  * @author Error 404: Team Name Not Found
  * @see Chassis
@@ -60,7 +59,7 @@ public class TankChassis extends Chassis
      * @param power  A double that is the power at which to drive
      * */
     @Override
-    public void drive(double distance, double power)
+    public void drive(double power, double distance)
     {
         if(rFront != null)
         {
@@ -86,7 +85,7 @@ public class TankChassis extends Chassis
             lRear.setPower(power);
         }
 
-        ticksToInches(distance);
+//        inchesToTicks(distance);
     }
 
     @Override
