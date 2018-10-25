@@ -28,25 +28,30 @@ public class MecanumChassis extends Chassis
     {
         try {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
+            rFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+
         } catch (Exception p_exeception) {
             rFrontMotor = null;
         }
         try {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
+            lFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Exception p_exeception) {
             lFrontMotor = null;
         }
         try {
             rRearMotor = hwMap.dcMotor.get("rightRear");
+            rRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Exception p_exeception) {
             rRearMotor = null;
         }
         try {
             lRearMotor = hwMap.dcMotor.get("leftRear");
-            lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            lRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
         } catch (Exception p_exeception) {
             rRearMotor = null;
         }
@@ -130,7 +135,7 @@ public class MecanumChassis extends Chassis
         // Haven't figured out how to incorporate heading yet...
 
         // Call joystickDrive using the power parameter as a simulated joystick command
-        joystickDrive(0, 0,power,0);
+        joystickDrive(0, 0, power,0);
 
     }
 
@@ -142,6 +147,7 @@ public class MecanumChassis extends Chassis
     {
         setPower(0.0);
     }
+
 
     /**
      * The strafe method moves the robot left or right depending on whether the power input is positive or negative.

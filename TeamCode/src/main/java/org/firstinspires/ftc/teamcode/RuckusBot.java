@@ -40,7 +40,17 @@ public class RuckusBot
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
     }
 
-    public void stop()
+    public void drive(double power, double distance)
+    {
+        theChassis.drive(power, distance);
+    }
+
+    public void pointTurn(double power, double heading)
+    {
+        theChassis.pointTurn(power, heading);
+    }
+
+    public void stopMotors()
     {
         theChassis.stopMotors();
     }

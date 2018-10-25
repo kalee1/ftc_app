@@ -15,7 +15,6 @@ public class Error404Autonomus extends OpMode
     int state = 0;  // used to represent the current state in the state machine
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
-
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -28,7 +27,7 @@ public class Error404Autonomus extends OpMode
         robot.init(hardwareMap);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver");    //
+        telemetry.addData("Say", "Let's Rock and Roll");    //
 
     }
 
@@ -38,6 +37,8 @@ public class Error404Autonomus extends OpMode
     @Override
     public void start()
     {
+        resetStartTime();
+
     }
 
     /*
@@ -46,6 +47,46 @@ public class Error404Autonomus extends OpMode
     @Override
     public void loop()
     {
+        switch (state)
+        {
+            case 0:
+                telemetry.addData("1)", "Case 0 checking in");
+                robot.drive(1, 0.0);
+                if(getRuntime() > 1.5)
+                {
+                    telemetry.addData("2)", "Case 0 complete");
+                    robot.stopMotors();
+                    state = 1;
+                    resetStartTime();
+                }
+                break;
+
+            case 1:
+                telemetry.addData("3)", "Case 1 checking in");
+                robot.pointTurn(1, 0.0);
+                if(getRuntime() > 4)
+                {
+                    telemetry.addData("4)", "Case 1 complete");
+                    robot.stopMotors();
+                    resetStartTime();
+                    state = 2;
+                }
+                break;
+            case 2:
+                telemetry.addData("3)", "Case 2 checking in");
+                robot.drive(-.25, 0.0);
+                if(getRuntime() > .5)
+                {
+                    telemetry.addData("5)", "Case 2 complete");
+                    robot.stopMotors();
+                    resetStartTime();
+                    state = 3;
+                }
+                break;
+            default:
+                break;
+        }
+        telemetry.addData("State: ", state );
 
     }
 
@@ -55,6 +96,6 @@ public class Error404Autonomus extends OpMode
     @Override
     public void stop()
     {
-        robot.stop();
+        robot.stopMotors();
     }
 }

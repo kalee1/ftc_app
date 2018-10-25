@@ -65,7 +65,9 @@ public class Error404TankTeleop extends OpMode
      * Code to run ONCE after the driver hits STOP
      */
     @Override
-    public void stop() {
+    public void stop()
+    {
+
     }
 
 }

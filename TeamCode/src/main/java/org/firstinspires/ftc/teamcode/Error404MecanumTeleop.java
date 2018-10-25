@@ -68,6 +68,6 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void stop()
     {
-        robot.stop();
+        robot.stopMotors();
     }
 }
