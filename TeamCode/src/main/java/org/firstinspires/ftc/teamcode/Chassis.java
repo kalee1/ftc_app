@@ -20,7 +20,7 @@ public class Chassis
     {
     }
 
-    public void drive(double power, double distance)
+    public void drive(double power, double direction,  double distance)
     {
     }
 

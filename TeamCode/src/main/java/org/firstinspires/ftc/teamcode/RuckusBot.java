@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
-/**
+/**E
  *
  * @author Error 404: Team Name Not Found
  */
@@ -40,9 +40,9 @@ public class RuckusBot
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
     }
 
-    public void drive(double power, double distance)
+    public void drive(double power, double direction, double distance)
     {
-        theChassis.drive(power, distance);
+        theChassis.drive(power, direction, distance);
     }
 
     public void pointTurn(double power, double heading)

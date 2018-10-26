@@ -17,6 +17,11 @@ public class MecanumChassis extends Chassis
     private DcMotor lFrontMotor = null;
     private DcMotor lRearMotor = null;
 
+    static final double FORWARD = 0.0;
+    static final double BACKWARD = 180.0;
+    static final double RIGHT = 270.0;
+    static final double LEFT = 90.0;
+
     /**
      * Look for a specified set of motors in the config file. If the motors are found, give them a
      * specified direction. If a motor is not found, ignore the error and set the motor to equal null.
@@ -114,13 +119,18 @@ public class MecanumChassis extends Chassis
      * @param power  How fast the robot will drive.
      */
     @Override
-    public void drive(double power, double distance)
+    public void drive(double power, double direction, double distance)
     {
         // Haven't figured out how to incorporate distnace yet...
 
+
+        double stickX = power * Math.sin(direction);
+        double stickY = Math.cos(direction);
+
         // Call joystickDrive using the power parameter as a simulated joystick command
-        joystickDrive(0, power,0,0);
+        joystickDrive(stickX, stickY,0.0,0.0);
      }
+
 
     /**
      * The pointTurn method turns the robot left or right depeinging on whether the power input is
@@ -138,7 +148,6 @@ public class MecanumChassis extends Chassis
         joystickDrive(0, 0, power,0);
 
     }
-
     /**
      * Stop all four drive motors by setting their power to zero.
      */
@@ -146,21 +155,6 @@ public class MecanumChassis extends Chassis
     public void stopMotors()
     {
         setPower(0.0);
-    }
-
-
-    /**
-     * The strafe method moves the robot left or right depending on whether the power input is positive or negative.
-     *
-     * @param power  How fast the robot will move.
-     * @param heading  At what heading the robot will move.
-     */
-    public void strafe(double power, double heading)  //joystickDrive(power,0,0,0)
-    {
-        // Haven't figured out how to incorporate heading yet...
-
-        // Call joystickDrive using the power parameter as a simulated joystick command
-        joystickDrive(power, 0,0,0);
     }
 
     /**

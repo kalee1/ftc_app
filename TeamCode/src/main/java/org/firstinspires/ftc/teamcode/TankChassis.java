@@ -59,7 +59,7 @@ public class TankChassis extends Chassis
      * @param power  A double that is the power at which to drive
      * */
     @Override
-    public void drive(double power, double distance)
+    public void drive(double power, double direction, double distance)
     {
         if(rFront != null)
         {
