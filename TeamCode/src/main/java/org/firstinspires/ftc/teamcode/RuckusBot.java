@@ -40,9 +40,10 @@ public class RuckusBot
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
     }
 
-    public void drive(double power, double direction, double distance)
+    public boolean drive(double power, double direction, double distance, double time)
     {
-        theChassis.drive(power, direction, distance);
+        theChassis.drive(power, direction, distance, time);
+        return theChassis.moving;
     }
 
     public void pointTurn(double power, double heading)

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.sun.tools.javac.util.ForwardingDiagnosticFormatter;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  *
  * @author Error 404: Team Name Not Found
@@ -11,6 +13,10 @@ import com.sun.tools.javac.util.ForwardingDiagnosticFormatter;
 
 public class Chassis
 {
+    boolean moving = false;
+
+    // internal time tracking
+    private long startTime = 0; // in nanoseconds
 
     public void init(HardwareMap hwMap)
     {
@@ -20,8 +26,9 @@ public class Chassis
     {
     }
 
-    public void drive(double power, double direction,  double distance)
+    public boolean drive(double power, double direction,  double distance, double time)
     {
+        return !moving;
     }
 
     public void pointTurn(double power, double heading)
@@ -31,6 +38,26 @@ public class Chassis
 
     public void stopMotors()
     {
+    }
+
+    /**
+     * Get the number of seconds this op mode has been running
+     * <p>
+     * This method has sub millisecond accuracy.
+     * @return number of seconds this op mode has been running
+     */
+    public double getRuntime()
+    {
+        final double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
+        return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
+    }
+
+    /**
+     * Reset the start time to zero.
+     */
+    public void resetStartTime()
+    {
+        startTime = System.nanoTime();
     }
 
 

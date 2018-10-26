@@ -27,6 +27,8 @@ public class MecanumChassis extends Chassis
     static final double BACKWARD_RIGHT_DIAGONAL = 135.0;
     static final double BACKWARD_LEFT_DIAGONAL = -135.0;
 
+    int initialPosition;
+
     /**
      * Look for a specified set of motors in the config file. If the motors are found, give them a
      * specified direction. If a motor is not found, ignore the error and set the motor to equal null.
@@ -100,8 +102,9 @@ public class MecanumChassis extends Chassis
 
         // If max is greater than 1, divide all command values by max to ensure that all command
         // values stay below a magnitude of 1.
-        if(max > 1)
+        if(max > .5)
         {
+            max = max + .5;
             leftFront/=max;
             rightFront/=max;
             leftRear/=max;
@@ -117,23 +120,37 @@ public class MecanumChassis extends Chassis
 
 
     /**
-     * The drive method moves the four drive motors on the robot and will move the robot forward or
-     * backward depending on whenther it recieved a positive or negative power value.
+     * The drive method moves the four drive motors on the robot and will move the robot forward,
+     * backward, left, right, or at a 45 degree angle in any direction.
      *
      * @param distance  How far the robot will drive.
      * @param power  How fast the robot will drive.
+     * @param direction  In which direction the robot will drive (forward, backward, left, right,
+     *                   or 45 degrees in any direction).
+     * @param time  The max time this move can take. A time-out feature: if the move stalls for some
+     *              reason, the timer will catch it.
+     * @return  A boolean that tells us whether or not the robot is moving.
      */
     @Override
-    public void drive(double power, double direction, double distance)
+    public boolean drive(double power, double direction, double distance, double time)
     {
-        // Haven't figured out how to incorporate distnace yet...
-
+        if(!moving)
+        {
+            resetStartTime();
+            moving = true;
+            initialPosition = lFrontMotor.getCurrentPosition();
+        }
 
         double stickX = power * Math.sin(Math.toRadians(direction));
         double stickY = power * Math.cos(Math.toRadians(direction));
-
-        // Call joystickDrive using the power parameter as a simulated joystick command
         joystickDrive(stickX, stickY,0.0,0.0);
+
+        if((lFrontMotor.getCurrentPosition() - initialPosition) > distance || getRuntime() > time)
+        {
+            stopMotors();
+            moving = false;
+        }
+        return !moving;
      }
 
 

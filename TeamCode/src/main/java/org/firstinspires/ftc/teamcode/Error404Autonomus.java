@@ -25,6 +25,12 @@ public class Error404Autonomus extends OpMode
     double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
     double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
 
+    protected int mineralDriveDistance;
+    protected int mineralSlideDistance;
+    protected int depoTurnHeading;
+    protected int depoDriveDistance;
+    protected int craterDriveDistance;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -59,62 +65,49 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
+            // Drive to in front of minerals
             case 0:
-                telemetry.addData("1)", "Case 0 checking in");
-                robot.drive(.25, forward, 0.0);
-                if(getRuntime() > 1)
+                if(robot.drive(.5, forward, mineralDriveDistance,2))
                 {
-                    telemetry.addData("2)", "Case 0 complete");
-                    robot.stopMotors();
-                    state = 2;
-                    resetStartTime();
+                    state = 1;
                 }
                 break;
 
-//            case 1:
-//                telemetry.addData("3)", "Case 1 checking in");
-//                robot.pointTurn(1, 0.0);
-//                if(getRuntime() > 1.5)
-//                {
-//                    telemetry.addData("4)", "Case 1 complete");
-//                    robot.stopMotors();
-//                    resetStartTime();
-//                    state = 2;
-//                }
-//                break;
+            // Strafe around minerals
+            case 1:
+                if(robot.drive(.5, left, mineralSlideDistance,2))
+                {
+                    state = 2;
+                }
+                break;
+
+            // Turn to face the depo
             case 2:
-                telemetry.addData("3)", "Case 2 checking in");
-                robot.drive(.25, frDiagonal, 0.0);
+                resetStartTime();
+                robot.pointTurn(.5, depoTurnHeading);
                 if(getRuntime() > 2)
                 {
-                    telemetry.addData("5)", "Case 2 complete");
                     robot.stopMotors();
-                    resetStartTime();
+                    state = 3;
+                }
+                break;
+
+            // Drive to depo
+            case 3:
+                if(robot.drive(.5, forward, depoDriveDistance,2))
+                {
                     state = 4;
                 }
                 break;
-//            case 3:
-//                telemetry.addData("3)", "Case 2 checking in");
-//                robot.pointTurn(.2, 0.0);
-//                if(getRuntime() > 2)
-//                {
-//                    telemetry.addData("5)", "Case 2 complete");
-//                    robot.stopMotors();
-//                    resetStartTime();
-//                    state = 4;
-//                }
-//                break;
+
+            // Drive to crater
             case 4:
-                telemetry.addData("3)", "Case 2 checking in");
-                robot.drive(1, right, 0.0);
-                if(getRuntime() > 1.5)
+                if(robot.drive(.5, backward, craterDriveDistance,5))
                 {
-                    telemetry.addData("5)", "Case 2 complete");
-                    robot.stopMotors();
-                    resetStartTime();
                     state = 5;
                 }
                 break;
+
             default:
                 break;
         }
