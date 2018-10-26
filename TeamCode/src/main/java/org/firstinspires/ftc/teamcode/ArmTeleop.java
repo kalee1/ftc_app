@@ -31,20 +31,41 @@ package org.firstinspires.ftc.teamcode;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
+@TeleOp(name = "ArmTeleop" , group = "REV" )
 public class ArmTeleop extends OpMode {
 
     public Servo Swivel = null;
+    public Servo Elbow = null;
+    public Servo Shoulder = null;
 
     double gamma;
+    double theta;
+    double alpha;
 
     public ArmTeleop(){
     }
+
     @Override
     public void init() {
 
+
+
         telemetry.addData("msg1", "Init" );
+
+        gamma = .5;
+        Swivel = hardwareMap. servo .get( "Swivel" );
+        Swivel.setPosition(gamma);
+
+        alpha = .18;
+        Shoulder = hardwareMap. servo .get( "Shoulder" );
+        Shoulder.setPosition(alpha);
+
+        theta = .5;
+        Elbow = hardwareMap. servo .get( "Elbow" );
+        Elbow.setPosition(theta);
 
     }
     @Override
@@ -52,9 +73,29 @@ public class ArmTeleop extends OpMode {
 
         telemetry.addData("msg1", "Loop" );
 
-        gamma = gamepad2.left_stick_x;
+        //Swivel
+        gamma = gamma + (gamepad2.left_stick_x / 1000.0);
+
+        telemetry.addData("msg1","" + gamma);
 
         Swivel.setPosition(gamma);
+
+        //Shoulder
+        /*
+        alpha = alpha + (gamepad2.left_stick_y / 1000.0);
+
+        telemetry.addData("msg2","" + alpha);
+
+        Shoulder.setPosition(alpha);
+        */
+        //Elbow
+        theta = theta + (gamepad2.right_stick_y / 1000.0);
+
+        telemetry.addData("msg3","" + theta);
+
+        Elbow.setPosition(theta);
+
+
     }
     @Override
     public void stop() {

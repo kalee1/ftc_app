@@ -58,8 +58,6 @@ public class Mecanum extends OpMode {
     }
     @Override
     public void loop() {
-
-
         //This section allows the robot to strafe with mecanum wheels
         strafeL = gamepad1.left_stick_x;  //get left stick value, hold it for future use
         strafeR = -gamepad1.right_stick_x; //get the right stick value, hold it for future use
@@ -92,8 +90,8 @@ public class Mecanum extends OpMode {
         telemetry.addData("msg1"," " + left );
 
 
-
     }
+
     @Override
     public void stop() {
 
