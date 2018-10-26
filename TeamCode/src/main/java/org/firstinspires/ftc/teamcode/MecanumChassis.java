@@ -134,6 +134,14 @@ public class MecanumChassis extends Chassis
     @Override
     public boolean drive(double power, double direction, double distance, double time)
     {
+        final double COUNTS_PER_MOTOR_REV = 2240;
+        final double DRIVE_GEAR_REDUCTION = 1.7333;
+        final double WHEEL_DIAMETER_INCHES = 4.0;
+        final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+                (WHEEL_DIAMETER_INCHES * 3.14159);
+
+        distance = COUNTS_PER_INCH * distance;
+
         if(!moving)
         {
             resetStartTime();
@@ -152,7 +160,6 @@ public class MecanumChassis extends Chassis
         }
         return !moving;
      }
-
 
     /**
      * The pointTurn method turns the robot left or right depeinging on whether the power input is
