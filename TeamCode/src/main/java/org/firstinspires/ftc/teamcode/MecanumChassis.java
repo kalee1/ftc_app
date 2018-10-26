@@ -19,8 +19,13 @@ public class MecanumChassis extends Chassis
 
     static final double FORWARD = 0.0;
     static final double BACKWARD = 180.0;
-    static final double RIGHT = 270.0;
-    static final double LEFT = 90.0;
+    static final double RIGHT = 90.0;
+    static final double LEFT = 270.0;
+
+    static final double FORWARD_RIGHT_DIAGONAL = 45.0;
+    static final double FORWARD_LEFT_DIAGONAL = -45.0;
+    static final double BACKWARD_RIGHT_DIAGONAL = 135.0;
+    static final double BACKWARD_LEFT_DIAGONAL = -135.0;
 
     /**
      * Look for a specified set of motors in the config file. If the motors are found, give them a
@@ -124,8 +129,8 @@ public class MecanumChassis extends Chassis
         // Haven't figured out how to incorporate distnace yet...
 
 
-        double stickX = power * Math.sin(direction);
-        double stickY = Math.cos(direction);
+        double stickX = power * Math.sin(Math.toRadians(direction));
+        double stickY = power * Math.cos(Math.toRadians(direction));
 
         // Call joystickDrive using the power parameter as a simulated joystick command
         joystickDrive(stickX, stickY,0.0,0.0);

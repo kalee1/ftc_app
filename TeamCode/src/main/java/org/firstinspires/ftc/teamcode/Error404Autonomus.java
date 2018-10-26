@@ -20,6 +20,11 @@ public class Error404Autonomus extends OpMode
     double right = MecanumChassis.RIGHT;
     double left = MecanumChassis.LEFT;
 
+    double frDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
+    double rlDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
+    double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
+    double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -56,41 +61,30 @@ public class Error404Autonomus extends OpMode
         {
             case 0:
                 telemetry.addData("1)", "Case 0 checking in");
-                robot.drive(1, forward, 0.0);
-                if(getRuntime() > 1.5)
+                robot.drive(.25, forward, 0.0);
+                if(getRuntime() > 1)
                 {
                     telemetry.addData("2)", "Case 0 complete");
                     robot.stopMotors();
-                    state = 1;
+                    state = 2;
                     resetStartTime();
                 }
                 break;
 
-            case 1:
-                telemetry.addData("3)", "Case 1 checking in");
-                robot.pointTurn(1, 0.0);
-                if(getRuntime() > 4)
-                {
-                    telemetry.addData("4)", "Case 1 complete");
-                    robot.stopMotors();
-                    resetStartTime();
-                    state = 2;
-                }
-                break;
+//            case 1:
+//                telemetry.addData("3)", "Case 1 checking in");
+//                robot.pointTurn(1, 0.0);
+//                if(getRuntime() > 1.5)
+//                {
+//                    telemetry.addData("4)", "Case 1 complete");
+//                    robot.stopMotors();
+//                    resetStartTime();
+//                    state = 2;
+//                }
+//                break;
             case 2:
                 telemetry.addData("3)", "Case 2 checking in");
-                robot.drive(1, right, 0.0);
-                if(getRuntime() > .75)
-                {
-                    telemetry.addData("5)", "Case 2 complete");
-                    robot.stopMotors();
-                    resetStartTime();
-                    state = 3;
-                }
-                break;
-            case 3:
-                telemetry.addData("3)", "Case 2 checking in");
-                robot.pointTurn(.2, 0.0);
+                robot.drive(.25, frDiagonal, 0.0);
                 if(getRuntime() > 2)
                 {
                     telemetry.addData("5)", "Case 2 complete");
@@ -99,9 +93,20 @@ public class Error404Autonomus extends OpMode
                     state = 4;
                 }
                 break;
+//            case 3:
+//                telemetry.addData("3)", "Case 2 checking in");
+//                robot.pointTurn(.2, 0.0);
+//                if(getRuntime() > 2)
+//                {
+//                    telemetry.addData("5)", "Case 2 complete");
+//                    robot.stopMotors();
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
             case 4:
                 telemetry.addData("3)", "Case 2 checking in");
-                robot.drive(-1, left, 0.0);
+                robot.drive(1, right, 0.0);
                 if(getRuntime() > 1.5)
                 {
                     telemetry.addData("5)", "Case 2 complete");
