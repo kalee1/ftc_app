@@ -14,6 +14,8 @@ public class RuckusBot
 //    FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
+    ArmTeleop theArm = new ArmTeleop();
+
     public RuckusBot(String chassisType)
     {
         if (chassisType.equals("MecanumChassis"))

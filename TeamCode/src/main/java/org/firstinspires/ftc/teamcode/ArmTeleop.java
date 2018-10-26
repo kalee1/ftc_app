@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "ArmTeleop" , group = "REV" )
-public class ArmTeleop extends OpMode {
+public class ArmTeleop {
 
     public Servo Swivel = null;
     public Servo Elbow = null;
