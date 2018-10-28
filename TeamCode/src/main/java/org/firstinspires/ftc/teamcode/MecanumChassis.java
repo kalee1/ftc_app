@@ -5,6 +5,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  * @author Error 404: Team Name Not Found
  * @see Chassis
@@ -27,6 +29,12 @@ public class MecanumChassis extends Chassis
     static final double BACKWARD_RIGHT_DIAGONAL = 135.0;
     static final double BACKWARD_LEFT_DIAGONAL = -135.0;
 
+    final double COUNTS_PER_MOTOR_REV = 2240;
+    final double DRIVE_GEAR_REDUCTION = 1.7333;
+    final double WHEEL_DIAMETER_INCHES = 4.0;
+    final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
+            (WHEEL_DIAMETER_INCHES * 3.14159);
+
     int initialPosition;
 
     /**
@@ -36,43 +44,57 @@ public class MecanumChassis extends Chassis
      * @param hwMap  The hardware map that the code will use to find and classify the objects it sees.
      */
     @Override
-    public void init(HardwareMap hwMap)
+    public void init(HardwareMap hwMap, Telemetry telem)
     {
-        try {
+        try
+        {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
             rFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
 
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rFrontMotor = null;
         }
-        try {
+        try
+        {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
             lFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             lFrontMotor = null;
         }
-        try {
+        try
+        {
             rRearMotor = hwMap.dcMotor.get("rightRear");
             rRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rRearMotor = null;
         }
-        try {
+        try
+        {
             lRearMotor = hwMap.dcMotor.get("leftRear");
             lRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rRearMotor = null;
         }
+
+        super.init(hwMap, telem);
     }
 
     /**
      * This method takes the command values from the x- and y-axes of the left and right joysticks
      * on the gamepad and converts them to motor speed commands. The code then makes sure that the
-     * command values don't exceed a magnitude of 1.
+     * command values don't exceed a magnitude of a selected limit.
      *
      * The code making sure the speed commands don't exceed a value of 1 was sourced from:
      * http://www.chiefdelphi.com/media/papers/download/2906
@@ -81,13 +103,16 @@ public class MecanumChassis extends Chassis
      * @param leftStickY  The y-axis of the left joystick
      * @param rightStickX  The x-axis of the right joystick
      * @param rightStickY  The y-axis of the right joystick
+     * @param powerLimit  The max power allowed to the motors
      */
     @Override
-    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
-        // These are the calculations need to make a simple mecaccnum drive.
-        // The left joystick controls moving straight forward/backward and straight sideways.
-        // The right joystick control turning.
+        /*
+            These are the calculations need to make a simple mecaccnum drive.
+              - The left joystick controls moving straight forward/backward and straight sideways.
+              - The right joystick control turning.
+        */
         double rightFront = (-leftStickY+rightStickX+leftStickX);
         double leftFront = (leftStickY+rightStickX+leftStickX);
         double rightRear=  (-leftStickY+rightStickX-leftStickX);
@@ -100,15 +125,20 @@ public class MecanumChassis extends Chassis
         if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
         if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
 
-        // If max is greater than 1, divide all command values by max to ensure that all command
-        // values stay below a magnitude of 1.
-        if(max > .5)
+        powerLimit = Range.clip(powerLimit, .2, 1);
+        if(max == 0)
         {
-            max = max + .5;
-            leftFront/=max;
-            rightFront/=max;
-            leftRear/=max;
-            rightRear/=max;
+            max = 1;
+        }
+
+        // If max is greater than the power limit, divide all command values by max to ensure that all command
+        // values stay below the magnitude of the power limit.
+        if(max > powerLimit)
+        {
+            leftFront = leftFront / max * powerLimit;
+            rightFront = rightFront / max * powerLimit;
+            leftRear = leftRear / max * powerLimit;
+            rightRear = rightRear / max *powerLimit;
         }
 
         //Give the motors the final power values -- sourced from the calculations above.
@@ -134,12 +164,6 @@ public class MecanumChassis extends Chassis
     @Override
     public boolean drive(double power, double direction, double distance, double time)
     {
-        final double COUNTS_PER_MOTOR_REV = 2240;
-        final double DRIVE_GEAR_REDUCTION = 1.7333;
-        final double WHEEL_DIAMETER_INCHES = 4.0;
-        final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-                (WHEEL_DIAMETER_INCHES * 3.14159);
-
         distance = COUNTS_PER_INCH * distance;
 
         if(!moving)
@@ -151,13 +175,19 @@ public class MecanumChassis extends Chassis
 
         double stickX = power * Math.sin(Math.toRadians(direction));
         double stickY = power * Math.cos(Math.toRadians(direction));
-        joystickDrive(stickX, stickY,0.0,0.0);
+        joystickDrive(stickX, stickY,0.0,0.0, power);
 
-        if((lFrontMotor.getCurrentPosition() - initialPosition) > distance || getRuntime() > time)
+        if(((lFrontMotor.getCurrentPosition() - initialPosition) > distance) || (getRuntime() > time))
         {
             stopMotors();
             moving = false;
         }
+        telemetry.addData("1) target position: ", distance);
+        telemetry.addData("2) Current position: )", lFrontMotor.getCurrentPosition());
+        telemetry.addData("3) timeout time: ", time);
+        telemetry.addData("4) runtime: ", getRuntime());
+        telemetry.addData("5) direction: ", direction);
+        telemetry.update();
         return !moving;
      }
 
@@ -169,14 +199,26 @@ public class MecanumChassis extends Chassis
      * @param power  The power at which the robot will move.
      */
     @Override
-    public void pointTurn(double power, double heading)
+    public boolean pointTurn(double power, double time, double heading)
     {
         // Haven't figured out how to incorporate heading yet...
 
-        // Call joystickDrive using the power parameter as a simulated joystick command
-        joystickDrive(0, 0, power,0);
+        if(!moving)
+        {
+            resetStartTime();
+            moving = true;
+        }
 
+        joystickDrive(0.0, 0.0,power,0.0, power);
+
+        if(getRuntime() > time)
+        {
+            stopMotors();
+            moving = false;
+        }
+        return !moving;
     }
+
     /**
      * Stop all four drive motors by setting their power to zero.
      */
@@ -184,6 +226,7 @@ public class MecanumChassis extends Chassis
     public void stopMotors()
     {
         setPower(0.0);
+        moving = false;
     }
 
     /**
@@ -230,9 +273,5 @@ public class MecanumChassis extends Chassis
         if(lRearMotor != null) {lRearMotor.setPower(power);}
 
     }
-
-
-
-
 
 }

@@ -25,7 +25,7 @@ public class Error404MecanumTeleop extends OpMode
         // Initialize the hardware variables.
         // The init() method of the hardware class does all the work here
         //
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
@@ -56,7 +56,7 @@ public class Error404MecanumTeleop extends OpMode
         telemetry.addData("2: leftY", lStickY);
         telemetry.addData("3: rightX", rStickX);
 
-        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY);
+        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, 1);
 
         //robot.theEyeOfSauron.goldMineralPosition();
 

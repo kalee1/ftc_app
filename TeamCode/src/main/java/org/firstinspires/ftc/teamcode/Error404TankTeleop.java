@@ -31,7 +31,7 @@ public class Error404TankTeleop extends OpMode
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver");    //
@@ -55,7 +55,7 @@ public class Error404TankTeleop extends OpMode
         double rStickY = gamepad1.right_stick_y;
 
 
-        robot.joystickDrive(0.0, lStickY ,0.0, rStickY);
+        robot.joystickDrive(0.0, lStickY ,0.0, rStickY, 1);
 
         //       robot.theEyeOfSauron.goldMineralPosition();
 

@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.sun.tools.javac.util.ForwardingDiagnosticFormatter;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -14,26 +16,32 @@ import java.util.concurrent.TimeUnit;
 public class Chassis
 {
     boolean moving = false;
+    double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
+    Telemetry telemetry;
+
 
     // internal time tracking
     private long startTime = 0; // in nanoseconds
 
-    public void init(HardwareMap hwMap)
+    public void init(HardwareMap hwMap, Telemetry telem)
     {
+        telemetry = telem;
+        moving = false;
+        startTime = 0;
     }
 
-    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
     }
 
     public boolean drive(double power, double direction,  double distance, double time)
     {
-        return !moving;
+        return moving;
     }
 
-    public void pointTurn(double power, double heading)
+    public boolean pointTurn(double power, double time, double heading)
     {
-
+        return moving;
     }
 
     public void stopMotors()
@@ -48,7 +56,6 @@ public class Chassis
      */
     public double getRuntime()
     {
-        final double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
         return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
     }
 

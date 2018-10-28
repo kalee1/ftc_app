@@ -6,6 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 @Autonomous(name="Test Autonomus w/Mecanum Chassis", group="Autonomus")
 
 public class Error404Autonomus extends OpMode
@@ -25,11 +27,11 @@ public class Error404Autonomus extends OpMode
     double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
     double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
 
-    protected int mineralDriveDistance;
-    protected int mineralSlideDistance;
-    protected int depoTurnHeading;
-    protected int depoDriveDistance;
-    protected int craterDriveDistance;
+    protected double mineralDriveDistance;
+    protected double mineralSlideDistance;
+    protected double depoTurnHeading;
+    protected double depoDriveDistance;
+    protected double craterDriveDistance;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -40,7 +42,7 @@ public class Error404Autonomus extends OpMode
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
          */
-        robot.init(hardwareMap);
+        robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Let's Rock and Roll");    //
@@ -67,7 +69,7 @@ public class Error404Autonomus extends OpMode
         {
             // Drive to in front of minerals
             case 0:
-                if(robot.drive(.5, forward, mineralDriveDistance,2))
+                if(robot.drive(.5, forward, 6,mineralDriveDistance))
                 {
                     state = 1;
                 }
@@ -83,11 +85,8 @@ public class Error404Autonomus extends OpMode
 
             // Turn to face the depo
             case 2:
-                resetStartTime();
-                robot.pointTurn(.5, depoTurnHeading);
-                if(getRuntime() > 2)
+                if(robot.pointTurn(.5, 2, depoTurnHeading))
                 {
-                    robot.stopMotors();
                     state = 3;
                 }
                 break;

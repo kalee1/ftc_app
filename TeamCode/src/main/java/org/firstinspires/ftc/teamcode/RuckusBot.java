@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 
 /**E
  *
@@ -27,28 +29,29 @@ public class RuckusBot
     }
 
 
-    public void init(HardwareMap hwMap)
+
+    public void init(HardwareMap hwMap, Telemetry telem)
     {
-        theChassis.init(hwMap);
+        theChassis.init(hwMap, telem);
 //        depoDeposit.init(hwMap);
 //        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
 //        area51.init(hwMap);
     }
 
-    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
-        theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY);
+        theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
     }
 
     public boolean drive(double power, double direction, double distance, double time)
     {
-        theChassis.drive(power, direction, distance, time);
-        return theChassis.moving;
+        return theChassis.drive(power, direction, distance, time);
+
     }
 
-    public void pointTurn(double power, double heading)
+    public boolean pointTurn(double power, double time, double heading)
     {
-        theChassis.pointTurn(power, heading);
+        return theChassis.pointTurn(power, time, heading);
     }
 
     public void stopMotors()

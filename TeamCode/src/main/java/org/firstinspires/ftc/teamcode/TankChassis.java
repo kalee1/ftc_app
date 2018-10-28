@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 /**
@@ -22,7 +23,7 @@ public class TankChassis extends Chassis
     private DcMotor lRearMotor = null;
 
     @Override
-    public void init(HardwareMap hwMap)
+    public void init(HardwareMap hwMap, Telemetry telem)
     {
         try {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
@@ -69,7 +70,7 @@ public class TankChassis extends Chassis
      * @param rightStickY  The y-axis of the right joystick
      */
     @Override
-    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         // These are the calculations need to make a simple mecaccnum drive.
         // The left joystick controls moving straight forward/backward and straight sideways.
@@ -128,7 +129,7 @@ public class TankChassis extends Chassis
 
         double stickX = power * Math.sin(Math.toRadians(direction));
         double stickY = power * Math.cos(Math.toRadians(direction));
-        joystickDrive(stickX, stickY,0.0,0.0);
+        joystickDrive(stickX, stickY,0.0,0.0, 1);
 
         if((lFrontMotor.getCurrentPosition() - initialPosition) > distance)
         {
