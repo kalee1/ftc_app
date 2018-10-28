@@ -69,7 +69,7 @@ public class Error404Autonomus extends OpMode
         {
             // Drive to in front of minerals
             case 0:
-                if(robot.drive(.5, forward, 6,mineralDriveDistance))
+                if(robot.drive(.5, forward, mineralDriveDistance, 2))
                 {
                     state = 1;
                 }

@@ -187,7 +187,7 @@ public class MecanumChassis extends Chassis
         telemetry.addData("3) timeout time: ", time);
         telemetry.addData("4) runtime: ", getRuntime());
         telemetry.addData("5) direction: ", direction);
-        telemetry.update();
+
         return !moving;
      }
 
