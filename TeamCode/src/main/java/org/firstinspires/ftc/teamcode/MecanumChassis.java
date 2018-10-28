@@ -182,6 +182,7 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
+
         telemetry.addData("1) target position: ", distance);
         telemetry.addData("2) Current position: )", lFrontMotor.getCurrentPosition());
         telemetry.addData("3) timeout time: ", time);
@@ -199,7 +200,7 @@ public class MecanumChassis extends Chassis
      * @param power  The power at which the robot will move.
      */
     @Override
-    public boolean pointTurn(double power, double time, double heading)
+    public boolean pointTurn(double power, double heading, double time)
     {
         // Haven't figured out how to incorporate heading yet...
 
@@ -216,6 +217,7 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
+
         return !moving;
     }
 
@@ -271,7 +273,6 @@ public class MecanumChassis extends Chassis
         if(lFrontMotor != null) {lFrontMotor.setPower(power);}
         if(rRearMotor != null) {rRearMotor.setPower(power);}
         if(lRearMotor != null) {lRearMotor.setPower(power);}
-
     }
 
 }

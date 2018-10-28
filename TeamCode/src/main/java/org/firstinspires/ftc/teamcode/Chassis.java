@@ -39,7 +39,7 @@ public class Chassis
         return moving;
     }
 
-    public boolean pointTurn(double power, double time, double heading)
+    public boolean pointTurn(double power, double heading, double time)
     {
         return moving;
     }
@@ -69,7 +69,7 @@ public class Chassis
 
 
     /**
-     * Converts encoder inches to encoder ticks
+     * Converts inches to encoder ticks
      *
      * @param distanceInch  A double that is the number of inches to convert to encoder ticks
      */

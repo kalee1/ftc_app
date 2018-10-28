@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -25,35 +26,47 @@ public class TankChassis extends Chassis
     @Override
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-        try {
+        try
+        {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
             rFrontMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rFrontMotor = null;
         }
-        try {
+
+        try
+        {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
             lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             lFrontMotor = null;
         }
-        try {
+
+        try
+        {
             rRearMotor = hwMap.dcMotor.get("rightRear");
             rRearMotor.setDirection(DcMotorSimple.Direction.REVERSE);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rRearMotor = null;
         }
-        try {
+
+        try
+        {
             lRearMotor = hwMap.dcMotor.get("leftRear");
             lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             rRearMotor = null;
         }
 
     }
-
-
-
 
 
     /**
@@ -81,7 +94,7 @@ public class TankChassis extends Chassis
         double leftRear = (leftStickY+rightStickX-leftStickX);
 
 
-        //Find the largest command value given and assign it to max.
+        // Find the largest command value given and assign it to max.
         double max = Math.abs(leftFront);
         if(Math.abs(rightFront) > max) {max = Math.abs(rightFront);}
         if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
@@ -89,15 +102,25 @@ public class TankChassis extends Chassis
 
         // If max is greater than 1, divide all command values by max to ensure that all command
         // values stay below a magnitude of 1.
-        if(max > 1)
+
+        powerLimit = Range.clip(powerLimit, .2, 1);
+
+        if(max == 0)
         {
-            leftFront/=max;
-            rightFront/=max;
-            leftRear/=max;
-            rightRear/=max;
+            max = 1;
         }
 
-        //Give the motors the final power values -- sourced from the calculations above.
+        // If max is greater than the power limit, divide all command values by max to ensure that all command
+        // values stay below the magnitude of the power limit.
+        if(max > powerLimit)
+        {
+            leftFront = leftFront / max * powerLimit;
+            rightFront = rightFront / max * powerLimit;
+            leftRear = leftRear / max * powerLimit;
+            rightRear = rightRear / max *powerLimit;
+        }
+
+        // Give the motors the final power values -- sourced from the calculations above.
         rFrontMotor.setPower(rightFront);
         lFrontMotor.setPower(leftFront);
         rRearMotor.setPower(rightRear);
