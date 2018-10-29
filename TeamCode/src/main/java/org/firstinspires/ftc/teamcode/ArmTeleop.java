@@ -29,13 +29,11 @@
 
 package org.firstinspires.ftc.teamcode;
 
-
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "ArmTeleop" , group = "REV" )
-public class ArmTeleop {
+public class ArmTeleop{
 
     public Servo Swivel = null;
     public Servo Elbow = null;
