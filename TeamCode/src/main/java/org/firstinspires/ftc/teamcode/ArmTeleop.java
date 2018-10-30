@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @TeleOp(name = "ArmTeleop" , group = "REV" )
@@ -40,62 +41,59 @@ public class ArmTeleop{
     public Servo Shoulder = null;
 
     double gamma;
-    double theta;
     double alpha;
+    double theta;
 
     public ArmTeleop(){
     }
 
-    @Override
-    public void init() {
+    public void init(HardwareMap hwmap) {
+
+        try {
+
+            Elbow = hwmap. servo .get( "Elbow" );
+            Elbow.setPosition(.12);
+
+        } catch (Exception p_exeception) {
+
+            Elbow = null;
+        }
+        try {
+
+            Shoulder = hwmap. servo .get( "Shoulder" );
+            Shoulder.setPosition(.50);
+
+        } catch (Exception p_exeception) {
+
+            Shoulder = null;
+        }
+        try {
+
+            Swivel = hwmap. servo .get( "Swivel" );
+            Swivel.setPosition(.75);
+
+        } catch (Exception p_exeception) {
+
+            Swivel = null;
+        }
 
 
 
-        telemetry.addData("msg1", "Init" );
-
-        gamma = .5;
-        Swivel = hardwareMap. servo .get( "Swivel" );
-        Swivel.setPosition(gamma);
-
-        alpha = .18;
-        Shoulder = hardwareMap. servo .get( "Shoulder" );
-        Shoulder.setPosition(alpha);
-
-        theta = .5;
-        Elbow = hardwareMap. servo .get( "Elbow" );
-        Elbow.setPosition(theta);
 
     }
-    @Override
-    public void loop() {
 
-        telemetry.addData("msg1", "Loop" );
-
+    public void armPosition(double right_stick_x,double right_stick_y)
+    {
         //Swivel
-        gamma = gamma + (gamepad2.left_stick_x / 1000.0);
-
-        telemetry.addData("msg1","" + gamma);
-
+        gamma = gamma + right_stick_x / 1000;
         Swivel.setPosition(gamma);
 
         //Shoulder
-        /*
-        alpha = alpha + (gamepad2.left_stick_y / 1000.0);
-
-        telemetry.addData("msg2","" + alpha);
-
+        alpha = alpha + right_stick_y / 1000;
         Shoulder.setPosition(alpha);
-        */
+
         //Elbow
-        theta = theta + (gamepad2.right_stick_y / 1000.0);
-
-        telemetry.addData("msg3","" + theta);
-
+        theta = alpha / 2;
         Elbow.setPosition(theta);
-
-
-    }
-    @Override
-    public void stop() {
     }
 }

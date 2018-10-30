@@ -47,6 +47,12 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void loop()
     {
+        double right_stick_x = gamepad2.right_stick_x;
+        double right_stick_y = gamepad2.right_stick_y;
+
+        robot.armMove(right_stick_x ,right_stick_y);
+
+
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
