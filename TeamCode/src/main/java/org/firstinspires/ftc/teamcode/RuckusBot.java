@@ -49,9 +49,9 @@ public class RuckusBot
 
     }
 
-    public boolean pointTurn(double power, double heading, double time)
+    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
     {
-        return theChassis.pointTurn(power, heading, time);
+        return theChassis.pointTurn(power, targetHeading, time, useExtendedGyro);
     }
 
     public void stopMotors()

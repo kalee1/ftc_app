@@ -39,7 +39,7 @@ public class Chassis
         return moving;
     }
 
-    public boolean pointTurn(double power, double heading, double time)
+    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
     {
         return moving;
     }

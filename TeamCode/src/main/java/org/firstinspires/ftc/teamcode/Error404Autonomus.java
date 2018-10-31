@@ -85,7 +85,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn to face the depo
             case 2:
-                if(robot.pointTurn(.5, 2, depoTurnHeading))
+                if(robot.pointTurn(.5, depoTurnHeading, 2, true))
                 {
                     state = 3;
                 }

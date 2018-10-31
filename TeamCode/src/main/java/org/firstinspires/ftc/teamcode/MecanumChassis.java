@@ -1,11 +1,17 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * @author Error 404: Team Name Not Found
@@ -18,6 +24,8 @@ public class MecanumChassis extends Chassis
     private DcMotor rRearMotor = null;
     private DcMotor lFrontMotor = null;
     private DcMotor lRearMotor = null;
+
+    private NavxMicroNavigationSensor navx = null;
 
     static final double FORWARD = 0.0;
     static final double BACKWARD = 180.0;
@@ -86,6 +94,12 @@ public class MecanumChassis extends Chassis
         catch (Exception p_exeception)
         {
             rRearMotor = null;
+        }
+        try {
+            navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
+        } catch (Exception p_exeception) {
+            telemetry.addData("navx not found in config file", 0);
+            navx = null;
         }
 
         super.init(hwMap, telem);
@@ -193,16 +207,26 @@ public class MecanumChassis extends Chassis
      }
 
     /**
-     * The pointTurn method turns the robot left or right depeinging on whether the power input is
+     * The pointTurn method turns the robot left or right depending on whether the power input is
      * positive or negative.
      *
-     * @param heading  The direction in which the robot will move.
+     * @param power
+     * @param targetHeading  The direction in which the robot will move.
+     * @param time
+     * @param useExtendedGyro
      * @param power  The power at which the robot will move.
      */
     @Override
-    public boolean pointTurn(double power, double heading, double time)
+    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
     {
-        // Haven't figured out how to incorporate heading yet...
+        double currentHeading = getHeadingDbl();
+        if ( useExtendedGyro )
+        {
+            if ( currentHeading < 0.0 )
+            {
+                currentHeading = 360.0 + currentHeading;
+            }
+        }
 
         if(!moving)
         {
@@ -210,9 +234,9 @@ public class MecanumChassis extends Chassis
             moving = true;
         }
 
-        joystickDrive(0.0, 0.0,power,0.0, power);
+        joystickDrive(0.0, 0.0, power, 0.0, power);
 
-        if(getRuntime() > time)
+        if(Math.abs(currentHeading - targetHeading) < 4.0 || getRuntime() > time)
         {
             stopMotors();
             moving = false;
@@ -220,6 +244,18 @@ public class MecanumChassis extends Chassis
 
         return !moving;
     }
+
+    /**
+     * Used to get the robot's heading.
+     *
+     * @return  the robtot's heading as an double
+     */
+    public double getHeadingDbl()
+    {
+        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+    }
+
 
     /**
      * Stop all four drive motors by setting their power to zero.

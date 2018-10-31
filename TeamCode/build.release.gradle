@@ -1,7 +1,14 @@
+repositories {
+    flatDir {
+        dirs 'libs', '/Users/andrew/navx-mxp/android/libs'
+    }
+}
+
 dependencies {
     implementation project(':FtcRobotController')
     implementation (name: 'RobotCore-release', ext: 'aar')
     implementation (name: 'Hardware-release', ext: 'aar')
     implementation (name: 'FtcCommon-release', ext: 'aar')
     implementation (name:'WirelessP2p-release', ext:'aar')
+    implementation (name:'navx_ftc-release', ext:'aar')
 }
