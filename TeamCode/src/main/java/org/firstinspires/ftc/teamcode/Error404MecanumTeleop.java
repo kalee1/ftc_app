@@ -49,9 +49,12 @@ public class Error404MecanumTeleop extends OpMode
     {
         double right_stick_x = gamepad2.right_stick_x;
         double right_stick_y = gamepad2.right_stick_y;
+        double left_stick_y = gamepad2.left_stick_y;
+        boolean sleepButton = gamepad2.b;
 
-        robot.armMove(right_stick_x ,right_stick_y);
-
+        telemetry.addData("Testing", "Entering armMove");
+        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
+        robot.armSleep(sleepButton);
 
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
@@ -75,5 +78,6 @@ public class Error404MecanumTeleop extends OpMode
     public void stop()
     {
         robot.stopMotors();
+
     }
 }

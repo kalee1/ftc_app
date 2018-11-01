@@ -33,16 +33,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "ArmTeleop" , group = "REV" )
 public class ArmTeleop{
 
-    public Servo Swivel = null;
-    public Servo Elbow = null;
-    public Servo Shoulder = null;
+    public Servo Swivel;
+    public Servo Elbow;
+    public Servo Shoulder;
 
-    double gamma;
-    double alpha;
-    double theta;
+    double gamma = .25; //was .25 ---- Sleep pos = .25   gamma is swivel
+    double alpha = .31;  //was .33 ---- sleep pos = .31  alpha is shoulder
+    double theta = .14; //was .18 ---- sleep pos = .14   theta is elbow
 
     public ArmTeleop(){
     }
@@ -52,7 +51,7 @@ public class ArmTeleop{
         try {
 
             Elbow = hwmap. servo .get( "Elbow" );
-            Elbow.setPosition(.12);
+            //Elbow.setPosition(theta);
 
         } catch (Exception p_exeception) {
 
@@ -61,7 +60,7 @@ public class ArmTeleop{
         try {
 
             Shoulder = hwmap. servo .get( "Shoulder" );
-            Shoulder.setPosition(.50);
+            //Shoulder.setPosition(alpha);
 
         } catch (Exception p_exeception) {
 
@@ -70,7 +69,7 @@ public class ArmTeleop{
         try {
 
             Swivel = hwmap. servo .get( "Swivel" );
-            Swivel.setPosition(.75);
+            //Swivel.setPosition(gamma);
 
         } catch (Exception p_exeception) {
 
@@ -78,22 +77,36 @@ public class ArmTeleop{
         }
 
 
+        this.armSleep(true);  //put servos into sleep positions
+
+        Shoulder.scaleRange(0.1, 0.27);
 
 
     }
 
-    public void armPosition(double right_stick_x,double right_stick_y)
+    public void armPosition(double right_stick_x,double right_stick_y, double left_stick_y)
     {
         //Swivel
-        gamma = gamma + right_stick_x / 1000;
-        Swivel.setPosition(gamma);
+        //gamma = gamma + right_stick_x / 1000;
+        //Swivel.setPosition(gamma);
 
         //Shoulder
-        alpha = alpha + right_stick_y / 1000;
+        //alpha = alpha + right_stick_y / 1000;
+        alpha = alpha + right_stick_y / 100;
         Shoulder.setPosition(alpha);
 
         //Elbow
-        theta = alpha / 2;
-        Elbow.setPosition(theta);
+        //theta = theta + left_stick_y / 1000;
+        //Elbow.setPosition(theta);//change to neg
+    }
+
+    public void armSleep( boolean sleepButton)
+    {
+        if (sleepButton == true)
+        {
+            Shoulder.setPosition(.31);
+            Swivel.setPosition(gamma);
+            Elbow.setPosition(theta);
+        }
     }
 }
