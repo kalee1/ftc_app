@@ -34,7 +34,7 @@ public class RuckusBot
 
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-        theArm.init(hwMap);
+        theArm.init(hwMap , telem);
         theChassis.init(hwMap, telem);
 //        depoDeposit.init(hwMap);
 //        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)

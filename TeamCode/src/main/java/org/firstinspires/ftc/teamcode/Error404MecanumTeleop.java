@@ -47,9 +47,6 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("msg1", "");
-
-
         double right_stick_x = gamepad2.right_stick_x;
         double right_stick_y = gamepad2.right_stick_y;
         double left_stick_y = gamepad2.left_stick_y;
