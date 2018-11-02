@@ -98,7 +98,7 @@ public class MecanumChassis extends Chassis
         try {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         } catch (Exception p_exeception) {
-            telemetry.addData("navx not found in config file", 0);
+            telem.addData("navx not found in config file", 0);
             navx = null;
         }
 
