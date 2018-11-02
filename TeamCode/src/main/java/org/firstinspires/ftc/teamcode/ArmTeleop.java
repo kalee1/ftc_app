@@ -1,37 +1,10 @@
-/* Copyright (c) 2017 FIRST. All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without modification,
- * are permitted (subject to the limitations in the disclaimer below) provided that
- * the following conditions are met:
- *
- * Redistributions of source code must retain the above copyright notice, this list
- * of conditions and the following disclaimer.
- *
- * Redistributions in binary form must reproduce the above copyright notice, this
- * list of conditions and the following disclaimer in the documentation and/or
- * other materials provided with the distribution.
- *
- * Neither the name of FIRST nor the names of its contributors may be used to endorse or
- * promote products derived from this software without specific prior written permission.
- *
- * NO EXPRESS OR IMPLIED LICENSES TO ANY PARTY'S PATENT RIGHTS ARE GRANTED BY THIS
- * LICENSE. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO,
- * THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
- * ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE
- * FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
- * DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
- * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
- * OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
- * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
- */
-
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.Range;
 
 public class ArmTeleop{
 
@@ -39,9 +12,10 @@ public class ArmTeleop{
     public Servo Elbow;
     public Servo Shoulder;
 
+
     double gamma = .25; //was .25 ---- Sleep pos = .25   gamma is swivel
     double alpha = .31;  //was .33 ---- sleep pos = .31  alpha is shoulder
-    double theta = .14; //was .18 ---- sleep pos = .14   theta is elbow
+    double theta = .40; //was .18 ---- sleep pos = .14   theta is elbow
 
     public ArmTeleop(){
     }
@@ -51,7 +25,9 @@ public class ArmTeleop{
         try {
 
             Elbow = hwmap. servo .get( "Elbow" );
-            //Elbow.setPosition(theta);
+            Elbow.setDirection(Servo.Direction.REVERSE);
+            Elbow.setPosition(theta);
+
 
         } catch (Exception p_exeception) {
 
@@ -60,7 +36,7 @@ public class ArmTeleop{
         try {
 
             Shoulder = hwmap. servo .get( "Shoulder" );
-            //Shoulder.setPosition(alpha);
+            Shoulder.setPosition(alpha);
 
         } catch (Exception p_exeception) {
 
@@ -68,45 +44,96 @@ public class ArmTeleop{
         }
         try {
 
-            Swivel = hwmap. servo .get( "Swivel" );
-            //Swivel.setPosition(gamma);
+            Swivel = hwmap.servo.get( "Swivel" );
+            Swivel.setPosition(gamma);
 
         } catch (Exception p_exeception) {
 
             Swivel = null;
         }
 
-
         this.armSleep(true);  //put servos into sleep positions
 
-        Shoulder.scaleRange(0.1, 0.27);
-
+        Shoulder.scaleRange(0.08, 0.31);
+        //Elbow.scaleRange(0.20,0.04 );
+        Swivel.scaleRange(0.24, 0.44);
 
     }
 
     public void armPosition(double right_stick_x,double right_stick_y, double left_stick_y)
     {
+
+        Elbow.setPosition(.10);
+
+        //DO NOT UNCOMMENT --- TESTING PHASE
+        //prototype range clip code - *untested*
+       /*
+        alpha = alpha + right_stick_y / 200;
+
+        if(Shoulder.getPosition() < alpha )
+            Shoulder.setPosition(Range.clip(Shoulder.getPosition() + .01, .08, 0.31));
+        else if(Shoulder.getPosition() > alpha)
+            Shoulder.setPosition(Range.clip(Shoulder.getPosition() - .01, .08, 0.31));
+
+       // theta = theta + -left_stick_y / 200;
+
+        //if(Elbow.getPosition() < theta )
+          //  Elbow.setPosition(Range.clip(Elbow.getPosition() + .01, .08, .15));
+        //else if(Elbow.getPosition() > theta)
+           // Elbow.setPosition(Range.clip(Elbow.getPosition() - .01, .08, .15));
+
+        gamma = gamma + right_stick_x / 200;
+
+        if(Swivel.getPosition() < gamma )
+            Swivel.setPosition(Range.clip(Swivel.getPosition() + .25, .44, 0.24));
+        else if(Swivel.getPosition() > gamma)
+            Swivel.setPosition(Range.clip(Swivel.getPosition() - .25, .44, 0.24));
+
+
+
+        //This section allows the drivers to control the 3 arm servos with the gamepad 2 sticks.
+        //problem with incrementing position too fast --- testing phase
+        //not user friendly yet / not competition ready!
+
         //Swivel
         //gamma = gamma + right_stick_x / 1000;
         //Swivel.setPosition(gamma);
 
         //Shoulder
         //alpha = alpha + right_stick_y / 1000;
-        alpha = alpha + right_stick_y / 100;
+        // alpha = alpha + right_stick_y / 100;
         Shoulder.setPosition(alpha);
 
         //Elbow
-        //theta = theta + left_stick_y / 1000;
+        //theta = theta + left_stick_y / 100;
         //Elbow.setPosition(theta);//change to neg
+
+
+        //This is a check to see if the Elbow can move based upon Shoulder position
+        //DO NOT UNCOMMENT --- TESTING PHASE
+        check1 = Shoulder.getPosition();
+
+        if (check1 == .31)
+        {
+            check2 = .31;
+        }
+
+        if (check1 == check2)
+        {
+            Elbow.setPosition(.14);
+        }
+        */
     }
+
+
 
     public void armSleep( boolean sleepButton)
     {
         if (sleepButton == true)
         {
-            Shoulder.setPosition(.31);
+            Shoulder.setPosition(alpha);
             Swivel.setPosition(gamma);
-            Elbow.setPosition(theta);
+            //Elbow.setPosition(theta);
         }
     }
 }
