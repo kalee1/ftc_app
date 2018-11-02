@@ -47,7 +47,7 @@ public class ArmTeleop{
             Swivel = hwmap.servo.get( "Swivel" );
             Swivel.setPosition(gamma);
 
-        } catch (Exception p_exeception) {
+        } catch (Exception p_exception) {
 
             Swivel = null;
         }
@@ -67,7 +67,7 @@ public class ArmTeleop{
 
         //DO NOT UNCOMMENT --- TESTING PHASE
         //prototype range clip code - *untested*
-       /*
+        /*
         alpha = alpha + right_stick_y / 200;
 
         if(Shoulder.getPosition() < alpha )
@@ -75,12 +75,12 @@ public class ArmTeleop{
         else if(Shoulder.getPosition() > alpha)
             Shoulder.setPosition(Range.clip(Shoulder.getPosition() - .01, .08, 0.31));
 
-       // theta = theta + -left_stick_y / 200;
+        theta = theta + -left_stick_y / 200;
 
-        //if(Elbow.getPosition() < theta )
-          //  Elbow.setPosition(Range.clip(Elbow.getPosition() + .01, .08, .15));
-        //else if(Elbow.getPosition() > theta)
-           // Elbow.setPosition(Range.clip(Elbow.getPosition() - .01, .08, .15));
+        if(Elbow.getPosition() < theta )
+            Elbow.setPosition(Range.clip(Elbow.getPosition() + .01, .08, .15));
+        else if(Elbow.getPosition() > theta)
+            Elbow.setPosition(Range.clip(Elbow.getPosition() - .01, .08, .15));
 
         gamma = gamma + right_stick_x / 200;
 
@@ -96,17 +96,17 @@ public class ArmTeleop{
         //not user friendly yet / not competition ready!
 
         //Swivel
-        //gamma = gamma + right_stick_x / 1000;
-        //Swivel.setPosition(gamma);
+        gamma = gamma + right_stick_x / 1000;
+        Swivel.setPosition(gamma);
 
         //Shoulder
-        //alpha = alpha + right_stick_y / 1000;
-        // alpha = alpha + right_stick_y / 100;
+        alpha = alpha + right_stick_y / 1000;
+        alpha = alpha + right_stick_y / 100;
         Shoulder.setPosition(alpha);
 
         //Elbow
-        //theta = theta + left_stick_y / 100;
-        //Elbow.setPosition(theta);//change to neg
+        theta = theta + left_stick_y / 100;
+        Elbow.setPosition(theta);//change to neg
 
 
         //This is a check to see if the Elbow can move based upon Shoulder position
