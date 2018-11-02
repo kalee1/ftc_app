@@ -28,23 +28,20 @@ public class RuckusBot
         }
     }
 
-    public void armDrive() {
-
+    public void armDrive()
+    {
     }
-
-    public void init(HardwareMap hwMap) {
-        theArm.init(hwMap);
-        theChassis.init(hwMap);
-
-
 
     public void init(HardwareMap hwMap, Telemetry telem)
     {
+        theArm.init(hwMap);
         theChassis.init(hwMap, telem);
 //        depoDeposit.init(hwMap);
 //        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
 //        area51.init(hwMap);
     }
+
+
 
     public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
         theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
@@ -55,7 +52,7 @@ public class RuckusBot
         theArm.armSleep(sleepButton);
     }
 
-    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY)
+    public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
     }
