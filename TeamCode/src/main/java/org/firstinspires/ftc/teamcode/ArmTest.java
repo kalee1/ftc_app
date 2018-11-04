@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -8,7 +9,9 @@ import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class ArmTeleop{
+@TeleOp(name="Error404 ArmTest", group="Teleop")
+public class ArmTest extends OpMode{
+
 
     public Servo Swivel;
     public Servo Elbow;
@@ -20,20 +23,32 @@ public class ArmTeleop{
     double theta = .52; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
     double increment = .003;
     boolean B1;
+    boolean sleepButton;
+    double left_stick_y;
+    double right_stick_y;
+    double left_stick_x;
+    double waitTime;
+    boolean fireCode = true;
 
-    Telemetry telemetry;
 
-    public ArmTeleop(){
+    public ArmTest(){
     }
 
-    public void init(HardwareMap hwmap , Telemetry telem) {
+    public void init()
+    {
 
-        telemetry = telem;
+
+        left_stick_y = gamepad2.left_stick_y;
+        right_stick_y = gamepad2.right_stick_y;
+        left_stick_x = gamepad2.left_stick_x;
+
+
+
         B1 = true;
 
         try {
 
-            Elbow = hwmap. servo .get( "Elbow" );
+            Elbow = hardwareMap. servo .get( "Elbow" );
             Elbow.setDirection(Servo.Direction.FORWARD);
             Elbow.setPosition(theta);
 
@@ -44,7 +59,7 @@ public class ArmTeleop{
         }
         try {
 
-            Shoulder = hwmap. servo .get( "Shoulder" );
+            Shoulder = hardwareMap. servo .get( "Shoulder" );
             Shoulder.setPosition(alpha);
 
         } catch (Exception p_exeception) {
@@ -53,7 +68,7 @@ public class ArmTeleop{
         }
         try {
 
-            Swivel = hwmap.servo.get( "Swivel" );
+            Swivel = hardwareMap.servo.get( "Swivel" );
             Swivel.setPosition(gamma);
 
         } catch (Exception p_exception) {
@@ -71,8 +86,12 @@ public class ArmTeleop{
 
     }
 
-    public void armPosition(double right_stick_x,double right_stick_y, double left_stick_y)
+    public void loop()
     {
+
+        left_stick_y = gamepad2.left_stick_y;
+        right_stick_y = gamepad2.right_stick_y;
+        left_stick_x = gamepad2.left_stick_x;
 
         //Elbow.setPosition(.10);
 
@@ -139,31 +158,83 @@ public class ArmTeleop{
         telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
         telemetry.update();
 
-
+        /*
         if (B1)
         {
-            Shoulder.setPosition(.505);
+            //Shoulder.setPosition(.505);
             telemetry.addData("msg5", "value" + Shoulder.getPosition());
         }
+        */
+        if (fireCode == true)
+        {
+            waitTime = System.currentTimeMillis() + 30;//was 63
 
-
-        if (left_stick_y < 0)
+            //Shoulder
+            if (left_stick_y < 0)
             {
-                //alpha += increment;
-                //Shoulder.setPosition(alpha);
+                alpha += increment;
+                Shoulder.setPosition(alpha);
+
             }
 
-        else if  (left_stick_y > 0)
+            else if (left_stick_y > 0)
             {
                 alpha -= increment;
                 Shoulder.setPosition(alpha);
             }
+
+            /*
+            //Elbow
+            if (right_stick_y < 0)
+            {
+                theta += increment;
+                Elbow.setPosition(theta);
+
+            }
+            else if (right_stick_y > 0)
+            {
+
+                theta -= increment;
+                Elbow.setPosition(theta);
+
+            }
+
+
+            //Swivel
+
+            if (left_stick_y < 0)
+            {
+                gamma += increment;
+                Swivel.setPosition(gamma);
+
+            }
+            else if (left_stick_y > 0)
+            {
+
+                gamma -= increment;
+                Swivel.setPosition(gamma);
+            }
+            */
+
+        }
+
+        if (System.currentTimeMillis() > waitTime)
+        {
+            fireCode = true;
+        }
+        else
+            {
+                fireCode = false;
+            }
+
     }
 
 
 
-    public void armSleep( boolean sleepButton)
+    public void stop()
     {
+        sleepButton = gamepad2.b;
+
         if (sleepButton == true)
         {
             Shoulder.setPosition(alpha);

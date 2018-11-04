@@ -17,6 +17,7 @@ public class RuckusBot
 //    MineralProcessing area51 = new MineralProcessing();
 
     ArmTeleop theArm = new ArmTeleop();
+    Collector theCollect = new Collector();
 
     public RuckusBot(String chassisType) {
         if (chassisType.equals("MecanumChassis")) {
@@ -36,12 +37,26 @@ public class RuckusBot
     {
         theArm.init(hwMap , telem);
         theChassis.init(hwMap, telem);
+        theCollect.init(hwMap, telem );
 //        depoDeposit.init(hwMap);
 //        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
 //        area51.init(hwMap);
     }
 
+    public void armIntake()
+    {
+        theCollect.intake();
+    }
 
+    public void armEject()
+    {
+        theCollect.eject();
+    }
+
+    public void armStop()
+    {
+        theCollect.stop();
+    }
 
     public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
         theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);

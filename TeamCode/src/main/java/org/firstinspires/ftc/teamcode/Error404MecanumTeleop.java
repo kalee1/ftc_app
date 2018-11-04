@@ -45,15 +45,14 @@ public class Error404MecanumTeleop extends OpMode
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
     @Override
-    public void loop()
-    {
+    public void loop() {
         double right_stick_x = gamepad2.right_stick_x;
         double right_stick_y = gamepad2.right_stick_y;
         double left_stick_y = gamepad2.left_stick_y;
         boolean sleepButton = gamepad2.b;
 
         telemetry.addData("Testing", "Entering armMove");
-        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
+        robot.armMove(right_stick_x, right_stick_y, left_stick_y);
         robot.armSleep(sleepButton);
 
         double lStickX = -gamepad1.left_stick_x;
@@ -67,6 +66,18 @@ public class Error404MecanumTeleop extends OpMode
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, 1);
 
+        if (gamepad2.right_bumper)
+        {
+            robot.armIntake();
+        }
+        else if (gamepad2.left_bumper)
+        {
+            robot.armEject();
+        }
+        else
+        {
+            robot.armStop();
+        }
         //robot.theEyeOfSauron.goldMineralPosition();
 
     }
