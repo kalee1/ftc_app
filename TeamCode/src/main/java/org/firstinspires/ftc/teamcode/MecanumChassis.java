@@ -134,7 +134,8 @@ public class MecanumChassis extends Chassis
 
 
         //Find the largest command value given and assign it to max.
-        double max = Math.abs(leftFront);
+        double max = 0.0;
+        if(Math.abs(leftFront) > max) {max = Math.abs(leftFront);}
         if(Math.abs(rightFront) > max) {max = Math.abs(rightFront);}
         if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
         if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
