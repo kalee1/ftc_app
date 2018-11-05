@@ -16,19 +16,27 @@ public class ArmTest extends OpMode{
     public Servo Swivel;
     public Servo Elbow;
     public Servo Shoulder;
+    public CRServo Intake;
 
-
-    double gamma = .50; //  gamma is swivel
-    double alpha = .50;  // alpha is shoulder
-    double theta = .52; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
-    double increment = .003;
+    double elbowSleep = .52;
+    double shoulderSleep = .50;
+    double swivelSleep = .50;
+    double gamma = swivelSleep; //  gamma is swivel
+    double alpha = shoulderSleep;  // alpha is shoulder
+    double theta = elbowSleep; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
+    double increment = .005;
     boolean B1;
     boolean sleepButton;
     double left_stick_y;
     double right_stick_y;
     double left_stick_x;
-    double waitTime;
-    boolean fireCode = true;
+    double shoulderTarTime;
+    double swivelTarTime;
+    double elbowTarTime;
+    boolean shoulderControl = true;
+    boolean swivelControl = true;
+    boolean elbowControl = true;
+
 
 
     public ArmTest(){
@@ -41,6 +49,7 @@ public class ArmTest extends OpMode{
         left_stick_y = gamepad2.left_stick_y;
         right_stick_y = gamepad2.right_stick_y;
         left_stick_x = gamepad2.left_stick_x;
+        sleepButton = gamepad2.dpad_up;
 
 
 
@@ -75,8 +84,18 @@ public class ArmTest extends OpMode{
 
             Swivel = null;
         }
+        try
+        {
 
-        telemetry.addData("msg 2", "elbow pos" + Elbow.getPosition());
+            Intake = hardwareMap.crservo.get( "Collector" );
+            Intake.setDirection(CRServo.Direction.FORWARD);
+
+        } catch (Exception p_exeception) {
+
+            Intake = null;
+        }
+
+        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
 
         //this.armSleep(true);  //put servos into sleep positions
 
@@ -89,143 +108,135 @@ public class ArmTest extends OpMode{
     public void loop()
     {
 
+
+
         left_stick_y = gamepad2.left_stick_y;
         right_stick_y = gamepad2.right_stick_y;
         left_stick_x = gamepad2.left_stick_x;
 
-        //Elbow.setPosition(.10);
-
-        //DO NOT UNCOMMENT --- TESTING PHASE
-        //prototype range clip code - *untested*
-        /*
-        alpha = alpha + right_stick_y / 200;
-
-        if(Shoulder.getPosition() < alpha )
-            Shoulder.setPosition(Range.clip(Shoulder.getPosition() + .01, .08, 0.31));
-        else if(Shoulder.getPosition() > alpha)
-            Shoulder.setPosition(Range.clip(Shoulder.getPosition() - .01, .08, 0.31));
-
-        theta = theta + -left_stick_y / 200;
-
-        if(Elbow.getPosition() < theta )
-            Elbow.setPosition(Range.clip(Elbow.getPosition() + .01, .08, .15));
-        else if(Elbow.getPosition() > theta)
-            Elbow.setPosition(Range.clip(Elbow.getPosition() - .01, .08, .15));
-
-        gamma = gamma + right_stick_x / 200;
-
-        if(Swivel.getPosition() < gamma )
-            Swivel.setPosition(Range.clip(Swivel.getPosition() + .25, .44, 0.24));
-        else if(Swivel.getPosition() > gamma)
-            Swivel.setPosition(Range.clip(Swivel.getPosition() - .25, .44, 0.24));
-
-        */
-
-        //This section allows the drivers to control the 3 arm servos with the gamepad 2 sticks.
-        //problem with incrementing position too fast --- testing phase
-        //not user friendly yet / not competition ready!
-
-        /*
-        //Swivel
-        gamma = gamma + right_stick_x / 1000;// set to 1000 due to higher gear ratio
-        Swivel.setPosition(gamma);
-
-        //Shoulder
-        alpha = alpha + right_stick_y / 100;
-        Shoulder.setPosition(alpha);
-
-        //Elbow
-        theta = theta + left_stick_y / 100;
-        Elbow.setPosition(theta);//change to neg
-        */
-        /*
-        //This is a check to see if the Elbow can move based upon Shoulder position
-        //DO NOT UNCOMMENT --- TESTING PHASE
-        check1 = Shoulder.getPosition();
-
-        if (check1 == .31)
-        {
-            check2 = .31;
-        }
-
-        if (check1 == check2)
-        {
-            Elbow.setPosition(.14);
-        }
-        */
 
         telemetry.addData("msg3", "joystick control" + left_stick_y);
         telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
         telemetry.update();
 
-        /*
-        if (B1)
+        //Shoulder
+        if (shoulderControl == true)
         {
-            //Shoulder.setPosition(.505);
-            telemetry.addData("msg5", "value" + Shoulder.getPosition());
-        }
-        */
-        if (fireCode == true)
-        {
-            waitTime = System.currentTimeMillis() + 30;//was 63
+            shoulderTarTime = System.currentTimeMillis() + 30;//was 63
 
-            //Shoulder
-            if (left_stick_y < 0)
+            if (-left_stick_y < 0)
             {
                 alpha += increment;
                 Shoulder.setPosition(alpha);
-
+                telemetry.addData("Shoulder positive increment", ""+ left_stick_y);
             }
 
-            else if (left_stick_y > 0)
+            else if (-left_stick_y > 0)
             {
                 alpha -= increment;
                 Shoulder.setPosition(alpha);
+                telemetry.addData("Shoulder negative increment", ""+ left_stick_y);
             }
-
-            /*
-            //Elbow
-            if (right_stick_y < 0)
-            {
-                theta += increment;
-                Elbow.setPosition(theta);
-
-            }
-            else if (right_stick_y > 0)
-            {
-
-                theta -= increment;
-                Elbow.setPosition(theta);
-
-            }
-
-
-            //Swivel
-
-            if (left_stick_y < 0)
-            {
-                gamma += increment;
-                Swivel.setPosition(gamma);
-
-            }
-            else if (left_stick_y > 0)
-            {
-
-                gamma -= increment;
-                Swivel.setPosition(gamma);
-            }
-            */
 
         }
 
-        if (System.currentTimeMillis() > waitTime)
+        if (System.currentTimeMillis() > shoulderTarTime)
         {
-            fireCode = true;
+            shoulderControl = true;
         }
         else
             {
-                fireCode = false;
+                shoulderControl = false;
             }
+
+            //Swivel
+        if (swivelControl == true)
+        {
+            swivelTarTime = System.currentTimeMillis() + 30;//was 63
+
+            if (gamepad2.right_stick_x < 0)
+            {
+                gamma += increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+
+            }
+
+            else if (gamepad2.right_stick_x > 0)
+            {
+                gamma -= increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+            }
+
+        }
+
+        if (System.currentTimeMillis() > swivelTarTime)
+        {
+            swivelControl = true;
+        }
+        else
+        {
+            swivelControl = false;
+        }
+
+        //Elbow
+
+        if (elbowControl == true)
+        {
+            elbowTarTime = System.currentTimeMillis() + 30;//was 63
+
+            if (gamepad2.right_stick_y < 0)
+            {
+                theta += increment;
+                Elbow.setPosition(theta);
+                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
+        }
+
+            else if (gamepad2.right_stick_y > 0)
+            {
+                theta -= increment;
+                Elbow.setPosition(theta);
+                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
+            }
+
+        }
+
+        if (System.currentTimeMillis() > elbowTarTime)
+        {
+            elbowControl = true;
+        }
+        else
+        {
+            elbowControl = false;
+        }
+
+        //Collector
+
+        if (gamepad2.right_bumper)
+        {
+            Intake.setPower(1.0);
+        }
+        else if (gamepad2.left_bumper)
+        {
+            Intake.setPower(-1.0);
+        }
+        else
+        {
+            Intake.setPower(0.0);
+        }
+
+        //Arm is supposed to fold into sleep position
+        //Do Not Delete - In Progress!!!
+        /*
+        if (sleepButton == true)
+        {
+            Shoulder.setPosition(shoulderSleep);
+            Swivel.setPosition(swivelSleep);
+            Elbow.setPosition(elbowSleep);
+            telemetry.addData("", "sleep pos method , in loop");
+        }
+        */
 
     }
 
@@ -233,13 +244,5 @@ public class ArmTest extends OpMode{
 
     public void stop()
     {
-        sleepButton = gamepad2.b;
-
-        if (sleepButton == true)
-        {
-            Shoulder.setPosition(alpha);
-            Swivel.setPosition(gamma);
-            //Elbow.setPosition(theta);
-        }
     }
 }

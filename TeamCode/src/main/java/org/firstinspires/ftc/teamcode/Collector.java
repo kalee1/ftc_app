@@ -34,10 +34,12 @@ public class Collector {
         theServo.setPower(1.0);
     }
     public void eject()
+
     {
         theServo.setPower(-1.0);
     }
     public void stop()
+
     {
         theServo.setPower(0.0);
     }
