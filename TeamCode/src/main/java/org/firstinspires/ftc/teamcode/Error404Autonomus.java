@@ -67,45 +67,45 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
-            // Drive to in front of minerals
+            // Drive to depo
             case 0:
-                if(robot.drive(.5, forward, mineralDriveDistance, 2))
+                if(robot.drive(.9, forward, 60, 1.5))
                 {
                     state = 1;
                 }
                 break;
 
-            // Strafe around minerals
+            // turn to face crater
             case 1:
-                if(robot.drive(.5, left, mineralSlideDistance,2))
+                if(robot.pointTurn(.2, 45, 3,true))
                 {
                     state = 2;
                 }
                 break;
 
-            // Turn to face the depo
+            // Drive to crater
             case 2:
-                if(robot.pointTurn(.5, depoTurnHeading, 2, true))
+                if(robot.drive(.9, forward, 120, 4))
                 {
                     state = 3;
                 }
                 break;
 
-            // Drive to depo
-            case 3:
-                if(robot.drive(.5, forward, depoDriveDistance,2))
-                {
-                    state = 4;
-                }
-                break;
-
-            // Drive to crater
-            case 4:
-                if(robot.drive(.5, backward, craterDriveDistance,5))
-                {
-                    state = 5;
-                }
-                break;
+//            // Drive to depo
+//            case 3:
+//                if(robot.drive(.5, forward, depoDriveDistance,2))
+//                {
+//                    state = 4;
+//                }
+//                break;
+//
+//            // Drive to crater
+//            case 4:
+//                if(robot.drive(.5, backward, craterDriveDistance,5))
+//                {
+//                    state = 5;
+//                }
+//                break;
 
             default:
                 break;

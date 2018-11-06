@@ -121,10 +121,25 @@ public class TankChassis extends Chassis
         }
 
         // Give the motors the final power values -- sourced from the calculations above.
-        rFrontMotor.setPower(rightFront);
-        lFrontMotor.setPower(leftFront);
-        rRearMotor.setPower(rightRear);
-        lRearMotor.setPower(leftRear);
+        if(rFrontMotor != null)
+        {
+            rFrontMotor.setPower(rightFront);
+        }
+
+        if(lFrontMotor != null)
+        {
+            lFrontMotor.setPower(leftFront);
+        }
+
+        if(rRearMotor != null)
+        {
+            rRearMotor.setPower(rightRear);
+        }
+
+        if(lRearMotor != null)
+        {
+            lRearMotor.setPower(leftRear);
+        }
     }
 
 

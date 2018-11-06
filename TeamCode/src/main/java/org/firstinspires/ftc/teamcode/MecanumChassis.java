@@ -54,6 +54,8 @@ public class MecanumChassis extends Chassis
     @Override
     public void init(HardwareMap hwMap, Telemetry telem)
     {
+        super.init(hwMap, telem);
+
         try
         {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
@@ -97,12 +99,13 @@ public class MecanumChassis extends Chassis
         }
         try {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception) {
             telem.addData("navx not found in config file", 0);
             navx = null;
         }
 
-        super.init(hwMap, telem);
+
     }
 
     /**
@@ -157,10 +160,35 @@ public class MecanumChassis extends Chassis
         }
 
         //Give the motors the final power values -- sourced from the calculations above.
-        rFrontMotor.setPower(rightFront);
-        lFrontMotor.setPower(leftFront);
-        rRearMotor.setPower(rightRear);
-        lRearMotor.setPower(leftRear);
+        if(rFrontMotor != null)
+        {
+            rFrontMotor.setPower(rightFront);
+        }
+
+        if(lFrontMotor != null)
+        {
+            lFrontMotor.setPower(leftFront);
+        }
+
+        if(rRearMotor != null)
+        {
+            rRearMotor.setPower(rightRear);
+        }
+
+        if(lRearMotor != null)
+        {
+            lRearMotor.setPower(leftRear);
+        }
+
+        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
+        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
+        telemetry.addData("4. right rear encoder", lRearMotor.getCurrentPosition());
+
+        telemetry.addData("5. right front power", rFrontMotor.getPower());
+        telemetry.addData("6. left front power", lFrontMotor.getPower());
+        telemetry.addData("7. right rear power", rRearMotor.getPower());
+        telemetry.addData("8. right rear power", lRearMotor.getPower());
     }
 
 
