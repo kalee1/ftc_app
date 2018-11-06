@@ -39,9 +39,11 @@ public class MecanumChassis extends Chassis
 
     final double COUNTS_PER_MOTOR_REV = 2240;
     final double DRIVE_GEAR_REDUCTION = 1.7333;
+    final double TOTAL_COUNTS_PER_REV = COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION;
     final double WHEEL_DIAMETER_INCHES = 4.0;
-    final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
-            (WHEEL_DIAMETER_INCHES * 3.14159);
+    final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159; //12.56636
+
+    final double COUNTS_PER_INCH = TOTAL_COUNTS_PER_REV / INCH_PER_REV; //308.972
 
     int initialPosition;
 
@@ -180,15 +182,15 @@ public class MecanumChassis extends Chassis
             lRearMotor.setPower(leftRear);
         }
 
-        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
-        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
-        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
-        telemetry.addData("4. right rear encoder", lRearMotor.getCurrentPosition());
-
-        telemetry.addData("5. right front power", rFrontMotor.getPower());
-        telemetry.addData("6. left front power", lFrontMotor.getPower());
-        telemetry.addData("7. right rear power", rRearMotor.getPower());
-        telemetry.addData("8. right rear power", lRearMotor.getPower());
+//        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
+//        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+//        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
+//        telemetry.addData("4. right rear encoder", lRearMotor.getCurrentPosition());
+//
+//        telemetry.addData("5. right front power", rFrontMotor.getPower());
+//        telemetry.addData("6. left front power", lFrontMotor.getPower());
+//        telemetry.addData("7. right rear power", rRearMotor.getPower());
+//        telemetry.addData("8. right rear power", lRearMotor.getPower());
     }
 
 
@@ -207,7 +209,13 @@ public class MecanumChassis extends Chassis
     @Override
     public boolean drive(double power, double direction, double distance, double time)
     {
-        distance = COUNTS_PER_INCH * distance;
+       double driveDistance = COUNTS_PER_INCH * distance;
+
+        telemetry.addData("target distance", driveDistance); //7415
+        telemetry.addData("counts per inch", COUNTS_PER_INCH); //308
+
+        telemetry.addData("total counts per rev", TOTAL_COUNTS_PER_REV); //1292
+        telemetry.addData("inch per rev", INCH_PER_REV);
 
         if(!moving)
         {
@@ -220,17 +228,21 @@ public class MecanumChassis extends Chassis
         double stickY = power * Math.cos(Math.toRadians(direction));
         joystickDrive(stickX, stickY,0.0,0.0, power);
 
-        if(((lFrontMotor.getCurrentPosition() - initialPosition) > distance) || (getRuntime() > time))
+        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+        telemetry.addData("3. initial position", initialPosition);
+
+
+        if(((lFrontMotor.getCurrentPosition() - initialPosition) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
             moving = false;
         }
-
-        telemetry.addData("1) target position: ", distance);
-        telemetry.addData("2) Current position: )", lFrontMotor.getCurrentPosition());
-        telemetry.addData("3) timeout time: ", time);
-        telemetry.addData("4) runtime: ", getRuntime());
-        telemetry.addData("5) direction: ", direction);
+//
+//        telemetry.addData("1) target position: ", distance);
+//        telemetry.addData("2) Current position: )", lFrontMotor.getCurrentPosition());
+//        telemetry.addData("3) timeout time: ", time);
+//        telemetry.addData("4) runtime: ", getRuntime());
+//        telemetry.addData("5) direction: ", direction);
 
         return !moving;
      }
@@ -248,6 +260,9 @@ public class MecanumChassis extends Chassis
     @Override
     public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
     {
+        telemetry.addData("1. counts per inch", COUNTS_PER_INCH);
+        telemetry.addData("2. counts per rev", TOTAL_COUNTS_PER_REV);
+        telemetry.addData("3. inch per rev", INCH_PER_REV);
         double currentHeading = getHeadingDbl();
         if ( useExtendedGyro )
         {

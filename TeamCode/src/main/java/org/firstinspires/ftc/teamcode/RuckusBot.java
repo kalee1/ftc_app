@@ -12,9 +12,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RuckusBot
 {
     Chassis theChassis =  null;
-    FieldVision theEyeOfSauron = new FieldVision();
-//    MarkDeploy depoDeposit = new MarkDeploy();
 //    FieldVision theEyeOfSauron = new FieldVision();
+
+
+//    MarkDeploy depoDeposit = new MarkDeploy();
 //    MineralProcessing area51 = new MineralProcessing();
 
 //    ArmTeleop theArm = new ArmTeleop();
@@ -37,9 +38,9 @@ public class RuckusBot
     {
  //       theArm.init(hwMap);
         theChassis.init(hwMap, telem);
-        theEyeOfSauron.init(hwMap, telem);
+//        theEyeOfSauron.init(hwMap, telem);
+
 //        depoDeposit.init(hwMap);
-//        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
 //        area51.init(hwMap);
     }
 

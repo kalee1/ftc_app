@@ -18,11 +18,11 @@ public class Error404Autonomus extends OpMode
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
     double forward = MecanumChassis.FORWARD;
-    double backward = MecanumChassis.FORWARD;
+    double backward = MecanumChassis.BACKWARD;
     double right = MecanumChassis.RIGHT;
     double left = MecanumChassis.LEFT;
 
-    double frDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
+    double frDiagonal = MecanumChassis.FORWARD_RIGHT_DIAGONAL;
     double rlDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
     double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
     double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
@@ -69,34 +69,35 @@ public class Error404Autonomus extends OpMode
         {
             // Drive to depo
             case 0:
-                if(robot.drive(.4, forward, 40, 3))
+//                if(robot.pointTurn(.2, 1000, 400, true))
+                if(robot.drive(.2, backward, 5, 10))
                 {
                     state = 1;
                 }
                 break;
 
-            // turn to face crater
-            case 1:
-                if(robot.pointTurn(.2, 45, 3,true))
-                {
-                    state = 2;
-                }
-                break;
+//            // turn to face crater
+////            case 1:
+////                if(robot.drive(.2, backward, 3,4))
+////                {
+////                    state = 2;
+////                }
+////                break;
 
-            // Drive to crater
-            case 2:
-                if(robot.drive(.4, backward, 120, 7))
-                {
-                    state = 3;
-                }
-                break;
-
-            case 3:
-                if(robot.theEyeOfSauron.tensorFlowMineralDetection().equals("center"))
-                {
-                    state = 4;
-                }
-                break;
+//            // Drive to crater
+//            case 2:
+//                if(robot.drive(.2, backward, 120, 7))
+//                {
+//                    state = 3;
+//                }
+//                break;
+//
+//            case 3:
+//                if(robot.theEyeOfSauron.tensorFlowMineralDetection().equals("center"))
+//                {
+//                    state = 4;
+//                }
+//                break;
 
 //            // Drive to depo
 //            case 3:

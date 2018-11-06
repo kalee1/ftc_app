@@ -3,7 +3,9 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+
 @TeleOp(name="Error404 Mecanum Teleop", group="Teleop")
+
 /**
  * The class which will handle the driver controlled period of the match.
  *
@@ -12,7 +14,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
  */
 public class Error404MecanumTeleop extends OpMode
 {
-
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
 
@@ -71,13 +72,21 @@ public class Error404MecanumTeleop extends OpMode
 
     }
 
+    /**
+     * afterburners() allows the driver to increase the robot's top speed from the default of 0.3 to
+     * 0.8 by holding down the left trigger on the gamepad. This is because it is easier to make small
+     * precise movements (like lining up on a mineral) at a lower top speed, but it is also
+     * useful to drive fast when crossing the field.
+     *
+     * @return  a double that is the maximum power
+     */
     public double afterburners ()
     {
         double powerLimit;
 
         if (gamepad1.left_trigger == 1)
         {
-            powerLimit = 1;
+            powerLimit = .8;
         }
         else
         {
@@ -93,6 +102,5 @@ public class Error404MecanumTeleop extends OpMode
     public void stop()
     {
         robot.stopMotors();
-
     }
 }
