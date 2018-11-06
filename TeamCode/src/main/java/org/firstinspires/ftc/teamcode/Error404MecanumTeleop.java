@@ -49,7 +49,6 @@ public class Error404MecanumTeleop extends OpMode
     {
         telemetry.addData("msg1", "");
 
-
         double right_stick_x = gamepad2.right_stick_x;
         double right_stick_y = gamepad2.right_stick_y;
         double left_stick_y = gamepad2.left_stick_y;
@@ -68,10 +67,23 @@ public class Error404MecanumTeleop extends OpMode
         telemetry.addData("2: leftY", lStickY);
         telemetry.addData("3: rightX", rStickX);
 
-        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, 1);
+        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
-        //robot.theEyeOfSauron.goldMineralPosition();
+    }
 
+    public double afterburners ()
+    {
+        double powerLimit;
+
+        if (gamepad1.left_trigger == 1)
+        {
+            powerLimit = 1;
+        }
+        else
+        {
+            powerLimit = .5;
+        }
+        return powerLimit;
     }
 
     /*

@@ -69,7 +69,7 @@ public class Error404Autonomus extends OpMode
         {
             // Drive to depo
             case 0:
-                if(robot.drive(.9, forward, 60, 1.5))
+                if(robot.drive(.2, forward, 60, 1.5))
                 {
                     state = 1;
                 }
@@ -85,9 +85,16 @@ public class Error404Autonomus extends OpMode
 
             // Drive to crater
             case 2:
-                if(robot.drive(.9, forward, 120, 4))
+                if(robot.drive(.2, forward, 120, 4))
                 {
                     state = 3;
+                }
+                break;
+
+            case 3:
+                if(robot.theEyeOfSauron.tensorFlowMineralDetection().equals("center"))
+                {
+                    state = 4;
                 }
                 break;
 

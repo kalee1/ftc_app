@@ -18,16 +18,18 @@ public class NavxTest extends OpMode
 {
     protected IntegratingGyroscope gyro;
     private NavxMicroNavigationSensor navx = null;
-    double currentHeading = getHeadingDbl();
 
 
     @Override
     public void init ()
     {
-        try {
+        try
+        {
             navx = hardwareMap.get(NavxMicroNavigationSensor.class, "navx");
             gyro = (IntegratingGyroscope)navx;
-        } catch (Exception p_exeception) {
+        }
+        catch (Exception p_exeception)
+        {
             telemetry.addData("navx not found in config file", 0);
             navx = null;
         }
@@ -36,7 +38,7 @@ public class NavxTest extends OpMode
 
     public void loop()
     {
-        telemetry.addData("navx heading", currentHeading);
+        telemetry.addData("navx heading", getHeadingDbl());
 
     }
 
