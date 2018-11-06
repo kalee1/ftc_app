@@ -17,7 +17,7 @@ public class RuckusBot
 //    FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
-    ArmTeleop theArm = new ArmTeleop();
+//    ArmTeleop theArm = new ArmTeleop();
 
     public RuckusBot(String chassisType) {
         if (chassisType.equals("MecanumChassis")) {
@@ -35,7 +35,7 @@ public class RuckusBot
 
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-        theArm.init(hwMap);
+ //       theArm.init(hwMap);
         theChassis.init(hwMap, telem);
         theEyeOfSauron.init(hwMap, telem);
 //        depoDeposit.init(hwMap);
@@ -45,14 +45,14 @@ public class RuckusBot
 
 
 
-    public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
-        theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
-    }
+//    public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
+//        theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
+//    }
 
-    public void armSleep(boolean sleepButton)
-    {
-        theArm.armSleep(sleepButton);
-    }
+//    public void armSleep(boolean sleepButton)
+//    {
+//        theArm.armSleep(sleepButton);
+//    }
 
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {

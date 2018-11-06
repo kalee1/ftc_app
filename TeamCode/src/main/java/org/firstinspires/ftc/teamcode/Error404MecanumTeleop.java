@@ -55,8 +55,8 @@ public class Error404MecanumTeleop extends OpMode
         boolean sleepButton = gamepad2.b;
 
         telemetry.addData("Testing", "Entering armMove");
-        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
-        robot.armSleep(sleepButton);
+//        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
+//        robot.armSleep(sleepButton);
 
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
@@ -81,7 +81,7 @@ public class Error404MecanumTeleop extends OpMode
         }
         else
         {
-            powerLimit = .5;
+            powerLimit = .3;
         }
         return powerLimit;
     }
