@@ -160,10 +160,16 @@ public class MecanumChassis extends Chassis
         lFrontMotor.setPower(leftFront);
         rRearMotor.setPower(rightRear);
         lRearMotor.setPower(leftRear);
+        
         telemetry.addData("left front encoder", lRearMotor.getCurrentPosition());
         telemetry.addData("left front encoder", lFrontMotor.getCurrentPosition());
         telemetry.addData("right front encoder", rFrontMotor.getCurrentPosition());
         telemetry.addData("right rear encoder", rRearMotor.getCurrentPosition());
+
+        telemetry.addData("left front power", lRearMotor.getPower());
+        telemetry.addData("left front power", lFrontMotor.getPower());
+        telemetry.addData("right front power", rFrontMotor.getPower());
+        telemetry.addData("right rear power", rRearMotor.getPower());
     }
 
 
