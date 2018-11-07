@@ -259,7 +259,6 @@ public class MecanumChassis extends Chassis
         telemetry.addData("5. drive equation",Math.abs(lFrontMotor.getCurrentPosition() - initialPosition));
         telemetry.addData("4. initial position", initialPosition);
 
-
         return !moving;
      }
 
