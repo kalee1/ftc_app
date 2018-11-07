@@ -1,10 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -67,58 +64,43 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
-            // Drive to depo
             case 0:
 //                if(robot.pointTurn(.2, 1000, 400, true))
-                if(robot.drive(.2, backward, 5, 10))
+                if(robot.drive(.3, forward, 60, 50))
                 {
                     state = 1;
+                    resetStartTime();
                 }
                 break;
 
-//            // turn to face crater
-////            case 1:
-////                if(robot.drive(.2, backward, 3,4))
-////                {
-////                    state = 2;
-////                }
-////                break;
+//             turn to face crater
+            case 1:
+                if(robot.pointTurn(.2, 45, 3,false))
+                {
+                    state = 2;
+                    resetStartTime();
+                }
+                break;
 
-//            // Drive to crater
-//            case 2:
-//                if(robot.drive(.2, backward, 120, 7))
-//                {
-//                    state = 3;
-//                }
-//                break;
-//
-//            case 3:
-//                if(robot.theEyeOfSauron.tensorFlowMineralDetection().equals("center"))
-//                {
-//                    state = 4;
-//                }
-//                break;
+            case 2:
+                if(getRuntime() > 10)
+                {
+                    state = 3;
+                }
+                break;
 
-//            // Drive to depo
-//            case 3:
-//                if(robot.drive(.5, forward, depoDriveDistance,2))
-//                {
-//                    state = 4;
-//                }
-//                break;
-//
-//            // Drive to crater
-//            case 4:
-//                if(robot.drive(.5, backward, craterDriveDistance,5))
-//                {
-//                    state = 5;
-//                }
-//                break;
+            // Drive to crater
+            case 3:
+                if(robot.drive(.2, backward, 120, 7))
+                {
+                    state = 4;
+                }
+                break;
 
             default:
                 break;
         }
-        telemetry.addData("State: ", state );
+//        telemetry.addData("State: ", state );
 
     }
 

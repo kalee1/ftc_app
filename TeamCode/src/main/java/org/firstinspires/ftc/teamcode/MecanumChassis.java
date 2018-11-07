@@ -27,23 +27,23 @@ public class MecanumChassis extends Chassis
 
     private NavxMicroNavigationSensor navx = null;
 
-    static final double FORWARD = 0.0;
-    static final double BACKWARD = 180.0;
-    static final double RIGHT = 90.0;
-    static final double LEFT = 270.0;
+    static final double FORWARD = 180;
+    static final double BACKWARD = 0.0;
+    static final double RIGHT = 270.0;
+    static final double LEFT = 90.0;
 
-    static final double FORWARD_RIGHT_DIAGONAL = 45.0;
-    static final double FORWARD_LEFT_DIAGONAL = -45.0;
-    static final double BACKWARD_RIGHT_DIAGONAL = 135.0;
-    static final double BACKWARD_LEFT_DIAGONAL = -135.0;
+    static final double FORWARD_RIGHT_DIAGONAL = -45.0;
+    static final double FORWARD_LEFT_DIAGONAL = 45.0;
+    static final double BACKWARD_RIGHT_DIAGONAL = -135.0;
+    static final double BACKWARD_LEFT_DIAGONAL = 135.0;
 
-    final double COUNTS_PER_MOTOR_REV = 2240;
-    final double DRIVE_GEAR_REDUCTION = 1.7333;
-    final double TOTAL_COUNTS_PER_REV = COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION;
+    final double COUNTS_PER_MOTOR_REV = 1120;
+    final double DRIVE_GEAR_REDUCTION = 1.3;
     final double WHEEL_DIAMETER_INCHES = 4.0;
-    final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159; //12.56636
+    //final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159; // 12.56636
 
-    final double COUNTS_PER_INCH = TOTAL_COUNTS_PER_REV / INCH_PER_REV; //308.972
+//    final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV/(DRIVE_GEAR_REDUCTION * WHEEL_DIAMETER_INCHES * 3.14159));
+    final double COUNTS_PER_INCH = (1120*10)/(13*4*3.14159);
 
     int initialPosition;
 
@@ -61,8 +61,10 @@ public class MecanumChassis extends Chassis
         try
         {
             rFrontMotor = hwMap.dcMotor.get("rightFront");
+            rFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            rFrontMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         }
         catch (Exception p_exeception)
@@ -72,8 +74,10 @@ public class MecanumChassis extends Chassis
         try
         {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
+            lFrontMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lFrontMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lFrontMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            lFrontMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         catch (Exception p_exeception)
         {
@@ -82,8 +86,10 @@ public class MecanumChassis extends Chassis
         try
         {
             rRearMotor = hwMap.dcMotor.get("rightRear");
+            rRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             rRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             rRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            rRearMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         catch (Exception p_exeception)
         {
@@ -92,8 +98,10 @@ public class MecanumChassis extends Chassis
         try
         {
             lRearMotor = hwMap.dcMotor.get("leftRear");
+            lRearMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             lRearMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             lRearMotor.setDirection(DcMotorSimple.Direction.FORWARD);
+            lRearMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         catch (Exception p_exeception)
         {
@@ -106,6 +114,7 @@ public class MecanumChassis extends Chassis
             telem.addData("navx not found in config file", 0);
             navx = null;
         }
+
 
 
     }
@@ -145,7 +154,7 @@ public class MecanumChassis extends Chassis
         if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
         if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
 
-        powerLimit = Range.clip(powerLimit, .2, 1);
+        powerLimit = Range.clip(powerLimit, .05, 1);
         if(max == 0)
         {
             max = 1;
@@ -211,30 +220,31 @@ public class MecanumChassis extends Chassis
     {
        double driveDistance = COUNTS_PER_INCH * distance;
 
-        telemetry.addData("target distance", driveDistance); //7415
-        telemetry.addData("counts per inch", COUNTS_PER_INCH); //308
+       setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        telemetry.addData("total counts per rev", TOTAL_COUNTS_PER_REV); //1292
-        telemetry.addData("inch per rev", INCH_PER_REV);
 
         if(!moving)
         {
             resetStartTime();
             moving = true;
-            initialPosition = lFrontMotor.getCurrentPosition();
+
+            lFrontMotor.setTargetPosition(-(lFrontMotor.getCurrentPosition() + (int)driveDistance));
+            rFrontMotor.setTargetPosition(rFrontMotor.getCurrentPosition() + (int)driveDistance);
+            lRearMotor.setTargetPosition(-(lRearMotor.getCurrentPosition() + (int)driveDistance));
+            rRearMotor.setTargetPosition(rRearMotor.getCurrentPosition() + (int)driveDistance);
         }
+
 
         double stickX = power * Math.sin(Math.toRadians(direction));
         double stickY = power * Math.cos(Math.toRadians(direction));
         joystickDrive(stickX, stickY,0.0,0.0, power);
 
-        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
-        telemetry.addData("3. initial position", initialPosition);
 
 
-        if(((lFrontMotor.getCurrentPosition() - initialPosition) >= driveDistance) || (getRuntime() > time))
+        if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             moving = false;
         }
 //
@@ -243,6 +253,12 @@ public class MecanumChassis extends Chassis
 //        telemetry.addData("3) timeout time: ", time);
 //        telemetry.addData("4) runtime: ", getRuntime());
 //        telemetry.addData("5) direction: ", direction);
+
+        telemetry.addData("3. driveDistance", driveDistance); //7415
+        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+        telemetry.addData("5. drive equation",Math.abs(lFrontMotor.getCurrentPosition() - initialPosition));
+        telemetry.addData("4. initial position", initialPosition);
+
 
         return !moving;
      }
@@ -260,10 +276,9 @@ public class MecanumChassis extends Chassis
     @Override
     public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
     {
-        telemetry.addData("1. counts per inch", COUNTS_PER_INCH);
-        telemetry.addData("2. counts per rev", TOTAL_COUNTS_PER_REV);
-        telemetry.addData("3. inch per rev", INCH_PER_REV);
+
         double currentHeading = getHeadingDbl();
+
         if ( useExtendedGyro )
         {
             if ( currentHeading < 0.0 )
@@ -274,6 +289,7 @@ public class MecanumChassis extends Chassis
 
         if(!moving)
         {
+            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             resetStartTime();
             moving = true;
         }

@@ -107,18 +107,18 @@ public class FieldVision
                     {
                         if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X)
                         {
-                            goldPosition = "Left";
-                            telemetry.addData("Gold Mineral Position", "Left");
+                            goldPosition = "left";
+                            telemetry.addData("Gold Mineral Position", "left");
                         }
                         else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X)
                         {
-                            goldPosition = "Right";
-                            telemetry.addData("Gold Mineral Position", "Right");
+                            goldPosition = "right";
+                            telemetry.addData("Gold Mineral Position", "right");
                         }
                         else
                         {
-                            goldPosition = "Center";
-                            telemetry.addData("Gold Mineral Position", "Center");
+                            goldPosition = "center";
+                            telemetry.addData("Gold Mineral Position", "center");
                         }
                     }
                 }
