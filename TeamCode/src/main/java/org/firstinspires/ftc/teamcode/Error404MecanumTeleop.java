@@ -3,9 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-
 @TeleOp(name="Error404 Mecanum Teleop", group="Teleop")
-
 /**
  * The class which will handle the driver controlled period of the match.
  *
@@ -70,7 +68,19 @@ public class Error404MecanumTeleop extends OpMode
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
-    }
+        if (gamepad2.right_bumper)
+        {
+            robot.armIntake();
+        }
+        else if (gamepad2.left_bumper)
+        {
+            robot.armEject();
+        }
+        else
+        {
+            robot.armStop();
+        }
+        //robot.theEyeOfSauron.goldMineralPosition();
 
     /**
      * afterburners() allows the driver to increase the robot's top speed from the default of 0.3 to

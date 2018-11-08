@@ -12,12 +12,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class RuckusBot
 {
     Chassis theChassis =  null;
-//    FieldVision theEyeOfSauron = new FieldVision();
-
-
 //    MarkDeploy depoDeposit = new MarkDeploy();
+//    FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
+    ArmTeleop theArm = new ArmTeleop();
+    Collector theCollect = new Collector();
 //    ArmTeleop theArm = new ArmTeleop();
 
     public RuckusBot(String chassisType) {
@@ -40,15 +40,29 @@ public class RuckusBot
         theChassis.init(hwMap, telem);
 //        theEyeOfSauron.init(hwMap, telem);
 
+        theCollect.init(hwMap, telem );
 //        depoDeposit.init(hwMap);
 //        area51.init(hwMap);
     }
 
+    public void armIntake()
+    {
+        theCollect.intake();
+    }
 
+    public void armEject()
+    {
+        theCollect.eject();
+    }
 
-//    public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
-//        theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
-//    }
+    public void armStop()
+    {
+        theCollect.stop();
+    }
+
+    public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
+        theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
+    }
 
 //    public void armSleep(boolean sleepButton)
 //    {
