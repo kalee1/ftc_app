@@ -2,6 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Error404 Mecanum Teleop", group="Teleop")
 /**
@@ -15,6 +20,35 @@ public class Error404MecanumTeleop extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
 
+    /* Declare Ben's Servos for the arm */
+    private Servo Swivel;
+    private Servo Elbow;
+    private Servo Shoulder;
+    private CRServo Intake;
+
+    /* Declare Ben's stick parameters and buttons */
+    double left_stick_y;
+    double right_stick_y;
+    double left_stick_x;
+    boolean sleepButton;
+
+    /* Declare Ben's variables for joint control */
+    double elbowSleep = .52;
+    double shoulderSleep = .50;
+    double swivelSleep = .50;
+    double gamma = swivelSleep; //  gamma is swivel
+    double alpha = shoulderSleep;  // alpha is shoulder
+    double theta = elbowSleep; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
+    double increment = .005;
+
+    /* Declare Ben's variables for time control */
+    double shoulderTarTime;
+    double swivelTarTime;
+    double elbowTarTime;
+    boolean shoulderControl = true;
+    boolean swivelControl = true;
+    boolean elbowControl = true;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -25,6 +59,9 @@ public class Error404MecanumTeleop extends OpMode
         // The init() method of the hardware class does all the work here
         //
         robot.init(hardwareMap, telemetry);
+
+        /* Call Ben's arm init code */
+        this.armInit(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
@@ -46,17 +83,13 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("msg1", "");
-
-        double right_stick_x = gamepad2.right_stick_x;
-        double right_stick_y = gamepad2.right_stick_y;
-        double left_stick_y = gamepad2.left_stick_y;
-        boolean sleepButton = gamepad2.b;
-
-        telemetry.addData("Testing", "Entering armMove");
+        telemetry.addData("1.", "Doing Arm Control");
 //        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
-//        robot.armSleep(sleepButton);
 
+        /* Call Ben's arm control code */
+        this.armLoop();
+
+        /* Do Chassis Control */
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
@@ -68,19 +101,20 @@ public class Error404MecanumTeleop extends OpMode
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
-        if (gamepad2.right_bumper)
-        {
-            robot.armIntake();
-        }
-        else if (gamepad2.left_bumper)
-        {
-            robot.armEject();
-        }
-        else
-        {
-            robot.armStop();
-        }
-        //robot.theEyeOfSauron.goldMineralPosition();
+        /* Do mineral intake/ejecting */
+//        if (gamepad2.right_bumper)
+//        {
+//            robot.armIntake();
+//        }
+//        else if (gamepad2.left_bumper)
+//        {
+//            robot.armEject();
+//        }
+//        else
+//        {
+//            robot.armStop();
+//        }
+    }
 
     /**
      * afterburners() allows the driver to increase the robot's top speed from the default of 0.3 to
@@ -90,7 +124,7 @@ public class Error404MecanumTeleop extends OpMode
      *
      * @return  a double that is the maximum power
      */
-    public double afterburners ()
+    public double afterburners()
     {
         double powerLimit;
 
@@ -113,4 +147,168 @@ public class Error404MecanumTeleop extends OpMode
     {
         robot.stopMotors();
     }
+
+    public void armInit(HardwareMap hwMap, Telemetry telem)
+    {
+        left_stick_y = gamepad2.left_stick_y;
+        right_stick_y = gamepad2.right_stick_y;
+        left_stick_x = gamepad2.left_stick_x;
+        sleepButton = gamepad2.dpad_up;
+
+        try
+        {
+            Elbow = hardwareMap. servo .get( "Elbow" );
+            Elbow.setDirection(Servo.Direction.FORWARD);
+            Elbow.setPosition(theta);
+        }
+        catch (Exception p_exeception)
+        {
+            Elbow = null;
+        }
+        try
+        {
+            Shoulder = hardwareMap. servo .get( "Shoulder" );
+            Shoulder.setPosition(alpha);
+        }
+        catch (Exception p_exeception)
+        {
+            Shoulder = null;
+        }
+        try
+        {
+            Swivel = hardwareMap.servo.get( "Swivel" );
+            Swivel.setPosition(gamma);
+        }
+        catch (Exception p_exception)
+        {
+            Swivel = null;
+        }
+        try
+        {
+            Intake = hardwareMap.crservo.get( "Collector" );
+            Intake.setDirection(CRServo.Direction.FORWARD);
+
+        }
+        catch (Exception p_exeception)
+        {
+            Intake = null;
+        }
+
+        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
+
+    }
+
+    void armLoop()
+    {
+        left_stick_y = gamepad2.left_stick_y;
+        right_stick_y = gamepad2.right_stick_y;
+        left_stick_x = gamepad2.left_stick_x;
+
+
+        telemetry.addData("msg3", "joystick control" + left_stick_y);
+        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
+        telemetry.update();
+
+        //Shoulder
+        if (shoulderControl == true)
+        {
+            shoulderTarTime = System.currentTimeMillis() + 30;//was 63
+
+            if (-left_stick_y < 0)
+            {
+                alpha += increment;
+                Shoulder.setPosition(alpha);
+                telemetry.addData("Shoulder positive increment", ""+ left_stick_y);
+            }
+            else if (-left_stick_y > 0)
+            {
+                alpha -= increment;
+                Shoulder.setPosition(alpha);
+                telemetry.addData("Shoulder negative increment", ""+ left_stick_y);
+            }
+
+        }
+
+        if (System.currentTimeMillis() > shoulderTarTime)
+        {
+            shoulderControl = true;
+        }
+        else
+        {
+            shoulderControl = false;
+        }
+
+        //Swivel
+        if (swivelControl == true)
+        {
+            swivelTarTime = System.currentTimeMillis() + 30;//was 63
+
+            if (gamepad2.right_stick_x < 0)
+            {
+                gamma += increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+            }
+            else if (gamepad2.right_stick_x > 0)
+            {
+                gamma -= increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+            }
+        }
+
+        if (System.currentTimeMillis() > swivelTarTime)
+        {
+            swivelControl = true;
+        }
+        else
+        {
+            swivelControl = false;
+        }
+
+        //Elbow
+
+        if (elbowControl == true)
+        {
+            elbowTarTime = System.currentTimeMillis() + 30;//was 63
+            if (gamepad2.right_stick_y < 0)
+            {
+                theta += increment;
+                Elbow.setPosition(theta);
+                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
+            }
+            else if (gamepad2.right_stick_y > 0)
+            {
+                theta -= increment;
+                Elbow.setPosition(theta);
+                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
+            }
+        }
+
+        if (System.currentTimeMillis() > elbowTarTime)
+        {
+            elbowControl = true;
+        }
+        else
+        {
+            elbowControl = false;
+        }
+
+        //Collector
+
+        if (gamepad2.right_bumper)
+        {
+            Intake.setPower(1.0);
+        }
+        else if (gamepad2.left_bumper)
+        {
+            Intake.setPower(-1.0);
+        }
+        else
+        {
+            Intake.setPower(0.0);
+        }
+
+    }
 }
+

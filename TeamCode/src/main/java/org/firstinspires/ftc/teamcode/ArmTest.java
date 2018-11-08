@@ -25,7 +25,6 @@ public class ArmTest extends OpMode{
     double alpha = shoulderSleep;  // alpha is shoulder
     double theta = elbowSleep; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
     double increment = .005;
-    boolean B1;
     boolean sleepButton;
     double left_stick_y;
     double right_stick_y;
@@ -44,54 +43,47 @@ public class ArmTest extends OpMode{
 
     public void init()
     {
-
-
         left_stick_y = gamepad2.left_stick_y;
         right_stick_y = gamepad2.right_stick_y;
         left_stick_x = gamepad2.left_stick_x;
         sleepButton = gamepad2.dpad_up;
 
-
-
-        B1 = true;
-
-        try {
-
+        try
+        {
             Elbow = hardwareMap. servo .get( "Elbow" );
             Elbow.setDirection(Servo.Direction.FORWARD);
             Elbow.setPosition(theta);
-
-
-        } catch (Exception p_exeception) {
-
+        }
+        catch (Exception p_exeception)
+        {
             Elbow = null;
         }
-        try {
-
+        try
+        {
             Shoulder = hardwareMap. servo .get( "Shoulder" );
             Shoulder.setPosition(alpha);
-
-        } catch (Exception p_exeception) {
-
+        }
+        catch (Exception p_exeception)
+        {
             Shoulder = null;
         }
-        try {
-
+        try
+        {
             Swivel = hardwareMap.servo.get( "Swivel" );
             Swivel.setPosition(gamma);
-
-        } catch (Exception p_exception) {
-
+        }
+        catch (Exception p_exception)
+        {
             Swivel = null;
         }
         try
         {
-
             Intake = hardwareMap.crservo.get( "Collector" );
             Intake.setDirection(CRServo.Direction.FORWARD);
 
-        } catch (Exception p_exeception) {
-
+        }
+        catch (Exception p_exeception)
+        {
             Intake = null;
         }
 
@@ -107,9 +99,6 @@ public class ArmTest extends OpMode{
 
     public void loop()
     {
-
-
-
         left_stick_y = gamepad2.left_stick_y;
         right_stick_y = gamepad2.right_stick_y;
         left_stick_x = gamepad2.left_stick_x;
@@ -145,9 +134,9 @@ public class ArmTest extends OpMode{
             shoulderControl = true;
         }
         else
-            {
-                shoulderControl = false;
-            }
+        {
+            shoulderControl = false;
+        }
 
             //Swivel
         if (swivelControl == true)
@@ -159,16 +148,13 @@ public class ArmTest extends OpMode{
                 gamma += increment;
                 Swivel.setPosition(gamma);
                 telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
-
             }
-
             else if (gamepad2.right_stick_x > 0)
             {
                 gamma -= increment;
                 Swivel.setPosition(gamma);
                 telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
             }
-
         }
 
         if (System.currentTimeMillis() > swivelTarTime)
@@ -185,21 +171,18 @@ public class ArmTest extends OpMode{
         if (elbowControl == true)
         {
             elbowTarTime = System.currentTimeMillis() + 30;//was 63
-
             if (gamepad2.right_stick_y < 0)
             {
                 theta += increment;
                 Elbow.setPosition(theta);
                 telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
-        }
-
+            }
             else if (gamepad2.right_stick_y > 0)
             {
                 theta -= increment;
                 Elbow.setPosition(theta);
                 telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
             }
-
         }
 
         if (System.currentTimeMillis() > elbowTarTime)
