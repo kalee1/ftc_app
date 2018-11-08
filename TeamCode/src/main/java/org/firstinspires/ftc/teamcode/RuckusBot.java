@@ -16,8 +16,8 @@ public class RuckusBot
 //    FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
-    ArmTeleop theArm = new ArmTeleop();
-    Collector theCollect = new Collector();
+    //ArmTeleop theArm = new ArmTeleop();
+    //Collector theCollect = new Collector();
 
     public RuckusBot(String chassisType) {
         if (chassisType.equals("MecanumChassis")) {
@@ -35,14 +35,14 @@ public class RuckusBot
 
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-        theArm.init(hwMap , telem);
+        //theArm.init(hwMap , telem);
         theChassis.init(hwMap, telem);
-        theCollect.init(hwMap, telem );
+        //theCollect.init(hwMap, telem );
 //        depoDeposit.init(hwMap);
 //        theEyeOfSauron.init(hwMap); //darkness is coming. Can you feel it? ;)
 //        area51.init(hwMap);
     }
-
+    /*
     public void armIntake()
     {
         theCollect.intake();
@@ -66,7 +66,7 @@ public class RuckusBot
     {
         theArm.armSleep(sleepButton);
     }
-
+    */
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
