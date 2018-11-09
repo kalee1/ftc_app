@@ -27,7 +27,7 @@ public class MecanumChassis extends Chassis
 
     private NavxMicroNavigationSensor navx = null;
 
-    static final double FORWARD = 180;
+    static final double FORWARD = 0.0;
     static final double BACKWARD = 0.0;
     static final double RIGHT = 270.0;
     static final double LEFT = 90.0;

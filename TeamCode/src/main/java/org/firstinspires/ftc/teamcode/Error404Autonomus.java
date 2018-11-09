@@ -66,7 +66,7 @@ public class Error404Autonomus extends OpMode
         {
             case 0:
 //                if(robot.pointTurn(.2, 1000, 400, true))
-                if(robot.drive(.3, forward, 60, 50))
+                if(robot.drive(.3, left, 60, 50))
                 {
                     state = 1;
                     resetStartTime();

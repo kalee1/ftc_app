@@ -163,7 +163,6 @@ public class Error404MecanumTeleop extends OpMode
         {
             Intake = hardwareMap.crservo.get( "Collector" );
             Intake.setDirection(CRServo.Direction.FORWARD);
-
         }
         catch (Exception p_exeception)
         {
@@ -210,6 +209,11 @@ public class Error404MecanumTeleop extends OpMode
         else
         {
             shoulderControl = false;
+        }
+
+        if (gamepad2.x)
+        {
+            Shoulder.setPosition(.40);
         }
 
 
@@ -284,6 +288,8 @@ public class Error404MecanumTeleop extends OpMode
         {
             Intake.setPower(0.0);
         }
+
+
     }
 
 
