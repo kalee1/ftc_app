@@ -36,9 +36,9 @@ public class Error404MecanumTeleop extends OpMode
     double elbowSleep = .52;
     double shoulderSleep = .50;
     double swivelSleep = .50;
-    double gamma = swivelSleep; //  gamma is swivel
+    double gamma = swivelSleep;    // gamma is swivel
     double alpha = shoulderSleep;  // alpha is shoulder
-    double theta = elbowSleep; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
+    double theta = elbowSleep;     // theta is elbow - elbow is higher than others due to intake box catching on chassis
     double increment = .005;
 
     /* Declare Ben's variables for time control */
@@ -49,53 +49,48 @@ public class Error404MecanumTeleop extends OpMode
     boolean swivelControl = true;
     boolean elbowControl = true;
 
-    /*
-     * Code to run ONCE when the driver hits INIT
-     */
+
+    //Code to run ONCE when the driver hits INIT
     @Override
     public void init()
     {
         // Initialize the hardware variables.
         // The init() method of the hardware class does all the work here
-        //
         robot.init(hardwareMap, telemetry);
 
         /* Call Ben's arm init code */
         this.armInit(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
+        telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");
 
         //this.armSleep(true);  //put servos into sleep positions
 
         //Shoulder.scaleRange(0.08, 0.31);
         //Elbow.scaleRange(0.20,0.04 );
         //Swivel.scaleRange(0.24, 0.44);
-
     }
 
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
+
+    //Code to run ONCE when the driver hits PLAY
     @Override
     public void start()
     {
 
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
+
+    //Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
     @Override
     public void loop()
     {
 //        telemetry.addData("1.", "Doing Arm Control");
 //        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
 
-        /* Call Ben's arm control code */
+        //Call Ben's arm control code
         this.armLoop();
 
-        /* Do Chassis Control */
+        //Do Chassis Control
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
@@ -106,20 +101,6 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("3: rightX", rStickX);
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
-
-        /* Do mineral intake/ejecting */
-//        if (gamepad2.right_bumper)
-//        {
-//            robot.armIntake();
-//        }
-//        else if (gamepad2.left_bumper)
-//        {
-//            robot.armEject();
-//        }
-//        else
-//        {
-//            robot.armStop();
-//        }
     }
 
     /**
@@ -190,8 +171,6 @@ public class Error404MecanumTeleop extends OpMode
         {
             Intake = null;
         }
-
-//        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
     }
 
     void armLoop()
@@ -287,13 +266,13 @@ public class Error404MecanumTeleop extends OpMode
             {
                 theta += increment;
                 Elbow.setPosition(theta);
-//                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
+//              telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
             }
             else if (gamepad2.right_stick_y > 0)
             {
                 theta -= increment;
                 Elbow.setPosition(theta);
-//                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
+//              telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
             }
 
             telemetry.addData("elbow tar time", elbowTarTime);
@@ -307,12 +286,10 @@ public class Error404MecanumTeleop extends OpMode
         {
             elbowControl = false;
         }
-
     }
 
-    /*
-     * Code to run ONCE after the driver hits STOP
-     */
+
+    //Code to run ONCE after the driver hits STOP
     @Override
     public void stop()
     {

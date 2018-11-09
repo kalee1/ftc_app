@@ -18,7 +18,6 @@ public class RuckusBot
 
     ArmTeleop theArm = new ArmTeleop();
     Collector theCollect = new Collector();
-//    ArmTeleop theArm = new ArmTeleop();
 
     public RuckusBot(String chassisType) {
         if (chassisType.equals("MecanumChassis")) {
@@ -44,31 +43,7 @@ public class RuckusBot
 //        depoDeposit.init(hwMap);
 //        area51.init(hwMap);
     }
-    /*
-    public void armIntake()
-    {
-        theCollect.intake();
-    }
 
-    public void armEject()
-    {
-        theCollect.eject();
-    }
-
-    public void armStop()
-    {
-        theCollect.stop();
-    }
-
-    public void armMove(double right_stick_y, double right_stick_x, double left_stick_y) {
-        theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
-    }
-
-    public void armSleep(boolean sleepButton)
-    {
-        theArm.armSleep(sleepButton);
-    }
-    */
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
