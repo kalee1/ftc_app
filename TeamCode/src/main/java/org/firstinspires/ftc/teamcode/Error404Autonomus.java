@@ -65,42 +65,45 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-//                if(robot.pointTurn(.2, 1000, 400, true))
-                if(robot.drive(.3, forward, 60, 50))
+                if(robot.drive(.3, backward, mineralDriveDistance, 6))
                 {
                     state = 1;
                     resetStartTime();
                 }
                 break;
 
-//             turn to face crater
-            case 1:
-                if(robot.pointTurn(.2, 45, 3,false))
-                {
-                    state = 2;
-                    resetStartTime();
-                }
-                break;
-
-            case 2:
-                if(getRuntime() > 10)
-                {
-                    state = 3;
-                }
-                break;
-
-            // Drive to crater
-            case 3:
-                if(robot.drive(.2, backward, 120, 7))
-                {
-                    state = 4;
-                }
-                break;
+//            case 1:
+//                if(robot.drive(.3, left, mineralSlideDistance, 6))
+//                {
+//                    state = 2;
+//                    resetStartTime();
+//                }
+//
+//            case 2:
+//                if(robot.pointTurn(.2, depoTurnHeading, 6, true))
+//                {
+//                    state = 3;
+//                    resetStartTime();
+//                }
+//
+//            case 3:
+//                if(robot.drive(.3, backward, depoDriveDistance, 6))
+//                {
+//                    state = 4;
+//                    resetStartTime();
+//                }
+//
+//            case 4:
+//                if(robot.drive(4, forward, craterDriveDistance, 6))
+//                {
+//                    state = 5;
+//                    resetStartTime();
+//                }
 
             default:
                 break;
         }
-//        telemetry.addData("State: ", state );
+        telemetry.addData("1)", "state: " + state );
 
     }
 
