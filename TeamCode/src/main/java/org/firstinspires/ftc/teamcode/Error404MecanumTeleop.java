@@ -31,7 +31,6 @@ public class Error404MecanumTeleop extends OpMode
     double right_stick_y;
     boolean dpad_left;
     boolean dpad_right;
-    boolean sleepButton;
 
     /* Declare Ben's variables for joint control */
     double elbowSleep = .52;
@@ -146,144 +145,12 @@ public class Error404MecanumTeleop extends OpMode
         return powerLimit;
     }
 
-///*
-//        left_stick_y = gamepad2.left_stick_y;
-//        right_stick_y = gamepad2.right_stick_y;
-//        left_stick_x = gamepad2.left_stick_x;
-//*/
-//
-//        telemetry.addData("msg3", "joystick control" + left_stick_y);
-//        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
-//        telemetry.update();
-//
-//        //Swivel
-//        if (swivelControl == true)
-//        {
-//            swivelTarTime = System.currentTimeMillis() + 60;//was 30
-//
-//            if (gamepad2.dpad_left == true)
-//            {
-//                gamma += increment;
-//                Swivel.setPosition(gamma);
-//                telemetry.addData("Swivel positive increment", "" + gamepad2.right_stick_x);
-//
-//            }
-//
-//            else if (gamepad2.dpad_right == true)
-//            {
-//                gamma -= increment;
-//                Swivel.setPosition(gamma);
-//                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
-//            }
-//
-//        }
-//
-//        if (System.currentTimeMillis() > swivelTarTime)
-//        {
-//            swivelControl = true;
-//        }
-//        else
-//        {
-//            swivelControl = false;
-//        }
-//
-//        //Shoulder
-//        telemetry.addData("before shoulder", " before shoulder");
-//
-//        if (shoulderControl == true)
-//        {
-//            shoulderTarTime = System.currentTimeMillis() + 30; //was 63
-//            telemetry.addData("in shoulder", "in shoulder");
-//            telemetry.update();
-//
-//            if (-gamepad2.left_stick_y < 0)
-//            {
-//                alpha += increment;
-//                Shoulder.setPosition(alpha);
-//                telemetry.addData("Shoulder positive increment", "" + gamepad2.dpad_left);
-//                telemetry.update();
-//            }
-//
-//            else if (-gamepad2.left_stick_y > 0)
-//            {
-//                alpha -= increment;
-//                Shoulder.setPosition(alpha);
-//                telemetry.addData("Shoulder negative increment", "-" + gamepad2.dpad_right);
-//                telemetry.update();
-//            }
-//
-//        }
-//
-//        if (System.currentTimeMillis() > shoulderTarTime)
-//        {
-//            shoulderControl = true;
-//            telemetry.addData("", "shouldercontrol = true" + shoulderControl);
-//            telemetry.update();
-//        }
-//        else
-//        {
-//            telemetry.addData("", "shouldercontrol = false" + shoulderControl);
-//            shoulderControl = false;
-//            telemetry.update();
-//        }
-//
-//        telemetry.addData("", "" + shoulderTarTime);
-//        telemetry.addData("after shoulder", " after shoulder");
-//
-//        //Elbow
-//
-//        if (elbowControl == true)
-//        {
-//            elbowTarTime = System.currentTimeMillis() + 30;//was 63
-//
-//            if (gamepad2.right_stick_y < 0)
-//            {
-//                theta += increment;
-//                Elbow.setPosition(theta);
-//                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
-//            }
-//
-//            else if (gamepad2.right_stick_y > 0)
-//            {
-//                theta -= increment;
-//                Elbow.setPosition(theta);
-//                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
-//            }
-//
-//        }
-//
-//        if (System.currentTimeMillis() > elbowTarTime)
-//        {
-//            elbowControl = true;
-//        }
-//        else
-//        {
-//            elbowControl = false;
-//        }
-//
-//        //Collector
-//
-//        if (gamepad2.right_bumper)
-//        {
-//            Intake.setPower(1.0);
-//        }
-//        else if (gamepad2.left_bumper)
-//        {
-//            Intake.setPower(-1.0);
-//        }
-//        else
-//        {
-//            Intake.setPower(0.0);
-//        }
-//    }
-
     public void armInit(HardwareMap hwMap, Telemetry telem)
     {
         left_stick_y = gamepad2.left_stick_y;
         right_stick_y = gamepad2.right_stick_y;
         dpad_left = gamepad2.dpad_left;
         dpad_right = gamepad2.dpad_right;
-        sleepButton = gamepad2.dpad_up;
 
         try
         {
@@ -325,7 +192,6 @@ public class Error404MecanumTeleop extends OpMode
         }
 
         telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
-
     }
 
     void armLoop()
@@ -334,15 +200,43 @@ public class Error404MecanumTeleop extends OpMode
         right_stick_y = gamepad2.right_stick_y;
         dpad_left = gamepad2.dpad_left;
         dpad_right = gamepad2.dpad_right;
-        dpad_left = gamepad2.dpad_left;
 
 
         telemetry.addData("msg3", "joystick control" + left_stick_y);
         telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
         telemetry.update();
 
+        //Swivel
+        if (swivelControl)
+        {
+            swivelTarTime = System.currentTimeMillis() + 63;//was 30
+
+            if (gamepad2.dpad_right)
+            {
+                gamma += increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+            }
+            else if (gamepad2.dpad_left)
+            {
+                gamma -= increment;
+                Swivel.setPosition(gamma);
+                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+            }
+        }
+        if (System.currentTimeMillis() > swivelTarTime)
+        {
+            swivelControl = true;
+        }
+        else
+        {
+            swivelControl = false;
+        }
+
+
+
         //Shoulder
-        if (shoulderControl == true)
+        if (shoulderControl)
         {
             shoulderTarTime = System.currentTimeMillis() + 30;//was 63
 
@@ -368,39 +262,27 @@ public class Error404MecanumTeleop extends OpMode
             shoulderControl = false;
         }
 
-        //Swivel
-        if (swivelControl == true)
-        {
-            swivelTarTime = System.currentTimeMillis() + 63;//was 30
 
-            if (gamepad2.dpad_right)
-            {
-                gamma += increment;
-                Swivel.setPosition(gamma);
-                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
-            }
-            else if (gamepad2.dpad_left)
-            {
-                gamma -= increment;
-                Swivel.setPosition(gamma);
-                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
-            }
+        //Collector
+        if (gamepad2.right_bumper)
+        {
+            Intake.setPower(1.0);
         }
-
-        if (System.currentTimeMillis() > swivelTarTime)
+        else if (gamepad2.left_bumper)
         {
-            swivelControl = true;
+            Intake.setPower(-1.0);
         }
         else
         {
-            swivelControl = false;
+            Intake.setPower(0.0);
         }
 
 
         //Elbow
-        if (elbowControl == true)
+        if (elbowControl)
         {
             elbowTarTime = System.currentTimeMillis() + 30;//was 63
+            shoulderTarTime = System.currentTimeMillis() +30;
             if (gamepad2.right_stick_y < 0)
             {
                 theta += increment;
@@ -413,8 +295,10 @@ public class Error404MecanumTeleop extends OpMode
                 Elbow.setPosition(theta);
                 telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
             }
-        }
 
+            telemetry.addData("elbow tar time", elbowTarTime);
+            telemetry.addData("shoulder tar time", shoulderTarTime);
+        }
         if (System.currentTimeMillis() > elbowTarTime)
         {
             elbowControl = true;
@@ -422,21 +306,6 @@ public class Error404MecanumTeleop extends OpMode
         else
         {
             elbowControl = false;
-        }
-
-        //Collector
-
-        if (gamepad2.right_bumper)
-        {
-            Intake.setPower(1.0);
-        }
-        else if (gamepad2.left_bumper)
-        {
-            Intake.setPower(-1.0);
-        }
-        else
-        {
-            Intake.setPower(0.0);
         }
 
     }
