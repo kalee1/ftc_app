@@ -18,7 +18,6 @@ public class RuckusBot
 
     ArmTeleop theArm = new ArmTeleop();
     Collector theCollect = new Collector();
-//    ArmTeleop theArm = new ArmTeleop();
 
     public RuckusBot(String chassisType) {
         if (chassisType.equals("MecanumChassis")) {
