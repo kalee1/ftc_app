@@ -243,13 +243,13 @@ public class Error404MecanumTeleop extends OpMode
         {
             swivelTarTime = System.currentTimeMillis() + 30;//was 63
 
-            if (gamepad2.right_stick_x < 0)
+            if (gamepad2.dpad_right == true)
             {
                 gamma += increment;
                 Swivel.setPosition(gamma);
                 telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
             }
-            else if (gamepad2.right_stick_x > 0)
+            else if (gamepad2.dpad_left == true)
             {
                 gamma -= increment;
                 Swivel.setPosition(gamma);
