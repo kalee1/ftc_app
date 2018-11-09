@@ -104,7 +104,7 @@ public class Error404MecanumTeleop extends OpMode
             Intake = null;
         }
 
-        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
+        //telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
 
         //this.armSleep(true);  //put servos into sleep positions
 
@@ -127,7 +127,8 @@ public class Error404MecanumTeleop extends OpMode
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
     @Override
-    public void loop() {
+    public void loop()
+    {
 
         /*
         double right_stick_x = gamepad2.right_stick_x;
@@ -176,7 +177,7 @@ public class Error404MecanumTeleop extends OpMode
 */
 
         //telemetry.addData("msg3", "joystick control" + left_stick_y);
-        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
+        //telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
         telemetry.update();
 
         //Swivel
@@ -196,7 +197,7 @@ public class Error404MecanumTeleop extends OpMode
             {
                 gamma -= increment;
                 Swivel.setPosition(gamma);
-                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+                telemetry.addData("Swivel positive increment", "" + gamepad2.right_stick_x);
             }
 
         }
@@ -263,14 +264,14 @@ public class Error404MecanumTeleop extends OpMode
             {
                 theta += increment;
                 Elbow.setPosition(theta);
-                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
+                telemetry.addData("Elbow positive increment", "" + gamepad2.right_stick_y);
             }
 
             else if (gamepad2.right_stick_y > 0)
             {
                 theta -= increment;
                 Elbow.setPosition(theta);
-                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
+                telemetry.addData("Elbow negative increment", "" + gamepad2.right_stick_y);
             }
 
         }
@@ -299,7 +300,10 @@ public class Error404MecanumTeleop extends OpMode
             Intake.setPower(0.0);
         }
 
-
+        if (gamepad2.x == true)
+        {
+            Shoulder.setPosition(.60);
+        }
     }
 
     /*
