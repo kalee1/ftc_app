@@ -44,7 +44,7 @@ public class RuckusBot
 //        depoDeposit.init(hwMap);
 //        area51.init(hwMap);
     }
-
+    /*
     public void armIntake()
     {
         theCollect.intake();
@@ -64,11 +64,11 @@ public class RuckusBot
         theArm.armPosition(right_stick_y, right_stick_x, left_stick_y);
     }
 
-//    public void armSleep(boolean sleepButton)
-//    {
-//        theArm.armSleep(sleepButton);
-//    }
-
+    public void armSleep(boolean sleepButton)
+    {
+        theArm.armSleep(sleepButton);
+    }
+    */
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
