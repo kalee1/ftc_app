@@ -91,25 +91,26 @@ public class Error404Autonomus extends OpMode
                     resetStartTime();
                 }
                 break;
-
             case 3:
                 if(robot.drive(.3, backward, depoDriveDistance, 6))
                 {
-                    state = 4;
+//                    robot.markDeploy();
                     resetStartTime();
+                    state = 5;
                 }
                 break;
 
-            case 4:
-                if(robot.pointTurn(.1, headingReset, 6, true))
-                {
-                    state = 5;
-                    resetStartTime();
-                }
-                break;
+//            case 4:
+//                robot.markRetract();
+//                if(getRuntime() > 2)
+//                {
+//                    state = 5;
+//                    resetStartTime();
+//                }
+//                break;
 
             case 5:
-                if(robot.drive(.4, forward, craterDriveDistance, 6))
+                if(robot.pointTurn(.1, headingReset, 6, true))
                 {
                     state = 6;
                     resetStartTime();
@@ -117,7 +118,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 6:
-                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
+                if(robot.drive(.4, forward, craterDriveDistance, 6))
                 {
                     state = 7;
                     resetStartTime();
@@ -125,7 +126,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 7:
-                if(robot.drive(.4, right, craterSlideDistance, 6))
+                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
                 {
                     state = 8;
                     resetStartTime();
@@ -133,9 +134,17 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 8:
-                if(robot.drive(.4, forward, enterCraterDistance, 6))
+                if(robot.drive(.4, right, craterSlideDistance, 6))
                 {
                     state = 9;
+                    resetStartTime();
+                }
+                break;
+
+            case 9:
+                if(robot.drive(.4, forward, enterCraterDistance, 6))
+                {
+                    state = 10;
                     resetStartTime();
                 }
                 break;
