@@ -11,11 +11,15 @@ public class E404_BlueCenter extends Error404Autonomus
     {
         // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 
-        mineralDriveDistance = 25;
-        mineralSlideDistance = 30;
-        depoTurnHeading = 45.0; // ~45 degrees
-        depoDriveDistance = 60;
-        craterDriveDistance = 90;
+        mineralDriveDistance = 15;
+        mineralSlideDistance = 45;
+        depoTurnHeading = 125;
+        depoDriveDistance = 35;
+        headingReset = 125;
+        craterDriveDistance = 65;
+        craterTurnHeading = 180;
+        craterSlideDistance = 15;
+        enterCraterDistance = 30;
 
         super.init();
     }

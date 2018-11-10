@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+
 @Autonomous(name="Test Autonomus w/Mecanum Chassis", group="Autonomus")
 
 public class Error404Autonomus extends OpMode
@@ -29,6 +30,10 @@ public class Error404Autonomus extends OpMode
     protected double depoTurnHeading;
     protected double depoDriveDistance;
     protected double craterDriveDistance;
+    protected double craterTurnHeading;
+    protected double craterSlideDistance;
+    protected double enterCraterDistance;
+    protected double headingReset;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -42,7 +47,9 @@ public class Error404Autonomus extends OpMode
         robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Let's Rock and Roll");    //
+        telemetry.addData("1 ", "Let's Rock and Roll");
+
+
 
     }
 
@@ -53,7 +60,6 @@ public class Error404Autonomus extends OpMode
     public void start()
     {
         resetStartTime();
-
     }
 
     /*
@@ -65,40 +71,76 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.drive(.3, backward, mineralDriveDistance, 6))
+                if(robot.drive(.2, backward, mineralDriveDistance, 6))
                 {
                     state = 1;
                     resetStartTime();
                 }
                 break;
 
-//            case 1:
-//                if(robot.drive(.3, left, mineralSlideDistance, 6))
-//                {
-//                    state = 2;
-//                    resetStartTime();
-//                }
-//
-//            case 2:
-//                if(robot.pointTurn(.2, depoTurnHeading, 6, true))
-//                {
-//                    state = 3;
-//                    resetStartTime();
-//                }
-//
-//            case 3:
-//                if(robot.drive(.3, backward, depoDriveDistance, 6))
-//                {
-//                    state = 4;
-//                    resetStartTime();
-//                }
-//
-//            case 4:
-//                if(robot.drive(4, forward, craterDriveDistance, 6))
-//                {
-//                    state = 5;
-//                    resetStartTime();
-//                }
+            case 1:
+                if(robot.drive(.3, right, mineralSlideDistance, 6))
+                {
+                    state = 2;
+                    resetStartTime();
+                }
+                break;
+
+            case 2:
+                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
+                {
+                    state = 3;
+                    resetStartTime();
+                }
+                break;
+
+            case 3:
+                if(robot.drive(.3, backward, depoDriveDistance, 6))
+                {
+                    state = 4;
+                    resetStartTime();
+                }
+                break;
+
+            case 4:
+                if(robot.pointTurn(.1, headingReset, 6, true))
+                {
+                    state = 5;
+                    resetStartTime();
+                }
+                break;
+
+            case 5:
+                if(robot.drive(.4, forward, craterDriveDistance, 6))
+                {
+                    state = 6;
+                    resetStartTime();
+                }
+                break;
+
+            case 6:
+                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
+                {
+                    state = 7;
+                    resetStartTime();
+                }
+                break;
+
+            case 7:
+                if(robot.drive(.4, right, craterSlideDistance, 6))
+                {
+                    state = 8;
+                    resetStartTime();
+                }
+                break;
+
+            case 8:
+                if(robot.drive(.4, forward, enterCraterDistance, 6))
+                {
+                    state = 9;
+                    resetStartTime();
+                }
+                break;
 
             default:
                 break;

@@ -96,7 +96,7 @@ public class Error404MecanumTeleop extends OpMode
 
         telemetry.addData("1: leftX", lStickX);
         telemetry.addData("2: leftY", lStickY);
-        telemetry.addData("3: rightX", rStickX);
+//        telemetry.addData("3: rightX", rStickX);
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
     }
@@ -163,14 +163,13 @@ public class Error404MecanumTeleop extends OpMode
         {
             Intake = hardwareMap.crservo.get( "Collector" );
             Intake.setDirection(CRServo.Direction.FORWARD);
-
         }
         catch (Exception p_exeception)
         {
             Intake = null;
         }
 
-        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
+//        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
 
     }
 
@@ -180,9 +179,9 @@ public class Error404MecanumTeleop extends OpMode
         right_stick_y = gamepad2.right_stick_y;
         left_stick_x = gamepad2.left_stick_x;
 
-        telemetry.addData("msg3", "joystick control" + left_stick_y);
-        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
-        telemetry.update();
+//        telemetry.addData("msg3", "joystick control" + left_stick_y);
+//        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
+//        telemetry.update();
 
 
         //Shoulder
@@ -194,13 +193,13 @@ public class Error404MecanumTeleop extends OpMode
             {
                 alpha += increment;
                 Shoulder.setPosition(alpha);
-                telemetry.addData("Shoulder positive increment", ""+ left_stick_y);
+//                telemetry.addData("Shoulder positive increment", ""+ left_stick_y);
             }
             else if (-left_stick_y > 0)
             {
                 alpha -= increment;
                 Shoulder.setPosition(alpha);
-                telemetry.addData("Shoulder negative increment", ""+ left_stick_y);
+//                telemetry.addData("Shoulder negative increment", ""+ left_stick_y);
             }
         }
         if (System.currentTimeMillis() > shoulderTarTime)
@@ -223,13 +222,13 @@ public class Error404MecanumTeleop extends OpMode
             {
                 gamma += increment;
                 Swivel.setPosition(gamma);
-                telemetry.addData("Swivel positive increment", "" + gamepad2.right_stick_x);
+//                telemetry.addData("Swivel positive increment", "" + gamepad2.right_stick_x);
             }
             else if (gamepad2.dpad_right)
             {
                 gamma -= increment;
                 Swivel.setPosition(gamma);
-                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
+//                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
             }
         }
         if (System.currentTimeMillis() > swivelTarTime)
@@ -251,13 +250,13 @@ public class Error404MecanumTeleop extends OpMode
             {
                 theta += increment;
                 Elbow.setPosition(theta);
-                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
+//                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
             }
             else if (gamepad2.right_stick_y > 0)
             {
                 theta -= increment;
                 Elbow.setPosition(theta);
-                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
+//                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
             }
         }
         if (System.currentTimeMillis() > elbowTarTime)

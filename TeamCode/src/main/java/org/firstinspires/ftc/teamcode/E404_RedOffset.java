@@ -9,15 +9,17 @@ public class E404_RedOffset extends Error404Autonomus
     @Override
     public void init()
     {
-        // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
+        super.init();
 
-        mineralDriveDistance = 60.0;
+        mineralDriveDistance = 55.0;
         mineralSlideDistance = 0.0;
         depoTurnHeading = 45.0; // ~45 degrees
         depoDriveDistance = 0.0;
-        craterDriveDistance = 120.0;
-
-        super.init();
+        headingReset = 45;
+        craterDriveDistance = 65;
+        craterTurnHeading = 70;
+        craterSlideDistance = 15;
+        enterCraterDistance = 45;
     }
 
     @Override public void start()
