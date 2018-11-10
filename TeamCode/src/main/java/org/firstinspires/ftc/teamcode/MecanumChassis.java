@@ -28,7 +28,7 @@ public class MecanumChassis extends Chassis
     private NavxMicroNavigationSensor navx = null;
 
     static final double FORWARD = 0.0;
-    static final double BACKWARD = 0.0;
+    static final double BACKWARD = 180.0;
     static final double RIGHT = 270.0;
     static final double LEFT = 90.0;
 
@@ -115,6 +115,8 @@ public class MecanumChassis extends Chassis
             navx = null;
         }
 
+        telemetry.addData("heading", getHeadingDbl());
+
 
 
     }
@@ -155,7 +157,8 @@ public class MecanumChassis extends Chassis
         if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
 
         powerLimit = Range.clip(powerLimit, .05, 1);
-        if(max == 0)
+        //If max still equals zero after checking all four motors, then set the max to 1
+        if(max == 0.0)
         {
             max = 1;
         }
@@ -194,12 +197,12 @@ public class MecanumChassis extends Chassis
 //        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
 //        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
 //        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
-//        telemetry.addData("4. right rear encoder", lRearMotor.getCurrentPosition());
-//
+//        telemetry.addData("4. left rear encoder", lRearMotor.getCurrentPosition());
+
 //        telemetry.addData("5. right front power", rFrontMotor.getPower());
 //        telemetry.addData("6. left front power", lFrontMotor.getPower());
 //        telemetry.addData("7. right rear power", rRearMotor.getPower());
-//        telemetry.addData("8. right rear power", lRearMotor.getPower());
+//        telemetry.addData("8. left rear power", lRearMotor.getPower());
     }
 
 
@@ -220,44 +223,35 @@ public class MecanumChassis extends Chassis
     {
        double driveDistance = COUNTS_PER_INCH * distance;
 
-       setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//       setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
 
         if(!moving)
         {
+            initialPosition = lFrontMotor.getCurrentPosition();
             resetStartTime();
             moving = true;
 
-            lFrontMotor.setTargetPosition(-(lFrontMotor.getCurrentPosition() + (int)driveDistance));
-            rFrontMotor.setTargetPosition(rFrontMotor.getCurrentPosition() + (int)driveDistance);
-            lRearMotor.setTargetPosition(-(lRearMotor.getCurrentPosition() + (int)driveDistance));
-            rRearMotor.setTargetPosition(rRearMotor.getCurrentPosition() + (int)driveDistance);
+//            lFrontMotor.setTargetPosition(-(lFrontMotor.getCurrentPosition() + (int)driveDistance));
+//            rFrontMotor.setTargetPosition(rFrontMotor.getCurrentPosition() + (int)driveDistance);
+//            lRearMotor.setTargetPosition(-(lRearMotor.getCurrentPosition() + (int)driveDistance));
+//            rRearMotor.setTargetPosition(rRearMotor.getCurrentPosition() + (int)driveDistance);
         }
 
-
         double stickX = power * Math.sin(Math.toRadians(direction));
-        double stickY = power * Math.cos(Math.toRadians(direction));
+        double stickY = -(power * Math.cos(Math.toRadians(direction)));
+
+        telemetry.addData("stick x", stickX);
+        telemetry.addData("stick y", stickY);
+
         joystickDrive(stickX, stickY,0.0,0.0, power);
-
-
 
         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
-            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             moving = false;
         }
-//
-//        telemetry.addData("1) target position: ", distance);
-//        telemetry.addData("2) Current position: )", lFrontMotor.getCurrentPosition());
-//        telemetry.addData("3) timeout time: ", time);
-//        telemetry.addData("4) runtime: ", getRuntime());
-//        telemetry.addData("5) direction: ", direction);
-
-        telemetry.addData("3. driveDistance", driveDistance); //7415
-        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
-        telemetry.addData("5. drive equation",Math.abs(lFrontMotor.getCurrentPosition() - initialPosition));
-        telemetry.addData("4. initial position", initialPosition);
 
         return !moving;
      }
@@ -300,6 +294,8 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
+
+        telemetry.addData("heading", getHeadingDbl());
 
         return !moving;
     }

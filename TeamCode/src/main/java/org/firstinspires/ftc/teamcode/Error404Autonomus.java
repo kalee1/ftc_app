@@ -29,6 +29,10 @@ public class Error404Autonomus extends OpMode
     protected double depoTurnHeading;
     protected double depoDriveDistance;
     protected double craterDriveDistance;
+    protected double craterTurnHeading;
+    protected double craterSlideDistance;
+    protected double enterCraterDistance;
+    protected double headingReset;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -65,17 +69,15 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-//                if(robot.pointTurn(.2, 1000, 400, true))
-                if(robot.drive(.3, left, 60, 50))
+                if(robot.drive(.2, backward, mineralDriveDistance, 6))
                 {
                     state = 1;
                     resetStartTime();
                 }
                 break;
 
-//             turn to face crater
             case 1:
-                if(robot.pointTurn(.2, 45, 3,false))
+                if(robot.drive(.3, right, mineralSlideDistance, 6))
                 {
                     state = 2;
                     resetStartTime();
@@ -83,24 +85,65 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 2:
-                if(getRuntime() > 10)
+                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
                 {
                     state = 3;
+                    resetStartTime();
                 }
                 break;
 
-            // Drive to crater
             case 3:
-                if(robot.drive(.2, backward, 120, 7))
+                if(robot.drive(.3, backward, depoDriveDistance, 6))
                 {
                     state = 4;
+                    resetStartTime();
+                }
+                break;
+
+            case 4:
+                if(robot.pointTurn(.1, headingReset, 6, true))
+                {
+                    state = 5;
+                    resetStartTime();
+                }
+                break;
+
+            case 5:
+                if(robot.drive(.4, forward, craterDriveDistance, 6))
+                {
+                    state = 6;
+                    resetStartTime();
+                }
+                break;
+
+            case 6:
+                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
+                {
+                    state = 7;
+                    resetStartTime();
+                }
+                break;
+
+            case 7:
+                if(robot.drive(.4, right, craterSlideDistance, 6))
+                {
+                    state = 8;
+                    resetStartTime();
+                }
+                break;
+
+            case 8:
+                if(robot.drive(.4, forward, enterCraterDistance, 6))
+                {
+                    state = 9;
+                    resetStartTime();
                 }
                 break;
 
             default:
                 break;
         }
-//        telemetry.addData("State: ", state );
+        telemetry.addData("1)", "state: " + state );
 
     }
 
