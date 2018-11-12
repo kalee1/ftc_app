@@ -71,54 +71,55 @@ public class Error404Autonomus extends OpMode
             case 0:
                 if(robot.drive(.2, backward, mineralDriveDistance, 6))
                 {
-                    state = 1;
                     resetStartTime();
+                    state = 1;
                 }
                 break;
 
             case 1:
                 if(robot.drive(.3, right, mineralSlideDistance, 6))
                 {
-                    state = 2;
                     resetStartTime();
+                    state = 2;
                 }
                 break;
 
             case 2:
                 if(robot.pointTurn(.1, depoTurnHeading, 6, true))
                 {
-                    state = 3;
                     resetStartTime();
+                    state = 3;
                 }
                 break;
             case 3:
                 if(robot.drive(.3, backward, depoDriveDistance, 6))
                 {
-//                    robot.markDeploy();
+                    robot.markDeploy();
                     resetStartTime();
-                    state = 5;
+                    state = 4;
                 }
                 break;
 
-//            case 4:
-//                robot.markRetract();
-//                if(getRuntime() > 2)
-//                {
-//                    state = 5;
-//                    resetStartTime();
-//                }
-//                break;
+            case 4:
+                if(getRuntime() > 3)
+                {
+                    robot.markRetract();
+                    resetStartTime();
+                    state = 5;
+
+                }
+                break;
 
             case 5:
                 if(robot.pointTurn(.1, headingReset, 6, true))
                 {
-                    state = 6;
                     resetStartTime();
+                    state = 6;
                 }
                 break;
 
             case 6:
-                if(robot.drive(.4, forward, craterDriveDistance, 6))
+                if(robot.drive(.5, forward, craterDriveDistance, 6))
                 {
                     state = 7;
                     resetStartTime();
@@ -128,21 +129,21 @@ public class Error404Autonomus extends OpMode
             case 7:
                 if(robot.pointTurn(.1, craterTurnHeading, 6, true))
                 {
-                    state = 8;
-                    resetStartTime();
-                }
-                break;
-
-            case 8:
-                if(robot.drive(.4, right, craterSlideDistance, 6))
-                {
                     state = 9;
                     resetStartTime();
                 }
                 break;
 
+//            case 8:
+//                if(robot.drive(.4, right, craterSlideDistance, 6))
+//                {
+//                    state = 9;
+//                    resetStartTime();
+//                }
+//                break;
+
             case 9:
-                if(robot.drive(.4, forward, enterCraterDistance, 6))
+                if(robot.drive(.5, forward, enterCraterDistance, 6))
                 {
                     state = 10;
                     resetStartTime();

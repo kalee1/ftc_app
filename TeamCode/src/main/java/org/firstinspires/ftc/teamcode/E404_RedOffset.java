@@ -19,7 +19,7 @@ public class E404_RedOffset extends Error404Autonomus
         craterDriveDistance = 65;
         craterTurnHeading = 70;
         craterSlideDistance = 15;
-        enterCraterDistance = 45;
+        enterCraterDistance = 20;
     }
 
     @Override public void start()
