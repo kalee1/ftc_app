@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 @Autonomous(name="Blue Offset", group="Field Position")
 
-public class E404_BlueOffest extends Error404Autonomus
+public class E404_DepoFace extends Error404Autonomus
 {
     @Override
     public void init()

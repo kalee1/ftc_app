@@ -29,12 +29,12 @@ public class MecanumChassis extends Chassis
 
     static final double FORWARD = 0.0;
     static final double BACKWARD = 180.0;
-    static final double RIGHT = 270.0;
+    static final double RIGHT = -90;
     static final double LEFT = 90.0;
 
-    static final double FORWARD_RIGHT_DIAGONAL = -45.0;
+    static final double FORWARD_RIGHT_DIAGONAL = -45;
     static final double FORWARD_LEFT_DIAGONAL = 45.0;
-    static final double BACKWARD_RIGHT_DIAGONAL = -135.0;
+    static final double BACKWARD_RIGHT_DIAGONAL = -135;
     static final double BACKWARD_LEFT_DIAGONAL = 135.0;
 
     final double COUNTS_PER_MOTOR_REV = 1120;
@@ -219,11 +219,17 @@ public class MecanumChassis extends Chassis
      * @return  A boolean that tells us whether or not the robot is moving.
      */
     @Override
-    public boolean drive(double power, double direction, double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
        double driveDistance = COUNTS_PER_INCH * distance;
+       double target = direction;
+       double actual = getHeadingDbl();
 
-//       setMode(DcMotor.RunMode.RUN_TO_POSITION);
+       //BACKWARD = 180; BACKWARD_LEFT_DIAGONAL = 135; BACKWARD_RIGHT_DIAGONAL = -135;
+        if (direction ==  BACKWARD || direction == BACKWARD_LEFT_DIAGONAL || direction == BACKWARD_RIGHT_DIAGONAL)
+        {
+            actual = actual + 360.0;
+        }
 
 
         if(!moving)
@@ -231,15 +237,11 @@ public class MecanumChassis extends Chassis
             initialPosition = lFrontMotor.getCurrentPosition();
             resetStartTime();
             moving = true;
-
-//            lFrontMotor.setTargetPosition(-(lFrontMotor.getCurrentPosition() + (int)driveDistance));
-//            rFrontMotor.setTargetPosition(rFrontMotor.getCurrentPosition() + (int)driveDistance);
-//            lRearMotor.setTargetPosition(-(lRearMotor.getCurrentPosition() + (int)driveDistance));
-//            rRearMotor.setTargetPosition(rRearMotor.getCurrentPosition() + (int)driveDistance);
         }
+        target = ((target-actual)*gain) + target;
 
-        double stickX = power * Math.sin(Math.toRadians(direction));
-        double stickY = -(power * Math.cos(Math.toRadians(direction)));
+        double stickX = power * Math.sin(Math.toRadians(target));
+        double stickY = -(power * Math.cos(Math.toRadians(target)));
 
         telemetry.addData("stick x", stickX);
         telemetry.addData("stick y", stickY);
@@ -249,12 +251,13 @@ public class MecanumChassis extends Chassis
         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
-//            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             moving = false;
         }
 
         return !moving;
      }
+
+
 
     /**
      * The pointTurn method turns the robot left or right depending on whether the power input is

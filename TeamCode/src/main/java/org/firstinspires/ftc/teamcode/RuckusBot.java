@@ -73,9 +73,9 @@ public class RuckusBot
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
     }
 
-    public boolean drive(double power, double direction, double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
-        return theChassis.drive(power, direction, distance, time);
+        return theChassis.drive(power, direction, gain, distance, time);
 
     }
 

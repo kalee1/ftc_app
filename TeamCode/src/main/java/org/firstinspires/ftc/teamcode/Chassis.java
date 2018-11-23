@@ -35,7 +35,7 @@ public class Chassis
     {
     }
 
-    public boolean drive(double power, double direction,  double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
         return moving;
     }
