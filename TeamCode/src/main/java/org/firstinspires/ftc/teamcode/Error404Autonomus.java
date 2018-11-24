@@ -20,9 +20,9 @@ public class Error404Autonomus extends OpMode
     double left = MecanumChassis.LEFT;
 
     double frDiagonal = MecanumChassis.FORWARD_RIGHT_DIAGONAL;
-    double rlDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
-    double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
-    double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
+    double flDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
+    double rrDiagonal = MecanumChassis.REVERSE_RIGHT_DIAGONAL;
+    double rlDiagonal = MecanumChassis.REVERSE_LEFT_DIAGONAL;
 
     protected double mineralDriveDistance;
     protected double mineralSlideDistance;
@@ -33,6 +33,8 @@ public class Error404Autonomus extends OpMode
     protected double craterSlideDistance;
     protected double enterCraterDistance;
     protected double headingReset;
+
+    double gain = 0.01;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -69,7 +71,7 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.drive(.2, backward, mineralDriveDistance, 6))
+                if(robot.tankDrive(.3, Chassis.TankDirection.FORWARD, gain, 50, 30))
                 {
                     resetStartTime();
                     state = 1;
@@ -77,7 +79,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 1:
-                if(robot.drive(.3, right, mineralSlideDistance, 6))
+                if(robot.pointTurn(.2, -90, 6))
                 {
                     resetStartTime();
                     state = 2;
@@ -85,70 +87,120 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 2:
-                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
+                if(robot.drive(.3, right, gain, 12, 6))
                 {
                     resetStartTime();
                     state = 3;
                 }
                 break;
+
             case 3:
-                if(robot.drive(.3, backward, depoDriveDistance, 6))
+                if(robot.drive(.3, flDiagonal, gain, 12, 6))
                 {
-                    robot.markDeploy();
                     resetStartTime();
                     state = 4;
                 }
                 break;
 
-            case 4:
-                if(getRuntime() > 3)
-                {
-                    robot.markRetract();
-                    resetStartTime();
-                    state = 5;
+//            case 1:
+//                if(robot.mecanumDrive(.3, right, gain, mineralSlideDistance, 6))
+//                {
+//                    resetStartTime();
+//                    state = 2;
+//                }
+//                break;
+//
+//            case 2:
+//                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
+//                {
+//                    resetStartTime();
+//                    state = 3;
+//                }
+//                break;
 
-                }
-                break;
 
-            case 5:
-                if(robot.pointTurn(.1, headingReset, 6, true))
-                {
-                    resetStartTime();
-                    state = 6;
-                }
-                break;
 
-            case 6:
-                if(robot.drive(.5, forward, craterDriveDistance, 6))
-                {
-                    state = 7;
-                    resetStartTime();
-                }
-                break;
-
-            case 7:
-                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
-                {
-                    state = 9;
-                    resetStartTime();
-                }
-                break;
-
-//            case 8:
-//                if(robot.drive(.4, right, craterSlideDistance, 6))
+//            case 0:
+//                if(robot.mecanumDrive(.2, backward, gain, mineralDriveDistance, 6))
+//                {
+//                    resetStartTime();
+//                    state = 1;
+//                }
+//                break;
+//
+//            case 1:
+//                if(robot.mecanumDrive(.3, right, gain, mineralSlideDistance, 6))
+//                {
+//                    resetStartTime();
+//                    state = 2;
+//                }
+//                break;
+//
+//            case 2:
+//                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
+//                {
+//                    resetStartTime();
+//                    state = 3;
+//                }
+//                break;
+//            case 3:
+//                if(robot.mecanumDrive(.3, backward, gain, depoDriveDistance, 6))
+//                {
+//                    robot.markDeploy();
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
+//
+//            case 4:
+//                if(getRuntime() > 3)
+//                {
+//                    robot.markRetract();
+//                    resetStartTime();
+//                    state = 5;
+//
+//                }
+//                break;
+//
+//            case 5:
+//                if(robot.pointTurn(.1, headingReset, 6, true))
+//                {
+//                    resetStartTime();
+//                    state = 6;
+//                }
+//                break;
+//
+//            case 6:
+//                if(robot.mecanumDrive(.5, forward, gain, craterDriveDistance, 6))
+//                {
+//                    state = 7;
+//                    resetStartTime();
+//                }
+//                break;
+//
+//            case 7:
+//                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
 //                {
 //                    state = 9;
 //                    resetStartTime();
 //                }
 //                break;
-
-            case 9:
-                if(robot.drive(.5, forward, enterCraterDistance, 6))
-                {
-                    state = 10;
-                    resetStartTime();
-                }
-                break;
+//
+////            case 8:
+////                if(robot.mecanumDrive(.4, right, craterSlideDistance, 6))
+////                {
+////                    state = 9;
+////                    resetStartTime();
+////                }
+////                break;
+//
+//            case 9:
+//                if(robot.mecanumDrive(.5, forward, gain, enterCraterDistance, 6))
+//                {
+//                    state = 10;
+//                    resetStartTime();
+//                }
+//                break;
 
             default:
                 break;

@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Chassis
 {
+    enum TankDirection {FORWARD, REVERSE}
+
     boolean moving = false;
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
     Telemetry telemetry;
@@ -40,7 +42,12 @@ public class Chassis
         return moving;
     }
 
-    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
+    public boolean tankDrive(double power, TankDirection direction, double gain, double distance, double time)
+    {
+        return moving;
+    }
+
+    public boolean pointTurn(double power, double targetHeading, double time)
     {
         return moving;
     }
