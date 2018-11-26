@@ -79,7 +79,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 1:
-                if(robot.pointTurn(.2, -90, 6))
+                if(robot.pointTurn(.2, Chassis.TurnDirection.RIGHT, -90, 6))
                 {
                     resetStartTime();
                     state = 2;

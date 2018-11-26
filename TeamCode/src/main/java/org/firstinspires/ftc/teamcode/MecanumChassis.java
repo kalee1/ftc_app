@@ -52,6 +52,9 @@ public class MecanumChassis extends Chassis
     int initialPosition;
     /** A double variable used in drive and tankDrive to capture the initial heading before each move. */
     double initialHeading;
+    /** A double variable used in pointTurn to either turn the robot left or right. */
+    double directionalPower;
+    double direction;
 
 
     /**
@@ -345,23 +348,39 @@ public class MecanumChassis extends Chassis
      * @return A boolean that tells use whether or not the robot is moving.
      */
     @Override
-    public boolean pointTurn(double power, double targetHeading, double time)
+    public boolean pointTurn(double power, TurnDirection turnDirection, double targetHeading, double time)
     {
 
         double currentHeading = getHeadingDbl();
 
-        if(Math.abs(targetHeading) > 130  &&  targetHeading < 0.0)
+        if(targetHeading <= -170)
         {
             targetHeading += 360;
         }
+        else if(Math.abs(targetHeading) >= 170  &&  currentHeading < 0)
+        {
+            currentHeading =+ 360;
+        }
+
         if(!moving)
         {
+            if(turnDirection == Chassis.TurnDirection.RIGHT)
+            {
+                direction = -1;
+                directionalPower = -power * direction;
+            }
+            else
+            {
+                direction = 1;
+                directionalPower = power * direction;
+            }
+
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             resetStartTime();
             moving = true;
         }
 
-        joystickDrive(0.0, 0.0, power, 0.0, power);
+        joystickDrive(0.0, 0.0, directionalPower, 0.0, power);
 
         if(Math.abs(currentHeading - targetHeading) < 4.0 || getRuntime() > time)
         {

@@ -83,9 +83,9 @@ public class RuckusBot
         return theChassis.tankDrive(power, direction, gain, distance, time);
     }
 
-    public boolean pointTurn(double power, double targetHeading, double time)
+    public boolean pointTurn(double power, Chassis.TurnDirection turnDirection, double targetHeading, double time)
     {
-        return theChassis.pointTurn(power, targetHeading, time);
+        return theChassis.pointTurn(power, turnDirection, targetHeading, time);
     }
 
     public void stopMotors()
