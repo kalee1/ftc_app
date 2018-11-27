@@ -20,34 +20,6 @@ public class Error404MecanumTeleop extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
 
-    /* Declare Ben's Servos for the arm */
-    private Servo Swivel;
-    private Servo Elbow;
-    private Servo Shoulder;
-    private CRServo Intake;
-
-    /* Declare Ben's stick parameters and buttons */
-    double left_stick_y;
-    double right_stick_y;
-    double left_stick_x;
-
-    /* Declare Ben's variables for joint control */
-    double elbowSleep = .52;
-    double shoulderSleep = .50;
-    double swivelSleep = .50;
-    double gamma = swivelSleep; //  gamma is swivel
-    double alpha = shoulderSleep;  // alpha is shoulder
-    double theta = elbowSleep; //  theta is elbow - elbow is higher than others due to intake box catching on chassis
-    double increment = .005;
-
-    /* Declare Ben's variables for time control */
-    double shoulderTarTime;
-    double swivelTarTime;
-    double elbowTarTime;
-    boolean shoulderControl = true;
-    boolean swivelControl = true;
-    boolean elbowControl = true;
-
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -58,9 +30,6 @@ public class Error404MecanumTeleop extends OpMode
         // The init() method of the hardware class does all the work here
         //
         robot.init(hardwareMap, telemetry);
-
-        /* Call Ben's arm init code */
-        this.armInit(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
@@ -82,11 +51,11 @@ public class Error404MecanumTeleop extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("1.", "Doing Arm Control");
-//        robot.armMove(right_stick_x ,right_stick_y ,left_stick_y);
+        /* Do Arm Control  */
+        double right_stick_y = gamepad2.right_stick_y;
+        double left_stick_y = gamepad2.left_stick_y;
 
-        /* Call Ben's arm control code */
-        this.armLoop();
+        robot.ArmDrive(right_stick_y ,left_stick_y);
 
         /* Do Chassis Control */
         double lStickX = -gamepad1.left_stick_x;
@@ -123,175 +92,6 @@ public class Error404MecanumTeleop extends OpMode
         }
         return powerLimit;
     }
-
-
-    public void armInit(HardwareMap hwMap, Telemetry telem)
-    {
-        left_stick_y = gamepad2.left_stick_y;
-        right_stick_y = gamepad2.right_stick_y;
-        left_stick_x = gamepad2.left_stick_x;
-
-        try
-        {
-            Elbow = hardwareMap.servo.get( "Elbow" );
-            Elbow.setDirection(Servo.Direction.FORWARD);
-            Elbow.setPosition(theta);
-        }
-        catch (Exception p_exeception)
-        {
-            Elbow = null;
-        }
-        try
-        {
-            Shoulder = hardwareMap.servo.get( "Shoulder" );
-            Shoulder.setPosition(alpha);
-        }
-        catch (Exception p_exeception)
-        {
-            Shoulder = null;
-        }
-        try
-        {
-            Swivel = hardwareMap.servo.get( "Swivel" );
-            Swivel.setPosition(gamma);
-        }
-        catch (Exception p_exception)
-        {
-            Swivel = null;
-        }
-        try
-        {
-            Intake = hardwareMap.crservo.get( "Collector" );
-            Intake.setDirection(CRServo.Direction.FORWARD);
-        }
-        catch (Exception p_exeception)
-        {
-            Intake = null;
-        }
-
-//        telemetry.addData("Arm Test Init", "elbow position" + Elbow.getPosition());
-
-    }
-
-    void armLoop()
-    {
-        left_stick_y = gamepad2.left_stick_y;
-        right_stick_y = gamepad2.right_stick_y;
-        left_stick_x = gamepad2.left_stick_x;
-
-//        telemetry.addData("msg3", "joystick control" + left_stick_y);
-//        telemetry.addData("msg4", "servo values" + Shoulder.getPosition());
-//        telemetry.update();
-
-
-        //Shoulder
-        if (shoulderControl)
-        {
-            shoulderTarTime = System.currentTimeMillis() + 30;//was 63
-
-            if (-left_stick_y < 0)
-            {
-                alpha += increment;
-                Shoulder.setPosition(alpha);
-//                telemetry.addData("Shoulder positive increment", ""+ left_stick_y);
-            }
-            else if (-left_stick_y > 0)
-            {
-                alpha -= increment;
-                Shoulder.setPosition(alpha);
-//                telemetry.addData("Shoulder negative increment", ""+ left_stick_y);
-            }
-        }
-        if (System.currentTimeMillis() > shoulderTarTime)
-        {
-            shoulderControl = true;
-        }
-        else
-        {
-            shoulderControl = false;
-        }
-
-        if (gamepad2.x)
-        {
-            Shoulder.setPosition(.40);
-        }
-
-
-
-        //Swivel
-        if (swivelControl)
-        {
-            swivelTarTime = System.currentTimeMillis() + 60;//was 30
-
-            if (gamepad2.dpad_left)
-            {
-                gamma += increment;
-                Swivel.setPosition(gamma);
-//                telemetry.addData("Swivel positive increment", "" + gamepad2.right_stick_x);
-            }
-            else if (gamepad2.dpad_right)
-            {
-                gamma -= increment;
-                Swivel.setPosition(gamma);
-//                telemetry.addData("Swivel positive increment", ""+ gamepad2.right_stick_x);
-            }
-        }
-        if (System.currentTimeMillis() > swivelTarTime)
-        {
-            swivelControl = true;
-        }
-        else
-        {
-            swivelControl = false;
-        }
-
-
-
-        //Elbow
-        if (elbowControl)
-        {
-            elbowTarTime = System.currentTimeMillis() + 30;//was 63
-            if (gamepad2.right_stick_y < 0)
-            {
-                theta += increment;
-                Elbow.setPosition(theta);
-//                telemetry.addData("Elbow positive increment", ""+ gamepad2.right_stick_y);
-            }
-            else if (gamepad2.right_stick_y > 0)
-            {
-                theta -= increment;
-                Elbow.setPosition(theta);
-//                telemetry.addData("Elbow negative increment", ""+ gamepad2.right_stick_y);
-            }
-        }
-        if (System.currentTimeMillis() > elbowTarTime)
-        {
-            elbowControl = true;
-        }
-        else
-        {
-            elbowControl = false;
-        }
-
-
-
-        //Collector
-        if (gamepad2.right_bumper)
-        {
-            Intake.setPower(1.0);
-        }
-        else if (gamepad2.left_bumper)
-        {
-            Intake.setPower(-1.0);
-        }
-        else
-        {
-            Intake.setPower(0.0);
-        }
-
-
-    }
-
 
     /*
      * Code to run ONCE after the driver hits STOP
