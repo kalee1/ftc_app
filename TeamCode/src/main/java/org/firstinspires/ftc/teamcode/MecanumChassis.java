@@ -49,12 +49,12 @@ public class MecanumChassis extends Chassis
     final double COUNTS_PER_INCH = (1120*10)/(13*4*3.14159);
 
     /** An int variable used in drive, tankDrive, and pointTurn to capture the encoder position before each move. */
-    int initialPosition;
+    double initialPosition;
     /** A double variable used in drive and tankDrive to capture the initial heading before each move. */
     double initialHeading;
     /** A double variable used in pointTurn to either turn the robot left or right. */
     double directionalPower;
-    double direction;
+    double error;
 
 
     /**
@@ -348,37 +348,46 @@ public class MecanumChassis extends Chassis
      * @return A boolean that tells use whether or not the robot is moving.
      */
     @Override
-    public boolean pointTurn(double power, TurnDirection turnDirection, double targetHeading, double time)
+    public boolean pointTurn(double power, double targetHeading, double time)
     {
-
+        power = Math.abs(power);
         double currentHeading = getHeadingDbl();
 
-        if(targetHeading <= -170)
+        if(Math.abs(targetHeading) > 170  &&  currentHeading < 0.0)
         {
-            targetHeading += 360;
-        }
-        else if(Math.abs(targetHeading) >= 170  &&  currentHeading < 0)
-        {
-            currentHeading =+ 360;
+            currentHeading += 360;
         }
 
+        telemetry.addData("current heading", currentHeading);
+        telemetry.addData("target heading", targetHeading);
         if(!moving)
         {
-            if(turnDirection == Chassis.TurnDirection.RIGHT)
+            initialHeading = getHeadingDbl();
+            error = initialHeading - targetHeading;
+
+            if(error > 180)
             {
-                direction = -1;
-                directionalPower = -power * direction;
+                error -= 360;
+            }
+            else if(error < -180)
+            {
+                error += 360;
+            }
+
+            if(error < 0)
+            {
+                directionalPower = power;
             }
             else
             {
-                direction = 1;
-                directionalPower = power * direction;
+                directionalPower = -power;
             }
-
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             resetStartTime();
             moving = true;
         }
+        telemetry.addData("error", error);
+        telemetry.addData("direction power", directionalPower);
 
         joystickDrive(0.0, 0.0, directionalPower, 0.0, power);
 

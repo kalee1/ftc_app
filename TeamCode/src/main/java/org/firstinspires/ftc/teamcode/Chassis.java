@@ -16,7 +16,6 @@ import java.util.concurrent.TimeUnit;
 public class Chassis
 {
     enum TankDirection {FORWARD, REVERSE}
-    enum TurnDirection {LEFT, RIGHT}
 
     boolean moving = false;
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
@@ -48,7 +47,7 @@ public class Chassis
         return moving;
     }
 
-    public boolean pointTurn(double power, TurnDirection turnDirection, double targetHeading, double time)
+    public boolean pointTurn(double power, double targetHeading, double time)
     {
         return moving;
     }

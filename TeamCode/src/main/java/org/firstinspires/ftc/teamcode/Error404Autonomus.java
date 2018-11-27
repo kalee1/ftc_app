@@ -48,7 +48,8 @@ public class Error404Autonomus extends OpMode
         robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Let's Rock and Roll");    //
+        telemetry.addData("Say", "Let's Rock and Roll");
+        telemetry.addData("initial heading: ", initialPosition);
 
     }
 
@@ -71,7 +72,7 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.tankDrive(.3, Chassis.TankDirection.FORWARD, gain, 50, 30))
+                if(robot.pointTurn(.2, 90, 20))
                 {
                     resetStartTime();
                     state = 1;
@@ -79,28 +80,28 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 1:
-                if(robot.pointTurn(.2, Chassis.TurnDirection.RIGHT, -90, 6))
+                if(robot.pointTurn(.2, -135, 20))
                 {
                     resetStartTime();
                     state = 2;
                 }
                 break;
 
-            case 2:
-                if(robot.drive(.3, right, gain, 12, 6))
-                {
-                    resetStartTime();
-                    state = 3;
-                }
-                break;
-
-            case 3:
-                if(robot.drive(.3, flDiagonal, gain, 12, 6))
-                {
-                    resetStartTime();
-                    state = 4;
-                }
-                break;
+//            case 2:
+//                if(robot.drive(.3, right, gain, 12, 6))
+//                {
+//                    resetStartTime();
+//                    state = 3;
+//                }
+//                break;
+//
+//            case 3:
+//                if(robot.drive(.3, flDiagonal, gain, 12, 6))
+//                {
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
 
 //            case 1:
 //                if(robot.mecanumDrive(.3, right, gain, mineralSlideDistance, 6))
@@ -205,7 +206,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-        telemetry.addData("1)", "state: " + state );
+//        telemetry.addData("1)", "state: " + state );
 
     }
 
