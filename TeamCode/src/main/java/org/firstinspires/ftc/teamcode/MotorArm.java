@@ -8,6 +8,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 public class MotorArm
 {
+
     DcMotor Elbow = null;
     DcMotor Shoulder = null;
 
@@ -32,16 +33,17 @@ public class MotorArm
         Shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void ArmDrive(double right_stick_y ,double left_stick_y , Telemetry telem)
+    public void ArmDrive(double LeftStickY, double RightStickY, Telemetry telem)
     {
 
+        telem.addData("", "" + RightStickY);
         telem.addData("Telemetry Test:", "Clone Wars Saved!!!!");
 
-        if (right_stick_y > 0)
+        if (RightStickY > 0)
         {
             Elbow.setPower(.15);
         }
-        else if (right_stick_y < 0)
+        else if (RightStickY < 0)
         {
             Elbow.setPower(-.15);
         }
@@ -50,7 +52,7 @@ public class MotorArm
             Elbow.setPower(0.0);
         }
 
-        Shoulder.setPower(left_stick_y * .6);
+        Shoulder.setPower(LeftStickY * .6);
 
     }
 

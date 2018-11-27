@@ -52,10 +52,10 @@ public class Error404MecanumTeleop extends OpMode
     public void loop()
     {
         /* Do Arm Control  */
-        double right_stick_y = gamepad2.right_stick_y;
-        double left_stick_y = gamepad2.left_stick_y;
+        double RightStickY = gamepad2.right_stick_y;
+        double LeftStickY = gamepad2.left_stick_y;
 
-        robot.ArmDrive(right_stick_y ,left_stick_y);
+
 
         /* Do Chassis Control */
         double lStickX = -gamepad1.left_stick_x;
@@ -68,6 +68,8 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("3: rightX", rStickX);
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+
+        robot.ArmDrive(LeftStickY, RightStickY);
     }
 
     /**

@@ -44,9 +44,9 @@ public class RuckusBot
 //        area51.init(hwMap);
     }
 
-    public void ArmDrive(double right_stick_y, double left_stick_y)
+    public void ArmDrive(double LeftStickY, double RightStickY)
     {
-        theArm.ArmDrive(right_stick_y, left_stick_y);
+
     }
 
 
