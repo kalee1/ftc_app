@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Blue Center", group="Field Position")
+@Autonomous(name="Crater Face", group="Field Position")
 
 public class E404_CraterFace extends Error404Autonomus
 {
