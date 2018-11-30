@@ -63,77 +63,10 @@ public class ArmTeleop{
 
         telemetry.addData("msg 2", "elbow pos" + Elbow.getPosition());
 
-        //this.armSleep(true);  //put servos into sleep positions
-
-        //Shoulder.scaleRange(0.08, 0.31);
-        //Elbow.scaleRange(0.20,0.04 );
-        //Swivel.scaleRange(0.24, 0.44);
-
     }
 
     public void armPosition(double right_stick_x,double right_stick_y, double left_stick_y)
     {
-
-        //Elbow.setPosition(.10);
-
-        //DO NOT UNCOMMENT --- TESTING PHASE
-        //prototype range clip code - *untested*
-        /*
-        alpha = alpha + right_stick_y / 200;
-
-        if(Shoulder.getPosition() < alpha )
-            Shoulder.setPosition(Range.clip(Shoulder.getPosition() + .01, .08, 0.31));
-        else if(Shoulder.getPosition() > alpha)
-            Shoulder.setPosition(Range.clip(Shoulder.getPosition() - .01, .08, 0.31));
-
-        theta = theta + -left_stick_y / 200;
-
-        if(Elbow.getPosition() < theta )
-            Elbow.setPosition(Range.clip(Elbow.getPosition() + .01, .08, .15));
-        else if(Elbow.getPosition() > theta)
-            Elbow.setPosition(Range.clip(Elbow.getPosition() - .01, .08, .15));
-
-        gamma = gamma + right_stick_x / 200;
-
-        if(Swivel.getPosition() < gamma )
-            Swivel.setPosition(Range.clip(Swivel.getPosition() + .25, .44, 0.24));
-        else if(Swivel.getPosition() > gamma)
-            Swivel.setPosition(Range.clip(Swivel.getPosition() - .25, .44, 0.24));
-
-        */
-
-        //This section allows the drivers to control the 3 arm servos with the gamepad 2 sticks.
-        //problem with incrementing position too fast --- testing phase
-        //not user friendly yet / not competition ready!
-
-        /*
-        //Swivel
-        gamma = gamma + right_stick_x / 1000;// set to 1000 due to higher gear ratio
-        Swivel.setPosition(gamma);
-
-        //Shoulder
-        alpha = alpha + right_stick_y / 100;
-        Shoulder.setPosition(alpha);
-
-        //Elbow
-        theta = theta + left_stick_y / 100;
-        Elbow.setPosition(theta);//change to neg
-        */
-        /*
-        //This is a check to see if the Elbow can move based upon Shoulder position
-        //DO NOT UNCOMMENT --- TESTING PHASE
-        check1 = Shoulder.getPosition();
-
-        if (check1 == .31)
-        {
-            check2 = .31;
-        }
-
-        if (check1 == check2)
-        {
-            Elbow.setPosition(.14);
-        }
-        */
 
         telemetry.addData("msg3", "joystick control" + left_stick_y);
         telemetry.addData("msg4", "servo values" + Shoulder.getPosition());

@@ -73,15 +73,19 @@ public class RuckusBot
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
     }
 
-    public boolean drive(double power, double direction, double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
-        return theChassis.drive(power, direction, distance, time);
-
+        return theChassis.drive(power, direction, gain, distance, time);
     }
 
-    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
+    public boolean tankDrive(double power, Chassis.TankDirection direction, double gain, double distance, double time)
     {
-        return theChassis.pointTurn(power, targetHeading, time, useExtendedGyro);
+        return theChassis.tankDrive(power, direction, gain, distance, time);
+    }
+
+    public boolean pointTurn(double power, double targetHeading, double time)
+    {
+        return theChassis.pointTurn(power, targetHeading, time);
     }
 
     public void stopMotors()

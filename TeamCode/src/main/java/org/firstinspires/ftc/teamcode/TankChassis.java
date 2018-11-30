@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -13,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * @author Error 404: Team Name Not Found
  * @see Chassis
  */
-
+@Disabled
 public class TankChassis extends Chassis
 {
     int initialPosition;
@@ -156,7 +157,7 @@ public class TankChassis extends Chassis
      * @return  A boolean that tells us whether or not the robot is moving.
      */
     @Override
-    public boolean drive(double power, double direction, double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
         if(!moving)
         {

@@ -20,9 +20,9 @@ public class Error404Autonomus extends OpMode
     double left = MecanumChassis.LEFT;
 
     double frDiagonal = MecanumChassis.FORWARD_RIGHT_DIAGONAL;
-    double rlDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
-    double brDiagonal = MecanumChassis.BACKWARD_RIGHT_DIAGONAL;
-    double blDiagonal = MecanumChassis.BACKWARD_LEFT_DIAGONAL;
+    double flDiagonal = MecanumChassis.FORWARD_LEFT_DIAGONAL;
+    double rrDiagonal = MecanumChassis.REVERSE_RIGHT_DIAGONAL;
+    double rlDiagonal = MecanumChassis.REVERSE_LEFT_DIAGONAL;
 
     protected double mineralDriveDistance;
     protected double mineralSlideDistance;
@@ -33,6 +33,8 @@ public class Error404Autonomus extends OpMode
     protected double craterSlideDistance;
     protected double enterCraterDistance;
     protected double headingReset;
+
+    double gain = 0.01;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -46,7 +48,8 @@ public class Error404Autonomus extends OpMode
         robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Let's Rock and Roll");    //
+        telemetry.addData("Say", "Let's Rock and Roll");
+        telemetry.addData("initial heading: ", initialPosition);
 
     }
 
@@ -69,7 +72,7 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.drive(.2, backward, mineralDriveDistance, 6))
+                if(robot.drive(.2, backward, gain, mineralDriveDistance, 6))
                 {
                     resetStartTime();
                     state = 1;
@@ -77,7 +80,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 1:
-                if(robot.drive(.3, right, mineralSlideDistance, 6))
+                if(robot.drive(.3, right, gain, mineralSlideDistance, 6))
                 {
                     resetStartTime();
                     state = 2;
@@ -85,14 +88,14 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 2:
-                if(robot.pointTurn(.1, depoTurnHeading, 6, true))
+                if(robot.pointTurn(.1, depoTurnHeading, 6))
                 {
                     resetStartTime();
                     state = 3;
                 }
                 break;
             case 3:
-                if(robot.drive(.3, backward, depoDriveDistance, 6))
+                if(robot.drive(.3, backward, gain, depoDriveDistance, 6))
                 {
                     robot.markDeploy();
                     resetStartTime();
@@ -111,7 +114,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 5:
-                if(robot.pointTurn(.1, headingReset, 6, true))
+                if(robot.pointTurn(.1, headingReset, 6))
                 {
                     resetStartTime();
                     state = 6;
@@ -119,7 +122,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 6:
-                if(robot.drive(.5, forward, craterDriveDistance, 6))
+                if(robot.drive(.5, forward, gain, craterDriveDistance, 6))
                 {
                     state = 7;
                     resetStartTime();
@@ -127,7 +130,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 7:
-                if(robot.pointTurn(.1, craterTurnHeading, 6, true))
+                if(robot.pointTurn(.1, craterTurnHeading, 6))
                 {
                     state = 9;
                     resetStartTime();
@@ -135,7 +138,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
 //            case 8:
-//                if(robot.drive(.4, right, craterSlideDistance, 6))
+//                if(robot.mecanumDrive(.4, right, craterSlideDistance, 6))
 //                {
 //                    state = 9;
 //                    resetStartTime();
@@ -143,7 +146,7 @@ public class Error404Autonomus extends OpMode
 //                break;
 
             case 9:
-                if(robot.drive(.5, forward, enterCraterDistance, 6))
+                if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
                 {
                     state = 10;
                     resetStartTime();
@@ -153,7 +156,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-        telemetry.addData("1)", "state: " + state );
+//        telemetry.addData("1)", "state: " + state );
 
     }
 

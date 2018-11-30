@@ -20,38 +20,49 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 public class MecanumChassis extends Chassis
 {
 
+    /** The right front drive motor. */
     private DcMotor rFrontMotor = null;
+    /** The right rear drive motor. */
     private DcMotor rRearMotor = null;
+    /** The left front drive motor. */
     private DcMotor lFrontMotor = null;
+    /** The left rear drive motor */
     private DcMotor lRearMotor = null;
 
+    /** The navx gyro. */
     private NavxMicroNavigationSensor navx = null;
 
     static final double FORWARD = 0.0;
     static final double BACKWARD = 180.0;
-    static final double RIGHT = 270.0;
+    static final double RIGHT = -90;
     static final double LEFT = 90.0;
 
-    static final double FORWARD_RIGHT_DIAGONAL = -45.0;
+    static final double FORWARD_RIGHT_DIAGONAL = -45;
     static final double FORWARD_LEFT_DIAGONAL = 45.0;
-    static final double BACKWARD_RIGHT_DIAGONAL = -135.0;
-    static final double BACKWARD_LEFT_DIAGONAL = 135.0;
+    static final double REVERSE_RIGHT_DIAGONAL = -135;
+    static final double REVERSE_LEFT_DIAGONAL = 135.0;
 
     final double COUNTS_PER_MOTOR_REV = 1120;
     final double DRIVE_GEAR_REDUCTION = 1.3;
     final double WHEEL_DIAMETER_INCHES = 4.0;
-    //final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159; // 12.56636
-
-//    final double COUNTS_PER_INCH = (COUNTS_PER_MOTOR_REV/(DRIVE_GEAR_REDUCTION * WHEEL_DIAMETER_INCHES * 3.14159));
+    final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159;
     final double COUNTS_PER_INCH = (1120*10)/(13*4*3.14159);
 
-    int initialPosition;
+    /** An int variable used in drive, tankDrive, and pointTurn to capture the encoder position before each move. */
+    double initialPosition;
+    /** A double variable used in drive and tankDrive to capture the initial heading before each move. */
+    double initialHeading;
+    /** A double variable used in pointTurn to either turn the robot left or right. */
+    double directionalPower;
+    double error;
+
 
     /**
      * Look for a specified set of motors in the config file. If the motors are found, give them a
      * specified direction. If a motor is not found, ignore the error and set the motor to equal null.
      *
      * @param hwMap  The hardware map that the code will use to find and classify the objects it sees.
+     * @param telem  Initializes a telemetry object that allows for telemetry statements.
      */
     @Override
     public void init(HardwareMap hwMap, Telemetry telem)
@@ -116,10 +127,8 @@ public class MecanumChassis extends Chassis
         }
 
         telemetry.addData("heading", getHeadingDbl());
-
-
-
     }
+
 
     /**
      * This method takes the command values from the x- and y-axes of the left and right joysticks
@@ -156,6 +165,7 @@ public class MecanumChassis extends Chassis
         if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
         if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
 
+        //Set the minimum and maximum power allowed for drive moves and compare it to the parameter powerLimit.
         powerLimit = Range.clip(powerLimit, .05, 1);
         //If max still equals zero after checking all four motors, then set the max to 1
         if(max == 0.0)
@@ -207,87 +217,179 @@ public class MecanumChassis extends Chassis
 
 
     /**
-     * The drive method moves the four drive motors on the robot and will move the robot forward,
+     * The mecanumDrive method moves the four drive motors on the robot and will move the robot forward,
      * backward, left, right, or at a 45 degree angle in any direction.
      *
-     * @param distance  How far the robot will drive.
      * @param power  How fast the robot will drive.
+     * @param gain  The rate at which the robot will correct an error
      * @param direction  In which direction the robot will drive (forward, backward, left, right,
      *                   or 45 degrees in any direction).
+     * @param distance  How far the robot will drive.
      * @param time  The max time this move can take. A time-out feature: if the move stalls for some
      *              reason, the timer will catch it.
      * @return  A boolean that tells us whether or not the robot is moving.
      */
     @Override
-    public boolean drive(double power, double direction, double distance, double time)
+    public boolean drive(double power, double direction, double gain, double distance, double time)
     {
-       double driveDistance = COUNTS_PER_INCH * distance;
+        double driveDistance = COUNTS_PER_INCH * distance;
+        double correction;
+        double actual = getHeadingDbl();
 
-//       setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-
+        if(Math.abs(direction) > 130  &&  actual < 0.0)
+        {
+            actual += 360;
+        }
         if(!moving)
         {
-            initialPosition = lFrontMotor.getCurrentPosition();
+            initialHeading = getHeadingDbl();
+            if(Math.abs(direction) > 130  &&  initialHeading < 0.0)
+            {
+                initialHeading += 360.0;
+            }
+            if(direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_LEFT_DIAGONAL)
+            {
+                initialPosition = rFrontMotor.getCurrentPosition();
+            }
+            else
+            {
+                initialPosition = lFrontMotor.getCurrentPosition();
+            }
             resetStartTime();
             moving = true;
-
-//            lFrontMotor.setTargetPosition(-(lFrontMotor.getCurrentPosition() + (int)driveDistance));
-//            rFrontMotor.setTargetPosition(rFrontMotor.getCurrentPosition() + (int)driveDistance);
-//            lRearMotor.setTargetPosition(-(lRearMotor.getCurrentPosition() + (int)driveDistance));
-//            rRearMotor.setTargetPosition(rRearMotor.getCurrentPosition() + (int)driveDistance);
         }
+        correction = ((initialHeading - actual) * gain);
 
-        double stickX = power * Math.sin(Math.toRadians(direction));
-        double stickY = -(power * Math.cos(Math.toRadians(direction)));
+        double lStickX = power * Math.sin(Math.toRadians(direction));
+        double lStickY = -(power * Math.cos(Math.toRadians(direction)));
 
-        telemetry.addData("stick x", stickX);
-        telemetry.addData("stick y", stickY);
+        telemetry.addData("stick x", lStickX);
+        telemetry.addData("stick y", lStickY);
 
-        joystickDrive(stickX, stickY,0.0,0.0, power);
+        joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
-//            setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             moving = false;
         }
 
         return !moving;
      }
 
+
+     /**
+      * A drive method that does not utilize the mecanum wheels on the robot and therefore only
+      * drives forward and backward
+      *
+      * @param power
+      * @param direction
+      * @param gain
+      * @param distance
+      * @param time
+      * @return A boolean that says whether or not the robot is moving
+      */
+     public boolean tankDrive(double power, TankDirection direction, double gain, double distance, double time)
+     {
+         double driveDistance = COUNTS_PER_INCH * distance;
+         double correction;
+         double actual = getHeadingDbl();
+         double numDirection = 0.0;
+
+         if(direction == TankDirection.FORWARD)
+         {
+             //forward
+             numDirection = 0.0;
+         }
+         else
+         {
+             //backward
+             numDirection = 180.0;
+         }
+         if(direction == TankDirection.REVERSE)
+         {
+             actual += 360.0;
+         }
+
+         if(!moving)
+         {
+             initialHeading = getHeadingDbl();
+             if(direction == TankDirection.REVERSE)
+             {
+                 initialHeading += 360.0;
+             }
+             initialPosition = lFrontMotor.getCurrentPosition();
+             resetStartTime();
+             moving = true;
+         }
+         correction = ((initialHeading - actual) * gain);
+
+         double lStickY = -(power * Math.cos(Math.toRadians(numDirection)));
+
+         joystickDrive(0.0, lStickY, correction,0.0, power);
+
+         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
+         {
+             stopMotors();
+             moving = false;
+         }
+
+         return !moving;
+     }
+
+
     /**
      * The pointTurn method turns the robot left or right depending on whether the power input is
      * positive or negative.
      *
-     * @param power
      * @param targetHeading  The direction in which the robot will move.
-     * @param time
-     * @param useExtendedGyro
+     * @param time  The maximum time the move can take before the code moves on.
      * @param power  The power at which the robot will move.
+     * @return A boolean that tells use whether or not the robot is moving.
      */
     @Override
-    public boolean pointTurn(double power, double targetHeading, double time, boolean useExtendedGyro)
+    public boolean pointTurn(double power, double targetHeading, double time)
     {
-
+        power = Math.abs(power);
         double currentHeading = getHeadingDbl();
 
-        if ( useExtendedGyro )
+        if(Math.abs(targetHeading) > 170  &&  currentHeading < 0.0)
         {
-            if ( currentHeading < 0.0 )
-            {
-                currentHeading = 360.0 + currentHeading;
-            }
+            currentHeading += 360;
         }
 
+        telemetry.addData("current heading", currentHeading);
+        telemetry.addData("target heading", targetHeading);
         if(!moving)
         {
+            initialHeading = getHeadingDbl();
+            error = initialHeading - targetHeading;
+
+            if(error > 180)
+            {
+                error -= 360;
+            }
+            else if(error < -180)
+            {
+                error += 360;
+            }
+
+            if(error < 0)
+            {
+                directionalPower = power;
+            }
+            else
+            {
+                directionalPower = -power;
+            }
             setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             resetStartTime();
             moving = true;
         }
+        telemetry.addData("error", error);
+        telemetry.addData("direction power", directionalPower);
 
-        joystickDrive(0.0, 0.0, power, 0.0, power);
+        joystickDrive(0.0, 0.0, directionalPower, 0.0, power);
 
         if(Math.abs(currentHeading - targetHeading) < 4.0 || getRuntime() > time)
         {

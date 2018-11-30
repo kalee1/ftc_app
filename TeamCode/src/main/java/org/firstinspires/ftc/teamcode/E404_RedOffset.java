@@ -1,9 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 @Autonomous(name="Red Offset", group="Field Position")
-
+@Disabled
 public class E404_RedOffset extends Error404Autonomus
 {
     @Override

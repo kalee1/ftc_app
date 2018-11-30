@@ -2,24 +2,25 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Blue Offset", group="Field Position")
+@Autonomous(name="Crater Face", group="Field Position")
 
-public class E404_BlueOffest extends Error404Autonomus
+public class E404_CraterFace extends Error404Autonomus
 {
     @Override
     public void init()
     {
         // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 
-        mineralDriveDistance = 55.0;
-        mineralSlideDistance = 0.0;
-        depoTurnHeading = 45.0; // ~45 degrees
-        depoDriveDistance = 0.0;
-        headingReset = 45;
+        mineralDriveDistance = 15;
+        mineralSlideDistance = 45;
+        depoTurnHeading = 125;
+        depoDriveDistance = 35;
+        headingReset = 125;
         craterDriveDistance = 65;
-        craterTurnHeading = 70;
+        craterTurnHeading = 180;
         craterSlideDistance = 15;
-        enterCraterDistance = 45;
+        enterCraterDistance = 30;
+
         super.init();
     }
 
