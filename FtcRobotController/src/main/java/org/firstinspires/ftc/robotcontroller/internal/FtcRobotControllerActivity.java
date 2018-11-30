@@ -122,6 +122,7 @@ import org.firstinspires.inspection.RcInspectionActivity;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import com.acmerobotics.dashboard.FtcDashboard;
 
 @SuppressWarnings("WeakerAccess")
 public class FtcRobotControllerActivity extends Activity
