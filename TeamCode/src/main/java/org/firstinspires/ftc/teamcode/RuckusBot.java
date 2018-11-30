@@ -44,12 +44,10 @@ public class RuckusBot
 //        area51.init(hwMap);
     }
 
-    public void ArmDrive(double LeftStickY, double RightStickY)
+    public void ArmDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
-
+        theArm.ArmDrive(RightStickY, LeftStickY, telem);
     }
-
-
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
