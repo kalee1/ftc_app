@@ -102,14 +102,14 @@ public class MotorArm
 
         if (Shoulderfront.isPressed())
         {
-            //Shoulder.setPower(.5);
+            Shoulder.setPower(.5);
             telem.addData("ShoulderFront", "has been pressed");
             telem.update();
         }
 
         if (Shoulderback.isPressed())
         {
-            //Shoulder.setPower(-.5);
+            Shoulder.setPower(-.5);
             telem.addData("ShoulderBack", "has been pressed");
             telem.update();
         }
