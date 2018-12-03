@@ -115,7 +115,7 @@ public class MecanumChassis extends Chassis
             navx = null;
         }
 
-        telemetry.addData("heading", getHeadingDbl());
+        //telemetry.addData("heading", getHeadingDbl()); ****
 
 
 
@@ -307,8 +307,9 @@ public class MecanumChassis extends Chassis
      */
     public double getHeadingDbl()
     {
-        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+        //Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES); ****
+        // return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle)); ****
+        return 0.00;
     }
 
 
