@@ -17,9 +17,6 @@ public class MotorArm
     protected TouchSensor Elbowfront = null;
     protected TouchSensor Elbowback = null;
 
-    double Pos1 = 0;
-    double Pos2 = 0;
-
     // Constructor for Class
     public MotorArm()
     {
