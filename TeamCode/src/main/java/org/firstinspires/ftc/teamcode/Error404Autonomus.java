@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Autonomous(name="Test Autonomus w/Mecanum Chassis", group="Autonomus")
+@Autonomous(name="Mother Autonomus", group="Zeta")
 
 public class Error404Autonomus extends OpMode
 {
@@ -48,8 +48,8 @@ public class Error404Autonomus extends OpMode
         robot.init(hardwareMap, telemetry);
 
         // Send telemetry message to signify robot waiting;
-        telemetry.addData("Say", "Let's Rock and Roll");
-        telemetry.addData("initial heading: ", initialPosition);
+//        telemetry.addData("Say", "Let's Rock and Roll");
+//        telemetry.addData("initial heading: ", initialPosition);
 
     }
 
@@ -60,7 +60,6 @@ public class Error404Autonomus extends OpMode
     public void start()
     {
         resetStartTime();
-
     }
 
     /*
@@ -72,7 +71,7 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.drive(.2, backward, gain, mineralDriveDistance, 6))
+                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
                 {
                     resetStartTime();
                     state = 1;
@@ -80,7 +79,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 1:
-                if(robot.drive(.3, right, gain, mineralSlideDistance, 6))
+                if(robot.drive(.4, right, gain, mineralSlideDistance, 6))
                 {
                     resetStartTime();
                     state = 2;
@@ -94,10 +93,11 @@ public class Error404Autonomus extends OpMode
                     state = 3;
                 }
                 break;
+
             case 3:
-                if(robot.drive(.3, backward, gain, depoDriveDistance, 6))
+                if(robot.drive(.5, backward, gain, depoDriveDistance, 6))
                 {
-                    robot.markDeploy();
+//                    robot.markDeploy();
                     resetStartTime();
                     state = 4;
                 }
@@ -106,7 +106,7 @@ public class Error404Autonomus extends OpMode
             case 4:
                 if(getRuntime() > 3)
                 {
-                    robot.markRetract();
+//                    robot.markRetract();
                     resetStartTime();
                     state = 5;
 
@@ -114,7 +114,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 5:
-                if(robot.pointTurn(.1, headingReset, 6))
+                if(robot.pointTurn(.2, headingReset, 6))
                 {
                     resetStartTime();
                     state = 6;
@@ -122,7 +122,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 6:
-                if(robot.drive(.5, forward, gain, craterDriveDistance, 6))
+                if(robot.drive(.4, forward, gain, craterDriveDistance, 6))
                 {
                     state = 7;
                     resetStartTime();
@@ -130,23 +130,23 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 7:
-                if(robot.pointTurn(.1, craterTurnHeading, 6))
+                if(robot.pointTurn(.2, craterTurnHeading, 6))
+                {
+                    state = 8;
+                    resetStartTime();
+                }
+                break;
+
+            case 8:
+                if(robot.drive(.4, right, gain, craterSlideDistance, 6))
                 {
                     state = 9;
                     resetStartTime();
                 }
                 break;
 
-//            case 8:
-//                if(robot.mecanumDrive(.4, right, craterSlideDistance, 6))
-//                {
-//                    state = 9;
-//                    resetStartTime();
-//                }
-//                break;
-
             case 9:
-                if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
+                if(robot.drive(.4, forward, gain, enterCraterDistance, 6))
                 {
                     state = 10;
                     resetStartTime();

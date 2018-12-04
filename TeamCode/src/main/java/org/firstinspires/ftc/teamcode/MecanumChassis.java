@@ -236,14 +236,10 @@ public class MecanumChassis extends Chassis
         double correction;
         double actual = getHeadingDbl();
 
-        if(Math.abs(direction) > 130  &&  actual < 0.0)
-        {
-            actual += 360;
-        }
         if(!moving)
         {
             initialHeading = getHeadingDbl();
-            if(Math.abs(direction) > 130  &&  initialHeading < 0.0)
+            if(Math.abs(initialHeading) > 130  &&  initialHeading < 0.0)
             {
                 initialHeading += 360.0;
             }
@@ -258,13 +254,16 @@ public class MecanumChassis extends Chassis
             resetStartTime();
             moving = true;
         }
+
+        if(Math.abs(initialHeading) > 130  &&  actual < 0.0)
+        {
+            actual += 360;
+        }
+
         correction = ((initialHeading - actual) * gain);
 
         double lStickX = power * Math.sin(Math.toRadians(direction));
         double lStickY = -(power * Math.cos(Math.toRadians(direction)));
-
-        telemetry.addData("stick x", lStickX);
-        telemetry.addData("stick y", lStickY);
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
@@ -273,6 +272,12 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
+
+        telemetry.addData("direction", direction);
+        telemetry.addData("distance", distance);
+        telemetry.addData("actual heading", actual);
+        telemetry.addData("initial heading", initialHeading);
+        telemetry.addData("correction", correction);
 
         return !moving;
      }

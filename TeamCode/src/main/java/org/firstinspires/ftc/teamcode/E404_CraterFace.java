@@ -11,15 +11,15 @@ public class E404_CraterFace extends Error404Autonomus
     {
         // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 
-        mineralDriveDistance = 15;
-        mineralSlideDistance = 45;
-        depoTurnHeading = 125;
-        depoDriveDistance = 35;
-        headingReset = 125;
+        mineralDriveDistance = 18;
+        mineralSlideDistance = 53;
+        depoTurnHeading = 135;
+        depoDriveDistance = 40;
+        headingReset = 135;
         craterDriveDistance = 65;
-        craterTurnHeading = 180;
-        craterSlideDistance = 15;
-        enterCraterDistance = 30;
+        craterTurnHeading = 175;
+        craterSlideDistance = 45;
+        enterCraterDistance = 13;
 
         super.init();
     }

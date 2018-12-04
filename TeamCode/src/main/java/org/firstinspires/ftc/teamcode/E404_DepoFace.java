@@ -6,8 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 public class E404_DepoFace extends Error404Autonomus
 {
-    @Override
-    public void init()
+    @Override public void init()
     {
         // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 
@@ -18,7 +17,7 @@ public class E404_DepoFace extends Error404Autonomus
         headingReset = 45;
         craterDriveDistance = 65;
         craterTurnHeading = 70;
-        craterSlideDistance = 15;
+        craterSlideDistance = 0.0;
         enterCraterDistance = 45;
         super.init();
     }
