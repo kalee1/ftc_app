@@ -13,9 +13,6 @@ public class MotorArm
     DcMotor Elbow = null;
     DcMotor Shoulder = null;
     protected TouchSensor Shoulderfront = null;
-    protected TouchSensor Shoulderback = null;
-    protected TouchSensor Elbowfront = null;
-    protected TouchSensor Elbowback = null;
 
     // Constructor for Class
     public MotorArm()
@@ -27,6 +24,8 @@ public class MotorArm
 
         Elbow = hwmap.dcMotor.get("Elbow");
         Shoulder = hwmap.dcMotor.get("Shoulder");
+        Shoulderfront = hwmap.touchSensor.get("Shoulderfront");
+
 
         Elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         Shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -36,6 +35,8 @@ public class MotorArm
 
     public void ArmDrive( double RightStickY, double LeftStickY, Telemetry telem)
     {
+
+
 
         if (RightStickY > 0)
         {
@@ -51,6 +52,13 @@ public class MotorArm
         }
 
         Shoulder.setPower(LeftStickY * .6);
+
+        if (Shoulderfront.isPressed())
+        {
+            Shoulder.setPower(0.0);
+
+            Shoulder = null;
+        }
 
 
 
