@@ -47,6 +47,7 @@ public class RuckusBot
     public void ArmDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
         theArm.ArmDrive(RightStickY, LeftStickY, telem);
+
     }
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {

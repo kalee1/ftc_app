@@ -20,6 +20,7 @@ public class Error404MecanumTeleop extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
 
+    Collector theCollect = new Collector();
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -70,6 +71,22 @@ public class Error404MecanumTeleop extends OpMode
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
         robot.ArmDrive(LeftStickY, RightStickY, telemetry);
+
+        if (gamepad2.left_bumper == true){
+
+            theCollect.intake();
+        }
+
+        else if (gamepad2.right_bumper == true){
+
+            theCollect.eject();
+        }
+        else{
+
+            theCollect.stop();
+        }
+
+
     }
 
     /**

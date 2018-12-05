@@ -30,7 +30,6 @@ public class Collector {
     }
     public void intake()
     {
-
         theServo.setPower(1.0);
     }
     public void eject()
