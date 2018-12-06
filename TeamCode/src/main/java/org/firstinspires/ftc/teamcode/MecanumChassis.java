@@ -34,13 +34,13 @@ public class MecanumChassis extends Chassis
 
     static final double FORWARD = 0.0;
     static final double BACKWARD = 180.0;
-    static final double RIGHT = -90;
+    static final double RIGHT = 270.0;
     static final double LEFT = 90.0;
 
-    static final double FORWARD_RIGHT_DIAGONAL = -45;
+    static final double FORWARD_RIGHT_DIAGONAL = -45.0;
     static final double FORWARD_LEFT_DIAGONAL = 45.0;
-    static final double REVERSE_RIGHT_DIAGONAL = -135;
-    static final double REVERSE_LEFT_DIAGONAL = 135.0;
+    static final double BACKWARD_RIGHT_DIAGONAL = -135.0;
+    static final double BACKWARD_LEFT_DIAGONAL = 135.0;
 
     final double COUNTS_PER_MOTOR_REV = 1120;
     final double DRIVE_GEAR_REDUCTION = 1.3;

@@ -26,11 +26,10 @@ public class Collector {
             theServo = null;
         }
 
-        telemetry.addData("msg1", "" + theServo.getPower());
+       // telemetry.addData("msg1", "" + theServo.getPower());
     }
     public void intake()
     {
-
         theServo.setPower(1.0);
     }
     public void eject()
