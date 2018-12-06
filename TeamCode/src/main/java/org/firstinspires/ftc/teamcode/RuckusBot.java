@@ -45,8 +45,12 @@ public class RuckusBot
 
     public void ArmDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
-        theArm.ArmDrive(RightStickY, LeftStickY, telem);
+        theArm.ArmDrive(RightStickY, LeftStickY);
 
+    }
+    public void info()
+    {
+        theArm.armDriveInfo();
     }
     public void Intake()
     {

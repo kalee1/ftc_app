@@ -57,32 +57,44 @@ public class Error404MecanumTeleop extends OpMode
         double LeftStickY = gamepad2.left_stick_y;
 
 
+        robot.info();
 
-        /* Do Chassis Control */
+        /* Asigning joysticks to motors */
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
         double rStickY = gamepad1.right_stick_y;
 
-        telemetry.addData("1: leftX", lStickX);
-        telemetry.addData("2: leftY", lStickY);
-//        telemetry.addData("3: rightX", rStickX);
+//        telemetry.addData("1: leftX", lStickX);
+//        telemetry.addData("2: leftY", lStickY);
 
+        //robot chassis controls
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
+        //arm controls
         robot.ArmDrive(LeftStickY, RightStickY, telemetry);
 
+        //intake controls
         if (gamepad2.left_bumper)
         {
             robot.Intake();
         }
-
         else if (gamepad2.right_bumper)
         {
             robot.Eject();
         }
         else{
             robot.collectorStop();
+        }
+
+        //auxiliary swivel
+        if(gamepad2.right_trigger > .1)
+        {
+            robot.joystickDrive(0.0, 0.0, 1, 0.0, .1);
+        }
+        else if(gamepad2.left_trigger > .1)
+        {
+            robot.joystickDrive(0.0, 0.0, -1, 0.0, .1);
         }
 
 
@@ -110,6 +122,7 @@ public class Error404MecanumTeleop extends OpMode
         }
         return powerLimit;
     }
+
 
     /*
      * Code to run ONCE after the driver hits STOP

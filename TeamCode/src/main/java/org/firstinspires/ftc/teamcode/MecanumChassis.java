@@ -273,12 +273,6 @@ public class MecanumChassis extends Chassis
             moving = false;
         }
 
-        telemetry.addData("direction", direction);
-        telemetry.addData("distance", distance);
-        telemetry.addData("actual heading", actual);
-        telemetry.addData("initial heading", initialHeading);
-        telemetry.addData("correction", correction);
-
         return !moving;
      }
 
@@ -363,8 +357,6 @@ public class MecanumChassis extends Chassis
             currentHeading += 360;
         }
 
-        telemetry.addData("current heading", currentHeading);
-        telemetry.addData("target heading", targetHeading);
         if(!moving)
         {
             initialHeading = getHeadingDbl();
@@ -391,8 +383,6 @@ public class MecanumChassis extends Chassis
             resetStartTime();
             moving = true;
         }
-        telemetry.addData("error", error);
-        telemetry.addData("direction power", directionalPower);
 
         joystickDrive(0.0, 0.0, directionalPower, 0.0, power);
 
@@ -401,8 +391,6 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
-
-        telemetry.addData("heading", getHeadingDbl());
 
         return !moving;
     }
