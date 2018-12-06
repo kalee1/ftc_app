@@ -87,7 +87,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 2:
-                if(robot.pointTurn(.1, depoTurnHeading, 6))
+                if(robot.pointTurn(.2, depoTurnHeading, 6))
                 {
                     resetStartTime();
                     state = 3;
@@ -146,18 +146,9 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 9:
-                if(getRuntime() > 3)
+                if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
                 {
-                    resetStartTime();
                     state = 10;
-
-                }
-                break;
-
-            case 10:
-                if(robot.drive(.6, forward, gain, enterCraterDistance, 6))
-                {
-                    state = 11;
                     resetStartTime();
                 }
                 break;

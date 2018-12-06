@@ -2,9 +2,9 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-@Autonomous(name="Depo Face", group="Field Position")
+@Autonomous(name="DepoFace (Left Enter)", group="Field Position")
 
-public class E404_DepoFace extends Error404Autonomus
+public class E404_DepoFaceLeftEnter extends Error404Autonomus
 {
     @Override public void init()
     {

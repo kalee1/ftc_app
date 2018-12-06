@@ -72,12 +72,12 @@ public class Error404MecanumTeleop extends OpMode
 
         robot.ArmDrive(LeftStickY, RightStickY, telemetry);
 
-        if (gamepad2.left_bumper == true)
+        if (gamepad2.left_bumper)
         {
             robot.Intake();
         }
 
-        else if (gamepad2.right_bumper == true)
+        else if (gamepad2.right_bumper)
         {
             robot.Eject();
         }
