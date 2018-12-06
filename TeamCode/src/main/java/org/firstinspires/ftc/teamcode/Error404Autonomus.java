@@ -146,9 +146,18 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 9:
+                if(getRuntime() > 3)
+                {
+                    resetStartTime();
+                    state = 10;
+
+                }
+                break;
+
+            case 10:
                 if(robot.drive(.6, forward, gain, enterCraterDistance, 6))
                 {
-                    state = 10;
+                    state = 11;
                     resetStartTime();
                 }
                 break;
@@ -156,7 +165,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-//        telemetry.addData("1)", "state: " + state );
+        telemetry.addData("1)", "state: " + state );
 
     }
 
