@@ -97,7 +97,7 @@ public class Error404Autonomus extends OpMode
             case 3:
                 if(robot.drive(.5, backward, gain, depoDriveDistance, 6))
                 {
-//                    robot.markDeploy();
+                    robot.markDeploy();
                     resetStartTime();
                     state = 4;
                 }
@@ -106,7 +106,7 @@ public class Error404Autonomus extends OpMode
             case 4:
                 if(getRuntime() > 3)
                 {
-//                    robot.markRetract();
+                    robot.markRetract();
                     resetStartTime();
                     state = 5;
 
@@ -146,7 +146,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 9:
-                if(robot.drive(.4, forward, gain, enterCraterDistance, 6))
+                if(robot.drive(.6, forward, gain, enterCraterDistance, 6))
                 {
                     state = 10;
                     resetStartTime();

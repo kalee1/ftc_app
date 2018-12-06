@@ -19,7 +19,7 @@ public class E404_CraterFace extends Error404Autonomus
         craterDriveDistance = 65;
         craterTurnHeading = 175;
         craterSlideDistance = 45;
-        enterCraterDistance = 13;
+        enterCraterDistance = 20;
 
         super.init();
     }

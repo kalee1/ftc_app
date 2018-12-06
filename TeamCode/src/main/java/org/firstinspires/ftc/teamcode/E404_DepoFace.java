@@ -18,7 +18,7 @@ public class E404_DepoFace extends Error404Autonomus
         craterDriveDistance = 65;
         craterTurnHeading = 70;
         craterSlideDistance = 0.0;
-        enterCraterDistance = 45;
+        enterCraterDistance = 20;
         super.init();
     }
 
