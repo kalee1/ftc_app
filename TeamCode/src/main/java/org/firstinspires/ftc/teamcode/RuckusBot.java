@@ -49,6 +49,18 @@ public class RuckusBot
         theArm.ArmDrive(RightStickY, LeftStickY, telem);
 
     }
+    public void Intake()
+    {
+        theCollect.intake();
+    }
+    public void Eject()
+    {
+        theCollect.eject();
+    }
+    public void collectorStop()
+    {
+        theCollect.stop();
+    }
     public void joystickDrive(double leftStickX, double leftStickY, double rightStickX, double rightStickY, double powerLimit)
     {
         theChassis.joystickDrive(leftStickX, leftStickY, rightStickX, rightStickY, powerLimit);
