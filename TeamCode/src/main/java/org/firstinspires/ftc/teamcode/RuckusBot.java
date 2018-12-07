@@ -12,7 +12,7 @@ public class RuckusBot
 {
     Chassis theChassis =  null;
     MarkDeploy depoDeposit = new MarkDeploy();
-//    FieldVision theEyeOfSauron = new FieldVision();
+    FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
     MotorArm theArm = new MotorArm();
@@ -35,7 +35,7 @@ public class RuckusBot
     public void init(HardwareMap hwMap, Telemetry telem)
     {
         theChassis.init(hwMap, telem);
-//        theEyeOfSauron.init(hwMap, telem);
+        theEyeOfSauron.init(hwMap, telem);
 
         theArm.Arminit(hwMap, telem);
         theCollect.init(hwMap, telem );
@@ -97,6 +97,12 @@ public class RuckusBot
     public void markRetract()
     {
         depoDeposit.retract();
+    }
+
+    public String goldPosition()
+    {
+        theEyeOfSauron.tensorFlowMineralDetection();
+        return "null";
     }
 
 

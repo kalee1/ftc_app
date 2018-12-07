@@ -153,6 +153,31 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+
+            case 11:
+                if(robot.goldPosition().equals("right"))
+                {
+                    //knock off right mineral
+
+                    resetStartTime();
+                    state = 12;
+                }
+                else if(robot.goldPosition().equals("left"))
+                {
+                    //knock off left mineral
+
+                    resetStartTime();
+                    state = 12;
+                }
+                else if(robot.goldPosition().equals("center"))
+                {
+                    //knock off center mineral
+
+                    resetStartTime();
+                    state = 12;
+                }
+                break;
+
             default:
                 break;
         }
