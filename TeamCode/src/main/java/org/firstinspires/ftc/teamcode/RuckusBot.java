@@ -48,10 +48,10 @@ public class RuckusBot
         theArm.ArmDrive(RightStickY, LeftStickY);
 
     }
-    public void info()
-    {
-        theArm.armDriveInfo();
-    }
+//    public void info()
+//    {
+//        theArm.armDriveInfo();
+//    }
     public void Intake()
     {
         theCollect.intake();

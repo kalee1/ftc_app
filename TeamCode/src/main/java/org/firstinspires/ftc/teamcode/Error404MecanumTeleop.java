@@ -57,7 +57,7 @@ public class Error404MecanumTeleop extends OpMode
         double LeftStickY = gamepad2.left_stick_y;
 
 
-        robot.info();
+//        robot.info();
 
         /* Asigning joysticks to motors */
         double lStickX = -gamepad1.left_stick_x;
@@ -114,11 +114,11 @@ public class Error404MecanumTeleop extends OpMode
 
         if (gamepad1.left_trigger == 1)
         {
-            powerLimit = .8;
+            powerLimit = 1;
         }
         else
         {
-            powerLimit = .3;
+            powerLimit = .5;
         }
         return powerLimit;
     }
