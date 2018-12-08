@@ -29,12 +29,8 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 public class FieldVision
 {
 
+    //standard vuforia stuff
     Telemetry telemetry;
-
-    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
-    private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
-    private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
-
     private static final String VUFORIA_KEY = "Ad6PrLn/////AAABmcL6fnsAN0NVnKxQV1Ko3bJpu5A7aDKat+BYcDQbPbdYejMpWXxDoqI5CO5fBqZtYHbBhcG1jjPL4bS/SvDqwI1He1kkqtw4YnZex3qhNUDsABTRdBeaiTyARIf5fGihCakVaCwzGHcPX6tdmJDofA/Q397J9cndk946HOeSqVAtj5/N8lJIXIyaW8s8rXULNgU7XQvQ0v+CC1O6yecH4/kDIYlXjGREV734h4JAKHFeVNuOB3/y8spjIcRCXRc3WPR80d9dAbs5ZB+NsITpCqjkxHGJOKBGDCI4xbQzDJs1JMTRAUWi+GhlIY2AfLWiNWX1d/R/J9+lq5C7UuqnMiyojSk+gJDD37c5H3D2Q/Ni";
 
     // Select which camera you want use.  The FRONT camera is the one on the same side as the screen.
@@ -47,6 +43,12 @@ public class FieldVision
      */
     VuforiaLocalizer vuforia;
 
+
+    //Tensor Flow stuff
+    private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+    private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
+
     /**
      * {@link #tfod} is the variable we will use to store our instance of the Tensor Flow Object
      * Detection engine.
@@ -55,6 +57,7 @@ public class FieldVision
 
 
 
+    // Vuforia Image navigation stuff
     private static final float mmPerInch        = 25.4f;
     private static final float mmFTCFieldWidth  = (12*6) * mmPerInch;       // the width of the FTC field (from the center point to the outer panels)
     private static final float mmTargetHeight   = (6) * mmPerInch;          // the height of the center of the target image above the floor
@@ -67,6 +70,7 @@ public class FieldVision
     private VuforiaTrackable backSpace;
 
 
+    //initializing all the tensor flow and vuforia navigation stuff
     public void init(HardwareMap hwMap, Telemetry telem)
     {
         telemetry = telem;
@@ -276,10 +280,10 @@ public class FieldVision
             ((VuforiaTrackableDefaultListener)trackable.getListener()).setPhoneInformation(phoneLocationOnRobot, parameters.cameraDirection);
         }
 
-        /** Wait for the game to begin */
-        telemetry.addData(">", "Press Play to start tracking");
-        telemetry.update();
-        waitForStart();
+//        /** Wait for the game to begin */
+//        telemetry.addData(">", "Press Play to start tracking");
+//        telemetry.update();
+//        waitForStart();
 
         /** Start tracking the data sets we care about. */
         targetsRoverRuckus.activate();
