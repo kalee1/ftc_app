@@ -57,9 +57,8 @@ public class Error404MecanumTeleop extends OpMode
         double LeftStickY = gamepad2.left_stick_y;
 
 
-//        robot.info();
 
-        /* Asigning joysticks to motors */
+        /* Do Chassis Control */
         double lStickX = -gamepad1.left_stick_x;
         double rStickX = -gamepad1.right_stick_x;
         double lStickY = gamepad1.left_stick_y;
