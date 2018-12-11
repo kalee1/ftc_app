@@ -25,12 +25,17 @@ public class MotorArm
 //    int targetEncoder = 0;
 
 
+    DcMotor elbow = null;
+    DcMotor shoulder = null;
+
+    protected TouchSensor shoulderFront = null;
+
     // Constructor for Class
     public MotorArm()
     {
     }
 
-    public void Arminit(HardwareMap hwmap, Telemetry telem)
+    public void init(HardwareMap hwmap, Telemetry telem)
     {
         Elbow = hwmap.dcMotor.get("Elbow");
         Shoulder = hwmap.dcMotor.get("Shoulder");
@@ -47,35 +52,20 @@ public class MotorArm
         telemetry = telem;
     }
 
-    public void ArmDrive( double RightStickY, double LeftStickY)
+    public void armDrive( double RightStickY, double LeftStickY, Telemetry telem)
     {
-//        if(RightStickY > .05)
-//        {
-//            targetEncoder += 1;
-//        }
-//        else if(RightStickY < -.05)
-//        {
-//            targetEncoder -= 1;
-//        }
-//        ElbowEx.setTargetPosition(targetEncoder);
-//        ElbowEx.setPower(.5);
+//
+//        elbow.setPower(RightStickY * .5);
+//
+//        shoulder.setPower(LeftStickY * .6);
+//
+        if (shoulderFront.isPressed())
+        {
+            shoulder.setPower(-0.2);
 
-        Elbow.setPower(RightStickY * .5);
-        Shoulder.setPower(LeftStickY * .6);
+            shoulder = null;
+        }
 
-//        if (Shoulderfront.isPressed())
-//        {
-//            Shoulder.setPower(0.0);
-//            Shoulder = null;
-//        }
     }
-
-//    public void armDriveInfo()
-//    {
-//        telemetry.addData("target position tolerance", ElbowEx.getTargetPositionTolerance());
-//        telemetry.addData("PIDF Coefficients RUE", ElbowEx.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER));
-//        telemetry.addData("PIDF Coefficients RTP", ElbowEx.getPIDFCoefficients(DcMotor.RunMode.RUN_TO_POSITION));
-//    }
-
 }
 

@@ -28,30 +28,22 @@ public class RuckusBot
         }
     }
 
-    public void armDrive()
-    {
-    }
-
     public void init(HardwareMap hwMap, Telemetry telem)
     {
         theChassis.init(hwMap, telem);
 //        theEyeOfSauron.init(hwMap, telem);
 
-        theArm.Arminit(hwMap, telem);
+        theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );
         depoDeposit.init(hwMap, telem);
 //        area51.init(hwMap);
     }
 
-    public void ArmDrive(double RightStickY, double LeftStickY, Telemetry telem)
+    public void armDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
-        theArm.ArmDrive(RightStickY, LeftStickY);
+        theArm.armDrive(RightStickY, LeftStickY, telem);
 
     }
-//    public void info()
-//    {
-//        theArm.armDriveInfo();
-//    }
     public void Intake()
     {
         theCollect.intake();
