@@ -16,17 +16,14 @@ public class MotorArm
 {
     Telemetry telemetry;
 
-    private DcMotor Elbow = null;
+    private DcMotor elbow = null;
 //    private DcMotorEx ElbowEx = null;
-    private DcMotor Shoulder = null;
+    private DcMotor shoulder = null;
 
 //    protected TouchSensor Shoulderfront = null;
 
 //    int targetEncoder = 0;
 
-
-    DcMotor elbow = null;
-    DcMotor shoulder = null;
 
     protected TouchSensor shoulderFront = null;
 
@@ -37,17 +34,17 @@ public class MotorArm
 
     public void init(HardwareMap hwmap, Telemetry telem)
     {
-        Elbow = hwmap.dcMotor.get("Elbow");
-        Shoulder = hwmap.dcMotor.get("Shoulder");
+        elbow = hwmap.dcMotor.get("Elbow");
+        shoulder = hwmap.dcMotor.get("Shoulder");
 //        Shoulderfront = hwmap.touchSensor.get("Shoulderfront");
 //        ElbowEx = (DcMotorEx)Elbow;
 //        targetEncoder = Elbow.getCurrentPosition();
 //        ElbowEx.setTargetPositionTolerance(10);
 
-        Elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        Shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        Shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry = telem;
     }
