@@ -283,7 +283,6 @@ public class FieldVision
                         }
                     }
                 }
-                telemetry.update();
             }
         }
 
@@ -331,8 +330,6 @@ public class FieldVision
         {
             telemetry.addData("Visible Target", "none");
         }
-        telemetry.update();
-
     }
 
 
