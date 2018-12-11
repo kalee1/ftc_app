@@ -12,20 +12,30 @@ import java.util.List;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 
-
+/**
+ * Contains all the vision code for autonomous including the tensor flow and vuforia image
+ * navigation code.
+ *
+ * @author  Andrew, Error 404: Team Name Not Found
+ * */
 public class FieldVision
 {
 
     Telemetry telemetry;
 
+    /** Labeling the tensor flow assets. */
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
+    /** The 3D asset of the gold mineral which is used by the tensor flow code. */
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
+    /** The 3D asset of the silver mineral which is used by the tensor flow code. */
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
 
+    /** The user-unique vuforia license key which allows the use of the vuforia sofware. */
     private static final String VUFORIA_KEY = "Ad6PrLn/////AAABmcL6fnsAN0NVnKxQV1Ko3bJpu5A7aDKat+BYcDQbPbdYejMpWXxDoqI5CO5fBqZtYHbBhcG1jjPL4bS/SvDqwI1He1kkqtw4YnZex3qhNUDsABTRdBeaiTyARIf5fGihCakVaCwzGHcPX6tdmJDofA/Q397J9cndk946HOeSqVAtj5/N8lJIXIyaW8s8rXULNgU7XQvQ0v+CC1O6yecH4/kDIYlXjGREV734h4JAKHFeVNuOB3/y8spjIcRCXRc3WPR80d9dAbs5ZB+NsITpCqjkxHGJOKBGDCI4xbQzDJs1JMTRAUWi+GhlIY2AfLWiNWX1d/R/J9+lq5C7UuqnMiyojSk+gJDD37c5H3D2Q/Ni";
 
     // Select which camera you want use.  The FRONT camera is the one on the same side as the screen.
     // Valid choices are:  BACK or FRONT
+    /** The camera that vuforia will use. There are two choices for the phone: BACK and FRONT. */
     private static final VuforiaLocalizer.CameraDirection CAMERA_CHOICE = BACK;
 
     /**
@@ -41,6 +51,13 @@ public class FieldVision
     private TFObjectDetector tfod;
 
 
+    /**
+     * Initializes all the hardware and assets used by vuforia and tensor flow.
+     *
+     * @param hwMap  An instnce of the FIRST-provided HardwareMap which allows for hardware to be
+     *               initilized to the robot.
+     * @param telem  An instance of Telemetry which allows this class to use Telemetry.
+     * */
     public void init(HardwareMap hwMap, Telemetry telem)
     {
         telemetry = telem;
@@ -69,10 +86,10 @@ public class FieldVision
 
     }
 
-    public void goldMineralPosition()
-    {
-    }
-
+    /** Sourced from the FIRST-provided tensor flow example code, this method recognizes minerals
+     * in its field of vision and identifies the position of the gold mineral (LEFT, RIGHT, CENTER)
+     * and returns that value as a string.
+     * */
     public String tensorFlowMineralDetection()
     {
         String goldPosition = "null";
@@ -127,9 +144,4 @@ public class FieldVision
 
         return goldPosition;
     }
-
-
-
-
-
 }

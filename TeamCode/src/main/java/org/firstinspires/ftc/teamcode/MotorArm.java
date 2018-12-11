@@ -10,12 +10,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import java.util.EventListener;
 
 
+/**
+ * The class responsible for the mineral collection and deployment arm on the robot. Contains all
+ * the harware and methods for the arm.
+ *
+ * @author Ben, Error 404: Team Name Not Found
+ * */
 public class MotorArm
 {
     Telemetry telemetry;
 
+    /** A dc Motor that moves the elbow joint on the arm.*/
     private DcMotor elbow = null;
 //    private DcMotorEx ElbowEx = null;
+    /** A dc motor that moves the shoulder joint on the arm.*/
     private DcMotor shoulder = null;
 
 //    protected TouchSensor Shoulderfront = null;
@@ -23,16 +31,22 @@ public class MotorArm
 //    int targetEncoder = 0;
 
 
+    /** A touch sensor that, if pressed, stops the arm. */
     protected TouchSensor shoulderFront = null;
+    /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
     protected TouchSensor elbowFront = null;
+    /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
     protected TouchSensor elbowRear = null;
 
-    // Constructor for Class
-    public MotorArm()
-    {
-    }
-
-    public void init(HardwareMap hwmap, Telemetry telem)
+    /**
+     * Initializes all the motors and sensors on the arm using try-catches. The try-catch statements
+     * prevents the code from crashing if the wanted device is missing and instead sends a message
+     * to the phone to notify the driver of the missing device.
+     *
+     * @param hwmap  An instance of the FIRST-provided HarwareMap.
+     * @param telemetry  An instance of Telemetry that allows the use of telemetry in this class.
+     * */
+    public void init(HardwareMap hwmap, Telemetry telemetry)
     {
         try
         {
@@ -79,7 +93,15 @@ public class MotorArm
         }
     }
 
-    public void armDrive( double RightStickY, double LeftStickY, Telemetry telem)
+    /**
+     * Sends the joystick commands to the motors, allowing the drivers to move the arm. Reverses the
+     * arm's movement if it hits one of the three limit switches. This prevents the arm from driving
+     * into itself and breaking.
+     *
+     * @param RightStickY  The y-axis of the right stick on the gamepad. Controls the elbow motor.
+     * @param LeftStickY  The y-axis of the left stick on the gamepad. Controls the shoulder motor.
+     * */
+    public void armDrive( double RightStickY, double LeftStickY)
     {
         if (shoulderFront.isPressed())
         {
