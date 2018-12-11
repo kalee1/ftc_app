@@ -27,6 +27,7 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             elbow = null;
+            telem.addData("Elbow Not Found", "");
         }
         try
         {
@@ -36,6 +37,7 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             shoulder = null;
+            telem.addData("Shoulder Not Found", "");
             shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         try
@@ -45,6 +47,7 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             shoulderFront = null;
+            telem.addData("ShoulderFront Not Found", "");
         }
         try
         {
@@ -53,6 +56,7 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             elbowFront = null;
+            telem.addData("ElbowFront Not Found", "");
         }
         try
         {
@@ -61,6 +65,7 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             elbowRear = null;
+            telem.addData("ElbowRear Not Found", "");
         }
     }
 
