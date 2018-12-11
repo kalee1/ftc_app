@@ -122,7 +122,6 @@ public class FieldVision
                         }
                     }
                 }
-                telemetry.update();
             }
         }
 

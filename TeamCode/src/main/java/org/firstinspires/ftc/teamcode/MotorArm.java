@@ -54,16 +54,15 @@ public class MotorArm
 
     public void armDrive( double RightStickY, double LeftStickY, Telemetry telem)
     {
-//
-//        elbow.setPower(RightStickY * .5);
-//
-//        shoulder.setPower(LeftStickY * .6);
-//
+
         if (shoulderFront.isPressed())
         {
             shoulder.setPower(-0.2);
-
-            shoulder = null;
+        }
+        else
+        {
+           elbow.setPower(RightStickY * .5);
+           shoulder.setPower(LeftStickY * .6);
         }
 
     }

@@ -72,7 +72,7 @@ public class Error404MecanumTeleop extends OpMode
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
         //arm controls
-        robot.ArmDrive(LeftStickY, RightStickY, telemetry);
+        robot.armDrive(LeftStickY, RightStickY, telemetry);
 
         //intake controls
         if (gamepad2.left_bumper)

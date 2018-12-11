@@ -44,7 +44,7 @@ public class RuckusBot
         theArm.armDrive(RightStickY, LeftStickY, telem);
 
     }
-    public void Intake()
+    public void intake()
     {
         theCollect.intake();
     }
