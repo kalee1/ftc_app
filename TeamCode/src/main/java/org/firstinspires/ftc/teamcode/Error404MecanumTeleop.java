@@ -57,7 +57,6 @@ public class Error404MecanumTeleop extends OpMode
         double LeftStickY = gamepad2.left_stick_y;
 
 
-        robot.info();
 
         /* Asigning joysticks to motors */
         double lStickX = -gamepad1.left_stick_x;
@@ -77,11 +76,11 @@ public class Error404MecanumTeleop extends OpMode
         //intake controls
         if (gamepad2.left_bumper)
         {
-            robot.Intake();
+            robot.intake();
         }
         else if (gamepad2.right_bumper)
         {
-            robot.Eject();
+            robot.eject();
         }
         else{
             robot.collectorStop();

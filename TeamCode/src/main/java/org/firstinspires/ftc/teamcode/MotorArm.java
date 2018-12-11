@@ -20,7 +20,7 @@ public class MotorArm
 //    private DcMotorEx ElbowEx = null;
     private DcMotor Shoulder = null;
 
-    protected TouchSensor Shoulderfront = null;
+//    protected TouchSensor Shoulderfront = null;
 
 //    int targetEncoder = 0;
 
@@ -34,7 +34,7 @@ public class MotorArm
     {
         Elbow = hwmap.dcMotor.get("Elbow");
         Shoulder = hwmap.dcMotor.get("Shoulder");
-        Shoulderfront = hwmap.touchSensor.get("Shoulderfront");
+//        Shoulderfront = hwmap.touchSensor.get("Shoulderfront");
 //        ElbowEx = (DcMotorEx)Elbow;
 //        targetEncoder = Elbow.getCurrentPosition();
 //        ElbowEx.setTargetPositionTolerance(10);
@@ -63,11 +63,11 @@ public class MotorArm
         Elbow.setPower(RightStickY * .5);
         Shoulder.setPower(LeftStickY * .6);
 
-        if (Shoulderfront.isPressed())
-        {
-            Shoulder.setPower(0.0);
-            Shoulder = null;
-        }
+//        if (Shoulderfront.isPressed())
+//        {
+//            Shoulder.setPower(0.0);
+//            Shoulder = null;
+//        }
     }
 
 //    public void armDriveInfo()
