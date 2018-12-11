@@ -33,6 +33,7 @@ public class Error404Autonomus extends OpMode
     protected double craterSlideDistance;
     protected double enterCraterDistance;
     protected double headingReset;
+    protected String goldPosition;
 
     double gain = 0.01;
 
@@ -71,14 +72,59 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             case 0:
-                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+                if(robot.goldPosition().equals("left"))
                 {
+                    goldPosition = "left";
                     resetStartTime();
                     state = 1;
+                }
+                else if(robot.goldPosition().equals("right"))
+                {
+                    goldPosition = "right";
+                    resetStartTime();
+                    state = 2;
+                }
+                else if(robot.goldPosition().equals("center"))
+                {
+                    goldPosition = "center";
+                    resetStartTime();
+                    state = 3;
+                }
+                else if(getRuntime() > 6)
+                {
+                    resetStartTime();
+                    state = 3;
                 }
                 break;
 
             case 1:
+                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+                {
+                    //knock off left mineral
+                    resetStartTime();
+                    state = 4;
+                }
+                break;
+
+            case 2:
+                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+                {
+                    //knock off right mineral
+                    resetStartTime();
+                    state = 4;
+                }
+                break;
+
+            case 3:
+                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+                {
+                    //knock off center mineral
+                    resetStartTime();
+                    state = 4;
+                }
+                break;
+
+            case 4:
                 if(robot.drive(.4, right, gain, mineralSlideDistance, 6))
                 {
                     resetStartTime();
@@ -86,7 +132,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 2:
+            case 5:
                 if(robot.pointTurn(.2, depoTurnHeading, 6))
                 {
                     resetStartTime();
@@ -94,7 +140,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 3:
+            case 6:
                 if(robot.drive(.5, backward, gain, depoDriveDistance, 6))
                 {
                     robot.markDeploy();
@@ -103,7 +149,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 4:
+            case 7:
                 if(getRuntime() > 3)
                 {
                     robot.markRetract();
@@ -113,7 +159,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 5:
+            case 8:
                 if(robot.pointTurn(.2, headingReset, 6))
                 {
                     resetStartTime();
@@ -121,7 +167,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 6:
+            case 9:
                 if(robot.drive(.4, forward, gain, craterDriveDistance, 6))
                 {
                     state = 7;
@@ -129,7 +175,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 7:
+            case 10:
                 if(robot.pointTurn(.2, craterTurnHeading, 6))
                 {
                     state = 8;
@@ -137,7 +183,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 8:
+            case 11:
                 if(robot.drive(.4, right, gain, craterSlideDistance, 6))
                 {
                     state = 9;
@@ -145,36 +191,11 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            case 9:
+            case 12:
                 if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
                 {
                     state = 10;
                     resetStartTime();
-                }
-                break;
-
-
-            case 11:
-                if(robot.goldPosition().equals("right"))
-                {
-                    //knock off right mineral
-
-                    resetStartTime();
-                    state = 12;
-                }
-                else if(robot.goldPosition().equals("left"))
-                {
-                    //knock off left mineral
-
-                    resetStartTime();
-                    state = 12;
-                }
-                else if(robot.goldPosition().equals("center"))
-                {
-                    //knock off center mineral
-
-                    resetStartTime();
-                    state = 12;
                 }
                 break;
 

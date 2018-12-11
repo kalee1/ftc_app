@@ -68,7 +68,7 @@ public class FieldVision
     private VuforiaTrackable redFootprint;
     private VuforiaTrackable frontCraters;
     private VuforiaTrackable backSpace;
-    private VuforiaTrackable allTrackables;
+    private List<VuforiaTrackable> allTrackables;
 
 
     //initializing all the tensor flow and vuforia navigation stuff
@@ -112,7 +112,7 @@ public class FieldVision
         backSpace.setName("Back-Space");
 
         // For convenience, gather together all the trackable objects in one easily-iterable collection */
-        List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
+        allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsRoverRuckus);
 
 
@@ -283,7 +283,6 @@ public class FieldVision
                         }
                     }
                 }
-                telemetry.update();
             }
         }
 
@@ -301,8 +300,10 @@ public class FieldVision
 
         // check all the trackable target to see which one (if any) is visible.
         targetVisible = false;
-        for (VuforiaTrackable trackable : allTrackables) {
-            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible()) {
+        for (VuforiaTrackable trackable : allTrackables)
+        {
+            if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible())
+            {
                 telemetry.addData("Visible Target", trackable.getName());
                 targetVisible = true;
 
@@ -317,7 +318,8 @@ public class FieldVision
         }
 
         // Provide feedback as to where the robot is located (if we know).
-        if (targetVisible) {
+        if (targetVisible)
+        {
             // express position (translation) of robot in inches.
             VectorF translation = lastLocation.getTranslation();
             telemetry.addData("Pos (in)", "{X, Y, Z} = %.1f, %.1f, %.1f",
@@ -327,11 +329,10 @@ public class FieldVision
             Orientation rotation = Orientation.getOrientation(lastLocation, EXTRINSIC, XYZ, DEGREES);
             telemetry.addData("Rot (deg)", "{Roll, Pitch, Heading} = %.0f, %.0f, %.0f", rotation.firstAngle, rotation.secondAngle, rotation.thirdAngle);
         }
-        else {
+        else
+        {
             telemetry.addData("Visible Target", "none");
         }
-        telemetry.update();
-
     }
 
 
