@@ -23,21 +23,21 @@ public class MotorArm
     public void init(HardwareMap hwmap, Telemetry telem)
     {
 
-//        elbow = hwmap.dcMotor.get("elbow");
-//        shoulder = hwmap.dcMotor.get("shoulder");
-//        shoulderFront = hwmap.touchSensor.get("shoulderFront");
-//
-//        elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-//        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        elbow = hwmap.dcMotor.get("elbow");
+        shoulder = hwmap.dcMotor.get("shoulder");
+        shoulderFront = hwmap.touchSensor.get("shoulderFront");
+
+        elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void armDrive( double RightStickY, double LeftStickY, Telemetry telem)
     {
-//
-//        elbow.setPower(RightStickY * .5);
-//
-//        shoulder.setPower(LeftStickY * .6);
-//
+
+        elbow.setPower(RightStickY * .5);
+
+        shoulder.setPower(LeftStickY * .6);
+
         if (shoulderFront.isPressed())
         {
             shoulder.setPower(-0.2);
