@@ -69,7 +69,7 @@ public class MotorArm
         }
     }
 
-    public void armDrive( double RightStickY, double LeftStickY, Telemetry telem)
+    public void armDrive( double RightStickY, double LeftStickY)
     {
         if (shoulderFront.isPressed())
         {

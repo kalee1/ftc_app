@@ -9,36 +9,34 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Collector {
 
     public CRServo theServo = null;
-    Telemetry telemetry;
 
     public void init(HardwareMap hwmap, Telemetry telem)
     {
-        telemetry = telem;
-
         try
         {
-
             theServo = hwmap.crservo.get( "Collector" );
             theServo.setDirection(CRServo.Direction.FORWARD);
 
         } catch (Exception p_exeception) {
 
             theServo = null;
+            telem.addData("Collector Not Found", "");
         }
-
-       // telemetry.addData("msg1", "" + theServo.getPower());
     }
-    public void intake()
+
+    public void intake(Telemetry telem)
     {
         theServo.setPower(1.0);
+        telem.addData("Collector Direction = Forward", "");
     }
-    public void eject()
 
+    public void eject(Telemetry telem)
     {
         theServo.setPower(-1.0);
+        telem.addData("Collector Direction = Backward", "");
     }
-    public void stop()
 
+    public void stop()
     {
         theServo.setPower(0.0);
     }

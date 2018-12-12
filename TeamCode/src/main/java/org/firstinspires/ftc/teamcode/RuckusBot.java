@@ -42,16 +42,16 @@ public class RuckusBot
 
     public void armDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
-        theArm.armDrive(RightStickY, LeftStickY, telem);
+        theArm.armDrive(RightStickY, LeftStickY);
 
     }
-    public void Intake()
+    public void Intake(Telemetry telem)
     {
-        theCollect.intake();
+        theCollect.intake(telem);
     }
-    public void Eject()
+    public void Eject(Telemetry telem)
     {
-        theCollect.eject();
+        theCollect.eject(telem);
     }
     public void collectorStop()
     {
