@@ -16,7 +16,8 @@ public class RuckusBot
     /** An instance of the MarkDeploy class. Links to the mechanism and the code that deploys the
      * team marker in autonomous. */
     MarkDeploy depoDeposit = new MarkDeploy();
-//    FieldVision theEyeOfSauron = new FieldVision();
+    FieldVision theEyeOfSauron = new FieldVision();
+//    MineralProcessing area51 = new MineralProcessing();
 
     /** An instance of the MotorArm class. Links to the motors and the code relating to the
      * operation of the mineral arm in teleop. */
@@ -48,7 +49,7 @@ public class RuckusBot
     public void init(HardwareMap hwMap, Telemetry telem)
     {
         theChassis.init(hwMap, telem);
-//        theEyeOfSauron.init(hwMap, telem);
+        theEyeOfSauron.init(hwMap, telem);
 
         theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );
@@ -176,5 +177,12 @@ public class RuckusBot
     {
         depoDeposit.retract();
     }
+
+    public String goldPosition()
+    {
+        theEyeOfSauron.tensorFlowMineralDetection();
+        return "null";
+    }
+
 
 }
