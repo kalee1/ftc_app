@@ -10,9 +10,10 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @TeleOp(name="Error404 Mecanum Teleop", group="Teleop")
 /**
- * The class which will handle the driver controlled period of the match.
+ * The class which will handle the driver controlled period of the match. Uses a robot chassis with
+ * mecanum wheels.
  *
- * @author Error 404: Team Name Not Found
+ * @author Andrew, Error 404: Team Name Not Found
  * @see OpMode
  */
 public class Error404MecanumTeleop extends OpMode
@@ -24,6 +25,7 @@ public class Error404MecanumTeleop extends OpMode
     /*
      * Code to run ONCE when the driver hits INIT
      */
+    /** Calls the init methods for needed classes. */
     @Override
     public void init()
     {
@@ -40,6 +42,8 @@ public class Error404MecanumTeleop extends OpMode
     /*
      * Code to run ONCE when the driver hits PLAY
      */
+    /** Not used for anything right now, but runs once when the start button is pressed, but before
+     * the loop method starts. */
     @Override
     public void start()
     {
@@ -49,59 +53,75 @@ public class Error404MecanumTeleop extends OpMode
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
+    /** Contains the actual movement commands of the class. Runs repeatedly until the stop button is
+     *  pressed.*/
     @Override
     public void loop()
     {
-        /* Do Arm Control  */
+        /* Arm Control  */
+        /* The y-axis of the right joystick on the gamepad. Used for mineral arm control. */
         double RightStickY = gamepad2.right_stick_y;
+        /* The y-axis of the left joystick on the gamepad. Used for mineral arm control. */
         double LeftStickY = gamepad2.left_stick_y;
 
 
 
-        /* Do Chassis Control */
+        /* Chassis Control */
+        /* The x-axis of the left joystick on the gamepad. Used for chassis control*/
         double lStickX = -gamepad1.left_stick_x;
+        /* The x-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickX = -gamepad1.right_stick_x;
+        /* The y-axis of the left joystick on the gamepad. Used for chassis control*/
         double lStickY = gamepad1.left_stick_y;
+        /* The y-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickY = gamepad1.right_stick_y;
 
 //        telemetry.addData("1: leftX", lStickX);
 //        telemetry.addData("2: leftY", lStickY);
 
-        //robot chassis controls
+        //robot chassis control method
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
-        //arm controls
-        robot.armDrive(LeftStickY, RightStickY, telemetry);
+        //arm control method
+        robot.armDrive(LeftStickY, RightStickY);
 
-        //intake controls
+        //mineral intake controls
+        //If the left bumper is pressed, turn the intake wheels inward.
         if (gamepad2.left_bumper)
         {
             robot.intake();
         }
+        //If the right bumber is pressed, turn the intake wheels outward.
         else if (gamepad2.right_bumper)
         {
             robot.eject();
         }
-        else{
+        //If neither bumper is pressed, stop the intake wheels.
+        else
+        {
             robot.collectorStop();
         }
 
         //auxiliary swivel
+        /*Allows the secondary gamepad (which run the mineral arm) to turn the chassis at a very slow
+               speed to aid in lining up on minerals. */
+        //If the right trigger on the secondary gamepad is pressed, rotate chassis right at .15 power.
         if(gamepad2.right_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, 1, 0.0, .1);
+            robot.joystickDrive(0.0, 0.0, 1, 0.0, .15);
         }
+        //If the left trigger on the secondary gamepad is pressed, rotate the chassis left at .15 power.
         else if(gamepad2.left_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, -1, 0.0, .1);
+            robot.joystickDrive(0.0, 0.0, -1, 0.0, .15);
         }
 
 
     }
 
     /**
-     * afterburners() allows the driver to increase the robot's top speed from the default of 0.3 to
-     * 0.8 by holding down the left trigger on the gamepad. This is because it is easier to make small
+     * afterburners() allows the driver to increase the robot's top speed from the default of 0.5 to
+     * 1.0 by holding down the left trigger on the gamepad. This is because it is easier to make small
      * precise movements (like lining up on a mineral) at a lower top speed, but it is also
      * useful to drive fast when crossing the field.
      *
@@ -111,10 +131,12 @@ public class Error404MecanumTeleop extends OpMode
     {
         double powerLimit;
 
+        //If the left trigger on the primary gamepad is pressed, set the maximum drive power to 1.0
         if (gamepad1.left_trigger == 1)
         {
             powerLimit = 1;
         }
+        //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.5
         else
         {
             powerLimit = .5;
@@ -126,6 +148,8 @@ public class Error404MecanumTeleop extends OpMode
     /*
      * Code to run ONCE after the driver hits STOP
      */
+    /** Runs once after the driver hits the stop button on teh drivers station phone.
+     * Stops the loop method and stops the drive motors. */
     @Override
     public void stop()
     {

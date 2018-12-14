@@ -10,8 +10,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 /**
+ * A type of chassis. Specifically a chassis that does not have mecanum wheels and drives like a tank.
  *
- * @author Error 404: Team Name Not Found
+ * @author Andrew, Error 404: Team Name Not Found
  * @see Chassis
  */
 @Disabled
@@ -24,6 +25,15 @@ public class TankChassis extends Chassis
     private DcMotor rRearMotor = null;
     private DcMotor lRearMotor = null;
 
+    /**
+     * Initilizes all the hardware used by this class. Also initilizes an instance of telemtry.
+     * Init has try-catches in it which means that the code won't crash if it can't find a listed
+     * piece of hardware. Instead the code will display a message on the driver station screen
+     * alerting the driver of the error.
+     *
+     * @param hwMap  An instance of HarwareMap, provided by FIRST.
+     * @param telem  An instance of telemtry, letting us use telemtry statements in this class.
+     * */
     @Override
     public void init(HardwareMap hwMap, Telemetry telem)
     {
@@ -178,6 +188,9 @@ public class TankChassis extends Chassis
         return !moving;
     }
 
+    /**
+     * Sets all the drive motors to zero power.
+     * */
     @Override
     public void stopMotors()
     {

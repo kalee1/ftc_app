@@ -65,6 +65,9 @@ public class Error404Autonomus extends OpMode
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
+    /** Runs through code repeatedly after the driver hits play but before the driver hits stop.
+     * This loop method contains a state machine that runs through the autonomous moves.
+     * */
     @Override
     public void loop()
     {
@@ -157,12 +160,13 @@ public class Error404Autonomus extends OpMode
                 break;
         }
         telemetry.addData("1)", "state: " + state );
-
     }
 
     /*
      * Code to run ONCE after the driver hits STOP
      */
+    /** Runs through once after the stop button on the driver station phone is pressed.
+     * Stops all motors and interrupts the loop method */
     @Override
     public void stop()
     {

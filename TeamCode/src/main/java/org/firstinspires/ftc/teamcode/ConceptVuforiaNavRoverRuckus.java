@@ -161,7 +161,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsRoverRuckus);
 
-        /**
+        /*
          * In order for localization to work, we need to tell the system where each target is on the field, and
          * where the phone resides on the robot.  These specifications are in the form of <em>transformation matrices.</em>
          * Transformation matrices are a central, important concept in the math here involved in localization.
@@ -181,7 +181,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
          *  coordinate system (the center of the field), facing up.
          */
 
-        /**
+        /*
          * To place the BlueRover target in the middle of the blue perimeter wall:
          * - First we rotate it 90 around the field's X axis to flip it upright.
          * - Then, we translate it along the Y axis to the blue perimeter wall.
@@ -191,7 +191,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 0));
         blueRover.setLocation(blueRoverLocationOnField);
 
-        /**
+        /*
          * To place the RedFootprint target in the middle of the red perimeter wall:
          * - First we rotate it 90 around the field's X axis to flip it upright.
          * - Second, we rotate it 180 around the field's Z axis so the image is flat against the red perimeter wall
@@ -203,7 +203,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, 180));
         redFootprint.setLocation(redFootprintLocationOnField);
 
-        /**
+        /*
          * To place the FrontCraters target in the middle of the front perimeter wall:
          * - First we rotate it 90 around the field's X axis to flip it upright.
          * - Second, we rotate it 90 around the field's Z axis so the image is flat against the front wall
@@ -215,7 +215,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0 , 90));
         frontCraters.setLocation(frontCratersLocationOnField);
 
-        /**
+        /*
          * To place the BackSpace target in the middle of the back perimeter wall:
          * - First we rotate it 90 around the field's X axis to flip it upright.
          * - Second, we rotate it -90 around the field's Z axis so the image is flat against the back wall
@@ -227,7 +227,7 @@ public class ConceptVuforiaNavRoverRuckus extends LinearOpMode {
                 .multiplied(Orientation.getRotationMatrix(EXTRINSIC, XYZ, DEGREES, 90, 0, -90));
         backSpace.setLocation(backSpaceLocationOnField);
 
-        /**
+        /*
          * Create a transformation matrix describing where the phone is on the robot.
          *
          * The coordinate frame for the robot looks the same as the field.
