@@ -69,7 +69,7 @@ public class Chassis
      *
      * @return  a boolean that tells whether or not the robot is currently moving.
      * */
-    public boolean tankDrive(double power, TankDirection irection, double gain, double distance, double time)
+    public boolean tankDrive(double power, TankDirection direction, double gain, double distance, double time)
     {
         return moving;
     }
