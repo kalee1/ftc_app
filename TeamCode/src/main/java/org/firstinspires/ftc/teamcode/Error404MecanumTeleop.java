@@ -66,6 +66,8 @@ public class Error404MecanumTeleop extends OpMode
         telemetry.addData("2: leftY", lStickY);
 //        telemetry.addData("3: rightX", rStickX);
 
+        robot.touchloop();
+
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
         robot.armDrive(LeftStickY, RightStickY, telemetry);

@@ -11,6 +11,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  */
 public class RuckusBot
 {
+    TouchSensor theTouch = new TouchSensor();
     Chassis theChassis =  null;
     MarkDeploy depoDeposit = new MarkDeploy();
 //    FieldVision theEyeOfSauron = new FieldVision();
@@ -37,8 +38,13 @@ public class RuckusBot
         theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );
         depoDeposit.init(hwMap, telem);
+        theTouch.init(hwMap, telem);
 //        area51.init(hwMap);
     }
+    public void touchloop(Telemetry telem)
+        {
+            theTouch.touchloop(telem);
+        }
 
     public void armDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
