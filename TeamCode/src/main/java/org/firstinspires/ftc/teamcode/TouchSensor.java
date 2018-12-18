@@ -1,5 +1,4 @@
 package org.firstinspires.ftc.teamcode;
-
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -7,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 public class TouchSensor extends OpMode
 {
 
-    protected com.qualcomm.robotcore.hardware.TouchSensor Shoulderfront = null;
+    protected com.qualcomm.robotcore.hardware.TouchSensor shoulderFront = null;
     protected com.qualcomm.robotcore.hardware.TouchSensor Shoulderback = null;
     protected com.qualcomm.robotcore.hardware.TouchSensor Elbowfront = null;
     protected com.qualcomm.robotcore.hardware.TouchSensor Elbowback = null;
@@ -18,14 +17,14 @@ public class TouchSensor extends OpMode
 
         try
         {
-            Shoulderfront = hardwareMap.touchSensor.get("Shoulderfront");
-            telemetry.addData("", "" + Shoulderfront.getValue());
+            shoulderFront = hardwareMap.touchSensor.get("shoulderFront");
+            telemetry.addData("", "" + shoulderFront.getValue());
             telemetry.update();
         } catch (Exception p_exeception)
         {
 
             telemetry.addData("SHOULDER-FRONT", "NOT FOUND");
-            Shoulderfront = null;
+            shoulderFront = null;
         }
 
        /* try
@@ -72,13 +71,13 @@ public class TouchSensor extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("", "" + Shoulderfront.getValue());
+        telemetry.addData("", "" + shoulderFront.getValue());
         telemetry.update();
 
-        if (Shoulderfront.isPressed())
+        if (shoulderFront.isPressed())
         {
             //Shoulder.setPower(.5);
-            telemetry.addData("ShoulderFront", "has been pressed");
+            telemetry.addData("shoulderFront", "has been pressed");
             telemetry.update();
         }
 

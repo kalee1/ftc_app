@@ -12,6 +12,8 @@ public class MotorArm
     protected TouchSensor elbowFront = null;
     protected TouchSensor elbowRear = null;
 
+    TestVuforia vuTest = new TestVuforia();
+
     // Constructor for Class
     public MotorArm()
     {
