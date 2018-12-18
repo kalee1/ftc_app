@@ -17,6 +17,7 @@ public class Chassis
 {
     enum TankDirection {FORWARD, REVERSE}
 
+    boolean pressed = false;
     boolean moving = false;
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
     Telemetry telemetry;
@@ -74,7 +75,6 @@ public class Chassis
     {
         startTime = System.nanoTime();
     }
-
 
     /**
      * Converts inches to encoder ticks

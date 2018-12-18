@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -12,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 /**
  * A chassis type. Specifically a mecanum chassis. Contains all of the hardware declerations for a
@@ -116,6 +119,7 @@ public class MecanumChassis extends Chassis
         {
             rFrontMotor = null;
         }
+
         try
         {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
@@ -128,6 +132,7 @@ public class MecanumChassis extends Chassis
         {
             lFrontMotor = null;
         }
+
         try
         {
             rRearMotor = hwMap.dcMotor.get("rightRear");
@@ -140,6 +145,7 @@ public class MecanumChassis extends Chassis
         {
             rRearMotor = null;
         }
+
         try
         {
             lRearMotor = hwMap.dcMotor.get("leftRear");
@@ -150,12 +156,15 @@ public class MecanumChassis extends Chassis
         }
         catch (Exception p_exeception)
         {
-            rRearMotor = null;
+            lRearMotor = null;
         }
-        try {
+
+        try
+        {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         }
-        catch (Exception p_exeception) {
+        catch (Exception p_exeception)
+        {
             telem.addData("navx not found in config file", 0);
             navx = null;
         }

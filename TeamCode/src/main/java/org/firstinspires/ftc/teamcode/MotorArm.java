@@ -1,4 +1,5 @@
 package org.firstinspires.ftc.teamcode;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -44,9 +45,9 @@ public class MotorArm
      * to the phone to notify the driver of the missing device.
      *
      * @param hwmap  An instance of the FIRST-provided HarwareMap.
-     * @param telemetry  An instance of Telemetry that allows the use of telemetry in this class.
+     * @param telem  An instance of Telemetry that allows the use of telemetry in this class.
      * */
-    public void init(HardwareMap hwmap, Telemetry telemetry)
+    public void init(HardwareMap hwmap, Telemetry telem)
     {
         try
         {
@@ -73,24 +74,27 @@ public class MotorArm
         }
         catch (Exception p_exeception)
         {
+            telem.addData("shoulderFront not found in config file", 0);
             shoulderFront = null;
         }
-        try
-        {
-            elbowFront = hwmap.touchSensor.get("elbowFront");
-        }
-        catch (Exception p_exeception)
-        {
-            elbowFront = null;
-        }
-        try
-        {
-            elbowRear = hwmap.touchSensor.get("elbowRear");
-        }
-        catch (Exception p_exeception)
-        {
-            elbowRear = null;
-        }
+//        try
+//        {
+//            elbowFront = hwmap.touchSensor.get("elbowFront");
+//        }
+//        catch (Exception p_exeception)
+//        {
+//            elbowFront = null;
+//        }
+//        try
+//        {
+//            elbowRear = hwmap.touchSensor.get("elbowRear");
+//        }
+//        catch (Exception p_exeception)
+//        {
+//            elbowRear = null;
+//        }
+
+        telemetry = telem;
     }
 
     /**
@@ -101,30 +105,35 @@ public class MotorArm
      * @param RightStickY  The y-axis of the right stick on the gamepad. Controls the elbow motor.
      * @param LeftStickY  The y-axis of the left stick on the gamepad. Controls the shoulder motor.
      * */
-    public void armDrive( double RightStickY, double LeftStickY)
+    public void armDrive( double LeftStickY, double RightStickY)
     {
         if (shoulderFront.isPressed())
         {
-            shoulder.setPower(-0.2);
+            shoulder.setPower(-0.1);
+            telemetry.addData("shoulder press", shoulder.getPower());
+            telemetry.addData("left stick", LeftStickY);
         }
         else
         {
             elbow.setPower(RightStickY * .5);
             shoulder.setPower(LeftStickY * .6);
+            telemetry.addData("shoulder", shoulder.getPower());
+            telemetry.addData("left stick", LeftStickY);
+
         }
 
-        if (elbowFront.isPressed())
-        {
-            elbow.setPower(-0.2);
-        }
-        else if(elbowRear.isPressed())
-        {
-            elbow.setPower(0.2);
-        }
-        else
-        {
-            elbow.setPower(RightStickY * .5);
-            shoulder.setPower(LeftStickY * .6);
-        }
+//        if (elbowFront.isPressed())
+//        {
+//            elbow.setPower(-0.2);
+//        }
+//        else if(elbowRear.isPressed())
+//        {
+//            elbow.setPower(0.2);
+//        }
+//        else
+//        {
+//            elbow.setPower(RightStickY * .5);
+//            shoulder.setPower(LeftStickY * .6);
+//        }
     }
 }

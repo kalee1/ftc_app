@@ -82,8 +82,10 @@ public class Error404MecanumTeleop extends OpMode
         //robot chassis control method
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
+
         //arm control method
         robot.armDrive(LeftStickY, RightStickY);
+
 
         //mineral intake controls
         //If the left bumper is pressed, turn the intake wheels inward.
@@ -101,6 +103,7 @@ public class Error404MecanumTeleop extends OpMode
         {
             robot.collectorStop();
         }
+
 
         //auxiliary swivel
         /*Allows the secondary gamepad (which run the mineral arm) to turn the chassis at a very slow
@@ -139,7 +142,7 @@ public class Error404MecanumTeleop extends OpMode
         //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.5
         else
         {
-            powerLimit = .5;
+            powerLimit = .4;
         }
         return powerLimit;
     }
