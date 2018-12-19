@@ -40,7 +40,6 @@ public class MotorArm
         {
             shoulder = null;
             telem.addData("Shoulder Not Found", "");
-            shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         try
         {
@@ -69,32 +68,34 @@ public class MotorArm
             elbowRear = null;
             telem.addData("ElbowRear Not Found", "");
         }
+
+
     }
 
     public void armDrive( double RightStickY, double LeftStickY)
     {
-        if (shoulderFront.isPressed())
-        {
-            shoulder.setPower(-0.2);
-        }
-        else
-        {
-            elbow.setPower(RightStickY * .5);
-            shoulder.setPower(LeftStickY * .6);
-        }
-
-        if (elbowFront.isPressed())
-        {
-            elbow.setPower(-0.2);
-        }
-        else if(elbowRear.isPressed())
-        {
-            elbow.setPower(0.2);
-        }
-        else
-        {
-            elbow.setPower(RightStickY * .5);
-            shoulder.setPower(LeftStickY * .6);
-        }
+//        if (shoulderFront.isPressed())
+//        {
+//            shoulder.setPower(-0.2);
+//        }
+//        else
+//        {
+//            elbow.setPower(RightStickY * .5);
+//            shoulder.setPower(LeftStickY * .6);
+//        }
+//
+//        if (elbowFront.isPressed())
+//        {
+//            elbow.setPower(-0.2);
+//        }
+//        else if(elbowRear.isPressed())
+//        {
+//            elbow.setPower(0.2);
+//        }
+//        else
+//        {
+//            elbow.setPower(RightStickY * .5);
+//            shoulder.setPower(LeftStickY * .6);
+//        }
     }
 }

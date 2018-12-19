@@ -41,10 +41,10 @@ public class RuckusBot
         theTouch.init(hwMap, telem);
 //        area51.init(hwMap);
     }
-    public void touchloop(Telemetry telem)
-        {
-            theTouch.touchloop(telem);
-        }
+//    public void touchloop(Telemetry telem)
+//        {
+//            theTouch.touchloop(telem);
+//        }
 
     public void armDrive(double RightStickY, double LeftStickY, Telemetry telem)
     {
