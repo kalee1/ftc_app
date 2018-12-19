@@ -71,6 +71,8 @@ public class Error404MecanumTeleop extends OpMode
         //robot chassis controls
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
+        robot.navigationDrive();
+
         //arm controls
         robot.ArmDrive(LeftStickY, RightStickY, telemetry);
 
@@ -108,6 +110,7 @@ public class Error404MecanumTeleop extends OpMode
      *
      * @return  a double that is the maximum power
      */
+
     public double afterburners()
     {
         double powerLimit;
@@ -122,7 +125,6 @@ public class Error404MecanumTeleop extends OpMode
         }
         return powerLimit;
     }
-
 
     /*
      * Code to run ONCE after the driver hits STOP

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.vuforia.Trackable;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -69,6 +70,7 @@ public class FieldVision
     private VuforiaTrackable frontCraters;
     private VuforiaTrackable backSpace;
     private List<VuforiaTrackable> allTrackables;
+    String navTarget;
 
 
     //initializing all the tensor flow and vuforia navigation stuff
@@ -295,13 +297,30 @@ public class FieldVision
      */
     public void vuforiaRun()
     {
+        if (navTarget == "Back-Space")
+            {
+        telemetry.addData("BACK SPACE FOUND", "");
+            }
+        else if (navTarget == "Red-Footprint")
+            {
+            telemetry.addData("RED FOOTPRINT FOUND", "");
+            }
+        else
+            {
+            telemetry.addData("NO TARGET FOUND", "");
+            }
+
+
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsRoverRuckus);
 
         // check all the trackable target to see which one (if any) is visible.
         targetVisible = false;
+
+
         for (VuforiaTrackable trackable : allTrackables)
         {
+
             if (((VuforiaTrackableDefaultListener)trackable.getListener()).isVisible())
             {
                 telemetry.addData("Visible Target", trackable.getName());
@@ -312,8 +331,9 @@ public class FieldVision
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
+
+                   navTarget = trackable.getName();
                 }
-                break;
             }
         }
 
@@ -333,6 +353,9 @@ public class FieldVision
         {
             telemetry.addData("Visible Target", "none");
         }
+
+
+
     }
 
 

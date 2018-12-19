@@ -105,5 +105,10 @@ public class RuckusBot
         return "null";
     }
 
+    public void navigationDrive()
+        {
+            theEyeOfSauron.vuforiaRun();
+        }
+
 
 }
