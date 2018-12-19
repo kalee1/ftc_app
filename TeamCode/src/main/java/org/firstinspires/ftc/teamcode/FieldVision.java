@@ -5,6 +5,7 @@ import com.vuforia.Trackable;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -90,6 +91,7 @@ public class FieldVision
 
         parameters.vuforiaLicenseKey = VUFORIA_KEY;
         parameters.cameraDirection = CAMERA_CHOICE;
+        parameters.cameraName = hwMap.get(WebcamName.class, "JesterCam");
 
         //  Instantiate the Vuforia engine
         vuforia = ClassFactory.getInstance().createVuforia(parameters);
@@ -196,7 +198,7 @@ public class FieldVision
          * camera is pointing to the left side of the  robot.  The rotation angles don't work if you flip the phone.
          *
          * If using the rear (High Res) camera:
-         * We need to rotate the camera around it's long axis to bring the rear camera forward.
+         * We need to rotfate the camera around it's long axis to bring the rear camera forward.
          * This requires a negative 90 degree rotation on the Y axis
          *
          * If using the Front (Low Res) camera
