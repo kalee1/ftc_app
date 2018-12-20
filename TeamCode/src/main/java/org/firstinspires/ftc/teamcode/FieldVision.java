@@ -241,6 +241,7 @@ public class FieldVision
     {
         /** Start tracking the data sets we care about. */
 //        targetsRoverRuckus.activate();
+        tfod.activate();
     }
 
 
