@@ -180,8 +180,7 @@ public class RuckusBot
 
     public String goldPosition()
     {
-        theEyeOfSauron.tensorFlowMineralDetection();
-        return "null";
+        return theEyeOfSauron.tensorFlowMineralDetection();
     }
 
 

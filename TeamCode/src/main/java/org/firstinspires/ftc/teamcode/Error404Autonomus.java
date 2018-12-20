@@ -115,150 +115,154 @@ public class Error404Autonomus extends OpMode
                  goldPosistion variable to the value of the gold position and set state equal to
                  the correct case value..*/
             case 0:
-                if(robot.goldPosition().equals("left"))
+                goldPosition = robot.goldPosition();
+                if(goldPosition.equals("left"))
                 {
-                    goldPosition = "left";
-                    resetStartTime();
-                    state = 1;
-                }
-                else if(robot.goldPosition().equals("right"))
-                {
-                    goldPosition = "right";
-                    resetStartTime();
-                    state = 2;
-                }
-                else if(robot.goldPosition().equals("center"))
-                {
-                    goldPosition = "center";
-                    resetStartTime();
+//                    goldPosition = "left";
+//                    resetStartTime();
                     state = 3;
                 }
-                else if(getRuntime() > 6)
+                else if(goldPosition.equals("right"))
                 {
-                    resetStartTime();
+//                    goldPosition = "right";
+//                    resetStartTime();
                     state = 3;
                 }
-                break;
-
-                //Drive up to the minerals and knock off the left one.
-            case 1:
-                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+                else if(goldPosition.equals("center"))
                 {
-                    //knock off left mineral
-                    resetStartTime();
-                    state = 4;
+//                    goldPosition = "center";
+//                    resetStartTime();
+                    state = 3;
                 }
-                break;
-
-                //Drive up to the minerals and knock off the right one.
-            case 2:
-                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
-                {
-                    //knock off right mineral
-                    resetStartTime();
-                    state = 4;
-                }
-                break;
-
-                //Drive up to the minerals and knock off the center one.
-            case 3:
-                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
-                {
-                    //knock off center mineral
-                    resetStartTime();
-                    state = 4;
-                }
-                break;
-
-                //Strafe right and around the minerals.
-            case 4:
-                if(robot.drive(.4, right, gain, mineralSlideDistance, 6))
-                {
-                    resetStartTime();
-                    state = 2;
-                }
-                break;
-
-                //Turn to face the depo.
-            case 5:
-                if(robot.pointTurn(.2, depoTurnHeading, 6))
+                if (getRuntime() > 25)
                 {
                     resetStartTime();
                     state = 3;
                 }
+                telemetry.addData("gold position", goldPosition);
+//                state = 100;
+                telemetry.addData("state", state);
                 break;
-
-                //Drive to the depo.
-            case 6:
-                if(robot.drive(.5, backward, gain, depoDriveDistance, 6))
-                {
-                    robot.markDeploy();
-                    resetStartTime();
-                    state = 4;
-                }
-                break;
-
-                //Deposit the team marker into the alliance depo.
-            case 7:
-                if(getRuntime() > 3)
-                {
-                    robot.markRetract();
-                    resetStartTime();
-                    state = 5;
-
-                }
-                break;
-
-                //Correct heading.
-            case 8:
-                if(robot.pointTurn(.2, headingReset, 6))
-                {
-                    resetStartTime();
-                    state = 6;
-                }
-                break;
-
-                //Drive towards crater.
-            case 9:
-                if(robot.drive(.4, forward, gain, craterDriveDistance, 6))
-                {
-                    state = 7;
-                    resetStartTime();
-                }
-                break;
-
-                //Turn to face the crater.
-            case 10:
-                if(robot.pointTurn(.2, craterTurnHeading, 6))
-                {
-                    state = 8;
-                    resetStartTime();
-                }
-                break;
-
-                //Strafe right, around the crater.
-            case 11:
-                if(robot.drive(.4, right, gain, craterSlideDistance, 6))
-                {
-                    state = 9;
-                    resetStartTime();
-                }
-                break;
-
-                //Drive into the crater.
-            case 12:
-                if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
-                {
-                    state = 10;
-                    resetStartTime();
-                }
-                break;
+//
+//                //Drive up to the minerals and knock off the left one.
+//            case 1:
+//                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+//                {
+//                    //knock off left mineral
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
+//
+//                //Drive up to the minerals and knock off the right one.
+//            case 2:
+//                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+//                {
+//                    //knock off right mineral
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
+//
+//                //Drive up to the minerals and knock off the center one.
+//            case 3:
+//                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
+//                {
+//                    //knock off center mineral
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
+//
+//                //Strafe right and around the minerals.
+//            case 4:
+//                if(robot.drive(.4, right, gain, mineralSlideDistance, 6))
+//                {
+//                    resetStartTime();
+//                    state = 2;
+//                }
+//                break;
+//
+//                //Turn to face the depo.
+//            case 5:
+//                if(robot.pointTurn(.2, depoTurnHeading, 6))
+//                {
+//                    resetStartTime();
+//                    state = 3;
+//                }
+//                break;
+//
+//                //Drive to the depo.
+//            case 6:
+//                if(robot.drive(.5, backward, gain, depoDriveDistance, 6))
+//                {
+//                    robot.markDeploy();
+//                    resetStartTime();
+//                    state = 4;
+//                }
+//                break;
+//
+//                //Deposit the team marker into the alliance depo.
+//            case 7:
+//                if(getRuntime() > 3)
+//                {
+//                    robot.markRetract();
+//                    resetStartTime();
+//                    state = 5;
+//
+//                }
+//                break;
+//
+//                //Correct heading.
+//            case 8:
+//                if(robot.pointTurn(.2, headingReset, 6))
+//                {
+//                    resetStartTime();
+//                    state = 6;
+//                }
+//                break;
+//
+//                //Drive towards crater.
+//            case 9:
+//                if(robot.drive(.4, forward, gain, craterDriveDistance, 6))
+//                {
+//                    state = 7;
+//                    resetStartTime();
+//                }
+//                break;
+//
+//                //Turn to face the crater.
+//            case 10:
+//                if(robot.pointTurn(.2, craterTurnHeading, 6))
+//                {
+//                    state = 8;
+//                    resetStartTime();
+//                }
+//                break;
+//
+//                //Strafe right, around the crater.
+//            case 11:
+//                if(robot.drive(.4, right, gain, craterSlideDistance, 6))
+//                {
+//                    state = 9;
+//                    resetStartTime();
+//                }
+//                break;
+//
+//                //Drive into the crater.
+//            case 12:
+//                if(robot.drive(.5, forward, gain, enterCraterDistance, 6))
+//                {
+//                    state = 10;
+//                    resetStartTime();
+//                }
+//                break;
 
             default:
                 break;
         }
         //Post the current state value to the driver station phone.
-        telemetry.addData("1)", "state: " + state );
+//        telemetry.addData("1)", "state: " + state );
     }
 
     /*
