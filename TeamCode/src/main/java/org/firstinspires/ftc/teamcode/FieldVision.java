@@ -57,7 +57,7 @@ public class FieldVision
      */
     private TFObjectDetector tfod;
 
-
+    int state = 0;  // used to represent the current state in the state machine
 
     // Vuforia Image navigation stuff
     private static final float mmPerInch        = 25.4f;
@@ -71,7 +71,8 @@ public class FieldVision
     private VuforiaTrackable frontCraters;
     private VuforiaTrackable backSpace;
     private List<VuforiaTrackable> allTrackables;
-    String navTarget;
+
+    Error404Autonomus auto = new Error404Autonomus();
 
 
     //initializing all the tensor flow and vuforia navigation stuff
@@ -297,22 +298,9 @@ public class FieldVision
     /**
      * The vuforua navigation code
      */
-    public void vuforiaRun()
+    public void vuforiaNavTargetDetection()
     {
-        if (navTarget == "Back-Space")
-            {
-        telemetry.addData("BACK SPACE FOUND", "");
-            }
-        else if (navTarget == "Red-Footprint")
-            {
-            telemetry.addData("RED FOOTPRINT FOUND", "");
-            }
-        else
-            {
-            telemetry.addData("NO TARGET FOUND", "");
-            }
-
-
+        String feildPosition = "null";
         List<VuforiaTrackable> allTrackables = new ArrayList<VuforiaTrackable>();
         allTrackables.addAll(targetsRoverRuckus);
 
@@ -331,10 +319,9 @@ public class FieldVision
                 // getUpdatedRobotLocation() will return null if no new information is available since
                 // the last time that call was made, or if the trackable is not currently visible.
                 OpenGLMatrix robotLocationTransform = ((VuforiaTrackableDefaultListener)trackable.getListener()).getUpdatedRobotLocation();
+                feildPosition = trackable.getName();
                 if (robotLocationTransform != null) {
                     lastLocation = robotLocationTransform;
-
-                   navTarget = trackable.getName();
                 }
             }
         }

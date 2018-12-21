@@ -105,9 +105,10 @@ public class RuckusBot
         return "null";
     }
 
-    public void navigationDrive()
+    public String fieldPosition()
         {
-            theEyeOfSauron.vuforiaRun();
+            theEyeOfSauron.vuforiaNavTargetDetection();
+            return "null";
         }
 
 

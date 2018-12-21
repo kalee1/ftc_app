@@ -34,6 +34,7 @@ public class Error404Autonomus extends OpMode
     protected double enterCraterDistance;
     protected double headingReset;
     protected String goldPosition;
+    protected String fieldPosition;
 
     double gain = 0.01;
 
@@ -71,6 +72,70 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
+
+//
+//        case 1000:
+//                if(robot.fieldPosition().equals("Back-Space"))
+//                {
+//                    fieldPosition = "Back-Space";
+//                    telemetry.addData("BACK SPACE FOUND", "");
+//                    telemetry.addData("Processing Data-set #1", "DepoLeftFace");
+//                    resetStartTime();
+//                    mineralDriveDistance = 55.0;
+//                    mineralSlideDistance = 0.0;
+//                    depoTurnHeading = 45.0; // ~45 degrees
+//                    depoDriveDistance = 0.0;
+//                    headingReset = 45;
+//                    craterDriveDistance = 65;
+//                    craterTurnHeading = 70;
+//                    craterSlideDistance = 0.0;
+//                    enterCraterDistance = 20;
+//                    state = 1;
+//                }
+//                else if(robot.fieldPosition().equals("Red-Footprint"))
+//                {
+//                    fieldPosition = "Red-Footprint";
+//                    telemetry.addData("RED FOOTPRINT FOUND", "");
+//                    telemetry.addData("Processing Data-set #2", "DepoRightFace");
+//                    resetStartTime();
+//                    mineralDriveDistance = 55.0;
+//                    mineralSlideDistance = 0.0;
+//                    depoTurnHeading = 45.0; // ~45 degrees
+//                    depoDriveDistance = 0.0;
+//                    headingReset = 45;
+//                    craterDriveDistance = 50;
+//                    craterTurnHeading = 85;
+//                    craterSlideDistance = 60;
+//                    enterCraterDistance = 35;
+//                    state = 1;
+//                }
+//                else if(robot.fieldPosition().equals("-------"))
+//                {
+//                    fieldPosition = "--------";
+//                    telemetry.addData("--------- FOUND", "");
+//                    telemetry.addData("Processing Data-set #3", "CraterFace");
+//                    resetStartTime();
+//                    mineralDriveDistance = 18;
+//                    mineralSlideDistance = 44;
+//                    depoTurnHeading = 135;
+//                    depoDriveDistance = 47;
+//                    headingReset = 135;
+//                    craterDriveDistance = 45;
+//                    craterTurnHeading = 175;
+//                    craterSlideDistance = 65;
+//                    enterCraterDistance = 32;
+//                    state = 1;
+//                }
+//                else if(getRuntime() > 6)
+//                {
+//                    fieldPosition = "NONE";
+//                    telemetry.addData("NO TARGET FOUND", "");
+//                    resetStartTime();
+//                    state = 1;
+//                }
+//
+//            break;
+//
             case 0:
                 if(robot.goldPosition().equals("left"))
                 {
