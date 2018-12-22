@@ -97,6 +97,7 @@ public class Error404Autonomus extends OpMode
     @Override
     public void start()
     {
+        robot.start();
         resetStartTime();
     }
 
@@ -120,39 +121,42 @@ public class Error404Autonomus extends OpMode
                 {
 //                    goldPosition = "left";
 //                    resetStartTime();
-                    state = 3;
+                    state = 1;
                 }
                 else if(goldPosition.equals("right"))
                 {
 //                    goldPosition = "right";
 //                    resetStartTime();
-                    state = 3;
+                    state = 1;
                 }
                 else if(goldPosition.equals("center"))
                 {
 //                    goldPosition = "center";
 //                    resetStartTime();
-                    state = 3;
+                    state = 1;
                 }
-                if (getRuntime() > 25)
+                if (getRuntime() > 16)
                 {
                     resetStartTime();
                     state = 3;
                 }
                 telemetry.addData("gold position", goldPosition);
-//                state = 100;
                 telemetry.addData("state", state);
+                if (state != 0)
+                {
+                    robot.tfodShutdown();
+                }
                 break;
-//
-//                //Drive up to the minerals and knock off the left one.
-//            case 1:
-//                if(robot.drive(.4, backward, gain, mineralDriveDistance, 6))
-//                {
-//                    //knock off left mineral
-//                    resetStartTime();
-//                    state = 4;
-//                }
-//                break;
+
+                //Drive up to the minerals and knock off the left one.
+            case 1:
+                if(robot.drive(.1, forward, gain, 2, 6))
+                {
+                    //knock off left mineral
+                    resetStartTime();
+                    state = 4;
+                }
+                break;
 //
 //                //Drive up to the minerals and knock off the right one.
 //            case 2:

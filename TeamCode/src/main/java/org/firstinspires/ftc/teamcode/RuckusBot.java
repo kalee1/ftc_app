@@ -56,6 +56,10 @@ public class RuckusBot
         depoDeposit.init(hwMap, telem);
     }
 
+    public void start() {
+        theEyeOfSauron.start();
+    }
+
     /** A go-between between the opmode class and the actual chassis class.
      * Drives the mineral arm using joystick inputs.
      *
@@ -181,6 +185,11 @@ public class RuckusBot
     public String goldPosition()
     {
         return theEyeOfSauron.tensorFlowMineralDetection();
+    }
+
+    public void tfodShutdown()
+    {
+        theEyeOfSauron.tfodShutdown();
     }
 
 
