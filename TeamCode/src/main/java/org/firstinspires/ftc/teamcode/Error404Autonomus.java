@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 
+import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Autonomous(name="Mother Autonomus", group="Zeta")
@@ -19,7 +20,7 @@ public class Error404Autonomus extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     /** An int varibale that is used to record the current case the case machine is in. */
-    int state = 0;  // used to represent the current state in the state machine
+    int state = 2;  // used to represent the current state in the state machine
     /** An int variable that is used to record the current motor position at the beginning of a move. */
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -112,51 +113,112 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
+//            case 0:
+//                //lower robot
+
+//            case 1:
+//                //gyro correct
+
             /*Look for the three minerals and locate the position of the gold mineral. Set the
                  goldPosistion variable to the value of the gold position and set state equal to
                  the correct case value..*/
-            case 0:
+            //find gold mineral position
+            case 2:
                 goldPosition = robot.goldPosition();
                 if(goldPosition.equals("left"))
                 {
-//                    goldPosition = "left";
-//                    resetStartTime();
-                    state = 1;
+                    if(robot.drive(.2, forward, gain, 6, 6))
+                    {
+                        resetStartTime();
+                        state = 3;
+                    }
                 }
                 else if(goldPosition.equals("right"))
                 {
-//                    goldPosition = "right";
-//                    resetStartTime();
-                    state = 1;
+                    if(robot.drive(.2, forward, gain, 6, 6))
+                    {
+                        resetStartTime();
+                        state = 4;
+                    }
                 }
                 else if(goldPosition.equals("center"))
                 {
-//                    goldPosition = "center";
-//                    resetStartTime();
-                    state = 1;
+                    if(robot.drive(.2, forward, gain, 6, 6))
+                    {
+                        resetStartTime();
+                        state = 5;
+                    }
                 }
-                if (getRuntime() > 16)
+                if (getRuntime() > 10)
                 {
-                    resetStartTime();
-                    state = 3;
+                    if(robot.drive(.2, forward, gain, 6, 6))
+                    {
+                        resetStartTime();
+                        state = 10;
+                    }
                 }
                 telemetry.addData("gold position", goldPosition);
                 telemetry.addData("state", state);
-                if (state != 0)
+                if (state != 2)
                 {
+                    resetStartTime();
                     robot.tfodShutdown();
                 }
                 break;
 
-                //Drive up to the minerals and knock off the left one.
-            case 1:
-                if(robot.drive(.1, forward, gain, 2, 6))
+
+                //Swivel to face the left mineral and drive forward
+            case 3:
+                if(robot.pointTurn(.2, 30, 4))
                 {
-                    //knock off left mineral
                     resetStartTime();
-                    state = 4;
+                    state = 6;
                 }
                 break;
+
+                //swivel to face right mineral and drive forward
+            case 4:
+                if(robot.pointTurn(.2, -30, 4))
+                {
+                    resetStartTime();
+                    state = 6;
+                }
+                break;
+
+                //swivel to face mineral center mineral and drive forward
+            case 5:
+                if(robot.pointTurn(.2, 0, 4))
+                {
+                    resetStartTime();
+                    state = 6;
+                }
+                break;
+
+                //knock off gold mineral
+            case 6:
+                // extend arm
+                state = 7;
+                break;
+
+                //drive forward
+            case 7:
+                if(robot.drive(.2, forward, gain, 5, 6))
+                {
+                    resetStartTime();
+                    state = 8;
+                }
+                break;
+
+                //face depo
+            case 8:
+                if(robot.pointTurn(.2, 0, 4))
+                {
+                    resetStartTime();
+                    state = 9;
+                }
+                break;
+
+            case 9:
 //
 //                //Drive up to the minerals and knock off the right one.
 //            case 2:
