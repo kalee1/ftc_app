@@ -119,6 +119,11 @@ public class Error404MecanumTeleop extends OpMode
             robot.joystickDrive(0.0, 0.0, -1, 0.0, .15);
         }
 
+        if (gamepad2.a)
+        {
+            robot.activate();
+        }
+
 
     }
 

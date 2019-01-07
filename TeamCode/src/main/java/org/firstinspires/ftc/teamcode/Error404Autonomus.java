@@ -185,7 +185,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //swivel to face mineral center mineral and drive forward
+                //swivel to face center mineral and drive forward
             case 5:
                 if(robot.pointTurn(.2, 0, 4))
                 {
@@ -218,7 +218,47 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive forward and deploy marker and mineral into depo
             case 9:
+                if(robot.drive(.2, forward, gain, 5, 4))
+                {
+                    robot.eject();
+                    resetStartTime();
+                    state = 10;
+                }
+                break;
+
+                //stop collector after three seconds
+            case 10:
+                if(getRuntime() > 3)
+                {
+                    robot.collectorStop();
+                    resetStartTime();
+                    state = 11;
+                }
+                break;
+
+                //retract the mineral arm
+            case 11:
+                //retract arm
+                break;
+
+                //turn to face crater
+            case 12:
+                if(robot.pointTurn(.2, craterTurnHeading, 5))
+                {
+                    resetStartTime();
+                    state = 13;
+                }
+                break;
+
+            case 13:
+                if(robot.drive(.2, forward, gain, craterDriveDistance, 6))
+                {
+                    resetStartTime();
+                    state = 14;
+                }
+                break;
 //
 //                //Drive up to the minerals and knock off the right one.
 //            case 2:
