@@ -248,10 +248,10 @@ public class MecanumChassis extends Chassis
             lRearMotor.setPower(leftRear);
         }
 
-//        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
-//        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
-//        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
-//        telemetry.addData("4. left rear encoder", lRearMotor.getCurrentPosition());
+        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
+        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
+        telemetry.addData("4. left rear encoder", lRearMotor.getCurrentPosition());
 
 //        telemetry.addData("5. right front power", rFrontMotor.getPower());
 //        telemetry.addData("6. left front power", lFrontMotor.getPower());
@@ -310,6 +310,8 @@ public class MecanumChassis extends Chassis
         double lStickY = -(power * Math.cos(Math.toRadians(direction)));
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
+
+ //       telemetry.addData("encoder", lFrontMotor.getCurrentPosition());
 
         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {

@@ -191,10 +191,6 @@ public class RuckusBot
     {
         theEyeOfSauron.tfodShutdown();
     }
-    public void activate()
-    {
-        depoDeposit.activate();
-    }
 
 
 }

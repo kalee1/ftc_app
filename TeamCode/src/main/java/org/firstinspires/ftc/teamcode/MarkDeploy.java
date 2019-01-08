@@ -16,10 +16,6 @@ public class MarkDeploy
 
     /** A continuous rotation servo called flag. */
     public CRServo flag;
-    public CRServo one;
-    public CRServo two;
-    public CRServo three;
-    public CRServo four;
 //    Servo flag;
 
     /** Initilzing the hardware used in this class.
@@ -44,55 +40,6 @@ public class MarkDeploy
             flag = null;
         }
 
-        try
-        {
-            one = hwMap.crservo.get( "one" );
-//            flag = hwMap.servo.get("MarkDeploy");
-            one.setDirection(CRServo.Direction.FORWARD);
-//            flag.setDirection(Servo.Direction.FORWARD);
-//            flag.setPosition(.5);
-        }
-        catch (Exception p_exception)
-        {
-            one = null;
-        }
-        try
-        {
-            two = hwMap.crservo.get( "two" );
-//            flag = hwMap.servo.get("MarkDeploy");
-            two.setDirection(CRServo.Direction.FORWARD);
-//            flag.setDirection(Servo.Direction.FORWARD);
-//            flag.setPosition(.5);
-        }
-        catch (Exception p_exception)
-        {
-            two = null;
-        }
-        try
-        {
-            three = hwMap.crservo.get( "three" );
-//            flag = hwMap.servo.get("MarkDeploy");
-            three.setDirection(CRServo.Direction.FORWARD);
-//            flag.setDirection(Servo.Direction.FORWARD);
-//            flag.setPosition(.5);
-        }
-        catch (Exception p_exception)
-        {
-            three = null;
-        }
-        try
-        {
-            four = hwMap.crservo.get( "four" );
-//            flag = hwMap.servo.get("MarkDeploy");
-            four.setDirection(CRServo.Direction.FORWARD);
-//            flag.setDirection(Servo.Direction.FORWARD);
-//            flag.setPosition(.5);
-        }
-        catch (Exception p_exception)
-        {
-            four = null;
-        }
-
     }
 
     /** Deploys the team marker. */
@@ -107,14 +54,6 @@ public class MarkDeploy
     {
         flag.setPower(0.0);
 //        flag.setPosition(.3);
-    }
-
-    public void activate()
-    {
-        one.setPower(1.0);
-        two.setPower(1.0);
-        three.setPower(1.0);
-        four.setPower(1.0);
     }
 
 
