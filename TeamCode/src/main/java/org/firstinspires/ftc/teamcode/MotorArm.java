@@ -33,11 +33,11 @@ public class MotorArm
 
 
     /** A touch sensor that, if pressed, stops the arm. */
-    protected TouchSensor shoulderFront = null;
+    protected TouchSensor chassisTouch = null;
     /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
     protected TouchSensor elbowFront = null;
     /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
-    protected TouchSensor elbowRear = null;
+    protected TouchSensor elbowBack = null;
 
     /**
      * Initializes all the motors and sensors on the arm using try-catches. The try-catch statements
@@ -68,31 +68,35 @@ public class MotorArm
             shoulder = null;
             shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
+
+
         try
         {
-            shoulderFront = hwmap.touchSensor.get("shoulderFront");
+            elbowBack = hwmap.touchSensor.get("elbowBack");
         }
-        catch (Exception p_exeception)
+        catch (Exception p_exception)
         {
-            telem.addData("shoulderFront not found in config file", 0);
-            shoulderFront = null;
+            elbowBack = null;
+            telemetry.addData("elbowBack not found", "");
         }
-//        try
-//        {
-//            elbowFront = hwmap.touchSensor.get("elbowFront");
-//        }
-//        catch (Exception p_exeception)
-//        {
-//            elbowFront = null;
-//        }
-//        try
-//        {
-//            elbowRear = hwmap.touchSensor.get("elbowRear");
-//        }
-//        catch (Exception p_exeception)
-//        {
-//            elbowRear = null;
-//        }
+        try
+        {
+            elbowFront = hwmap.touchSensor.get("elbowFront");
+        }
+        catch (Exception p_exception)
+        {
+            elbowFront = null;
+            telemetry.addData("elbowFront not found", "");
+        }
+        try
+        {
+            chassisTouch = hwmap.touchSensor.get("chassisTouch");
+        }
+        catch (Exception p_exception)
+        {
+            chassisTouch = null;
+            telemetry.addData("chassisTouch not found", "");
+        }
 
         telemetry = telem;
     }
@@ -107,33 +111,6 @@ public class MotorArm
      * */
     public void armDrive( double LeftStickY, double RightStickY)
     {
-        if (shoulderFront.isPressed())
-        {
-            shoulder.setPower(-0.1);
-            telemetry.addData("shoulder press", shoulder.getPower());
-            telemetry.addData("left stick", LeftStickY);
-        }
-        else
-        {
-            elbow.setPower(RightStickY * .5);
-            shoulder.setPower(LeftStickY * .6);
-            telemetry.addData("shoulder", shoulder.getPower());
-            telemetry.addData("left stick", LeftStickY);
 
-        }
-
-//        if (elbowFront.isPressed())
-//        {
-//            elbow.setPower(-0.2);
-//        }
-//        else if(elbowRear.isPressed())
-//        {
-//            elbow.setPower(0.2);
-//        }
-//        else
-//        {
-//            elbow.setPower(RightStickY * .5);
-//            shoulder.setPower(LeftStickY * .6);
-//        }
     }
 }
