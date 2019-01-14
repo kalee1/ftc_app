@@ -83,22 +83,7 @@ public class Error404MecanumTeleop extends OpMode
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
 
-        if (elbowBack == true)
-        {
-            robot.armDrive(RightStickY, 0.2);
-        }
-        else if (elbowFront == true)
-        {
-            robot.armDrive(RightStickY, -0.2);
-        }
-        else if (shoulderBack == true)
-        {
-            robot.armDrive(0.2, RightStickY);
-        }
-        else
-        {
-            robot.armDrive(RightStickY, LeftStickY);
-        }
+
 
 
 

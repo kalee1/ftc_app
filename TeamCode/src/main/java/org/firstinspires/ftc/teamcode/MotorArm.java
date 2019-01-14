@@ -109,8 +109,43 @@ public class MotorArm
      * @param RightStickY  The y-axis of the right stick on the gamepad. Controls the elbow motor.
      * @param LeftStickY  The y-axis of the left stick on the gamepad. Controls the shoulder motor.
      * */
-    public void armDrive( double LeftStickY, double RightStickY)
+    public void armDrive( double RightStickY, double LeftStickY)
     {
+        double elbowGain = 0.3;
+        double shoulderGain = 0.4;
 
+        if (elbowBack != 1)
+        {
+            shoulder.setPower(LeftStickY * shoulderGain);
+            elbow.setPower(0.2);
+        }
+        else if (elbowFront.isPressed())
+        {
+            shoulder.setPower(LeftStickY * shoulderGain);
+            elbow.setPower(-0.2);
+        }
+        else if (chassisTouch.isPressed())
+        {
+            shoulder.setPower(0.2);
+            elbow.setPower(RightStickY * elbowGain);
+        }
+        else
+        {
+            shoulder.setPower(LeftStickY * shoulderGain);
+            elbow.setPower(RightStickY * elbowGain);
+        }
+
+    }
+    public void ArmDeploy()
+    {
+        /*
+        shoulderCurrentDis = Shoulder.getCurrentPosition();
+        shoulderDis = Shoulder.getCurrentPosition() + 5000;
+
+        if (shoulderCurrentDis <= shoulderDis)
+        {
+
+        }
+        */
     }
 }
