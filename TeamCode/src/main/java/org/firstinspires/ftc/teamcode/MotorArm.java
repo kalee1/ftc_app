@@ -1,101 +1,84 @@
 package org.firstinspires.ftc.teamcode;
+
+import android.provider.Settings;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDCoefficients;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.TouchSensor;
+
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-public class MotorArm
-{
-    DcMotor elbow = null;
-    DcMotor shoulder = null;
-    protected TouchSensor shoulderFront = null;
-    protected TouchSensor elbowFront = null;
-    protected TouchSensor elbowRear = null;
+import java.util.EventListener;
 
-    TestVuforia vuTest = new TestVuforia();
+
+public class MotorArm
+    {
+    Telemetry telemetry;
+    double shoulderCurrentDis = 0;
+    double shoulderDis = 0;
+
+    private DcMotor Elbow = null;
+    //    private DcMotorEx ElbowEx = null;
+    private DcMotor Shoulder = null;
+
+//    int targetEncoder = 0;
+
 
     // Constructor for Class
     public MotorArm()
-    {
-    }
+        {
+        }
 
     public void init(HardwareMap hwmap, Telemetry telem)
-    {
-        try
         {
-            elbow = hwmap.dcMotor.get("elbow");
-            elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-        catch (Exception p_exeception)
-        {
-            elbow = null;
-            telem.addData("Elbow Not Found", "");
-        }
-        try
-        {
-            shoulder = hwmap.dcMotor.get("shoulder");
-            shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        }
-        catch (Exception p_exeception)
-        {
-            shoulder = null;
-            telem.addData("Shoulder Not Found", "");
-        }
-        try
-        {
-            shoulderFront = hwmap.touchSensor.get("shoulderFront");
-        }
-        catch (Exception p_exeception)
-        {
-            shoulderFront = null;
-            telem.addData("ShoulderFront Not Found", "");
-        }
-        try
-        {
-            elbowFront = hwmap.touchSensor.get("elbowFront");
-        }
-        catch (Exception p_exeception)
-        {
-            elbowFront = null;
-            telem.addData("ElbowFront Not Found", "");
-        }
-        try
-        {
-            elbowRear = hwmap.touchSensor.get("elbowRear");
-        }
-        catch (Exception p_exeception)
-        {
-            elbowRear = null;
-            telem.addData("ElbowRear Not Found", "");
-        }
 
-
-    }
+            try
+                {
+                Elbow = hwmap.dcMotor.get("Elbow");
+                Elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                Elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+            catch (Exception p_exception)
+                {
+                Elbow = null;
+                telem.addData("Elbow not found", "");
+                }
+            try
+                {
+                Shoulder = hwmap.dcMotor.get("Shoulder");
+                Shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                Shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                }
+            catch (Exception p_exception)
+                {
+                Shoulder = null;
+                telem.addData("Shoulder not found", "");
+                }
+            telemetry = telem;
+        }
 
     public void armDrive( double RightStickY, double LeftStickY)
-    {
-//        if (shoulderFront.isPressed())
-//        {
-//            shoulder.setPower(-0.2);
-//        }
-//        else
-//        {
-//            elbow.setPower(RightStickY * .5);
-//            shoulder.setPower(LeftStickY * .6);
-//        }
-//
-//        if (elbowFront.isPressed())
-//        {
-//            elbow.setPower(-0.2);
-//        }
-//        else if(elbowRear.isPressed())
-//        {
-//            elbow.setPower(0.2);
-//        }
-//        else
-//        {
-//            elbow.setPower(RightStickY * .5);
-//            shoulder.setPower(LeftStickY * .6);
-//        }
+        {
+
+            Elbow.setPower(RightStickY * .5);
+
+            Shoulder.setPower(LeftStickY * .6);
+
+        }
+    public void ArmDeploy()
+        {
+        /*
+        shoulderCurrentDis = Shoulder.getCurrentPosition();
+        shoulderDis = Shoulder.getCurrentPosition() + 5000;
+
+        if (shoulderCurrentDis <= shoulderDis)
+        {
+
+        }
+        */
+        }
     }
-}
+

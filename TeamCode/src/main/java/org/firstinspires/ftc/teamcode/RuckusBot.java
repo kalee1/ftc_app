@@ -46,7 +46,7 @@ public class RuckusBot
 //            theTouch.touchloop(telem);
 //        }
 
-    public void armDrive(double RightStickY, double LeftStickY, Telemetry telem)
+    public void armDrive(double RightStickY, double LeftStickY)
     {
         theArm.armDrive(RightStickY, LeftStickY);
 

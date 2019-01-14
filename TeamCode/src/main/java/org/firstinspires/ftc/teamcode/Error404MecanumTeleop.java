@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -22,6 +23,11 @@ public class Error404MecanumTeleop extends OpMode
     /*
      * Code to run ONCE when the driver hits INIT
      */
+
+protected com.qualcomm.robotcore.hardware.TouchSensor ChassisTouch = null;
+protected com.qualcomm.robotcore.hardware.TouchSensor ArmTouchForward = null;
+protected TouchSensor ArmTouchBackward = null;
+
     @Override
     public void init()
     {
@@ -33,6 +39,33 @@ public class Error404MecanumTeleop extends OpMode
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
 
+        try
+            {
+            ArmTouchBackward = hardwareMap.touchSensor.get("ArmTouchBackward");
+            }
+        catch (Exception p_exception)
+            {
+            ArmTouchBackward = null;
+            telemetry.addData("ArmTouchB not found", "");
+            }
+        try
+            {
+            ArmTouchForward = hardwareMap.touchSensor.get("ArmTouchForward");
+            }
+        catch (Exception p_exception)
+            {
+            ArmTouchForward = null;
+            telemetry.addData("ArmTouchF not found", "");
+            }
+        try
+            {
+            ChassisTouch = hardwareMap.touchSensor.get("ChassisTouch");
+            }
+        catch (Exception p_exception)
+            {
+            ChassisTouch = null;
+            telemetry.addData("ChassisTouch not found", "");
+            }
     }
 
     /*
@@ -54,7 +87,10 @@ public class Error404MecanumTeleop extends OpMode
         double RightStickY = gamepad2.right_stick_y;
         double LeftStickY = gamepad2.left_stick_y;
 
+        if (ArmTouchForward.isPressed());
+        {
 
+        }
 
         /* Do Chassis Control */
         double lStickX = -gamepad1.left_stick_x;
@@ -70,7 +106,7 @@ public class Error404MecanumTeleop extends OpMode
 
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
-        robot.armDrive(LeftStickY, RightStickY, telemetry);
+        robot.armDrive(LeftStickY, RightStickY);
 
         /** If one of the specified specified bumpers are pressed, the collector methods Intake,
          * Eject or CollecotrStop are called. Intake tells the robot to move the collector servo
