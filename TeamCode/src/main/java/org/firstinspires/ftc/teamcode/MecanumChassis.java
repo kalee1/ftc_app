@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
+import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.IntegratingGyroscope;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -12,9 +14,13 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 
 /**
- * @author Error 404: Team Name Not Found
+ * A chassis type. Specifically a mecanum chassis. Contains all of the hardware declerations for a
+ * mecanum chassis as well as the methods used by a chassis (ie, a bunch of drive methods).
+ *
+ * @author Andrew, Error 404: Team Name Not Found
  * @see Chassis
  */
 public class MecanumChassis extends Chassis
@@ -32,20 +38,50 @@ public class MecanumChassis extends Chassis
     /** The navx gyro. */
     private NavxMicroNavigationSensor navx = null;
 
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a forward drive command.*/
     static final double FORWARD = 0.0;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a backward drive command.*/
     static final double BACKWARD = 180.0;
-    static final double RIGHT = -90;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a right strafe command.*/
+    static final double RIGHT = 270.0;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a left strafe command.*/
     static final double LEFT = 90.0;
-
-    static final double FORWARD_RIGHT_DIAGONAL = -45;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a forward-right diagonal strafe command.*/
+    static final double FORWARD_RIGHT_DIAGONAL = -45.0;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a forward-left diagonal strafe command.*/
     static final double FORWARD_LEFT_DIAGONAL = 45.0;
-    static final double REVERSE_RIGHT_DIAGONAL = -135;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a backward-right diagonal strafe command.*/
+    static final double REVERSE_RIGHT_DIAGONAL = -135.0;
+    /** Directional variables used to simulate joystick commands in autonomous.
+     * Simulates a backward-left diagonal strafe command.*/
     static final double REVERSE_LEFT_DIAGONAL = 135.0;
 
+    /** The counts per motor revolution for a REV HD 40:1 Hex Motor.
+     * Used in converting inches to encoder ticks. Allows the programmer to code in inches while
+     * the motor measures in encoder ticks.*/
     final double COUNTS_PER_MOTOR_REV = 1120;
+    /** The drive gear reduction currently being used on the robot drive modules.
+     * Used in converting inches to encoder ticks. Allows the programmer to code in inches while
+     * the motor measures in encoder ticks.*/
     final double DRIVE_GEAR_REDUCTION = 1.3;
+    /** The wheel diameter of the mecanum wheel currently on the robot.
+     * Used in converting inches to encoder ticks. Allows the programmer to code in inches while
+     * the motor measures in encoder ticks.*/
     final double WHEEL_DIAMETER_INCHES = 4.0;
+    /** The inches traveled per wheel rotation for the 4" diameter mecanum wheels currently on the robot.
+     * Used in converting inches to encoder ticks. Allows the programmer to code in inches while
+     * the motor measures in encoder ticks.*/
     final double INCH_PER_REV = WHEEL_DIAMETER_INCHES * 3.14159;
+    /** The encoder ticks per inch ( (ticks per mtr rev*10)/(13*4*3.14159) ).
+     * Used in converting inches to encoder ticks. Allows the programmer to code in inches while
+     * the motor measures in encoder ticks.*/
     final double COUNTS_PER_INCH = (1120*10)/(13*4*3.14159);
 
     /** An int variable used in drive, tankDrive, and pointTurn to capture the encoder position before each move. */
@@ -54,6 +90,7 @@ public class MecanumChassis extends Chassis
     double initialHeading;
     /** A double variable used in pointTurn to either turn the robot left or right. */
     double directionalPower;
+    /** A double variable used in pointTurn to represent the value by which the robot needs to correct.*/
     double error;
 
 
@@ -82,6 +119,7 @@ public class MecanumChassis extends Chassis
         {
             rFrontMotor = null;
         }
+
         try
         {
             lFrontMotor = hwMap.dcMotor.get("leftFront");
@@ -94,6 +132,7 @@ public class MecanumChassis extends Chassis
         {
             lFrontMotor = null;
         }
+
         try
         {
             rRearMotor = hwMap.dcMotor.get("rightRear");
@@ -106,6 +145,7 @@ public class MecanumChassis extends Chassis
         {
             rRearMotor = null;
         }
+
         try
         {
             lRearMotor = hwMap.dcMotor.get("leftRear");
@@ -116,12 +156,15 @@ public class MecanumChassis extends Chassis
         }
         catch (Exception p_exeception)
         {
-            rRearMotor = null;
+            lRearMotor = null;
         }
-        try {
+
+        try
+        {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         }
-        catch (Exception p_exeception) {
+        catch (Exception p_exeception)
+        {
             telem.addData("navx not found in config file", 0);
             navx = null;
         }
@@ -132,11 +175,12 @@ public class MecanumChassis extends Chassis
 
     /**
      * This method takes the command values from the x- and y-axes of the left and right joysticks
-     * on the gamepad and converts them to motor speed commands. The code then makes sure that the
-     * command values don't exceed a magnitude of a selected limit.
+     * on the gamepad and converts them to motor directional power commands for the drive motors.
+     * The algorithm also makes sure that the power values don't exceed a magnitude of a selected limit.
+     * Allows the robot to move in any direction while not exceeding a set speed.
      *
      * The code making sure the speed commands don't exceed a value of 1 was sourced from:
-     * http://www.chiefdelphi.com/media/papers/download/2906
+     * (see <a href="http://www.chiefdelphi.com/media/papers/download/2906">chiefdelphi.com</a>)
      *
      * @param leftStickX  The x-axis of the left joystick
      * @param leftStickY  The y-axis of the left joystick
@@ -204,10 +248,10 @@ public class MecanumChassis extends Chassis
             lRearMotor.setPower(leftRear);
         }
 
-//        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
-//        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
-//        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
-//        telemetry.addData("4. left rear encoder", lRearMotor.getCurrentPosition());
+        telemetry.addData("1. right front encoder", rFrontMotor.getCurrentPosition());
+        telemetry.addData("2. left front encoder", lFrontMotor.getCurrentPosition());
+        telemetry.addData("3. right rear encoder", rRearMotor.getCurrentPosition());
+        telemetry.addData("4. left rear encoder", lRearMotor.getCurrentPosition());
 
 //        telemetry.addData("5. right front power", rFrontMotor.getPower());
 //        telemetry.addData("6. left front power", lFrontMotor.getPower());
@@ -267,17 +311,13 @@ public class MecanumChassis extends Chassis
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
+ //       telemetry.addData("encoder", lFrontMotor.getCurrentPosition());
+
         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
             moving = false;
         }
-
-        telemetry.addData("direction", direction);
-        telemetry.addData("distance", distance);
-        telemetry.addData("actual heading", actual);
-        telemetry.addData("initial heading", initialHeading);
-        telemetry.addData("correction", correction);
 
         return !moving;
      }
@@ -344,8 +384,8 @@ public class MecanumChassis extends Chassis
 
 
     /**
-     * The pointTurn method turns the robot left or right depending on whether the power input is
-     * positive or negative.
+     * The pointTurn method turns the robot to a target heading, automatically picking the turn
+     * direction that is the shortest distance to turn to arrive at the target.
      *
      * @param targetHeading  The direction in which the robot will move.
      * @param time  The maximum time the move can take before the code moves on.
@@ -363,8 +403,6 @@ public class MecanumChassis extends Chassis
             currentHeading += 360;
         }
 
-        telemetry.addData("current heading", currentHeading);
-        telemetry.addData("target heading", targetHeading);
         if(!moving)
         {
             initialHeading = getHeadingDbl();
@@ -391,8 +429,6 @@ public class MecanumChassis extends Chassis
             resetStartTime();
             moving = true;
         }
-        telemetry.addData("error", error);
-        telemetry.addData("direction power", directionalPower);
 
         joystickDrive(0.0, 0.0, directionalPower, 0.0, power);
 
@@ -401,8 +437,6 @@ public class MecanumChassis extends Chassis
             stopMotors();
             moving = false;
         }
-
-        telemetry.addData("heading", getHeadingDbl());
 
         return !moving;
     }
