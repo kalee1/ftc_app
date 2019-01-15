@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -66,7 +68,6 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             shoulder = null;
-            shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
 
 
@@ -111,22 +112,34 @@ public class MotorArm
      * */
     public void armDrive( double RightStickY, double LeftStickY)
     {
-        double elbowGain = 0.3;
-        double shoulderGain = 0.4;
+        double elbowGain = 0.6;
+        double shoulderGain = 0.7;
 
-        if (elbowBack != 1)
+        if(elbowBack != null)
         {
-            shoulder.setPower(LeftStickY * shoulderGain);
-            elbow.setPower(0.2);
+            if (elbowBack.getValue() != 1)
+            {
+                if (elbow != null)
+                {
+                    elbow.setPower(-0.5);
+                }
+                if (shoulder != null)
+                {
+                    shoulder.setPower(LeftStickY * shoulderGain);
+                }
+            }
         }
-        else if (elbowFront.isPressed())
+        if (elbowBack != null)
         {
-            shoulder.setPower(LeftStickY * shoulderGain);
-            elbow.setPower(-0.2);
+            if (elbowFront.isPressed())
+            {
+                shoulder.setPower(LeftStickY * shoulderGain);
+                elbow.setPower(0.5);
+            }
         }
-        else if (chassisTouch.isPressed())
+        if (chassisTouch.isPressed())
         {
-            shoulder.setPower(0.2);
+            shoulder.setPower(-0.5);
             elbow.setPower(RightStickY * elbowGain);
         }
         else
@@ -134,6 +147,10 @@ public class MotorArm
             shoulder.setPower(LeftStickY * shoulderGain);
             elbow.setPower(RightStickY * elbowGain);
         }
+
+        telemetry.addData("elbowBack: ", elbowBack.getValue());
+        telemetry.addData("elbowFront: ", elbowFront.getValue());
+        telemetry.addData("chassisTouch", chassisTouch.getValue());
 
     }
     public void ArmDeploy()

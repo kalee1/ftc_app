@@ -136,7 +136,7 @@ public class Error404Autonomus extends OpMode
                     goldPosition = "center";
                     state = 3;
                 }
-                telemetry.addData("gold position", goldPosition);
+//                telemetry.addData("gold position", goldPosition);
                 if (state != 2)
                 {
                     resetStartTime();
@@ -379,7 +379,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-        telemetry.addData("state", state);
+//        telemetry.addData("state", state);
 
         //Post the current state value to the driver station phone.
 //        telemetry.addData("1)", "state: " + state );
