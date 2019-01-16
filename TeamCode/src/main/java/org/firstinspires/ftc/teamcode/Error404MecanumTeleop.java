@@ -82,9 +82,12 @@ public class Error404MecanumTeleop extends OpMode
         //robot chassis control method
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
 
+        //mineral arm control method
+        robot.armDrive(RightStickY, LeftStickY);
 
-        //arm control method
-        robot.armDrive(LeftStickY, RightStickY);
+
+
+
 
 
         //mineral intake controls
@@ -137,12 +140,12 @@ public class Error404MecanumTeleop extends OpMode
         //If the left trigger on the primary gamepad is pressed, set the maximum drive power to 1.0
         if (gamepad1.left_trigger == 1)
         {
-            powerLimit = 1;
+            powerLimit = .7;
         }
         //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.5
         else
         {
-            powerLimit = .4;
+            powerLimit = .3;
         }
         return powerLimit;
     }

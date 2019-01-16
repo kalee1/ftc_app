@@ -1,6 +1,8 @@
 package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.TouchSensor;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDCoefficients;
@@ -33,11 +35,11 @@ public class MotorArm
 
 
     /** A touch sensor that, if pressed, stops the arm. */
-    protected TouchSensor shoulderFront = null;
+    protected TouchSensor chassisTouch = null;
     /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
     protected TouchSensor elbowFront = null;
     /** A touch sensor that, if pressed, stops the forearm from folding into itself. */
-    protected TouchSensor elbowRear = null;
+    protected TouchSensor elbowBack = null;
 
     /**
      * Initializes all the motors and sensors on the arm using try-catches. The try-catch statements
@@ -66,33 +68,36 @@ public class MotorArm
         catch (Exception p_exeception)
         {
             shoulder = null;
-            shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        }
+
+
+        try
+        {
+            elbowBack = hwmap.touchSensor.get("elbowBack");
+        }
+        catch (Exception p_exception)
+        {
+            elbowBack = null;
+            telemetry.addData("elbowBack not found", "");
         }
         try
         {
-            shoulderFront = hwmap.touchSensor.get("shoulderFront");
+            elbowFront = hwmap.touchSensor.get("elbowFront");
         }
-        catch (Exception p_exeception)
+        catch (Exception p_exception)
         {
-            telem.addData("shoulderFront not found in config file", 0);
-            shoulderFront = null;
+            elbowFront = null;
+            telemetry.addData("elbowFront not found", "");
         }
-//        try
-//        {
-//            elbowFront = hwmap.touchSensor.get("elbowFront");
-//        }
-//        catch (Exception p_exeception)
-//        {
-//            elbowFront = null;
-//        }
-//        try
-//        {
-//            elbowRear = hwmap.touchSensor.get("elbowRear");
-//        }
-//        catch (Exception p_exeception)
-//        {
-//            elbowRear = null;
-//        }
+        try
+        {
+            chassisTouch = hwmap.touchSensor.get("chassisTouch");
+        }
+        catch (Exception p_exception)
+        {
+            chassisTouch = null;
+            telemetry.addData("chassisTouch not found", "");
+        }
 
         telemetry = telem;
     }
@@ -105,35 +110,59 @@ public class MotorArm
      * @param RightStickY  The y-axis of the right stick on the gamepad. Controls the elbow motor.
      * @param LeftStickY  The y-axis of the left stick on the gamepad. Controls the shoulder motor.
      * */
-    public void armDrive( double LeftStickY, double RightStickY)
+    public void armDrive( double RightStickY, double LeftStickY)
     {
-        if (shoulderFront.isPressed())
+        double elbowGain = 0.6;
+        double shoulderGain = 0.7;
+
+        if(elbowBack != null)
         {
-            shoulder.setPower(-0.1);
-            telemetry.addData("shoulder press", shoulder.getPower());
-            telemetry.addData("left stick", LeftStickY);
+            if (elbowBack.getValue() != 1)
+            {
+                if (elbow != null)
+                {
+                    elbow.setPower(-0.5);
+                }
+                if (shoulder != null)
+                {
+                    shoulder.setPower(LeftStickY * shoulderGain);
+                }
+            }
+        }
+        if (elbowBack != null)
+        {
+            if (elbowFront.isPressed())
+            {
+                shoulder.setPower(LeftStickY * shoulderGain);
+                elbow.setPower(0.5);
+            }
+        }
+        if (chassisTouch.isPressed())
+        {
+            shoulder.setPower(-0.5);
+            elbow.setPower(RightStickY * elbowGain);
         }
         else
         {
-            elbow.setPower(RightStickY * .5);
-            shoulder.setPower(LeftStickY * .6);
-            telemetry.addData("shoulder", shoulder.getPower());
-            telemetry.addData("left stick", LeftStickY);
-
+            shoulder.setPower(LeftStickY * shoulderGain);
+            elbow.setPower(RightStickY * elbowGain);
         }
 
-//        if (elbowFront.isPressed())
-//        {
-//            elbow.setPower(-0.2);
-//        }
-//        else if(elbowRear.isPressed())
-//        {
-//            elbow.setPower(0.2);
-//        }
-//        else
-//        {
-//            elbow.setPower(RightStickY * .5);
-//            shoulder.setPower(LeftStickY * .6);
-//        }
+        telemetry.addData("elbowBack: ", elbowBack.getValue());
+        telemetry.addData("elbowFront: ", elbowFront.getValue());
+        telemetry.addData("chassisTouch", chassisTouch.getValue());
+
+    }
+    public void ArmDeploy()
+    {
+        /*
+        shoulderCurrentDis = Shoulder.getCurrentPosition();
+        shoulderDis = Shoulder.getCurrentPosition() + 5000;
+
+        if (shoulderCurrentDis <= shoulderDis)
+        {
+
+        }
+        */
     }
 }
