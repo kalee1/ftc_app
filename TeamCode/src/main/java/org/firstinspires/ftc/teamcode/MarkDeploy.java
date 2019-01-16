@@ -39,7 +39,6 @@ public class MarkDeploy
         {
             flag = null;
         }
-
     }
 
     /** Deploys the team marker. */
