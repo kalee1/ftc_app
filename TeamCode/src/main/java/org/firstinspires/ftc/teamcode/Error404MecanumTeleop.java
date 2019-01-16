@@ -94,12 +94,12 @@ public class Error404MecanumTeleop extends OpMode
         //If the left bumper is pressed, turn the intake wheels inward.
         if (gamepad2.left_bumper)
         {
-            robot.intake();
+            robot.eject();
         }
         //If the right bumber is pressed, turn the intake wheels outward.
         else if (gamepad2.right_bumper)
         {
-            robot.eject();
+            robot.intake();
         }
         //If neither bumper is pressed, stop the intake wheels.
         else
