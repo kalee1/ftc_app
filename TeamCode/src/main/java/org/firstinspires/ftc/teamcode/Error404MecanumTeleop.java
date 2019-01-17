@@ -80,7 +80,14 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("2: leftY", lStickY);
 
         //robot chassis control method
-        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+        if (gamepad1.a)
+        {
+            robot.joystickDrive(-lStickX, -lStickY, -rStickX, -rStickY, afterburners());
+        }
+        else
+        {
+            robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+        }
 
         //mineral arm control method
         robot.armDrive(RightStickY, LeftStickY);
@@ -92,12 +99,12 @@ public class Error404MecanumTeleop extends OpMode
 
         //mineral intake controls
         //If the left bumper is pressed, turn the intake wheels inward.
-        if (gamepad2.left_bumper)
+        if (gamepad2.right_bumper)
         {
             robot.eject();
         }
         //If the right bumber is pressed, turn the intake wheels outward.
-        else if (gamepad2.right_bumper)
+        else if (gamepad2.left_bumper)
         {
             robot.intake();
         }
@@ -112,14 +119,14 @@ public class Error404MecanumTeleop extends OpMode
         /*Allows the secondary gamepad (which run the mineral arm) to turn the chassis at a very slow
                speed to aid in lining up on minerals. */
         //If the right trigger on the secondary gamepad is pressed, rotate chassis right at .15 power.
-        if(gamepad2.right_trigger > .1)
+        if(gamepad1.right_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, 1, 0.0, .15);
+            robot.joystickDrive(0.0, 0.0, 1, 0.0, .18);
         }
         //If the left trigger on the secondary gamepad is pressed, rotate the chassis left at .15 power.
-        else if(gamepad2.left_trigger > .1)
+        else if(gamepad1.left_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, -1, 0.0, .15);
+            robot.joystickDrive(0.0, 0.0, -1, 0.0, .18);
         }
 
 
@@ -137,12 +144,12 @@ public class Error404MecanumTeleop extends OpMode
     {
         double powerLimit;
 
-        //If the left trigger on the primary gamepad is pressed, set the maximum drive power to 1.0
-        if (gamepad1.left_trigger == 1)
+        //If the left trigger on the primary gamepad is pressed, set the maximum drive power to 0.7
+        if (gamepad1.left_bumper)
         {
             powerLimit = .7;
         }
-        //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.5
+        //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.3
         else
         {
             powerLimit = .3;
