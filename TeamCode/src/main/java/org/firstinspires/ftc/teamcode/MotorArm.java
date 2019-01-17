@@ -168,8 +168,11 @@ public class MotorArm
 
             if (shoulder.getCurrentPosition() != targetEncoder)
                 {
-                shoulder.setTargetPosition(targetEncoder);
                 shoulder.setPower(4);
+                else
+                    {
+                    shoulder.setPower(0);
+                    }
 
                 if (elbow.getCurrentPosition() != targetEncoder2)
                     {
