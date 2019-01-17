@@ -125,10 +125,6 @@ public class MotorArm
                 {
                     elbow.setPower(-0.5);
                 }
-                if (shoulder != null)
-                {
-                    shoulder.setPower(LeftStickY * shoulderGain);
-                }
             }
         }
         if (elbowBack != null)
@@ -159,6 +155,8 @@ public class MotorArm
     {
         elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         if (timesrun >= 1)
             {
