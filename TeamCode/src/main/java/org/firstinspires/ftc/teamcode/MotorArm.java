@@ -158,22 +158,33 @@ public class MotorArm
             elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-            if (timesrun >= 1)
+            if (timesrun == 1)
                 {
                 targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
                 targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
                 timesrun = 1;
+                }
+            if (shoulder.getCurrentPosition() != targetEncoder)
+                {
+                shoulder.setPower(4);
 
-                if (shoulder.getCurrentPosition() != targetEncoder)
+                if (elbow.getCurrentPosition() != targetEncoder2)
                     {
-                    shoulder.setPower(4);
-
-                    if (elbow.getCurrentPosition() != targetEncoder2)
-                        {
-                        elbow.setTargetPosition(targetEncoder2);
-                        elbow.setPower(-4);
-                        }
+                    elbow.setPower(-4);
                     }
+                else
+                    {
+                    elbow.setPower(0.0);
+                    }
+                }
+            else
+                {
+                shoulder.setPower(0.0);
+                }
+
+            if (shoulder.getCurrentPosition() >= targetEncoder)
+                {
+                timesrun = 0;
                 }
         }
     }
