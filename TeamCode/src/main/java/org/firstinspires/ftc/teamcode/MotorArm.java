@@ -31,7 +31,9 @@ public class MotorArm
 
 //    protected TouchSensor Shoulderfront = null;
 
-//    int targetEncoder = 0;
+    int targetEncoder = 500;
+    int targetEncoder2 = 300;
+    int timesrun = 0;
 
 
     /** A touch sensor that, if pressed, stops the arm. */
@@ -155,14 +157,26 @@ public class MotorArm
     }
     public void ArmDeploy()
     {
-        /*
-        shoulderCurrentDis = Shoulder.getCurrentPosition();
-        shoulderDis = Shoulder.getCurrentPosition() + 5000;
+        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-        if (shoulderCurrentDis <= shoulderDis)
-        {
+        if (timesrun >= 1)
+            {
+            targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
+            targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
+            timesrun = 1;
 
-        }
-        */
+            if (shoulder.getCurrentPosition() != targetEncoder)
+                {
+                shoulder.setTargetPosition(targetEncoder);
+                shoulder.setPower(4);
+
+                if (elbow.getCurrentPosition() != targetEncoder2)
+                    {
+                    elbow.setTargetPosition(targetEncoder2);
+                    elbow.setPower(-4);
+                    }
+                }
+            }
     }
 }
