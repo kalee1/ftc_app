@@ -79,8 +79,10 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("1: leftX", lStickX);
 //        telemetry.addData("2: leftY", lStickY);
 
+
+
         //robot chassis control method
-        if (gamepad1.a)
+        if(gamepad1.right_bumper)
         {
             robot.joystickDrive(-lStickX, -lStickY, -rStickX, -rStickY, afterburners());
         }

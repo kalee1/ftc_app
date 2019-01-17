@@ -144,6 +144,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive out from under the lander
             case 3:
                 if(goldPosition.equals("left"))
                 {
@@ -208,7 +209,7 @@ public class Error404Autonomus extends OpMode
 
                 //drive forward
             case 8:
-                if(robot.drive(.2, forward, gain, 5, 6))
+                if(robot.drive(.2, forward, gain, 10, 6))
                 {
                     resetStartTime();
                     state = 9;
@@ -224,15 +225,15 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //drive forward and deploy marker and mineral into depo
-            case 10:
-                if(robot.drive(.2, forward, gain, 20, 4))
-                {
-                    robot.eject();
-                    resetStartTime();
-                    state = 11;
-                }
-                break;
+//                //drive forward and deploy marker and mineral into depo
+//            case 10:
+//                if(robot.drive(.2, forward, gain, 20, 4))
+//                {
+//                    robot.eject();
+//                    resetStartTime();
+//                    state = 11;
+//                }
+//                break;
 //
 //                //stop collector after three seconds
 //            case 11:
