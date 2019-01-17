@@ -203,6 +203,7 @@ public class Error404Autonomus extends OpMode
                 //knock off gold mineral
             case 7:
                 // extend arm
+                robot.theArm.ArmDeploy();
                 state = 8;
                 break;
 
