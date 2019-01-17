@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
  * @author Ben, Error 404: Team Name Not Found
  * */
 public class MotorArm
-{
+    {
     Telemetry telemetry;
     boolean moving = false;
 
@@ -155,6 +155,19 @@ public class MotorArm
             shoulder.setPower(LeftStickY * shoulderGain);
             elbow.setPower(RightStickY * elbowGain);
         }
+    public void ArmDeploy()
+        {
+//        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            if (timesrun == 1)
+                {
+                targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
+                targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
+                timesrun = 1;
+                }
 
         telemetry.addData("elbowBack: ", elbowBack.getValue());
         telemetry.addData("elbowFront: ", elbowFront.getValue());
@@ -173,9 +186,13 @@ public class MotorArm
             if (shoulder.getCurrentPosition() != targetEncoder)
             {
                 shoulder.setPower(4);
+                else
+                    {
+                    shoulder.setPower(0);
+                    }
+
                 if (elbow.getCurrentPosition() != targetEncoder2)
-                {
-                    elbow.setTargetPosition(targetEncoder2);
+                    {
                     elbow.setPower(-4);
                 }
                 else
