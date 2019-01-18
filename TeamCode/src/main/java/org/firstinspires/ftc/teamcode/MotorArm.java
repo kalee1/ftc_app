@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.EventListener;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -22,6 +23,12 @@ import java.util.EventListener;
 public class MotorArm
     {
     Telemetry telemetry;
+    boolean moving = false;
+
+    /** A double that is the number of nanoseconds per second. */
+    double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
+    /** A long variable that is the internal start time. */
+    private long startTime = 0; // in nanoseconds
 
     /** A dc Motor that moves the elbow joint on the arm.*/
     private DcMotor elbow = null;
@@ -29,10 +36,9 @@ public class MotorArm
     /** A dc motor that moves the shoulder joint on the arm.*/
     private DcMotor shoulder = null;
 
-//    protected TouchSensor Shoulderfront = null;
-
-    int targetEncoder = 500;
-    int targetEncoder2 = 300;
+    //    protected TouchSensor Shoulderfront = null;
+    int targetEncoder;
+    int targetEncoder2;
     int timesrun = 0;
 
 
@@ -57,19 +63,23 @@ public class MotorArm
                 {
                 elbow = hwmap.dcMotor.get("elbow");
                 elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
             catch (Exception p_exeception)
                 {
                 elbow = null;
+                telemetry.addData("elbow not found", "");
                 }
             try
                 {
                 shoulder = hwmap.dcMotor.get("shoulder");
                 shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+                shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
                 }
             catch (Exception p_exeception)
                 {
                 shoulder = null;
+                telemetry.addData("shoulder not found", "");
                 }
 
 
@@ -112,82 +122,159 @@ public class MotorArm
      * @param RightStickY  The y-axis of the right stick on the gamepad. Controls the elbow motor.
      * @param LeftStickY  The y-axis of the left stick on the gamepad. Controls the shoulder motor.
      * */
-    public void armDrive( double RightStickY, double LeftStickY)
+    public void armDrive(double RightStickY, double LeftStickY)
         {
             double elbowGain = 0.6;
             double shoulderGain = 0.7;
 
-            if(elbowBack != null)
+
+            //elbow limits
+            if(elbow != null)
                 {
-                if (elbowBack.getValue() != 1)
+                if(elbowBack != null)
                     {
-                    if (elbow != null)
+                    if(elbowBack.getValue() != 1)
                         {
                         elbow.setPower(-0.5);
                         }
+                    else
+                        {
+                        elbow.setPower(RightStickY);
+                        }
                     }
-                }
-            if (elbowBack != null)
-                {
-                if (elbowFront.isPressed())
+                if(elbowFront != null)
                     {
-                    shoulder.setPower(LeftStickY * shoulderGain);
-                    elbow.setPower(0.5);
+                    if(elbowFront.isPressed())
+                        {
+                        elbow.setPower(0.5);
+                        }
+                    else
+                        {
+                        elbow.setPower(RightStickY);
+                        }
                     }
-                }
-            if (chassisTouch.isPressed())
-                {
-                shoulder.setPower(-0.5);
-                elbow.setPower(RightStickY * elbowGain);
-                }
-            else
-                {
-                shoulder.setPower(LeftStickY * shoulderGain);
-                elbow.setPower(RightStickY * elbowGain);
+                //telemetry.addData("elbow power: ", elbow.getPower());
                 }
 
-            telemetry.addData("elbowBack: ", elbowBack.getValue());
-            telemetry.addData("elbowFront: ", elbowFront.getValue());
-            telemetry.addData("chassisTouch", chassisTouch.getValue());
+            //shoulder limits
+            if(shoulder != null) //check to make sure shoulder motor is good.
+                {
+                if(chassisTouch != null) //check to make sure the limit switch is good.
+                    {
+                    //if the limit switch is pressed, reverse the arm, otherwise run the arm as normal.
+                    if(chassisTouch.isPressed())
+                        {
+                        shoulder.setPower(-0.7);
+                        }
+                    else
+                        {
+                        shoulder.setPower(LeftStickY);
+                        }
+                    }
+//            telemetry.addData("shoulder power: ", shoulder.getPower());
+                }
+
+//        telemetry.addData("elbow back: ", elbowBack);
+//        telemetry.addData("elbow front: ", elbowFront);
+            telemetry.addData("elbow: ", elbow.getCurrentPosition());
+//        telemetry.addData("chassis touch: ", chassisTouch);
+            telemetry.addData("shoulder: ", shoulder.getCurrentPosition());
+//        telemetry.addData("elbowBack: ", elbowBack.getValue());
+//        telemetry.addData("elbowFront: ", elbowFront.getValue());
+//        telemetry.addData("chassisTouch", chassisTouch.getValue());
 
         }
-    public void ArmDeploy()
+
+
+    public boolean armDeploy(int shoulderTarget, int elbowTarget)
         {
-//        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            double shoulderValue;
+            double elbowValue;
 
-            if (timesrun == 1)
+            if( timesrun < 1 )
                 {
-                targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
-                targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
-                timesrun = 1;
-                }
-            if (shoulder.getCurrentPosition() != targetEncoder)
-                {
-                shoulder.setPower(4);
-                {
-                shoulder.setPower(0);
+                shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+                elbowTarget = elbow.getCurrentPosition() + elbowTarget;
                 }
 
-                if (elbow.getCurrentPosition() != targetEncoder2)
-                    {
-                    elbow.setPower(-4);
-                    }
-                else
-                    {
-                    elbow.setPower(0.0);
-                    }
+            if( shoulder.getCurrentPosition() >= shoulderTarget )
+                {
+                shoulderValue = -0.7;
                 }
             else
                 {
-                shoulder.setPower(0.0);
+                shoulderValue = 0.0;
                 }
 
-            if (shoulder.getCurrentPosition() >= targetEncoder)
+            if( elbow.getCurrentPosition() <= elbowTarget )
                 {
-                timesrun = 0;
+                elbowValue = 0.5;
                 }
+            else
+                {
+                elbowValue = 0.0;
+                }
+
+//        telemetry.addData("elbow encoder: ", elbow.getCurrentPosition());
+//        telemetry.addData("shoulder encoder: ", shoulder.getCurrentPosition());
+            telemetry.addData("elbow target: ", elbowTarget);
+            telemetry.addData("shoulder target: ", shoulderTarget);
+
+            armDrive(elbowValue, shoulderValue);
+
+            if( (elbow.getCurrentPosition() >= elbowTarget) &&
+                    (shoulder.getCurrentPosition() <= shoulderTarget) )
+                {
+                moving = false;
+                timesrun = 0;
+                elbow.setPower(0.0);
+                shoulder.setPower(0.0);
+                }
+            else
+                {
+                moving = true;
+                timesrun = 1;
+                }
+
+            return !moving;
+        }
+
+    public boolean testAutoArm(double power, double direction, double gain, double distance, double time)
+        {
+            resetStartTime();
+            if(!moving)
+                {
+
+                moving = true;
+                }
+
+            armDrive(3,3);
+
+            if((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
+                {
+                moving = false;
+                }
+
+            return !moving;
+        }
+
+
+    /**
+     * Get the number of seconds this op mode has been running
+     * <p>
+     * This method has sub millisecond accuracy.
+     * @return number of seconds this op mode has been running
+     */
+    public double getRuntime()
+        {
+            return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
+        }
+
+    /**
+     * Reset the internal timer to zero.
+     */
+    public void resetStartTime()
+        {
+            startTime = System.nanoTime();
         }
     }
