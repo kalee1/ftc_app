@@ -72,6 +72,7 @@ public class RuckusBot
     }
     /** A go-between between the opmode class and the actual chassis class.
      * Turns the collector wheels inward to suck in minerals.
+     * Turns the collector wheels inward to suck in minerals.
      * */
     public void intake()
     {
