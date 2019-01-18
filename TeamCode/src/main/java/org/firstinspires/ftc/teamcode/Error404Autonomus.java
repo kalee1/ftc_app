@@ -205,13 +205,10 @@ public class Error404Autonomus extends OpMode
                 //knock off gold mineral
             case 7:
                 // extend arm
-                if( robot.armDeploy(-4103,0) )
+                if( robot.armDeploy(-4103,2864) )
                 {
-                    if(robot.armDeploy(0, 2864))
-                    {
-                        state = 8;
-                        resetStartTime();
-                    } 
+                    state = 8;
+                    resetStartTime();
                 }
                 break;
 //

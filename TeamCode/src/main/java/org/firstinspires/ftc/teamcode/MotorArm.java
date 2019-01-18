@@ -193,20 +193,20 @@ public class MotorArm
 
         if( timesrun < 1 )
         {
-            targetEncoder = shoulder.getCurrentPosition() + shoulderTarget;
-            targetEncoder2 = elbow.getCurrentPosition() + elbowTarget;
+            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
         }
 
-        if( shoulder.getCurrentPosition() >= targetEncoder )
+        if( shoulder.getCurrentPosition() >= shoulderTarget )
         {
-            shoulderValue = -0.2;
+            shoulderValue = -0.7;
         }
         else
         {
             shoulderValue = 0.0;
         }
 
-        if( elbow.getCurrentPosition() <= targetEncoder2 )
+        if( elbow.getCurrentPosition() <= elbowTarget )
         {
             elbowValue = 0.5;
         }
@@ -217,13 +217,13 @@ public class MotorArm
 
 //        telemetry.addData("elbow encoder: ", elbow.getCurrentPosition());
 //        telemetry.addData("shoulder encoder: ", shoulder.getCurrentPosition());
-        telemetry.addData("elbow target: ", targetEncoder2);
-        telemetry.addData("shoulder target: ", targetEncoder);
+        telemetry.addData("elbow target: ", elbowTarget);
+        telemetry.addData("shoulder target: ", shoulderTarget);
 
         armDrive(elbowValue, shoulderValue);
 
-        if( (elbow.getCurrentPosition() >= targetEncoder2) &&
-            (shoulder.getCurrentPosition() <= targetEncoder) )
+        if( (elbow.getCurrentPosition() >= elbowTarget) &&
+            (shoulder.getCurrentPosition() <= shoulderTarget) )
         {
             moving = false;
             timesrun = 0;
