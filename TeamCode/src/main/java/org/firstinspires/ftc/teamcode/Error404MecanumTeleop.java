@@ -94,11 +94,6 @@ public class Error404MecanumTeleop extends OpMode
         //mineral arm control method
         robot.armDrive(RightStickY, LeftStickY);
 
-
-
-
-
-
         //mineral intake controls
         //If the left bumper is pressed, turn the intake wheels inward.
         if (gamepad2.right_bumper)

@@ -20,7 +20,7 @@ public class Error404Autonomus extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     /** An int varibale that is used to record the current case the case machine is in. */
-    int state = 2;  // used to represent the current state in the state machine
+    int state = 7;  // used to represent the current state in the state machine
     /** An int variable that is used to record the current motor position at the beginning of a move. */
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -123,108 +123,115 @@ public class Error404Autonomus extends OpMode
             /*Look for the three minerals and locate the position of the gold mineral. Set the
                  goldPosistion variable to the value of the gold position and set state equal to
                  the correct case value..*/
+
             //find gold mineral position
-            case 2:
-                goldPosition = robot.goldPosition();
-
-                if(goldPosition.equals("left") || goldPosition.equals("right") || goldPosition.equals("center"))
-                {
-                    state = 3;
-                }
-                if (getRuntime() > 5)
-                {
-                    goldPosition = "center";
-                    state = 3;
-                }
+//            case 2:
+//                goldPosition = robot.goldPosition();
+//
+//                if(goldPosition.equals("left") || goldPosition.equals("right") || goldPosition.equals("center"))
+//                {
+//                    state = 3;
+//                }
+//                if (getRuntime() > 5)
+//                {
+//                    goldPosition = "center";
+//                    state = 3;
+//                }
+////                telemetry.addData("gold position", goldPosition);
+//                if (state != 2)
+//                {
+//                    resetStartTime();
+//                    robot.tfodShutdown();
+//                }
+//                break;
+//
+//                //drive out from under the lander
+//            case 3:
+//                if(goldPosition.equals("left"))
+//                {
+//                    if(robot.drive(.2, forward, gain, 7, 6))
+//                    {
+//                        resetStartTime();
+//                        state = 4;
+//                    }
+//                }
+//                else if(goldPosition.equals("right"))
+//                {
+//                    if(robot.drive(.2, forward, gain, 7, 6))
+//                    {
+//                        resetStartTime();
+//                        state = 5;
+//                    }
+//                }
+//                else if(goldPosition.equals("center"))
+//                {
+//                    if(robot.drive(.2, forward, gain, 7, 6))
+//                    {
+//                        resetStartTime();
+//                        state = 6;
+//                    }
+//                }
 //                telemetry.addData("gold position", goldPosition);
-                if (state != 2)
-                {
-                    resetStartTime();
-                    robot.tfodShutdown();
-                }
-                break;
-
-                //drive out from under the lander
-            case 3:
-                if(goldPosition.equals("left"))
-                {
-                    if(robot.drive(.2, forward, gain, 7, 6))
-                    {
-                        resetStartTime();
-                        state = 4;
-                    }
-                }
-                else if(goldPosition.equals("right"))
-                {
-                    if(robot.drive(.2, forward, gain, 7, 6))
-                    {
-                        resetStartTime();
-                        state = 5;
-                    }
-                }
-                else if(goldPosition.equals("center"))
-                {
-                    if(robot.drive(.2, forward, gain, 7, 6))
-                    {
-                        resetStartTime();
-                        state = 6;
-                    }
-                }
-                telemetry.addData("gold position", goldPosition);
-                break;
-
-
-                //Swivel to face the left mineral and drive forward
-            case 4:
-                if(robot.pointTurn(.2, 20, 4))
-                {
-                    resetStartTime();
-                    state = 7;
-                }
-                break;
-
-                //swivel to face right mineral and drive forward
-            case 5:
-                if(robot.pointTurn(.2, -20, 4))
-                {
-                    resetStartTime();
-                    state = 7;
-                }
-                break;
-
-                //swivel to face center mineral and drive forward
-            case 6:
-                if(robot.pointTurn(.2, 0, 4))
-                {
-                    resetStartTime();
-                    state = 7;
-                }
-                break;
+//                break;
+//
+//
+//                //Swivel to face the left mineral and drive forward
+//            case 4:
+//                if(robot.pointTurn(.2, 20, 4))
+//                {
+//                    resetStartTime();
+//                    state = 7;
+//                }
+//                break;
+//
+//                //swivel to face right mineral and drive forward
+//            case 5:
+//                if(robot.pointTurn(.2, -20, 4))
+//                {
+//                    resetStartTime();
+//                    state = 7;
+//                }
+//                break;
+//
+//                //swivel to face center mineral and drive forward
+//            case 6:
+//                if(robot.pointTurn(.2, 0, 4))
+//                {
+//                    resetStartTime();
+//                    state = 7;
+//                }
+//                break;
 
                 //knock off gold mineral
             case 7:
                 // extend arm
-                robot.theArm.ArmDeploy();
-                state = 8;
-                break;
-
-                //drive forward
-            case 8:
-                if(robot.drive(.2, forward, gain, 10, 6))
+                if( robot.armDeploy(-4103,0) )
                 {
-                    resetStartTime();
-                    state = 9;
+                    if(robot.armDeploy(0, 2864))
+                    {
+                        state = 8;
+                        resetStartTime();
+                    } 
                 }
                 break;
-
-                //face depo
-            case 9:
-                if(robot.pointTurn(.2, 0, 4))
-                {
-                    resetStartTime();
-                    state = 10;
-                }
-                break;
+//
+//                //drive forward
+//            case 8:
+//                if(robot.drive(.2, forward, gain, 10, 6))
+//                {
+//                    resetStartTime();
+//                    state = 9;
+//                }
+//                break;
+//
+//                //face depo
+//            case 9:
+//                if(robot.pointTurn(.2, 0, 4))
+//                {
+//                    resetStartTime();
+//                    state = 10;
+//                }
+//                break;
 
 //                //drive forward and deploy marker and mineral into depo
 //            case 10:
@@ -381,7 +388,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-//        telemetry.addData("state", state);
+        telemetry.addData("state", state);
 
         //Post the current state value to the driver station phone.
 //        telemetry.addData("1)", "state: " + state );

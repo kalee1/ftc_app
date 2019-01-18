@@ -192,5 +192,10 @@ public class RuckusBot
         theEyeOfSauron.tfodShutdown();
     }
 
+    public boolean armDeploy(int shoulderTarget, int elbowTarget)
+    {
+        return theArm.armDeploy(shoulderTarget, elbowTarget);
+    }
+
 
 }

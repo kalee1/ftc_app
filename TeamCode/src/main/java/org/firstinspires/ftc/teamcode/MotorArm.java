@@ -37,9 +37,8 @@ public class MotorArm
     private DcMotor shoulder = null;
 
 //    protected TouchSensor Shoulderfront = null;
-
-    int targetEncoder = 500;
-    int targetEncoder2 = 300;
+    int targetEncoder;
+    int targetEncoder2;
     int timesrun = 0;
 
 
@@ -64,22 +63,23 @@ public class MotorArm
         {
             elbow = hwmap.dcMotor.get("elbow");
             elbow.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         catch (Exception p_exeception)
         {
             elbow = null;
+            telemetry.addData("elbow not found", "");
         }
         try
         {
             shoulder = hwmap.dcMotor.get("shoulder");
             shoulder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-            shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
+            shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         }
         catch (Exception p_exeception)
         {
             shoulder = null;
+            telemetry.addData("shoulder not found", "");
         }
 
 
@@ -127,82 +127,116 @@ public class MotorArm
         double elbowGain = 0.6;
         double shoulderGain = 0.7;
 
-        if(elbowBack != null)
+
+        //elbow limits
+        if(elbow != null)
         {
-            if (elbowBack.getValue() != 1)
+            if(elbowBack != null)
             {
-                if (elbow != null)
+                if(elbowBack.getValue() != 1)
                 {
                     elbow.setPower(-0.5);
                 }
+                else
+                {
+                    elbow.setPower(RightStickY);
+                }
             }
-        }
-        if (elbowBack != null)
-        {
-            if (elbowFront.isPressed())
+            if(elbowFront != null)
             {
-                shoulder.setPower(LeftStickY * shoulderGain);
-                elbow.setPower(0.5);
+                if(elbowFront.isPressed())
+                {
+                    elbow.setPower(0.5);
+                }
+                else
+                {
+                    elbow.setPower(RightStickY);
+                }
             }
+            //telemetry.addData("elbow power: ", elbow.getPower());
         }
-        if (chassisTouch.isPressed())
+
+        //shoulder limits
+        if(shoulder != null) //check to make sure shoulder motor is good.
         {
-            shoulder.setPower(-0.5);
-            elbow.setPower(RightStickY * elbowGain);
+            if(chassisTouch != null) //check to make sure the limit switch is good.
+            {
+                //if the limit switch is pressed, reverse the arm, otherwise run the arm as normal.
+                if(chassisTouch.isPressed())
+                {
+                    shoulder.setPower(-0.7);
+                }
+                else
+                {
+                    shoulder.setPower(LeftStickY);
+                }
+            }
+//            telemetry.addData("shoulder power: ", shoulder.getPower());
+        }
+
+//        telemetry.addData("elbow back: ", elbowBack);
+//        telemetry.addData("elbow front: ", elbowFront);
+        telemetry.addData("elbow: ", elbow.getCurrentPosition());
+//        telemetry.addData("chassis touch: ", chassisTouch);
+        telemetry.addData("shoulder: ", shoulder.getCurrentPosition());
+//        telemetry.addData("elbowBack: ", elbowBack.getValue());
+//        telemetry.addData("elbowFront: ", elbowFront.getValue());
+//        telemetry.addData("chassisTouch", chassisTouch.getValue());
+
+    }
+
+
+    public boolean armDeploy(int shoulderTarget, int elbowTarget)
+    {
+        double shoulderValue;
+        double elbowValue;
+
+        if( timesrun < 1 )
+        {
+            targetEncoder = shoulder.getCurrentPosition() + shoulderTarget;
+            targetEncoder2 = elbow.getCurrentPosition() + elbowTarget;
+        }
+
+        if( shoulder.getCurrentPosition() >= targetEncoder )
+        {
+            shoulderValue = -0.2;
         }
         else
         {
-            shoulder.setPower(LeftStickY * shoulderGain);
-            elbow.setPower(RightStickY * elbowGain);
+            shoulderValue = 0.0;
         }
-    public void ArmDeploy()
+
+        if( elbow.getCurrentPosition() <= targetEncoder2 )
         {
-//        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-            if (timesrun == 1)
-                {
-                targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
-                targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
-                timesrun = 1;
-                }
-
-        telemetry.addData("elbowBack: ", elbowBack.getValue());
-        telemetry.addData("elbowFront: ", elbowFront.getValue());
-        telemetry.addData("chassisTouch", chassisTouch.getValue());
-
-    }
-    public boolean ArmDeploy()
-    {
-
-        if (timesrun > 1)
+            elbowValue = 0.5;
+        }
+        else
         {
-            targetEncoder = shoulder.getCurrentPosition() + targetEncoder;
-            targetEncoder2 = elbow.getCurrentPosition() + targetEncoder2;
+            elbowValue = 0.0;
+        }
+
+//        telemetry.addData("elbow encoder: ", elbow.getCurrentPosition());
+//        telemetry.addData("shoulder encoder: ", shoulder.getCurrentPosition());
+        telemetry.addData("elbow target: ", targetEncoder2);
+        telemetry.addData("shoulder target: ", targetEncoder);
+
+        armDrive(elbowValue, shoulderValue);
+
+        if( (elbow.getCurrentPosition() >= targetEncoder2) &&
+            (shoulder.getCurrentPosition() <= targetEncoder) )
+        {
+            moving = false;
+            timesrun = 0;
+            elbow.setPower(0.0);
+            shoulder.setPower(0.0);
+        }
+        else
+        {
+            moving = true;
             timesrun = 1;
-
-            if (shoulder.getCurrentPosition() != targetEncoder)
-            {
-                shoulder.setPower(4);
-                else
-                    {
-                    shoulder.setPower(0);
-                    }
-
-                if (elbow.getCurrentPosition() != targetEncoder2)
-                    {
-                    elbow.setPower(-4);
-                }
-                else
-                {
-                    shoulder.setPower(0);
-                }
-
-            }
         }
-        return true;
+
+        return !moving;
     }
 
     public boolean testAutoArm(double power, double direction, double gain, double distance, double time)
@@ -216,7 +250,7 @@ public class MotorArm
 
         armDrive(3,3);
 
-        if(((Math.abs(shoulder.getCurrentPosition()) > distance || (getRuntime() > time))
+        if((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
         {
             moving = false;
         }
