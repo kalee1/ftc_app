@@ -20,7 +20,7 @@ public class Error404Autonomus extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     /** An int varibale that is used to record the current case the case machine is in. */
-    int state = 7;  // used to represent the current state in the state machine
+    int state = 2;  // used to represent the current state in the state machine
     /** An int variable that is used to record the current motor position at the beginning of a move. */
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -43,16 +43,28 @@ public class Error404Autonomus extends OpMode
 
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance from the start position to the on-field minerals.*/
-    protected double mineralDriveDistance;
+    protected double mineralDriveDistanceL;
+    protected double mineralDriveDistanceR;
+    protected double mineralDriveDistanceC;
+    protected double[] mineralDriveDistance = {mineralDriveDistanceL, mineralDriveDistanceR, mineralDriveDistanceC};
+    protected double mineralDriveDistanceFinal;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to slide around the minerals. */
     protected double mineralSlideDistance;
     /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
      * The target heading that faces the robot towards the alliance depo. */
-    protected double depoTurnHeading;
+    protected double depoTurnHeadingL;
+    protected double depoTurnHeadingR;
+    protected double depoTurnHeadingC;
+    protected double[] depoTurnHeading = {depoTurnHeadingL, depoTurnHeadingR, depoTurnHeadingC};
+    protected double depoTurnHeadingFinal;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to drive to the alliance depo. */
-    protected double depoDriveDistance;
+    protected double depoDriveDistanceL;
+    protected double depoDriveDistanceR;
+    protected double depoDriveDistanceC;
+    protected double[] depoDriveDistance = {depoDriveDistanceL, depoDriveDistanceR, depoDriveDistanceC};
+    protected double depoDriveDistanceFinal;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to drive to the crater. */
     protected double craterDriveDistance;
@@ -71,6 +83,9 @@ public class Error404Autonomus extends OpMode
     protected String goldPosition;
     /** The amount by which the PID drive algorithms will correct error. */
     double gain = 0.01;
+    final int LEFT = 0;
+    final int RIGHT = 1;
+    final int CENTER = 2;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -125,92 +140,201 @@ public class Error404Autonomus extends OpMode
                  the correct case value..*/
 
             //find gold mineral position
-//            case 2:
-//                goldPosition = robot.goldPosition();
-//
-//                if(goldPosition.equals("left") || goldPosition.equals("right") || goldPosition.equals("center"))
-//                {
-//                    state = 3;
-//                }
-//                if (getRuntime() > 5)
-//                {
-//                    goldPosition = "center";
-//                    state = 3;
-//                }
-////                telemetry.addData("gold position", goldPosition);
-//                if (state != 2)
-//                {
-//                    resetStartTime();
-//                    robot.tfodShutdown();
-//                }
-//                break;
-//
-//                //drive out from under the lander
-//            case 3:
-//                if(goldPosition.equals("left"))
-//                {
-//                    if(robot.drive(.2, forward, gain, 7, 6))
-//                    {
-//                        resetStartTime();
-//                        state = 4;
-//                    }
-//                }
-//                else if(goldPosition.equals("right"))
-//                {
-//                    if(robot.drive(.2, forward, gain, 7, 6))
-//                    {
-//                        resetStartTime();
-//                        state = 5;
-//                    }
-//                }
-//                else if(goldPosition.equals("center"))
-//                {
-//                    if(robot.drive(.2, forward, gain, 7, 6))
-//                    {
-//                        resetStartTime();
-//                        state = 6;
-//                    }
-//                }
+            case 2:
+                goldPosition = robot.goldPosition();
+
+                if(goldPosition.equals("left") || goldPosition.equals("right") || goldPosition.equals("center"))
+                {
+                    state = 3;
+                }
+                if (getRuntime() > 5)
+                {
+                    goldPosition = "center";
+                    state = 3;
+                }
 //                telemetry.addData("gold position", goldPosition);
-//                break;
-//
-//
-//                //Swivel to face the left mineral and drive forward
-//            case 4:
-//                if(robot.pointTurn(.2, 20, 4))
-//                {
-//                    resetStartTime();
-//                    state = 7;
-//                }
-//                break;
-//
-//                //swivel to face right mineral and drive forward
-//            case 5:
-//                if(robot.pointTurn(.2, -20, 4))
-//                {
-//                    resetStartTime();
-//                    state = 7;
-//                }
-//                break;
-//
-//                //swivel to face center mineral and drive forward
-//            case 6:
-//                if(robot.pointTurn(.2, 0, 4))
-//                {
-//                    resetStartTime();
-//                    state = 7;
-//                }
-//                break;
+                if (state != 2)
+                {
+                    resetStartTime();
+                    robot.tfodShutdown();
+                }
+                break;
+
+                //drive out from under the lander
+            case 3:
+                if(goldPosition.equals("left"))
+                {
+                    mineralDriveDistanceFinal = mineralDriveDistance[LEFT];
+                    depoTurnHeadingFinal = depoTurnHeading[LEFT];
+                    depoDriveDistanceFinal = depoDriveDistance[LEFT];
+                    if(robot.drive(.2, forward, gain, 7, 6))
+                    {
+                        resetStartTime();
+                        state = 4;
+                    }
+                }
+                else if(goldPosition.equals("right"))
+                {
+                    mineralDriveDistanceFinal = mineralDriveDistance[RIGHT];
+                    depoTurnHeadingFinal = depoTurnHeading[RIGHT];
+                    depoDriveDistanceFinal = depoDriveDistance[RIGHT];
+                    if(robot.drive(.2, forward, gain, 7, 6))
+                    {
+                        resetStartTime();
+                        state = 5;
+                    }
+                }
+                else if(goldPosition.equals("center"))
+                {
+                    mineralDriveDistanceFinal = mineralDriveDistance[CENTER];
+                    depoTurnHeadingFinal = depoTurnHeading[CENTER];
+                    depoDriveDistanceFinal = depoDriveDistance[CENTER];
+                    if(robot.drive(.2, forward, gain, 7, 6))
+                    {
+                        resetStartTime();
+                        state = 6;
+                    }
+                }
+                telemetry.addData("gold position", goldPosition);
+                break;
+
+
+                //Swivel to face the left mineral
+            case 4:
+                if(robot.pointTurn(.2, 35, 4))
+                {
+                    resetStartTime();
+                    state = 7;
+                }
+                break;
+
+                //swivel to face right mineral
+            case 5:
+                if(robot.pointTurn(.2, -30, 4))
+                {
+                    resetStartTime();
+                    state = 7;
+                }
+                break;
+
+                //swivel to face center mineral
+            case 6:
+                if(robot.pointTurn(.2, 0, 4))
+                {
+                    resetStartTime();
+                    state = 7;
+                }
+                break;
+
+                //drive forward to mineral
+            case 7:
+                if(robot.drive(.2, forward, gain, mineralDriveDistanceFinal, 6))
+                {
+                    resetStartTime();
+                    robot.intake();
+                    state = 8;
+                }
+                break;
 
                 //knock off gold mineral
-            case 7:
+            case 8:
                 // extend arm
-                if( robot.armDeploy(-4103,2864) )
+                if( robot.armDeploy(-4150,2700, true) )
                 {
-                    state = 8;
+                    state = 9;
+                    robot.collectorStop();
                     resetStartTime();
                 }
                 break;
+
+                //retract arm
+            case 9:
+                if( robot.armRetract() )
+                {
+                    state = 11;
+                    resetStartTime();
+                }
+                break;
+
+//            case 10:
+//                if(robot.pointTurn(.2, 0, 3))
+//                {
+//                    resetStartTime();
+//                    state = 11;
+//                }
+//                break;
+
+            case 11:
+                if(robot.pointTurn(.2, depoTurnHeadingFinal, 4))
+                {
+                    resetStartTime();
+                    state = 12;
+                }
+                break;
+
+            case 12:
+                if(robot.drive(.2, forward, gain, depoDriveDistanceFinal, 5))
+                {
+                    robot.markDeploy();
+                    resetStartTime();
+                    state = 13;
+                }
+                break;
+
+            case 13:
+                if(getRuntime() > 2)
+                {
+                    robot.markRetract();
+                    resetStartTime();
+                    state = 14;
+                }
+                break;
+
+            case 14:
+                if(robot.pointTurn(.2, headingReset, 6))
+                {
+                    resetStartTime();
+                    state = 15;
+                }
+                break;
+
+                //Drive towards crater.
+            case 15:
+                if(robot.drive(.4, forward, gain, craterDriveDistance, 6))
+                {
+                    state = 16;
+                    resetStartTime();
+                }
+                break;
+
+                //Turn to face the crater.
+            case 16:
+                if(robot.pointTurn(.2, craterTurnHeading, 6))
+                {
+                    state = 17;
+                    resetStartTime();
+                }
+                break;
+
+                //Strafe right, around the crater.
+            case 17:
+                if(robot.drive(.4, right, gain, craterSlideDistance, 6))
+                {
+                    state = 18;
+                    resetStartTime();
+                }
+                break;
+
+                //extend arm into the crater.
+            case 18:
+                if(robot.armDeploy(6799, -4948, false))
+                {
+                    resetStartTime();
+                    state = 19;
+                }
+                break;
+
+
 //
 //                //drive forward
 //            case 8:

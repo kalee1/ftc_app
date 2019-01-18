@@ -82,17 +82,21 @@ public class Error404MecanumTeleop extends OpMode
 
 
         //robot chassis control method
-        if(gamepad1.right_bumper)
+        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+
+        //mineral arm control method
+        if(gamepad2.x)
         {
-            robot.joystickDrive(-lStickX, -lStickY, -rStickX, -rStickY, afterburners());
+            robot.armRetract();
+        }
+        else if(gamepad2.a)
+        {
+            robot.armExtend();
         }
         else
         {
-            robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+            robot.armDrive(RightStickY, LeftStickY);
         }
-
-        //mineral arm control method
-        robot.armDrive(RightStickY, LeftStickY);
 
         //mineral intake controls
         //If the left bumper is pressed, turn the intake wheels inward.
@@ -118,12 +122,12 @@ public class Error404MecanumTeleop extends OpMode
         //If the right trigger on the secondary gamepad is pressed, rotate chassis right at .15 power.
         if(gamepad1.right_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, 1, 0.0, .18);
+            robot.joystickDrive(0.0, 0.0, -1, 0.0, .18);
         }
         //If the left trigger on the secondary gamepad is pressed, rotate the chassis left at .15 power.
         else if(gamepad1.left_trigger > .1)
         {
-            robot.joystickDrive(0.0, 0.0, -1, 0.0, .18);
+            robot.joystickDrive(0.0, 0.0, 1, 0.0, .18);
         }
 
 
@@ -145,6 +149,10 @@ public class Error404MecanumTeleop extends OpMode
         if (gamepad1.left_bumper)
         {
             powerLimit = .7;
+        }
+        else if(gamepad1.right_bumper)
+        {
+            powerLimit = 1;
         }
         //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.3
         else

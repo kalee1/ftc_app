@@ -17,10 +17,10 @@ public class E404_RedCenter extends Error404Autonomus
     @Override
     public void init()
     {
-        mineralDriveDistance = 15;
-        mineralSlideDistance = 45;
-        depoTurnHeading = 125;
-        depoDriveDistance = 35;
+//        mineralDriveDistance = 15;
+//        mineralSlideDistance = 45;
+//        depoTurnHeading = 125;
+//        depoDriveDistance = 35;
         headingReset = 125;
         craterDriveDistance = 65;
         craterTurnHeading = 180;
