@@ -31,8 +31,8 @@ public class MotorArm
 
 //    protected TouchSensor Shoulderfront = null;
 
-    int targetEncoder = 500;
-    int targetEncoder2 = 300;
+    double targetEncoder = 500;
+    double targetEncoder2 = 300;
     int timesrun = 0;
 
 
@@ -151,10 +151,8 @@ public class MotorArm
             telemetry.addData("chassisTouch", chassisTouch.getValue());
 
         }
-    public void ArmDeploy()
+    public void armDeploy(double targetEncoder, double targetEncoder2)
         {
-//        elbow.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        shoulder.setMode(DcMotor.RunMode.RUN_TO_POSITION);
             elbow.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             shoulder.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
@@ -167,7 +165,6 @@ public class MotorArm
             if (shoulder.getCurrentPosition() != targetEncoder)
                 {
                 shoulder.setPower(4);
-                else
                     {
                     shoulder.setPower(0);
                     }
