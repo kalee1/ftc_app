@@ -20,12 +20,10 @@ public class E404_CraterFace extends Error404Autonomus
         mineralDriveDistanceL = 14.0;
         mineralDriveDistanceR = 12.0;
         mineralDriveDistanceC = 14.0;
-        depoTurnHeadingL = 200.0;
-        depoTurnHeadingR = 160.0;
-        depoTurnHeadingC = 180.0;
-        depoDriveDistanceL = 20.0;
-        depoDriveDistanceR = 30.0;
-        depoDriveDistanceC = 30.0;
+        depoTurnHeading = 20;
+        depoDriveDistanceL = 45; //done
+        depoDriveDistanceR = 45;
+        depoDriveDistanceC = 50;
         headingReset = 135;
         craterDriveDistance = 45;
         craterTurnHeading = 175;

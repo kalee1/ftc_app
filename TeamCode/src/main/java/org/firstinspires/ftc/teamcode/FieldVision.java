@@ -190,6 +190,11 @@ public class FieldVision
         return goldPosition;
     }
 
+//    public boolean goldTrack()
+//    {
+//        return true;
+//    }
+
 
 //    /**
 //     * The vuforua navigation code

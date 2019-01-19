@@ -25,7 +25,6 @@ public class MarkDeploy
      * */
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-
         try
         {
             flag = hwMap.crservo.get( "MarkDeploy" );
@@ -33,7 +32,6 @@ public class MarkDeploy
           flag.setDirection(CRServo.Direction.FORWARD);
 //            flag.setDirection(Servo.Direction.FORWARD);
 //            flag.setPosition(.5);
-            telem.addData("servo position", flag.getPower());
         }
         catch (Exception p_exception)
         {

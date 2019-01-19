@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.hardware.kauailabs.NavxMicroNavigationSensor;
 import com.qualcomm.hardware.rev.RevTouchSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -37,6 +39,9 @@ public class MecanumChassis extends Chassis
 
     /** The navx gyro. */
     private NavxMicroNavigationSensor navx = null;
+
+    /*I The IMU sensor object */
+    BNO055IMU imu;
 
     /** Directional variables used to simulate joystick commands in autonomous.
      * Simulates a forward drive command.*/
@@ -161,7 +166,7 @@ public class MecanumChassis extends Chassis
 
         try
         {
-            navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
+//            navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
         }
         catch (Exception p_exeception)
         {
@@ -169,7 +174,28 @@ public class MecanumChassis extends Chassis
             navx = null;
         }
 
-        telemetry.addData("heading", getHeadingDbl());
+        try
+        {
+            // Set up the parameters with which we will use our IMU. Note that integration
+            // algorithm here just reports accelerations to the logcat log; it doesn't actually
+            // provide positional information.
+            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+            parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+            parameters.loggingEnabled = true;
+            parameters.loggingTag = "IMU";
+            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+            // Retrieve and initialize the IMU.
+            imu = hwMap.get(BNO055IMU.class, "imu");
+            imu.initialize(parameters);
+        }
+        catch (Exception p_exeception)
+        {
+            telem.addData("imu not found in config file", 0);
+            imu = null;
+        }
     }
 
 
@@ -204,22 +230,22 @@ public class MecanumChassis extends Chassis
 
         //Find the largest command value given and assign it to max.
         double max = 0.0;
-        if(Math.abs(leftFront) > max) {max = Math.abs(leftFront);}
-        if(Math.abs(rightFront) > max) {max = Math.abs(rightFront);}
-        if(Math.abs(leftRear) > max) {max = Math.abs(leftRear);}
-        if(Math.abs(rightRear) > max) {max = Math.abs(rightRear);}
+        if (Math.abs(leftFront) > max)  { max = Math.abs(leftFront); }
+        if (Math.abs(rightFront) > max) { max = Math.abs(rightFront); }
+        if (Math.abs(leftRear) > max)   { max = Math.abs(leftRear); }
+        if (Math.abs(rightRear) > max)  { max = Math.abs(rightRear); }
 
         //Set the minimum and maximum power allowed for drive moves and compare it to the parameter powerLimit.
         powerLimit = Range.clip(powerLimit, .05, 1);
         //If max still equals zero after checking all four motors, then set the max to 1
-        if(max == 0.0)
+        if (max == 0.0)
         {
             max = 1;
         }
 
         // If max is greater than the power limit, divide all command values by max to ensure that all command
         // values stay below the magnitude of the power limit.
-        if(max > powerLimit)
+        if (max > powerLimit)
         {
             leftFront = leftFront / max * powerLimit;
             rightFront = rightFront / max * powerLimit;
@@ -228,22 +254,22 @@ public class MecanumChassis extends Chassis
         }
 
         //Give the motors the final power values -- sourced from the calculations above.
-        if(rFrontMotor != null)
+        if (rFrontMotor != null)
         {
             rFrontMotor.setPower(rightFront);
         }
 
-        if(lFrontMotor != null)
+        if (lFrontMotor != null)
         {
             lFrontMotor.setPower(leftFront);
         }
 
-        if(rRearMotor != null)
+        if (rRearMotor != null)
         {
             rRearMotor.setPower(rightRear);
         }
 
-        if(lRearMotor != null)
+        if (lRearMotor != null)
         {
             lRearMotor.setPower(leftRear);
         }
@@ -257,6 +283,9 @@ public class MecanumChassis extends Chassis
 //        telemetry.addData("6. left front power", lFrontMotor.getPower());
 //        telemetry.addData("7. right rear power", rRearMotor.getPower());
 //        telemetry.addData("8. left rear power", lRearMotor.getPower());
+
+        telemetry.addData("Current Heading", "" + getHeadingDbl());
+
     }
 
 
@@ -273,6 +302,8 @@ public class MecanumChassis extends Chassis
      *              reason, the timer will catch it.
      * @return  A boolean that tells us whether or not the robot is moving.
      */
+
+
     @Override
     public boolean drive(double power, double direction, double gain, double distance, double time)
     {
@@ -280,14 +311,14 @@ public class MecanumChassis extends Chassis
         double correction;
         double actual = getHeadingDbl();
 
-        if(!moving)
+        if (!moving)
         {
             initialHeading = getHeadingDbl();
-            if(Math.abs(initialHeading) > 130  &&  initialHeading < 0.0)
+            if (Math.abs(initialHeading) > 130  &&  initialHeading < 0.0)
             {
                 initialHeading += 360.0;
             }
-            if(direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_LEFT_DIAGONAL)
+            if (direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_LEFT_DIAGONAL)
             {
                 initialPosition = rFrontMotor.getCurrentPosition();
             }
@@ -299,7 +330,7 @@ public class MecanumChassis extends Chassis
             moving = true;
         }
 
-        if(Math.abs(initialHeading) > 130  &&  actual < 0.0)
+        if (Math.abs(initialHeading) > 130  &&  actual < 0.0)
         {
             actual += 360;
         }
@@ -311,9 +342,13 @@ public class MecanumChassis extends Chassis
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
+        telemetry.addData("", "" + lStickX);
+        telemetry.addData("", "" + lStickY);
+        telemetry.addData("", "" + correction);
+
  //       telemetry.addData("encoder", lFrontMotor.getCurrentPosition());
 
-        if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
+        if (((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
             moving = false;
@@ -341,7 +376,7 @@ public class MecanumChassis extends Chassis
          double actual = getHeadingDbl();
          double numDirection = 0.0;
 
-         if(direction == TankDirection.FORWARD)
+         if (direction == TankDirection.FORWARD)
          {
              //forward
              numDirection = 0.0;
@@ -351,15 +386,15 @@ public class MecanumChassis extends Chassis
              //backward
              numDirection = 180.0;
          }
-         if(direction == TankDirection.REVERSE)
+         if (direction == TankDirection.REVERSE)
          {
              actual += 360.0;
          }
 
-         if(!moving)
+         if (!moving)
          {
              initialHeading = getHeadingDbl();
-             if(direction == TankDirection.REVERSE)
+             if (direction == TankDirection.REVERSE)
              {
                  initialHeading += 360.0;
              }
@@ -373,7 +408,7 @@ public class MecanumChassis extends Chassis
 
          joystickDrive(0.0, lStickY, correction,0.0, power);
 
-         if(((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
+         if (((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
          {
              stopMotors();
              moving = false;
@@ -398,26 +433,26 @@ public class MecanumChassis extends Chassis
         power = Math.abs(power);
         double currentHeading = getHeadingDbl();
 
-        if(Math.abs(targetHeading) > 170  &&  currentHeading < 0.0)
+        if (Math.abs(targetHeading) > 170  &&  currentHeading < 0.0)
         {
             currentHeading += 360;
         }
 
-        if(!moving)
+        if (!moving)
         {
             initialHeading = getHeadingDbl();
             error = initialHeading - targetHeading;
 
-            if(error > 180)
+            if (error > 180)
             {
                 error -= 360;
             }
-            else if(error < -180)
+            else if (error < -180)
             {
                 error += 360;
             }
 
-            if(error < 0)
+            if (error < 0)
             {
                 directionalPower = power;
             }
@@ -448,7 +483,10 @@ public class MecanumChassis extends Chassis
      */
     public double getHeadingDbl()
     {
-        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+        Orientation angles;
+        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
     }
 
@@ -473,10 +511,10 @@ public class MecanumChassis extends Chassis
      */
     private void setMode(DcMotor.RunMode mode)
     {
-        if(rFrontMotor != null){rFrontMotor.setMode(mode);}
-        if(lFrontMotor != null){lFrontMotor.setMode(mode);}
-        if(rRearMotor != null) {rRearMotor.setMode(mode);}
-        if(lRearMotor != null){lRearMotor.setMode(mode);}
+        if (rFrontMotor != null) { rFrontMotor.setMode(mode); }
+        if (lFrontMotor != null) { lFrontMotor.setMode(mode); }
+        if (rRearMotor != null)  { rRearMotor.setMode(mode); }
+        if (lRearMotor != null)  { lRearMotor.setMode(mode); }
     }
 
     /**
@@ -488,10 +526,10 @@ public class MecanumChassis extends Chassis
      */
     private void setDirection(DcMotorSimple.Direction direction)
     {
-        if(rFrontMotor != null){rFrontMotor.setDirection(direction);}
-        if(lFrontMotor != null){lFrontMotor.setDirection(direction);}
-        if(rRearMotor != null) {rRearMotor.setDirection(direction);}
-        if(lRearMotor != null){lRearMotor.setDirection(direction);}
+        if (rFrontMotor != null) { rFrontMotor.setDirection(direction); }
+        if (lFrontMotor != null) { lFrontMotor.setDirection(direction); }
+        if (rRearMotor != null)  { rRearMotor.setDirection(direction); }
+        if (lRearMotor != null)  { lRearMotor.setDirection(direction); }
     }
 
     /**
@@ -501,10 +539,10 @@ public class MecanumChassis extends Chassis
      */
     private void setPower(double power)
     {
-        if(rFrontMotor != null) {rFrontMotor.setPower(power);}
-        if(lFrontMotor != null) {lFrontMotor.setPower(power);}
-        if(rRearMotor != null) {rRearMotor.setPower(power);}
-        if(lRearMotor != null) {lRearMotor.setPower(power);}
+        if (rFrontMotor != null) { rFrontMotor.setPower(power); }
+        if (lFrontMotor != null) { lFrontMotor.setPower(power); }
+        if (rRearMotor != null)  { rRearMotor.setPower(power); }
+        if (lRearMotor != null)  { lRearMotor.setPower(power); }
     }
 
 }

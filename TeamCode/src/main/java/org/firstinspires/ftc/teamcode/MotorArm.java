@@ -64,6 +64,8 @@ public class MotorArm
      * */
     public void init(HardwareMap hwmap, Telemetry telem)
     {
+        telemetry = telem;
+
         try
         {
             elbow = hwmap.dcMotor.get("elbow");
@@ -118,14 +120,13 @@ public class MotorArm
 
         elbowStart = elbow.getCurrentPosition();
         shoulderStart = shoulder.getCurrentPosition();
-        telemetry = telem;
 
         elbowExtend = 9165;
         shoulderExtend = -5630;
     }
 
     /**
-     * Sends the joystick commands to the motors, allowing the drivers to move the arm. Reverses the
+     * Sends the joystick commands to the motors, allowing the drivers to move the arm and reverses the
      * arm's movement if it hits one of the three limit switches. This prevents the arm from driving
      * into itself and breaking.
      *
@@ -139,11 +140,11 @@ public class MotorArm
 
 
         //elbow limits
-        if(elbow != null)
+        if (elbow != null)
         {
-            if(elbowBack != null)
+            if (elbowBack != null)
             {
-                if(elbowBack.getValue() != 1)
+                if (elbowBack.getValue() != 1)
                 {
                     elbow.setPower(-0.5);
                 }
@@ -152,9 +153,9 @@ public class MotorArm
                     elbow.setPower(RightStickY);
                 }
             }
-            if(elbowFront != null)
+            if (elbowFront != null)
             {
-                if(elbowFront.isPressed())
+                if (elbowFront.isPressed())
                 {
                     elbow.setPower(0.5);
                 }
@@ -163,16 +164,15 @@ public class MotorArm
                     elbow.setPower(RightStickY);
                 }
             }
-            //telemetry.addData("elbow power: ", elbow.getPower());
         }
 
         //shoulder limits
-        if(shoulder != null) //check to make sure shoulder motor is good.
+        if (shoulder != null) //check to make sure shoulder motor is good.
         {
-            if(chassisTouch != null) //check to make sure the limit switch is good.
+            if (chassisTouch != null) //check to make sure the limit switch is good.
             {
                 //if the limit switch is pressed, reverse the arm, otherwise run the arm as normal.
-                if(chassisTouch.isPressed())
+                if (chassisTouch.isPressed())
                 {
                     shoulder.setPower(-0.7);
                 }
@@ -181,17 +181,10 @@ public class MotorArm
                     shoulder.setPower(LeftStickY);
                 }
             }
-//            telemetry.addData("shoulder power: ", shoulder.getPower());
         }
 
-//        telemetry.addData("elbow back: ", elbowBack);
-//        telemetry.addData("elbow front: ", elbowFront);
         telemetry.addData("elbow: ", elbow.getCurrentPosition());
-//        telemetry.addData("chassis touch: ", chassisTouch);
         telemetry.addData("shoulder: ", shoulder.getCurrentPosition());
-//        telemetry.addData("elbowBack: ", elbowBack.getValue());
-//        telemetry.addData("elbowFront: ", elbowFront.getValue());
-//        telemetry.addData("chassisTouch", chassisTouch.getValue());
 
     }
 
@@ -201,13 +194,13 @@ public class MotorArm
         double shoulderValue;
         double elbowValue;
 
-        if( timesrun < 1 )
+        if (timesrun < 1)
         {
             shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
             elbowTarget = elbow.getCurrentPosition() + elbowTarget;
         }
 
-        if( shoulder.getCurrentPosition() >= shoulderTarget )
+        if (shoulder.getCurrentPosition() >= shoulderTarget)
         {
             shoulderValue = -0.7;
         }
@@ -216,9 +209,9 @@ public class MotorArm
             shoulderValue = 0.0;
         }
 
-        if( elbowSecond )
+        if (elbowSecond)
         {
-            if( elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget )
+            if (elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget)
             {
                 elbowValue = 0.7;
             }
@@ -229,7 +222,7 @@ public class MotorArm
         }
         else
         {
-            if( elbow.getCurrentPosition() <= elbowTarget )
+            if (elbow.getCurrentPosition() <= elbowTarget)
             {
                 elbowValue = 0.7;
             }
@@ -241,8 +234,8 @@ public class MotorArm
 
         armDrive(elbowValue, shoulderValue);
 
-        if( (elbow.getCurrentPosition() >= elbowTarget) &&
-            (shoulder.getCurrentPosition() <= shoulderTarget) )
+        if ((elbow.getCurrentPosition() >= elbowTarget) &&
+            (shoulder.getCurrentPosition() <= shoulderTarget))
         {
             moving = false;
             timesrun = 0;
@@ -266,13 +259,13 @@ public class MotorArm
         double shoulderValue;
         double elbowValue;
 
-        if( timesrun < 1 )
-        {
+//        if (timesrun < 1)
+//        {
 //            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
 //            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
-        }
+//        }
 
-        if( shoulder.getCurrentPosition() < shoulderStart )
+        if (shoulder.getCurrentPosition() < shoulderStart && elbow.getCurrentPosition() < elbowStart)
         {
             shoulderValue = 0.8;
         }
@@ -282,7 +275,7 @@ public class MotorArm
         }
 
 
-        if( elbow.getCurrentPosition() > elbowStart )
+        if (elbow.getCurrentPosition() > elbowStart)
         {
             elbowValue = -0.9;
         }
@@ -293,8 +286,8 @@ public class MotorArm
 
         armDrive(elbowValue, shoulderValue);
 
-        if( (elbow.getCurrentPosition()    <= elbowStart) &&
-            (shoulder.getCurrentPosition() >= shoulderStart) )
+        if ((elbow.getCurrentPosition()    <= elbowStart) &&
+            (shoulder.getCurrentPosition() >= shoulderStart))
         {
             moving = false;
             timesrun = 0;
@@ -313,7 +306,7 @@ public class MotorArm
     public boolean testAutoArm(double power, double direction, double gain, double distance, double time)
     {
         resetStartTime();
-        if(!moving)
+        if (!moving)
         {
 
             moving = true;
@@ -321,7 +314,7 @@ public class MotorArm
 
         armDrive(3,3);
 
-        if((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
+        if ((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
         {
             moving = false;
         }
@@ -330,63 +323,64 @@ public class MotorArm
     }
 
 
-    /**
-     * Get the number of seconds this op mode has been running
-     * <p>
-     * This method has sub millisecond accuracy.
-     * @return number of seconds this op mode has been running
-     */
-    public boolean armExtend()
-    {
-        double elbowTarget = elbowStart;
-        double shoulderTarget = shoulderStart;
-        double shoulderValue;
-        double elbowValue;
 
-        if( timesrun < 1 )
-        {
-//            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
-//            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
-        }
+//    public boolean armExtend()
+//    {
+//        double elbowTarget = elbowStart;
+//        double shoulderTarget = shoulderStart;
+//        double shoulderValue;
+//        double elbowValue;
+//
+//        if( timesrun < 1 )
+//        {
+////            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+////            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
+//        }
+//
+//        if( shoulder.getCurrentPosition() < shoulderExtend )
+//        {
+//            shoulderValue = -0.8;
+//        }
+//        else
+//        {
+//            shoulderValue = 0.0;
+//        }
+//
+//
+//        if( elbow.getCurrentPosition() > elbowExtend )
+//        {
+//            elbowValue = 0.9;
+//        }
+//        else
+//        {
+//            elbowValue = 0.0;
+//        }
+//
+//        armDrive(elbowValue, shoulderValue);
+//
+//        if( (elbow.getCurrentPosition()    >= elbowExtend) &&
+//                (shoulder.getCurrentPosition() <= shoulderExtend) )
+//        {
+//            moving = false;
+//            timesrun = 0;
+//            elbow.setPower(0.0);
+//            shoulder.setPower(0.0);
+//        }
+//        else
+//        {
+//            moving = true;
+//            timesrun = 1;
+//        }
+//
+//        return !moving;
+//    }
 
-        if( shoulder.getCurrentPosition() < shoulderExtend )
-        {
-            shoulderValue = -0.8;
-        }
-        else
-        {
-            shoulderValue = 0.0;
-        }
-
-
-        if( elbow.getCurrentPosition() > elbowExtend )
-        {
-            elbowValue = 0.9;
-        }
-        else
-        {
-            elbowValue = 0.0;
-        }
-
-        armDrive(elbowValue, shoulderValue);
-
-        if( (elbow.getCurrentPosition()    >= elbowExtend) &&
-                (shoulder.getCurrentPosition() <= shoulderExtend) )
-        {
-            moving = false;
-            timesrun = 0;
-            elbow.setPower(0.0);
-            shoulder.setPower(0.0);
-        }
-        else
-        {
-            moving = true;
-            timesrun = 1;
-        }
-
-        return !moving;
-    }
-
+        /**
+         * Get the number of seconds this op mode has been running
+         * <p>
+         * This method has sub millisecond accuracy.
+         * @return number of seconds this op mode has been running
+         */
     public double getRuntime()
     {
         return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
@@ -398,5 +392,14 @@ public class MotorArm
     public void resetStartTime()
     {
         startTime = System.nanoTime();
+    }
+
+    /**
+     * Stop the motors by removing power.
+     */
+    public void stop()
+    {
+        if (elbow != null) { elbow.setPower(0.0); }
+        if (shoulder != null) { shoulder.setPower(0.0); }
     }
 }

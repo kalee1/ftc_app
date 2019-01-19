@@ -89,10 +89,10 @@ public class Error404MecanumTeleop extends OpMode
         {
             robot.armRetract();
         }
-        else if(gamepad2.a)
-        {
-            robot.armExtend();
-        }
+//        else if(gamepad2.a)
+//        {
+//            robot.armExtend();
+//        }
         else
         {
             robot.armDrive(RightStickY, LeftStickY);
