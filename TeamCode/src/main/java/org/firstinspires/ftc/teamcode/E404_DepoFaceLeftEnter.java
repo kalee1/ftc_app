@@ -20,9 +20,6 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         mineralDriveDistanceR = 12; //done
         mineralDriveDistanceC = 10; //done
 
-        depoTurnHeading = 135;
-        depoSlideDistance = 14;
-
         faceDepoHeadingL = 170; //done
         faceDepoHeadingR = 180; //done
         faceDepoHeadingC = 180; //done
@@ -31,10 +28,16 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         mineralSlideDistanceR = 46; //done
         mineralSlideDistanceC = 45; //done
 
+        depoTurnHeading = 135;
+        depoSlideDistance = 14;
+
         depoDriveDistanceL = 52; //done
         depoDriveDistanceR = 45; //done
         depoDriveDistanceC = 55; //done
-        faceCraterHeading = 45;
+
+        markerTurnHeading = 180;
+        markerSlideDistance = 7;
+        faceCraterHeading = 220;
 
         headingReset = 45;
         craterDriveDistance = 60;

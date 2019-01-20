@@ -199,9 +199,9 @@ public class RuckusBot
         return theArm.armDeploy(shoulderTarget, elbowTarget, elbowSecond);
     }
 
-    public boolean armRetract()
+    public boolean armRetract(boolean elbowFirst)
     {
-        return theArm.armRetract();
+        return theArm.armRetract(elbowFirst);
     }
 
 //    public boolean armExtend()

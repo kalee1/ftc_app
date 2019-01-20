@@ -48,6 +48,13 @@ public class Error404Autonomus extends OpMode
     protected double mineralDriveDistanceC;
     protected double[] mineralDriveDistance;
     protected double mineralDriveDistanceFinal;
+
+    protected double faceDepoHeadingL;
+    protected double faceDepoHeadingR;
+    protected double faceDepoHeadingC;
+    protected double[] faceDepoHeading;
+    protected double faceDepoHeadingFinal;
+
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to slide around the minerals. */
     protected double mineralSlideDistanceL;
@@ -59,13 +66,7 @@ public class Error404Autonomus extends OpMode
      * The target heading that faces the robot towards the alliance depo. */
     protected double depoTurnHeading;
     protected double depoSlideDistance;
-    protected double faceCraterHeading;
 
-    protected double faceDepoHeadingL;
-    protected double faceDepoHeadingR;
-    protected double faceDepoHeadingC;
-    protected double[] faceDepoHeading;
-    protected double faceDepoHeadingFinal;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to drive to the alliance depo. */
     protected double[] depoDriveDistance;
@@ -73,6 +74,10 @@ public class Error404Autonomus extends OpMode
     protected double depoDriveDistanceR;
     protected double depoDriveDistanceC;
     protected double depoDriveDistanceFinal;
+
+    protected double markerTurnHeading;
+    protected double markerSlideDistance;
+    protected double faceCraterHeading;
 
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to drive to the crater. */
@@ -267,7 +272,7 @@ public class Error404Autonomus extends OpMode
 
                 //retract arm
             case 9:
-                if (robot.armRetract() || getRuntime() > 3.0)
+                if (robot.armRetract(true) || getRuntime() > 3.0)
                 {
                     state = 11;
                     robot.collectorStop();
@@ -325,7 +330,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 16:
-                if(robot.pointTurn(.3, 180,4))
+                if(robot.pointTurn(.3, markerTurnHeading,4))
                 {
                     resetStartTime();
                     robot.markDeploy();
@@ -334,7 +339,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 17:
-                if(robot.drive(.4, left, gain, 7, 4))
+                if(robot.drive(.4, left, gain, markerSlideDistance, 4))
                 {
                     resetStartTime();
                     state = 18;
@@ -350,7 +355,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 19:
-                if(robot.pointTurn(.3, 220,4))
+                if(robot.pointTurn(.3, faceCraterHeading,4))
                 {
                     resetStartTime();
                     robot.markRetract();

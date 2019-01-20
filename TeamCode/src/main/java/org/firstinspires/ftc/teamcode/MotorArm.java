@@ -252,7 +252,7 @@ public class MotorArm
     }
 
 
-    public boolean armRetract()
+    public boolean armRetract(boolean elbowFirst)
     {
         double elbowTarget = elbowStart;
         double shoulderTarget = shoulderStart;
@@ -265,13 +265,28 @@ public class MotorArm
 //            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
 //        }
 
-        if (shoulder.getCurrentPosition() < shoulderStart && elbow.getCurrentPosition() < elbowStart)
+        if (elbowFirst)
         {
-            shoulderValue = 0.8;
+
+            if (shoulder.getCurrentPosition() < shoulderStart && elbow.getCurrentPosition() < elbowStart)
+            {
+                shoulderValue = 0.8;
+            }
+            else
+            {
+                shoulderValue = 0.0;
+            }
         }
         else
         {
-            shoulderValue = 0.0;
+            if (shoulder.getCurrentPosition() < shoulderStart)
+            {
+                shoulderValue = 0.8;
+            }
+            else
+            {
+                shoulderValue = 0.0;
+            }
         }
 
 

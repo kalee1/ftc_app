@@ -17,16 +17,32 @@ public class E404_CraterFace extends Error404Autonomus
     @Override
     public void init()
     {
-        mineralDriveDistanceL = 14.0;
-        mineralDriveDistanceR = 12.0;
-        mineralDriveDistanceC = 14.0;
+        mineralDriveDistanceL = 13; //done
+        mineralDriveDistanceR = 12; //done
+        mineralDriveDistanceC = 10; //done
+
+        faceDepoHeadingL = 0; //done
+        faceDepoHeadingR = 0; //done
+        faceDepoHeadingC = 0; //done
+
+        mineralSlideDistanceL = 35;
+        mineralSlideDistanceR = 46;
+        mineralSlideDistanceC = 45;
+
         depoTurnHeading = 20;
-        depoDriveDistanceL = 45; //done
-        depoDriveDistanceR = 45;
-        depoDriveDistanceC = 50;
+        depoSlideDistance = 0;
+
+        depoDriveDistanceL = 60; //all same
+        depoDriveDistanceR = 60;
+        depoDriveDistanceC = 60;
+
+        markerTurnHeading = depoTurnHeading;
+        markerSlideDistance = 0;
+        faceCraterHeading = depoTurnHeading;
+
         headingReset = 135;
-        craterDriveDistance = 45;
-        craterTurnHeading = 175;
+        craterDriveDistance = 60;
+        craterTurnHeading = 220;
         craterSlideDistance = 65;
         enterCraterDistance = 32;
 
