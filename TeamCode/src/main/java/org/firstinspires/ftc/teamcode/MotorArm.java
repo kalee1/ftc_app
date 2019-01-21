@@ -24,6 +24,11 @@ public class MotorArm
     {
     Telemetry telemetry;
     boolean moving = false;
+    int elbowHome;
+    int shoulderHome;
+    int elbowExtend;
+    int shoulderExtend;
+
 
     /** A double that is the number of nanoseconds per second. */
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
@@ -59,6 +64,7 @@ public class MotorArm
      * */
     public void init(HardwareMap hwmap, Telemetry telem)
         {
+            telemetry = telem;
             try
                 {
                 elbow = hwmap.dcMotor.get("elbow");
@@ -87,7 +93,7 @@ public class MotorArm
                 {
                 elbowBack = hwmap.touchSensor.get("elbowBack");
                 }
-            catch (Exception p_exception)
+            catch (Exception p_exeception)
                 {
                 elbowBack = null;
                 telemetry.addData("elbowBack not found", "");
@@ -111,7 +117,12 @@ public class MotorArm
                 telemetry.addData("chassisTouch not found", "");
                 }
 
-            telemetry = telem;
+            elbowHome = elbow.getCurrentPosition();
+            shoulderHome = shoulder.getCurrentPosition();
+
+
+            elbowExtend = 9165;
+            shoulderExtend = -5630;
         }
 
     /**
@@ -131,27 +142,17 @@ public class MotorArm
             //elbow limits
             if(elbow != null)
                 {
-                if(elbowBack != null)
+                if(elbowBack != null && elbowBack.getValue() != 1)
                     {
-                    if(elbowBack.getValue() != 1)
-                        {
-                        elbow.setPower(-0.5);
-                        }
-                    else
-                        {
-                        elbow.setPower(RightStickY);
-                        }
+                    elbow.setPower(-0.5);
                     }
-                if(elbowFront != null)
+                else if(elbowFront != null && elbowFront.isPressed())
                     {
-                    if(elbowFront.isPressed())
-                        {
-                        elbow.setPower(0.5);
-                        }
-                    else
-                        {
-                        elbow.setPower(RightStickY);
-                        }
+                    elbow.setPower(0.5);
+                    }
+                else
+                    {
+                    elbow.setPower(RightStickY);
                     }
                 //telemetry.addData("elbow power: ", elbow.getPower());
                 }
@@ -186,7 +187,7 @@ public class MotorArm
         }
 
 
-    public boolean armDeploy(int shoulderTarget, int elbowTarget)
+    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
         {
             double shoulderValue;
             double elbowValue;
@@ -206,24 +207,85 @@ public class MotorArm
                 shoulderValue = 0.0;
                 }
 
-            if( elbow.getCurrentPosition() <= elbowTarget )
+            if( elbowSecond )
                 {
-                elbowValue = 0.5;
+                if( elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget )
+                    {
+                    elbowValue = 0.7;
+                    }
+                else
+                    {
+                    elbowValue = 0.0;
+                    }
+                }
+            else
+                {
+                if( elbow.getCurrentPosition() <= elbowTarget )
+                    {
+                    elbowValue = 0.7;
+                    }
+                else
+                    {
+                    elbowValue = 0.0;
+                    }
+                }
+
+            armDrive(elbowValue, shoulderValue);
+
+            if( (elbow.getCurrentPosition() >= elbowTarget) &&
+                    (shoulder.getCurrentPosition() <= shoulderTarget) )
+                {
+                moving = false;
+                timesrun = 0;
+                elbow.setPower(0.0);
+                shoulder.setPower(0.0);
+                }
+            else
+                {
+                moving = true;
+                timesrun = 1;
+                }
+
+            return !moving;
+        }
+
+
+    public boolean armHome()
+        {
+            double elbowTarget = elbowHome;
+            double shoulderTarget = shoulderHome;
+            double shoulderValue;
+            double elbowValue;
+
+            if( timesrun < 1 )
+                {
+//            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+//            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
+                }
+
+            if( shoulder.getCurrentPosition() < shoulderHome )
+                {
+                shoulderValue = 0.8;
+                }
+            else
+                {
+                shoulderValue = 0.0;
+                }
+
+
+            if( elbow.getCurrentPosition() > elbowHome )
+                {
+                elbowValue = -0.9;
                 }
             else
                 {
                 elbowValue = 0.0;
                 }
 
-//        telemetry.addData("elbow encoder: ", elbow.getCurrentPosition());
-//        telemetry.addData("shoulder encoder: ", shoulder.getCurrentPosition());
-            telemetry.addData("elbow target: ", elbowTarget);
-            telemetry.addData("shoulder target: ", shoulderTarget);
-
             armDrive(elbowValue, shoulderValue);
 
-            if( (elbow.getCurrentPosition() >= elbowTarget) &&
-                    (shoulder.getCurrentPosition() <= shoulderTarget) )
+            if( (elbow.getCurrentPosition()    <= elbowHome) &&
+                    (shoulder.getCurrentPosition() >= shoulderHome) )
                 {
                 moving = false;
                 timesrun = 0;
@@ -265,6 +327,57 @@ public class MotorArm
      * This method has sub millisecond accuracy.
      * @return number of seconds this op mode has been running
      */
+    public boolean armExtend()
+        {
+            double elbowTarget = elbowHome;
+            double shoulderTarget = shoulderHome;
+            double shoulderValue;
+            double elbowValue;
+
+            if( timesrun < 1 )
+                {
+//            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+//            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
+                }
+
+            if( shoulder.getCurrentPosition() < shoulderExtend )
+                {
+                shoulderValue = -0.8;
+                }
+            else
+                {
+                shoulderValue = 0.0;
+                }
+
+
+            if( elbow.getCurrentPosition() > elbowExtend )
+                {
+                elbowValue = 0.9;
+                }
+            else
+                {
+                elbowValue = 0.0;
+                }
+
+            armDrive(elbowValue, shoulderValue);
+
+            if( (elbow.getCurrentPosition()    >= elbowExtend) &&
+                    (shoulder.getCurrentPosition() <= shoulderExtend) )
+                {
+                moving = false;
+                timesrun = 0;
+                elbow.setPower(0.0);
+                shoulder.setPower(0.0);
+                }
+            else
+                {
+                moving = true;
+                timesrun = 1;
+                }
+
+            return !moving;
+        }
+
     public double getRuntime()
         {
             return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
