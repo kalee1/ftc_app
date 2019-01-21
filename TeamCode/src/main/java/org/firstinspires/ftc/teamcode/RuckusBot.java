@@ -74,16 +74,16 @@ public class RuckusBot
      * Turns the collector wheels inward to suck in minerals.
      * Turns the collector wheels inward to suck in minerals.
      * */
-    public void intake()
+    public void intake(Telemetry telem)
         {
-            theCollect.intake();
+            theCollect.intake(telem);
         }
     /** A go-between between the opmode class and the actual chassis class.
      * Turns the collector wheels outward to eject minerals.
      * */
-    public void eject()
+    public void eject(Telemetry telem)
         {
-            theCollect.eject();
+            theCollect.eject(telem);
         }
     /** A go-between between the opmode class and the actual chassis class.
      * Tells the collector wheels to stop turning.

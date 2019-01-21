@@ -252,8 +252,6 @@ public class MotorArm
 
     public boolean armHome()
         {
-            double elbowTarget = elbowHome;
-            double shoulderTarget = shoulderHome;
             double shoulderValue;
             double elbowValue;
 

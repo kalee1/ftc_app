@@ -113,12 +113,12 @@ protected TouchSensor ArmTouchBackward = null;
          * to spin at a given direction*/
         if (gamepad2.left_bumper == true)
         {
-            robot.Intake(telemetry);
+            robot.intake(telemetry);
         }
 
         else if (gamepad2.right_bumper == true)
         {
-            robot.Eject(telemetry);
+            robot.eject(telemetry);
         }
         else{
             robot.collectorStop();
