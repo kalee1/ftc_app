@@ -187,6 +187,89 @@ public class MotorArm
         }
 
 
+
+
+
+
+
+    public enum ArmPositions
+        {
+            ARMHOME(0, 0),
+            LANDEREXTEND(9165, -5630),
+            CRATEREXTEND(420, 420),
+            DRIVINGEXTEND(420, 420);
+
+        public final double Elbow;   // in kilograms
+        public final double Shoulder; // in meters
+
+        ArmPositions(double Elbow, double Shoulder)
+            {
+                this.Elbow = Elbow;
+                this.Shoulder = Shoulder;
+            }
+        }
+    public void craterExtend()
+        {
+            if (shoulder.getCurrentPosition() <= ArmPositions.CRATEREXTEND.Shoulder &&
+                    elbow.getCurrentPosition() >= ArmPositions.CRATEREXTEND.Elbow)
+                {
+                shoulder.setPower(-0.8);
+                elbow.setPower(0.9);
+                }
+            else
+                {
+                shoulder.setPower(0.0);
+                elbow.setPower(0.0);
+                }
+        }
+    public void armHome()
+        {
+            if (shoulder.getCurrentPosition() <= ArmPositions.ARMHOME.Shoulder &&
+                    elbow.getCurrentPosition() >= ArmPositions.ARMHOME.Elbow)
+                {
+                shoulder.setPower(-0.8);
+                elbow.setPower(0.9);
+                }
+            else
+                {
+                shoulder.setPower(0.0);
+                elbow.setPower(0.0);
+                }
+        }
+    public void landerExtend()
+        {
+            if (shoulder.getCurrentPosition() <= ArmPositions.LANDEREXTEND.Shoulder &&
+                    elbow.getCurrentPosition() >= ArmPositions.LANDEREXTEND.Elbow)
+                {
+                shoulder.setPower(-0.8);
+                elbow.setPower(0.9);
+                }
+            else
+                {
+                shoulder.setPower(0.0);
+                elbow.setPower(0.0);
+                }
+        }
+            public void driveingExtend()
+            {
+            if (shoulder.getCurrentPosition() <= ArmPositions.DRIVINGEXTEND.Shoulder &&
+                    elbow.getCurrentPosition() >= ArmPositions.DRIVINGEXTEND.Elbow)
+                {
+                shoulder.setPower(-0.8);
+                elbow.setPower(0.9);
+                }
+            else
+                {
+                shoulder.setPower(0.0);
+                elbow.setPower(0.0);
+                }
+            }
+
+
+
+
+
+
     public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
         {
             double shoulderValue;
@@ -250,7 +333,7 @@ public class MotorArm
         }
 
 
-    public boolean armHome()
+    public boolean ArmHome()
         {
             double shoulderValue;
             double elbowValue;

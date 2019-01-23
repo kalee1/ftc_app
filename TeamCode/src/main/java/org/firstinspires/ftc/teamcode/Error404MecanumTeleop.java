@@ -124,7 +124,10 @@ protected TouchSensor ArmTouchBackward = null;
             robot.collectorStop();
         }
 
+        if (gamepad2.x){
 
+        robot.armHome();
+        }
     }
 
     /**
