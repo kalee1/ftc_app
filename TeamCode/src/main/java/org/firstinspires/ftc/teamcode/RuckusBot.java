@@ -231,4 +231,6 @@ public class RuckusBot
         {
             theArm.armHome();
         }
-    }
+    public boolean armCollect(boolean elbowSecond){ return theArm.goldCollect(elbowSecond); }
+
+}

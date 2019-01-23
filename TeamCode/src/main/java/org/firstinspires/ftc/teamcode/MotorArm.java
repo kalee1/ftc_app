@@ -197,7 +197,8 @@ public class MotorArm
             ARMHOME(0, 0),
             LANDEREXTEND(9165, -5630),
             CRATEREXTEND(420, 420),
-            DRIVINGEXTEND(420, 420);
+            DRIVINGEXTEND(420, 420),
+            MINERALCOLLECT(2500, -4220);
 
         public final double Elbow;   // in kilograms
         public final double Shoulder; // in meters
@@ -264,6 +265,45 @@ public class MotorArm
                 elbow.setPower(0.0);
                 }
             }
+        public boolean goldCollect(boolean elbowSecond)
+            {
+
+                if (shoulder.getCurrentPosition() >= ArmPositions.MINERALCOLLECT.Shoulder)
+                    {
+                    shoulder.setPower(-0.7);
+                    }
+                else
+                    {
+                    shoulder.setPower(0.0);
+                    }
+
+                if (elbowSecond)
+                    {
+                    if (elbow.getCurrentPosition() <= ArmPositions.MINERALCOLLECT.Elbow &&
+                            shoulder.getCurrentPosition() <= ArmPositions.MINERALCOLLECT.Shoulder)
+                        {
+                        elbow.setPower(0.7);
+                        }
+                    else
+                        {
+                        elbow.setPower(0.0);
+                        }
+                    }
+                else
+                    {
+                    if (elbow.getCurrentPosition() <= ArmPositions.MINERALCOLLECT.Elbow)
+                        {
+                        elbow.setPower(0.7);
+                        }
+                    else
+                        {
+                        elbow.setPower(0.0);
+                        }
+                    }
+                return !moving;
+            }
+
+
 
 
 
