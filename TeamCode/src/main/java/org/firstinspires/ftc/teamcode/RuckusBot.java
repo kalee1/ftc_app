@@ -227,10 +227,11 @@ public class RuckusBot
             theEyeOfSauron.tfodShutdown();
         }
 
-    public void armHome()
+    public boolean armHome()
         {
-            theArm.armHome();
+            return theArm.armHome();
         }
-    public boolean armCollect(boolean elbowSecond){ return theArm.goldCollect(elbowSecond); }
+    public boolean armGoldCollect(boolean elbowSecond){ return theArm.goldCollect(elbowSecond); }
+    public boolean armCraterExtend(){ return theArm.craterExtend(); }
 
 }

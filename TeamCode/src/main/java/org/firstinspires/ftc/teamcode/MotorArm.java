@@ -196,7 +196,7 @@ public class MotorArm
         {
             ARMHOME(0, 0),
             LANDEREXTEND(9165, -5630),
-            CRATEREXTEND(420, 420),
+            CRATEREXTEND(6700, -4950),
             DRIVINGEXTEND(420, 420),
             MINERALCOLLECT(2500, -4220);
 
@@ -209,7 +209,7 @@ public class MotorArm
                 this.Shoulder = Shoulder;
             }
         }
-    public void craterExtend()
+    public boolean craterExtend()
         {
             if (shoulder.getCurrentPosition() <= ArmPositions.CRATEREXTEND.Shoulder &&
                     elbow.getCurrentPosition() >= ArmPositions.CRATEREXTEND.Elbow)
@@ -222,8 +222,9 @@ public class MotorArm
                 shoulder.setPower(0.0);
                 elbow.setPower(0.0);
                 }
+            return !moving;
         }
-    public void armHome()
+    public boolean armHome()
         {
             if (shoulder.getCurrentPosition() <= ArmPositions.ARMHOME.Shoulder &&
                     elbow.getCurrentPosition() >= ArmPositions.ARMHOME.Elbow)
@@ -236,6 +237,7 @@ public class MotorArm
                 shoulder.setPower(0.0);
                 elbow.setPower(0.0);
                 }
+            return !moving;
         }
     public void landerExtend()
         {
@@ -251,7 +253,7 @@ public class MotorArm
                 elbow.setPower(0.0);
                 }
         }
-            public void driveingExtend()
+        public void driveingExtend()
             {
             if (shoulder.getCurrentPosition() <= ArmPositions.DRIVINGEXTEND.Shoulder &&
                     elbow.getCurrentPosition() >= ArmPositions.DRIVINGEXTEND.Elbow)

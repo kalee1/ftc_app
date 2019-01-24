@@ -11,10 +11,10 @@ public class E404_RedOffset extends Error404Autonomus
     {
         super.init();
 
-        mineralDriveDistance = 55.0;
-        mineralSlideDistance = 0.0;
-        depoTurnHeading = 45.0; // ~45 degrees
-        depoDriveDistance = 0.0;
+//        mineralDriveDistance = 55.0;
+//        mineralSlideDistance = 0.0;
+//        depoTurnHeading = 45.0; // ~45 degrees
+//        depoDriveDistance = 0.0;
         headingReset = 45;
         craterDriveDistance = 65;
         craterTurnHeading = 70;
