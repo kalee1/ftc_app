@@ -263,7 +263,7 @@ public class Error404Autonomus extends OpMode
                 //knock off gold mineral
             case 8:
                 // extend arm
-                if (robot.armDeploy( -4220,2500, true))
+                if (robot.armGoldCollect( true))
                 {
                     state = 9;
                     resetStartTime();
@@ -272,7 +272,7 @@ public class Error404Autonomus extends OpMode
 
                 //retract arm
             case 9:
-                if (robot.armRetract(true) || getRuntime() > 3.0)
+                if (robot.armHome() || getRuntime() > 3.0)
                 {
                     state = 11;
                     robot.collectorStop();
@@ -390,7 +390,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 23:
-                if(robot.armDeploy(-4950, 6700, false))
+                if(robot.armGoldCollect(false))
                 {
                     resetStartTime();
                     state = 24;

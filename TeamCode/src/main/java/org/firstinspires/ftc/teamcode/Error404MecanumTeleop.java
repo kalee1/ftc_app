@@ -87,12 +87,12 @@ public class Error404MecanumTeleop extends OpMode
         //mineral arm control method
         if(gamepad2.x)
         {
-            robot.armRetract(false);
+            robot.armHome();
         }
-//        else if(gamepad2.a)
-//        {
-//            robot.armExtend();
-//        }
+        else if(gamepad2.a)
+        {
+            robot.armCraterExtend();
+        }
         else
         {
             robot.armDrive(RightStickY, LeftStickY);

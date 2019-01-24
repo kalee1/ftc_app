@@ -194,20 +194,20 @@ public class RuckusBot
         theEyeOfSauron.tfodShutdown();
     }
 
-    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
+    public boolean armHome()
     {
-        return theArm.armDeploy(shoulderTarget, elbowTarget, elbowSecond);
+        return theArm.armHome();
     }
 
-    public boolean armRetract(boolean elbowFirst)
+    public boolean armGoldCollect(boolean elbowSecond)
     {
-        return theArm.armRetract(elbowFirst);
+        return theArm.goldCollect(elbowSecond);
     }
 
-//    public boolean armExtend()
-//    {
-//        return theArm.armExtend();
-//    }
+    public boolean armCraterExtend()
+    {
+        return theArm.craterExtend();
+    }
 
 
 }
