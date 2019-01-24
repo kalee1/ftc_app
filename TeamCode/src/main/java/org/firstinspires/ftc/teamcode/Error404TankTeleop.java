@@ -8,10 +8,12 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Error404 Tank Teleop", group="Teleop")
+//@TeleOp(name="Error404 Tank Teleop", group="Teleop")
 
 /**
- * @author Error 404: Team Name Not Found
+ * A teleop opmode that drive the robot like a tank (ie, not mecanum).
+ *
+ * @author Andrew, Error 404: Team Name Not Found
  * @see OpMode
  */
 public class Error404TankTeleop extends OpMode
@@ -25,6 +27,7 @@ public class Error404TankTeleop extends OpMode
     /*
      * Code to run ONCE when the driver hits INIT
      */
+    /** Calls the needed init methods for used classes. */
     @Override
     public void init()
     {
@@ -41,6 +44,8 @@ public class Error404TankTeleop extends OpMode
     /*
      * Code to run ONCE when the driver hits PLAY
      */
+    /** Not used for anything right now, but runs once when the start button is pressed, but before
+     * the loop method starts. */
     @Override
     public void start() {
     }
@@ -48,6 +53,8 @@ public class Error404TankTeleop extends OpMode
     /*
      * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
      */
+    /** Contains the actual movement commands of the class. Runs repeatedly until the stop button is
+     *  pressed.*/
     @Override
     public void loop()
     {
@@ -64,6 +71,8 @@ public class Error404TankTeleop extends OpMode
     /*
      * Code to run ONCE after the driver hits STOP
      */
+    /** Runs once after the driver hits the stop button on teh drivers station phone.
+     * Stops the loop method. */
     @Override
     public void stop()
     {
