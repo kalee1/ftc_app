@@ -20,7 +20,7 @@ public class RuckusBot
      * team marker in autonomous.
      */
     MarkDeploy depoDeposit = new MarkDeploy();
-    FieldVision theEyeOfSauron = new FieldVision();
+   // FieldVision theEyeOfSauron = new FieldVision();
 //    MineralProcessing area51 = new MineralProcessing();
 
     /**
@@ -61,7 +61,7 @@ public class RuckusBot
     public void init(HardwareMap hwMap, Telemetry telem)
         {
             theChassis.init(hwMap, telem);
-            theEyeOfSauron.init(hwMap, telem);
+            //theEyeOfSauron.init(hwMap, telem);
 
             theArm.init(hwMap, telem);
             theCollect.init(hwMap, telem);
@@ -70,7 +70,7 @@ public class RuckusBot
 
     public void start()
         {
-            theEyeOfSauron.start();
+            //theEyeOfSauron.start();
         }
 
     /**
@@ -217,15 +217,15 @@ public class RuckusBot
             depoDeposit.retract();
         }
 
-    public String goldPosition()
-        {
-            return theEyeOfSauron.tensorFlowMineralDetection();
-        }
-
-    public void tfodShutdown()
-        {
-            theEyeOfSauron.tfodShutdown();
-        }
+//    public String goldPosition()
+//        {
+//            return theEyeOfSauron.tensorFlowMineralDetection();
+//        }
+//
+//    public void tfodShutdown()
+//        {
+//            theEyeOfSauron.tfodShutdown();
+//        }
 
     public boolean armHome()
         {

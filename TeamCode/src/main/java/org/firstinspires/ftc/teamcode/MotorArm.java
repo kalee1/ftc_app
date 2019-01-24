@@ -196,7 +196,7 @@ public class MotorArm
         {
             ARMHOME(0, 0),
             LANDEREXTEND(9165, -5630),
-            CRATEREXTEND(6700, -4950),
+            CRATEREXTEND(7500, -6300),
             DRIVINGEXTEND(420, 420),
             MINERALCOLLECT(2500, -4220);
 
@@ -211,8 +211,8 @@ public class MotorArm
         }
     public boolean craterExtend()
         {
-            if (shoulder.getCurrentPosition() <= ArmPositions.CRATEREXTEND.Shoulder &&
-                    elbow.getCurrentPosition() >= ArmPositions.CRATEREXTEND.Elbow)
+            if (shoulder.getCurrentPosition() >= ArmPositions.CRATEREXTEND.Shoulder &&
+                    elbow.getCurrentPosition() <= ArmPositions.CRATEREXTEND.Elbow)
                 {
                 shoulder.setPower(-0.8);
                 elbow.setPower(0.9);
@@ -226,15 +226,20 @@ public class MotorArm
         }
     public boolean armHome()
         {
-            if (shoulder.getCurrentPosition() <= ArmPositions.ARMHOME.Shoulder &&
-                    elbow.getCurrentPosition() >= ArmPositions.ARMHOME.Elbow)
+            if (shoulder.getCurrentPosition() <= ArmPositions.ARMHOME.Shoulder)
                 {
-                shoulder.setPower(-0.8);
-                elbow.setPower(0.9);
+                shoulder.setPower(0.7);
                 }
             else
                 {
                 shoulder.setPower(0.0);
+                }
+            if (elbow.getCurrentPosition() >= ArmPositions.ARMHOME.Elbow)
+                {
+                elbow.setPower(-0.9);
+                }
+            else
+                {
                 elbow.setPower(0.0);
                 }
             return !moving;

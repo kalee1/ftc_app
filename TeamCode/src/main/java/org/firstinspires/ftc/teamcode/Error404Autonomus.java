@@ -157,7 +157,7 @@ public class Error404Autonomus extends OpMode
 
                 //find gold mineral position
                 case 2:
-                    goldPosition = robot.goldPosition();
+                    //goldPosition = robot.goldPosition();
 
                     if (goldPosition.equals("left") || goldPosition.equals("right") || goldPosition.equals("center"))
                         {
@@ -172,7 +172,7 @@ public class Error404Autonomus extends OpMode
                     if (state != 2)
                         {
                         resetStartTime();
-                        robot.tfodShutdown();
+                        //robot.tfodShutdown();
                         }
                     break;
 
