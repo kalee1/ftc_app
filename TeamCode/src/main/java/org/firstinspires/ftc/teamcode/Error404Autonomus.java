@@ -42,54 +42,97 @@ public class Error404Autonomus extends OpMode
     double rlDiagonal = MecanumChassis.REVERSE_LEFT_DIAGONAL;
 
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance from the start position to the on-field minerals.*/
+     * The distance to the left mineral location.*/
     protected double mineralDriveDistanceL;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance to the right mineral location.*/
     protected double mineralDriveDistanceR;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance to the center mineral location.*/
     protected double mineralDriveDistanceC;
+    /** An enum that stores three variable options for driving to the gold mineral: left, right, and center. */
     protected double[] mineralDriveDistance;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to drive to the gold mineral. Assigned either left, right, or center
+     * depending on which one is selected from the enum. */
     protected double mineralDriveDistanceFinal;
 
+    /** A turn variable that holds differing angles that change based on where the robot is on the field.
+     * The angle needed to turn to face the depo from the left mineral position.*/
     protected double faceDepoHeadingL;
+    /** A turn variable that holds differing angles that change based on where the robot is on the field.
+     * The angle needed to turn to face the depo from the right mineral position.*/
     protected double faceDepoHeadingR;
+    /** A turn variable that holds differing angles that change based on where the robot is on the field.
+     * The angle needed to turn to face the depo from the center mineral position.*/
     protected double faceDepoHeadingC;
+    /** An enum that stores three variable options for turning to face the depo: left, right, and center. */
     protected double[] faceDepoHeading;
+    /** A turn variable that holds differing angles that change based on where the robot starts on the field.
+     * The angle required to turn to the alliance depo. Assigned either left, right, or center
+     * depending on which one is selected from the enum. */
     protected double faceDepoHeadingFinal;
 
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance required to slide around the minerals. */
+     * The distance required to slide around the minerals from the left mineral position. */
     protected double mineralSlideDistanceL;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to slide around the minerals from the right mineral position. */
     protected double mineralSlideDistanceR;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to slide around the minerals from the center mineral position. */
     protected double mineralSlideDistanceC;
+    /** An enum that stores three variable options for sliding around the minerals: left, right, and center. */
     protected double[] mineralSlideDistance;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to slide around the minerals. Assigned either left, right, or center
+     * depending on which one is selected from the enum. */
     protected double mineralSlideDistanceFinal;
+
     /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
-     * The target heading that faces the robot towards the alliance depo. */
+     * The angle required to turn towards the depo. */
     protected double depoTurnHeading;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to slide into the field wall to line up on the depo. */
     protected double depoSlideDistance;
 
-    /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance required to drive to the alliance depo. */
+    /** An enum that stores three variable options for driving to the depo: left, right, and center. */
     protected double[] depoDriveDistance;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to drive to the alliance depo from the left position. */
     protected double depoDriveDistanceL;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to drive to the alliance depo from the right position. */
     protected double depoDriveDistanceR;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to drive to the alliance depo from the center position. */
     protected double depoDriveDistanceC;
+    /** A move variable that holds differing distances that change based on where the robot starts on the field.
+     * The distance required to drive to the alliance depo. Assigned either left, right, or center
+     * depending on which one is selected from the enum. */
     protected double depoDriveDistanceFinal;
 
+    /** A turn variable that holds the differing angles that change based on where the robot starts on the field.
+     * The angle required to turn 45 degrees to the depo in preparation for deploying the team marker. */
     protected double markerTurnHeading;
+    /** A move variable that holds the differing distances that change based on where the robot starts on the field.
+     * The distance required to slide into the depo to deploy the marker. */
     protected double markerSlideDistance;
+    /** A turn variable that holds the differing angles that change based on where the robot starts on the field.
+     * The angle required to turn to face the crater. */
     protected double faceCraterHeading;
 
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance required to drive to the crater. */
+     * The distance required to drive to the crater from the depo. */
     protected double craterDriveDistance;
     /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
      * The target heading required to face the crater. */
     protected double craterTurnHeading;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance required to drive around the crater to enter on a selected side. */
+     * The distance required to drive around the crater to enter the crater on a selected side (left or right). */
     protected double craterSlideDistance;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
-     * The distance reqiured to drive halfway into the crater. */
+     * The distance required to drive up to the edge of the crater -- not used. */
     protected double enterCraterDistance;
     /** A turn variable that corrects any error acquired over the first half of the run. */
     protected double headingReset;
@@ -97,14 +140,19 @@ public class Error404Autonomus extends OpMode
     protected String goldPosition;
     /** The amount by which the PID drive algorithms will correct error. */
     double gain = 0.01;
+    //Variables that represent which variable to use -- used when the gold mineral is located.
+    /** An int that is used to decide which variable in the variable enums to use.*/
     final int LEFT = 0;
+    /** An int that is used to decide which variable in the variable enums to use.*/
     final int RIGHT = 1;
+    /** An int that is used to decide which variable in the variable enums to use.*/
     final int CENTER = 2;
 
     /*
      * Code to run ONCE when the driver hits INIT
      */
-    /** Calls the required init methods in the needed classes. */
+    /** Calls the required init methods in the needed classes.
+     * Initializes all the hardware and methods in the various class objects called. */
     @Override
     public void init()
     {
@@ -130,7 +178,7 @@ public class Error404Autonomus extends OpMode
      * Code to run ONCE when the driver hits PLAY
      */
     /** Runs through once after the driver hits start.
-     * Resets the internal timer to 0. */
+     * Resets the internal timer to 0.0 */
     @Override
     public void start()
     {
