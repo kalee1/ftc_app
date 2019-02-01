@@ -24,21 +24,25 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         faceDepoHeadingR = 225; //done
         faceDepoHeadingC = 225; //done
 
-        mineralSlideDistanceL = 35; //done
-        mineralSlideDistanceR = 46; //done
-        mineralSlideDistanceC = 45; //done
-
-        depoTurnHeadingL = 135;
-        depoTurnHeadingR = 135;
-        depoTurnHeadingC = 135;
+        mineralSlideDistanceL = 18; //done
+        mineralSlideDistanceR = 15; //done
+        mineralSlideDistanceC = 28; //done
 
         directionL = right;
         directionG = left;
-        depoSlideDistance = 14;
+//        depoSlideDistance = 16;
 
-        depoDriveDistanceL = 52; //done
-        depoDriveDistanceR = 45; //done
-        depoDriveDistanceC = 55; //done
+        depoDriveDistanceL = 32; //done
+        depoDriveDistanceR = 32; //done
+        depoDriveDistanceC = 17; //done
+
+
+
+        depoTurnHeadingL = 225;
+        depoTurnHeadingR = 225;
+        depoTurnHeadingC = 225;
+
+
 
         markerTurnHeading = 180;
         markerSlideDistance = 7;

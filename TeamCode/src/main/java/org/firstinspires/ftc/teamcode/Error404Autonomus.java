@@ -321,6 +321,7 @@ public class Error404Autonomus extends OpMode
                 {
                     state = 8;
                     resetStartTime();
+                    robot.intake();
                 }
                 break;
 
@@ -330,7 +331,7 @@ public class Error404Autonomus extends OpMode
                 if (robot.drive(.4, forward, gain, mineralDriveDistanceFinal, 6))
                 {
                     resetStartTime();
-                    robot.intake();
+                    robot.collectorStop();
                     state = 9;
                 }
                 break;
@@ -341,7 +342,7 @@ public class Error404Autonomus extends OpMode
                 if (robot.armRetract(false) || getRuntime() > 4.0)
                 {
                     state = 11;
-                    robot.collectorStop();
+                   // robot.collectorStop();
                     robot.stopMotors();
                     resetStartTime();
                 }
@@ -356,13 +357,48 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 12:
-                if(robot.drive(.4, directionFinal, gain, depoSlideDistance, 4))
+                if(robot.drive(.4, directionFinal, gain, mineralSlideDistanceFinal, 4))
                 {
                     resetStartTime();
                     state = 13;
                 }
                 break;
-//
+
+            case 13:
+                if(robot.drive(.4, backward, gain, depoDriveDistanceFinal, 6))
+                {
+                    resetStartTime();
+                    state = 14;
+                }
+                break;
+
+            case 14:
+                if(robot.pointTurn(.3, depoTurnHeadingFinal, 4))
+                {
+                    resetStartTime();
+                    robot.markDeploy();
+                    state = 15;
+                }
+                break;
+
+            case 15:
+                if(getRuntime() > 1)
+                {
+                    resetStartTime();
+                    state = 16;
+                }
+                break;
+
+//            case 16:
+//                if(robot.pointTurn(.3, faceCraterHeading,4))
+//                {
+//                    resetStartTime();
+//                    robot.markRetract();
+//                    state = 17;
+//                }
+//                break;
+
+
 //            case 12:
 //                if (robot.drive(.4, right, gain, mineralSlideDistanceFinal, 6))
 //                {
@@ -371,24 +407,9 @@ public class Error404Autonomus extends OpMode
 //                }
 //                break;
 //
-//            case 13:
-//                if(robot.pointTurn(.3, depoTurnHeading, 4))
-//                {
-//                    resetStartTime();
-//                    state = 14;
-//                }
-//                break;
-//
 
 //
-//            case 15:
-//                if(robot.drive(.4, backward, gain, depoDriveDistanceFinal, 6))
-//                {
-//                    resetStartTime();
-//                    state = 16;
-//                }
-//                break;
-//
+
 //            case 16:
 //                if(robot.pointTurn(.3, markerTurnHeading,4))
 //                {
@@ -406,22 +427,7 @@ public class Error404Autonomus extends OpMode
 //                }
 //                break;
 //
-//            case 18:
-//                if(getRuntime() > 1)
-//                {
-//                    resetStartTime();
-//                    state = 19;
-//                }
-//                break;
-//
-//            case 19:
-//                if(robot.pointTurn(.3, faceCraterHeading,4))
-//                {
-//                    resetStartTime();
-//                    robot.markRetract();
-//                    state = 20;
-//                }
-//                break;
+
 //
 //            case 20:
 //                if(robot.drive(.7, forward, gain, craterDriveDistance, 6))
