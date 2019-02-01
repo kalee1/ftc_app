@@ -69,6 +69,9 @@ public class Collector
         theServoR.setPower(0.0);
         theServoL.setPower(0.0);
     }
+
+
+    /** Turns the intake wheels inward to suck in minerals. */
     public void intakeL()
     {
         theServoL.setPower(1.0);
@@ -83,6 +86,9 @@ public class Collector
     {
         theServoL.setPower(0.0);
     }
+
+
+    /** Turns the intake wheels inward to suck in minerals. */
     public void intakeR()
     {
         theServoR.setPower(1.0);

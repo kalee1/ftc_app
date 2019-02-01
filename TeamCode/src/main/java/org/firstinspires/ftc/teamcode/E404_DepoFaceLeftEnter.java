@@ -27,9 +27,9 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         faceDepoHeadingC = 225; //done
 
         //Case 11
-        mineralSlideDistanceL = 18; //done
-        mineralSlideDistanceR = 15; //done
-        mineralSlideDistanceC = 28; //done
+        mineralSlideDistanceL = 21; //done
+        mineralSlideDistanceR = 18; //done
+        mineralSlideDistanceC = 25; //done
         directionL = right;
         directionG = left;
 //        depoSlideDistance = 16;
@@ -37,7 +37,7 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         //Case 12
         depoDriveDistanceL = 32; //done
         depoDriveDistanceR = 32; //done
-        depoDriveDistanceC = 14; //done
+        depoDriveDistanceC = 10; //done
 
 
         //Case 13

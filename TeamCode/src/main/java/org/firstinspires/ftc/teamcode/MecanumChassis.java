@@ -302,8 +302,6 @@ public class MecanumChassis extends Chassis
      *              reason, the timer will catch it.
      * @return  A boolean that tells us whether or not the robot is moving.
      */
-
-
     @Override
     public boolean drive(double power, double direction, double gain, double distance, double time)
     {

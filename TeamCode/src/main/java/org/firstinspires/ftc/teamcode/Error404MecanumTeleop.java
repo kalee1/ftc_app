@@ -98,17 +98,17 @@ public class Error404MecanumTeleop extends OpMode
             robot.armDrive(RightStickY, LeftStickY);
         }
 
-        //dual intake controls
-        //If the left bumper is pressed, turn the intake wheels inward.
-        if (gamepad2.dpad_up)
-        {
-            robot.eject();
-        }
-        //If the right bumber is pressed, turn the intake wheels outward.
-        else if (gamepad2.dpad_down)
-        {
-            robot.intake();
-        }
+//        //dual intake controls
+//        //If the left bumper is pressed, turn the intake wheels inward.
+//        if (gamepad2.dpad_up)
+//        {
+//            robot.eject();
+//        }
+//        //If the right bumber is pressed, turn the intake wheels outward.
+//        else if (gamepad2.dpad_down)
+//        {
+//            robot.intake();
+//        }
         //Right intake controls
         if(gamepad2.right_bumper)
         {
@@ -118,6 +118,10 @@ public class Error404MecanumTeleop extends OpMode
         {
             robot.ejectR();
         }
+        else
+        {
+            robot.collectorStopR();
+        }
         //Left intake controls
         if(gamepad2.left_bumper)
         {
@@ -126,6 +130,10 @@ public class Error404MecanumTeleop extends OpMode
         else if(gamepad2.left_trigger > .1)
         {
             robot.ejectL();
+        }
+        else
+        {
+            robot.collectorStopL();
         }
 
 
