@@ -9,7 +9,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  * @author Ben, Error 404: Team Name Not Found
  * */
-public class Collector {
+public class Collector
+{
 
     /** A continuous rotation servo called theServo. */
     public CRServo theServoR = null;
@@ -68,6 +69,32 @@ public class Collector {
         theServoR.setPower(0.0);
         theServoL.setPower(0.0);
     }
+    public void intakeL()
+    {
+        theServoL.setPower(1.0);
+    }
+    /** Turns the intake wheels outward to spit our minerals. */
+    public void ejectL()
+    {
+        theServoL.setPower(-1.0);
+    }
+    /** Stops the intake wheels. */
+    public void stopL()
+    {
+        theServoL.setPower(0.0);
+    }
+    public void intakeR()
+    {
+        theServoR.setPower(1.0);
+    }
+    /** Turns the intake wheels outward to spit our minerals. */
+    public void ejectR()
+    {
+        theServoR.setPower(-1.0);
+    }
+    /** Stops the intake wheels. */
+    public void stopR()
+    {
+        theServoR.setPower(0.0);
+    }
 }
-
-

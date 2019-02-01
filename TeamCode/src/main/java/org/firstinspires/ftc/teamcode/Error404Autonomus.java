@@ -289,7 +289,7 @@ public class Error404Autonomus extends OpMode
 
                 //Swivel to face the left mineral
             case 4:
-                if (robot.pointTurn(.2, 27, 4))
+                if (robot.pointTurn(.2, 28, 4))
                 {
                     resetStartTime();
                     state = 7;
@@ -298,7 +298,7 @@ public class Error404Autonomus extends OpMode
 
                 //swivel to face right mineral
             case 5:
-                if (robot.pointTurn(.2, -27, 4))
+                if (robot.pointTurn(.2, -28, 4))
                 {
                     resetStartTime();
                     state = 7;
@@ -317,7 +317,7 @@ public class Error404Autonomus extends OpMode
             //knock off gold mineral
             case 7:
                 // extend arm
-                if (robot.armDeploy( -4220,2500, false))
+                if (robot.armDeploy( -4300,2500, false))
                 {
                     state = 8;
                     resetStartTime();
@@ -328,7 +328,7 @@ public class Error404Autonomus extends OpMode
 
                 //drive forward to mineral
             case 8:
-                if (robot.drive(.4, forward, gain, mineralDriveDistanceFinal, 6))
+                if (robot.drive(.2, forward, gain, mineralDriveDistanceFinal, 6))
                 {
                     resetStartTime();
                     robot.collectorStop();
@@ -341,15 +341,23 @@ public class Error404Autonomus extends OpMode
             case 9:
                 if (robot.armRetract(false) || getRuntime() > 4.0)
                 {
-                    state = 11;
+                    state = 10;
                    // robot.collectorStop();
                     robot.stopMotors();
                     resetStartTime();
                 }
                 break;
 
+            case 10:
+                if (robot.pointTurn(.2, faceDepoHeadingFinal, 4))
+                {
+                    resetStartTime();
+                    state = 11;
+                }
+                break;
+
             case 11:
-                if (robot.pointTurn(.3, faceDepoHeadingFinal, 4))
+                if(robot.drive(.2, directionFinal, gain, mineralSlideDistanceFinal, 4))
                 {
                     resetStartTime();
                     state = 12;
@@ -357,46 +365,40 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 12:
-                if(robot.drive(.4, directionFinal, gain, mineralSlideDistanceFinal, 4))
+                if(robot.drive(.2, backward, gain, depoDriveDistanceFinal, 6))
                 {
                     resetStartTime();
                     state = 13;
                 }
                 break;
 
-            case 13:
-                if(robot.drive(.4, backward, gain, depoDriveDistanceFinal, 6))
-                {
-                    resetStartTime();
-                    state = 14;
-                }
-                break;
-
-            case 14:
-                if(robot.pointTurn(.3, depoTurnHeadingFinal, 4))
-                {
-                    resetStartTime();
-                    robot.markDeploy();
-                    state = 15;
-                }
-                break;
-
-            case 15:
-                if(getRuntime() > 1)
-                {
-                    resetStartTime();
-                    state = 16;
-                }
-                break;
-
-//            case 16:
-//                if(robot.pointTurn(.3, faceCraterHeading,4))
+//            case 13:
+//                if(robot.pointTurn(.2, depoTurnHeadingFinal, 4))
+//                {
+//                    resetStartTime();
+//                    robot.markDeploy();
+//                    state = 14;
+//                }
+//                break;
+//
+//            case 14:
+//                if(getRuntime() > 1.5)
+//                {
+//                    resetStartTime();
+//                    state = 15;
+//                }
+//                break;
+//
+//            case 15:
+//                if(robot.pointTurn(.2, faceCraterHeading,4))
 //                {
 //                    resetStartTime();
 //                    robot.markRetract();
-//                    state = 17;
+//                    state = 16;
 //                }
 //                break;
+
+
 
 
 //            case 12:

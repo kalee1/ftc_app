@@ -98,21 +98,34 @@ public class Error404MecanumTeleop extends OpMode
             robot.armDrive(RightStickY, LeftStickY);
         }
 
-        //mineral intake controls
+        //dual intake controls
         //If the left bumper is pressed, turn the intake wheels inward.
-        if (gamepad2.right_bumper)
+        if (gamepad2.dpad_up)
         {
             robot.eject();
         }
         //If the right bumber is pressed, turn the intake wheels outward.
-        else if (gamepad2.left_bumper)
+        else if (gamepad2.dpad_down)
         {
             robot.intake();
         }
-        //If neither bumper is pressed, stop the intake wheels.
-        else
+        //Right intake controls
+        if(gamepad2.right_bumper)
         {
-            robot.collectorStop();
+            robot.intakeR();
+        }
+        else if(gamepad2.right_trigger > .1)
+        {
+            robot.ejectR();
+        }
+        //Left intake controls
+        if(gamepad2.left_bumper)
+        {
+            robot.intakeL();
+        }
+        else if(gamepad2.left_trigger > .1)
+        {
+            robot.ejectL();
         }
 
 

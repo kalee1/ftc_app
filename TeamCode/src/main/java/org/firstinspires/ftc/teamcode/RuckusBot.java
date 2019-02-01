@@ -75,7 +75,6 @@ public class RuckusBot
     }
     /** A go-between between the opmode class and the actual chassis class.
      * Turns the collector wheels inward to suck in minerals.
-     * Turns the collector wheels inward to suck in minerals.
      * */
     public void intake()
     {
@@ -95,6 +94,49 @@ public class RuckusBot
     {
         theCollect.stop();
     }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Turns the left collector wheel inward to suck in minerals.
+     * */
+    public void intakeL()
+    {
+        theCollect.intakeL();
+    }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Turns the left collector wheel outward to eject minerals.
+     * */
+    public void ejectL()
+    {
+        theCollect.ejectL();
+    }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Tells the left collector wheel to stop turning.
+     * */
+    public void collectorStopL()
+    {
+        theCollect.stopL();
+    }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Turns the right collector wheel inward to suck in minerals.
+     * */
+    public void intakeR()
+    {
+        theCollect.intakeR();
+    }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Turns the right collector wheel outward to eject minerals.
+     * */
+    public void ejectR()
+    {
+        theCollect.ejectR();
+    }
+    /** A go-between between the opmode class and the actual chassis class.
+     * Tells the right collector wheel to stop turning.
+     * */
+    public void collectorStopR()
+    {
+        theCollect.stopR();
+    }
+
     /** A go-between between the opmode class and the actual chassis class.
      * The primary drive method in use by 404. All other drive methods call this one. JoystickDrive
      * uses mecanum calculations to interpret joystick inputs and give directional power to the

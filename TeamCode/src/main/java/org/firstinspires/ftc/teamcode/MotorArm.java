@@ -142,8 +142,8 @@ public class MotorArm
      * */
     public void armDrive(double RightStickY, double LeftStickY)
     {
-        double elbowGain = 0.6;
-        double shoulderGain = 0.7;
+        double elbowGain = 0.7;
+        double shoulderGain = 0.8;
 
 
         //elbow limits
