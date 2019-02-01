@@ -46,10 +46,13 @@ public class RuckusBot
      *               specific classes for initilizng hardware.
      * @param telem  An instance of Telemetry which allows the use of Telemtry in this class.
      * */
-    public void init(HardwareMap hwMap, Telemetry telem)
+    public void init(HardwareMap hwMap, Telemetry telem, boolean useCamera)
     {
         theChassis.init(hwMap, telem);
-        theEyeOfSauron.init(hwMap, telem);
+        if(useCamera)
+        {
+            theEyeOfSauron.init(hwMap, telem);
+        }
 
         theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );

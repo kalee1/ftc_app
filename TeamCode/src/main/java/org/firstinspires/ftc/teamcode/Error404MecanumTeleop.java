@@ -32,7 +32,7 @@ public class Error404MecanumTeleop extends OpMode
         // Initialize the hardware variables.
         // The init() method of the hardware class does all the work here
         //
-        robot.init(hardwareMap, telemetry);
+        robot.init(hardwareMap, telemetry, false);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
