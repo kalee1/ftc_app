@@ -35,9 +35,9 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
 //        depoSlideDistance = 16;
 
         //Case 12
-        depoDriveDistanceL = 32; //done
+        depoDriveDistanceL = 30; //done
         depoDriveDistanceR = 32; //done
-        depoDriveDistanceC = 10; //done
+        depoDriveDistanceC = 8; //done
 
 
         //Case 13
@@ -48,7 +48,7 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
 
 
         //Case 15
-        faceCraterHeading = 225;
+        faceCraterHeading = 220;
 
         markerTurnHeading = 180;
         markerSlideDistance = 7;

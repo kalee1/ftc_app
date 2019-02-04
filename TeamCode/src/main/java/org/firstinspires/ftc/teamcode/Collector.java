@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
@@ -32,7 +33,7 @@ public class Collector
         try
         {
             theServoR = hwmap.crservo.get( "CollectorR" );
-            theServoR.setDirection(CRServo.Direction.FORWARD);
+            theServoR.setDirection(CRServo.Direction.REVERSE);
 
         }
         catch (Exception p_exeception)
