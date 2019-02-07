@@ -26,6 +26,10 @@ public class RuckusBot
      * into the mineral basket on the end of the mineral arm. */
     Collector theCollect = new Collector();
 
+    /** An instance of the Collector class. Links to the motor and code relating to sucking minerals
+     * into the mineral basket on the end of the mineral arm. */
+    Gen2_Hang theHang = new Gen2_Hang();
+
     /** Determines which chassis type to use: Mecanum or Tank.
      *
      * @param chassisType  A string that is the type of chassis the code will use.
@@ -50,7 +54,7 @@ public class RuckusBot
     {
         theChassis.init(hwMap, telem);
         theEyeOfSauron.init(hwMap, telem);
-
+        theHang.init(hwMap, telem);
         theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );
         depoDeposit.init(hwMap, telem);
@@ -208,6 +212,8 @@ public class RuckusBot
 //    {
 //        return theArm.armExtend();
 //    }
+
+    public void hangDrive(boolean dpadDown, boolean dpadUp) { theHang.hangTeleop(dpadDown, dpadUp);}
 
 
 }

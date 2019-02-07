@@ -75,6 +75,9 @@ public class Error404MecanumTeleop extends OpMode
         double lStickY = gamepad1.left_stick_y;
         /* The y-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickY = gamepad1.right_stick_y;
+        /* The down & up values of the dpad on gamepad 2. Used for lander Hang control*/
+        boolean dpadDown = gamepad1.dpad_down;
+        boolean dpadUp = gamepad1.dpad_up;
 
 //        telemetry.addData("1: leftX", lStickX);
 //        telemetry.addData("2: leftY", lStickY);
@@ -83,6 +86,13 @@ public class Error404MecanumTeleop extends OpMode
 
         //robot chassis control method
         robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+
+        if (dpadUp || dpadDown){
+
+        //robot lander hang method
+        robot.hangDrive(dpadDown, dpadUp);
+
+        }
 
         //mineral arm control method
         if(gamepad2.x)
