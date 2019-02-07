@@ -3,29 +3,37 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+import java.util.ListIterator;
+
 
 public class Gen2_Hang
     {
 
-    DcMotor Hang = null;
+    DcMotor hang = null;
 
-    public void init(HardwareMap hwmap, Telemetry telem)
+    Telemetry telem;
+
+    public void init(HardwareMap hwmap, Telemetry telemetry)
+    {
+        telem = telemetry;
+        try
         {
-            try
-                {
-                Hang = hwmap.dcMotor.get("Hang");
-                }
-            catch (Exception p_exeception)
-                {
-                Hang = null;
-                telem.addData("Hang Not Found", "");
-                }
+            hang = hwmap.dcMotor.get("Hang");
         }
+        catch (Exception p_exeception)
+        {
+            hang = null;
+            telem.addData("Hang Not Found", "");
+        }
+
+        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
 
 
     public enum Lift
-        {
-            LANDERDOWN(-5000);
+    {
+        LANDERHANG(0),
+        LANDERPREP(-2400);
 
         public final double targetEncoder;
 
@@ -33,34 +41,37 @@ public class Gen2_Hang
             {
                 this.targetEncoder = targetEncoder;
             }
+    }
+
+   public void landerPrep()
+   {
+       if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+       {
+           hang.setPower(.3);
+       }
+   }
+    public void landerHang()
+    {
+        if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+        {
+            hang.setPower(.4);
         }
+    }
+    public void hangControl(boolean dpadDown, boolean dpadUp)
+    {
+        if (dpadDown)
+        {
+            hang.setPower(-.2);
+        }
+        else if (dpadUp)
+        {
+            hang.setPower(.8);
+        }
+        else
+        {
+            hang.setPower(0.0);
+        }
+        telem.addData("Hang Encoder Pos", "" + hang.getCurrentPosition());
 
-        public void hangTeleop(boolean dpaddown, boolean dpadup)
-            {
-                if (dpadup)
-                    {
-                    Hang.setPower(1);
-                    }
-                else if (dpaddown)
-                    {
-                    Hang.setPower(-1);
-                    }
-                else
-                    {
-                    Hang.setPower(0.0);
-                    }
-            }
-
-        public void hangAuto()
-            {
-               if(Hang.getCurrentPosition() >= Lift.LANDERDOWN.targetEncoder)
-                    {
-                    Hang.setPower(-0.5);
-                    }
-                else
-                    {
-                    Hang.setPower(0.0);
-                    }
-            }
-
+    }
 }
