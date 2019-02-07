@@ -29,16 +29,16 @@ public class E404_CraterFace extends Error404Autonomus
         mineralSlideDistanceR = 46;
         mineralSlideDistanceC = 45;
 
-        depoTurnHeading = 20;
+//        depoTurnHeading = 20;
         depoSlideDistance = 0;
 
         depoDriveDistanceL = 60; //all same
         depoDriveDistanceR = 60;
         depoDriveDistanceC = 60;
 
-        markerTurnHeading = depoTurnHeading;
+//        markerTurnHeading = depoTurnHeading;
         markerSlideDistance = 0;
-        faceCraterHeading = depoTurnHeading;
+//        faceCraterHeading = depoTurnHeading;
 
         headingReset = 135;
         craterDriveDistance = 60;

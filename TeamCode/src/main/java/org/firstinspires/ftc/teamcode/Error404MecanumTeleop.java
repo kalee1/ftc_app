@@ -32,7 +32,7 @@ public class Error404MecanumTeleop extends OpMode
         // Initialize the hardware variables.
         // The init() method of the hardware class does all the work here
         //
-        robot.init(hardwareMap, telemetry);
+        robot.init(hardwareMap, telemetry, false);
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //
@@ -108,21 +108,42 @@ public class Error404MecanumTeleop extends OpMode
             robot.armDrive(RightStickY, LeftStickY);
         }
 
-        //mineral intake controls
-        //If the left bumper is pressed, turn the intake wheels inward.
-        if (gamepad2.right_bumper)
+//        //dual intake controls
+//        //If the left bumper is pressed, turn the intake wheels inward.
+//        if (gamepad2.dpad_up)
+//        {
+//            robot.eject();
+//        }
+//        //If the right bumber is pressed, turn the intake wheels outward.
+//        else if (gamepad2.dpad_down)
+//        {
+//            robot.intake();
+//        }
+        //Right intake controls
+        if(gamepad2.right_bumper)
         {
-            robot.eject();
+            robot.intakeR();
         }
-        //If the right bumber is pressed, turn the intake wheels outward.
-        else if (gamepad2.left_bumper)
+        else if(gamepad2.right_trigger > .1)
         {
-            robot.intake();
+            robot.ejectR();
         }
-        //If neither bumper is pressed, stop the intake wheels.
         else
         {
-            robot.collectorStop();
+            robot.collectorStopR();
+        }
+        //Left intake controls
+        if(gamepad2.left_bumper)
+        {
+            robot.intakeL();
+        }
+        else if(gamepad2.left_trigger > .1)
+        {
+            robot.ejectL();
+        }
+        else
+        {
+            robot.collectorStopL();
         }
 
 

@@ -21,12 +21,18 @@ import java.util.concurrent.TimeUnit;
  * @author Ben, Error 404: Team Name Not Found
  * */
 public class MotorArm
-    {
+{
+    /** A telemetry object that is used to enable the calling of telemetry in this class. */
     Telemetry telemetry;
+    /** A boolean that represents whether or not the arm is currently moving. */
     boolean moving = false;
+    /** An int that holds the starting position of the elbow motor. */
     int elbowStart;
+    /** An int that holds the starting position of the shoulder arm. */
     int shoulderStart;
+    /** An int that holds the distance required to extend the elbow joint. */
     int elbowExtend;
+    /** An int that holds the distance required to extend the shoulder joint. */
     int shoulderExtend;
 
 
@@ -37,13 +43,14 @@ public class MotorArm
 
     /** A dc Motor that moves the elbow joint on the arm.*/
     private DcMotor elbow = null;
-//    private DcMotorEx ElbowEx = null;
     /** A dc motor that moves the shoulder joint on the arm.*/
     private DcMotor shoulder = null;
 
-//    protected TouchSensor Shoulderfront = null;
+    /** An int that holds a target position -- not used. */
     int targetEncoder;
+    /** An int that holds a target position -- not used. */
     int targetEncoder2;
+    /** An int that holds the number of times a method has been run. */
     int timesrun = 0;
 
 
@@ -135,8 +142,8 @@ public class MotorArm
      * */
     public void armDrive(double RightStickY, double LeftStickY)
     {
-        double elbowGain = 0.6;
-        double shoulderGain = 0.7;
+        double elbowGain = 0.7;
+        double shoulderGain = 0.8;
 
 
         //elbow limits
@@ -189,6 +196,12 @@ public class MotorArm
     }
 
 
+    /** Drives the arm to a target position and returns true when done.
+     *
+     * @param shoulderTarget  The target position for the shoulder motor.
+     * @param elbowTarget  The target position for the elbow motor.
+     * @param elbowSecond  A boolean that tells whether or not to move the elbow after the shoulder is done.
+     * @return  A boolean that tells whether or not the arm is moving. */
     public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
     {
         double shoulderValue;
@@ -252,6 +265,11 @@ public class MotorArm
     }
 
 
+    /** Retracts the arm to the home position (folded up on the chassis) and returns true when done.
+     *
+     * @param elbowFirst  A boolean that tells whether or not to move the elbow before the shoulder.
+     * @return  A boolean that tells whether or not the arm is moving.
+     * */
     public boolean armRetract(boolean elbowFirst)
     {
         double elbowTarget = elbowStart;
@@ -313,25 +331,6 @@ public class MotorArm
         {
             moving = true;
             timesrun = 1;
-        }
-
-        return !moving;
-    }
-
-    public boolean testAutoArm(double power, double direction, double gain, double distance, double time)
-    {
-        resetStartTime();
-        if (!moving)
-        {
-
-            moving = true;
-        }
-
-        armDrive(3,3);
-
-        if ((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
-        {
-            moving = false;
         }
 
         return !moving;

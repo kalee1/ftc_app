@@ -16,28 +16,42 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
      * Initializes drive and heading values for autonomous. */
     @Override public void init()
     {
-        mineralDriveDistanceL = 13; //done
-        mineralDriveDistanceR = 12; //done
-        mineralDriveDistanceC = 10; //done
+        //Case 8
+        mineralDriveDistanceL = 31; //done
+        mineralDriveDistanceR = 31; //done
+        mineralDriveDistanceC = 45; //done
 
-        faceDepoHeadingL = 170; //done
-        faceDepoHeadingR = 180; //done
-        faceDepoHeadingC = 180; //done
+        //Case 10
+        faceDepoHeadingL = 135; //done
+        faceDepoHeadingR = 225; //done
+        faceDepoHeadingC = 225; //done
 
-        mineralSlideDistanceL = 35; //done
-        mineralSlideDistanceR = 46; //done
-        mineralSlideDistanceC = 45; //done
+        //Case 11
+        mineralSlideDistanceL = 21; //done
+        mineralSlideDistanceR = 18; //done
+        mineralSlideDistanceC = 25; //done
+        directionL = right;
+        directionG = left;
+//        depoSlideDistance = 16;
 
-        depoTurnHeading = 135;
-        depoSlideDistance = 14;
+        //Case 12
+        depoDriveDistanceL = 32; //done
+        depoDriveDistanceR = 32; //done
+        depoDriveDistanceC = 10; //done
 
-        depoDriveDistanceL = 52; //done
-        depoDriveDistanceR = 45; //done
-        depoDriveDistanceC = 55; //done
+
+        //Case 13
+        depoTurnHeadingL = 225;
+        depoTurnHeadingR = 225;
+        depoTurnHeadingC = 225;
+
+
+
+        //Case 15
+        faceCraterHeading = 225;
 
         markerTurnHeading = 180;
         markerSlideDistance = 7;
-        faceCraterHeading = 220;
 
         headingReset = 45;
         craterDriveDistance = 60;

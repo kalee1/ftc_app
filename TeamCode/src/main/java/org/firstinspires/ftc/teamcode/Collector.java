@@ -9,10 +9,12 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  *
  * @author Ben, Error 404: Team Name Not Found
  * */
-public class Collector {
+public class Collector
+{
 
     /** A continuous rotation servo called theServo. */
-    public CRServo theServo = null;
+    public CRServo theServoR = null;
+    public CRServo theServoL = null;
     /** A telemetry object called telemtry. */
     Telemetry telemetry;
 
@@ -29,31 +31,76 @@ public class Collector {
 
         try
         {
-            theServo = hwmap.crservo.get( "Collector" );
-            theServo.setDirection(CRServo.Direction.FORWARD);
+            theServoR = hwmap.crservo.get( "CollectorR" );
+            theServoR.setDirection(CRServo.Direction.FORWARD);
 
         }
         catch (Exception p_exeception)
         {
-            theServo = null;
+            theServoR = null;
+        }
+        try
+        {
+            theServoL = hwmap.crservo.get( "CollectorL" );
+            theServoL.setDirection(CRServo.Direction.FORWARD);
+
+        }
+        catch (Exception p_exeception)
+        {
+            theServoL = null;
         }
     }
 
     /** Turns the intake wheels inward to suck in minerals. */
     public void intake()
     {
-        theServo.setPower(1.0);
+        theServoR.setPower(1.0);
+        theServoL.setPower(1.0);
     }
     /** Turns the intake wheels outward to spit our minerals. */
     public void eject()
     {
-        theServo.setPower(-1.0);
+        theServoR.setPower(-1.0);
+        theServoL.setPower(-1.0);
     }
     /** Stops the intake wheels. */
     public void stop()
     {
-        theServo.setPower(0.0);
+        theServoR.setPower(0.0);
+        theServoL.setPower(0.0);
+    }
+
+
+    /** Turns the intake wheels inward to suck in minerals. */
+    public void intakeL()
+    {
+        theServoL.setPower(1.0);
+    }
+    /** Turns the intake wheels outward to spit our minerals. */
+    public void ejectL()
+    {
+        theServoL.setPower(-1.0);
+    }
+    /** Stops the intake wheels. */
+    public void stopL()
+    {
+        theServoL.setPower(0.0);
+    }
+
+
+    /** Turns the intake wheels inward to suck in minerals. */
+    public void intakeR()
+    {
+        theServoR.setPower(1.0);
+    }
+    /** Turns the intake wheels outward to spit our minerals. */
+    public void ejectR()
+    {
+        theServoR.setPower(-1.0);
+    }
+    /** Stops the intake wheels. */
+    public void stopR()
+    {
+        theServoR.setPower(0.0);
     }
 }
-
-
