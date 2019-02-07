@@ -53,12 +53,16 @@ public class RuckusBot
     public void init(HardwareMap hwMap, Telemetry telem, boolean useCamera)
     {
         theChassis.init(hwMap, telem);
+<<<<<<< HEAD
+        theEyeOfSauron.init(hwMap, telem);
+        theHang.init(hwMap, telem);
+=======
         if(useCamera)
         {
             theEyeOfSauron.init(hwMap, telem);
         }
 
-        theHang.init(hwMap, telem);
+>>>>>>> develop
         theArm.init(hwMap, telem);
         theCollect.init(hwMap, telem );
         depoDeposit.init(hwMap, telem);
@@ -259,11 +263,7 @@ public class RuckusBot
 //        return theArm.armExtend();
 //    }
 
-    public void landerHang() { theHang.landerHang();}
-
-    public void landerPrep() { theHang.landerPrep(); }
-
-    public void hangControl(boolean dpadDown, boolean dpadUp) { theHang.hangControl(dpadDown, dpadUp);}
+    public void hangDrive(boolean dpadDown, boolean dpadUp) { theHang.hangTeleop(dpadDown, dpadUp);}
 
 
 }
