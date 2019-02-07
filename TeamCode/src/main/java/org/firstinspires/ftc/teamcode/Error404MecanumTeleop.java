@@ -67,19 +67,22 @@ public class Error404MecanumTeleop extends OpMode
 
 
         /* Chassis Control */
-        /* The x-axis of the left joystick on the gamepad. Used for chassis control*/
+        /** The x-axis of the left joystick on the gamepad. Used for chassis control*/
         double lStickX = -gamepad1.left_stick_x;
-        /* The x-axis of the right joystick on the gamepad. Used for chassis control*/
+        /** The x-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickX = -gamepad1.right_stick_x;
-        /* The y-axis of the left joystick on the gamepad. Used for chassis control*/
+        /** The y-axis of the left joystick on the gamepad. Used for chassis control*/
         double lStickY = gamepad1.left_stick_y;
-        /* The y-axis of the right joystick on the gamepad. Used for chassis control*/
+        /** The y-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickY = gamepad1.right_stick_y;
-        /* The down & up values of the dpad on gamepad 2. Used for lander Hang control*/
+        /** The down & up values of the dpad on gamepad 2. Used for lander Hang control*/
         boolean dpadDown = gamepad1.dpad_down;
         boolean dpadUp = gamepad1.dpad_up;
-        /* The return value of the button a on gamepad1. Used for lander hang presets*/
+        /** The return value of the button a on gamepad1. Used for lander hang presets*/
         boolean buttonB = gamepad1.b;
+
+
+        double power;
 
 //        telemetry.addData("1: leftX", lStickX);
 //        telemetry.addData("2: leftY", lStickY);
@@ -91,7 +94,22 @@ public class Error404MecanumTeleop extends OpMode
 
 
         //robot lander hang method
-        robot.hangControl(dpadDown, dpadUp);
+        if( dpadDown || dpadUp )
+        {
+            power = .8;
+            if (gamepad1.left_bumper)
+            {
+                power = 0.2;
+            }
+        }
+        else
+        {
+            power = 0;
+        }
+        telemetry.addData("dpadUp: ", dpadUp);
+        telemetry.addData("dpadDown: ", dpadDown);
+        telemetry.addData("Power: ", power);
+        robot.hangControl(dpadDown, dpadUp, power);
 //
 //        if (buttonB){
 //        //robot lander hang method

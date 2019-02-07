@@ -7,26 +7,48 @@ import java.util.ListIterator;
 
 
 public class Gen2_Hang
-    {
+{
 
     DcMotor hang = null;
 
-    Telemetry telem;
+    Telemetry telemetry;
 
-    public void init(HardwareMap hwmap, Telemetry telemetry)
+    enum HangDirection {IN, OUT}
+    boolean moving = false;
+    double initialPosition;
+
+
+    public void init(HardwareMap hwmap, Telemetry telem)
     {
-        telem = telemetry;
+        telemetry = telem;
         try
         {
-            hang = hwmap.dcMotor.get("Hang");
+            hang = hwmap.dcMotor.get("hang");
+//            hang.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//            hang.setTargetPosition(hang.getCurrentPosition());
+//            hang.setPower(.8);
+            hang.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+            hang.setPower(0.0);
+
         }
         catch (Exception p_exeception)
         {
             hang = null;
-            telem.addData("Hang Not Found", "");
+            telem.addData("hang Not Found", "");
         }
 
-        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+    }
+
+    public void start()
+    {
+        if(hang != null)
+        {
+//            hang.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//            hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+//            hang.setPower(0.0);
+        }
     }
 
 
@@ -57,21 +79,66 @@ public class Gen2_Hang
             hang.setPower(.4);
         }
     }
-    public void hangControl(boolean dpadDown, boolean dpadUp)
+    public void hangControl(boolean down, boolean up, double power)
     {
-        if (dpadDown)
+        power = Math.abs(power);
+
+        if(hang != null)
         {
-            hang.setPower(-.2);
+            if (down)
+            {
+                hang.setPower(power);
+            }
+            else if (up)
+            {
+                hang.setPower(-power);
+            }
+            else
+            {
+                hang.setPower(0.0);
+            }
+            telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
+            telemetry.addData("Up: ", up);
+            telemetry.addData("Down: ", down);
+            telemetry.addData("Hang Power: ", power );
         }
-        else if (dpadUp)
+    }
+
+
+    public boolean hangDrive(double power, double distance,  HangDirection direction)
+    {
+        if(!moving)
         {
-            hang.setPower(.8);
+            initialPosition = hang.getCurrentPosition();
+
+            moving = true;
         }
-        else
+
+        if(direction.equals(HangDirection.IN))
+        {
+
+            hangControl(true, false, power);
+        }
+        else if(direction.equals(HangDirection.OUT))
+        {
+            hangControl(false, true, power);
+        }
+
+        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance)
+        {
+            stopHangMotor();
+            moving = false;
+        }
+
+        return !moving;
+    }
+
+    public void stopHangMotor()
+    {
+        if(hang != null)
         {
             hang.setPower(0.0);
         }
-        telem.addData("Hang Encoder Pos", "" + hang.getCurrentPosition());
-
     }
+
 }
