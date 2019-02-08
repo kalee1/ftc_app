@@ -79,7 +79,7 @@ public class Error404MecanumTeleop extends OpMode
         boolean dpadDown = gamepad1.dpad_down;
         boolean dpadUp = gamepad1.dpad_up;
         /** The return value of the button a on gamepad1. Used for lander hang presets*/
-        boolean buttonB = gamepad1.b;
+        boolean buttonX = gamepad1.x;
 
 
         double power;
@@ -109,12 +109,11 @@ public class Error404MecanumTeleop extends OpMode
         telemetry.addData("dpadUp: ", dpadUp);
         telemetry.addData("dpadDown: ", dpadDown);
         telemetry.addData("Power: ", power);
-        robot.hangControl(dpadDown, dpadUp, power);
-//
-//        if (buttonB){
-//        //robot lander hang method
-//        robot.hangPresets();
-//        }
+        robot.hangTeleop(dpadDown, dpadUp, power);
+
+        if (buttonX){
+        //robot lander hang method
+        }
 
         //mineral arm control method
         if(gamepad2.x)

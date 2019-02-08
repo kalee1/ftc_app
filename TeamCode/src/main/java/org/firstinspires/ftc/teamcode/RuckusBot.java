@@ -261,18 +261,14 @@ public class RuckusBot
 //        return theArm.armExtend();
 //    }
 
-    public void landerHang() { theHang.landerHang();}
-
-    public void landerPrep() { theHang.landerPrep(); }
-
-    public void hangControl(boolean dpadDown, boolean dpadUp, double power)
+    public void hangTeleop(boolean dpadDown, boolean dpadUp, double power)
     {
-        theHang.hangControl(dpadDown, dpadUp, power);
+        theHang.hangTeleop(dpadDown, dpadUp, power);
     }
 
-    public boolean hangDrive(double power, double distance, Gen2_Hang.HangDirection direction)
+    public boolean landerHang(double power, Gen2_Hang.HangDirection direction)
     {
-        return theHang.hangDrive(power, distance, direction);
+        return theHang.landerHang(power, direction);
     }
 
 

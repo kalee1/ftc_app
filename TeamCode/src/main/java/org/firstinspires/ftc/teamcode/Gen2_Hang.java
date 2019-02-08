@@ -14,6 +14,7 @@ public class Gen2_Hang
     Telemetry telemetry;
 
     enum HangDirection {IN, OUT}
+
     boolean moving = false;
     double initialPosition;
 
@@ -52,40 +53,20 @@ public class Gen2_Hang
     }
 
 
-    public enum Lift
+    public enum Hang
     {
-        LANDERHANG(0),
-        LANDERPREP(-18500);
+        LAND(-18500),
+        LIFT(0);
 
-        public final double targetEncoder;
+        public final double distance;
 
-        Lift(double targetEncoder)
+        Hang(double distance)
             {
-                this.targetEncoder = targetEncoder;
+                this.distance = distance;
             }
     }
 
-   public void landerPrep()
-   {
-       if (hang != null)
-       {
-           if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
-           {
-               hang.setPower(.3);
-           }
-       }
-   }
-    public void landerHang()
-    {
-        if (hang != null)
-        {
-            if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
-            {
-                hang.setPower(.4);
-            }
-        }
-    }
-    public void hangControl(boolean dpadDown,boolean dpadUp,double power)
+    public void hangTeleop(boolean dpadDown,boolean dpadUp,double power)
     {
         if (hang != null)
         {
@@ -109,7 +90,7 @@ public class Gen2_Hang
     }
 
 
-    public boolean hangDrive(double power, double distance,  HangDirection direction)
+    public boolean landerHang(double power, HangDirection direction)
     {
         if(!moving)
         {
@@ -121,14 +102,14 @@ public class Gen2_Hang
         if(direction.equals(HangDirection.IN))
         {
 
-            hangControl(true, false, power);
+            hangTeleop(true, false, power);
         }
         else if(direction.equals(HangDirection.OUT))
         {
-            hangControl(false, true, power);
+            hangTeleop(false, true, power);
         }
 
-        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance)
+        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= Hang.LAND.distance)
         {
             stopHangMotor();
             moving = false;
