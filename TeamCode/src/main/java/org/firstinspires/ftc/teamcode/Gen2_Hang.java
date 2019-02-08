@@ -85,15 +85,15 @@ public class Gen2_Hang
             }
         }
     }
-    public void hangControl(boolean dpadDown, boolean dpadUp)
+    public void hangControl(boolean dpadDown,boolean dpadUp,double power)
     {
         if (hang != null)
         {
-            if (dpadUp)
+            if (dpadDown)
             {
                 hang.setPower(power);
             }
-            else if (up)
+            else if (dpadUp)
             {
                 hang.setPower(-power);
             }
@@ -102,8 +102,8 @@ public class Gen2_Hang
                 hang.setPower(0.0);
             }
             telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
-            telemetry.addData("Up: ", up);
-            telemetry.addData("Down: ", down);
+            telemetry.addData("Up: ", dpadUp);
+            telemetry.addData("Down: ", dpadDown);
             telemetry.addData("Hang Power: ", power );
         }
     }

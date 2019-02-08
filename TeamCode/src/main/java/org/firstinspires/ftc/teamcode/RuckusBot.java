@@ -265,9 +265,9 @@ public class RuckusBot
 
     public void landerPrep() { theHang.landerPrep(); }
 
-    public void hangControl(boolean down, boolean up, double power)
+    public void hangControl(boolean dpadDown, boolean dpadUp, double power)
     {
-        theHang.hangControl(down, up, power);
+        theHang.hangControl(dpadDown, dpadUp, power);
     }
 
     public boolean hangDrive(double power, double distance, Gen2_Hang.HangDirection direction)
