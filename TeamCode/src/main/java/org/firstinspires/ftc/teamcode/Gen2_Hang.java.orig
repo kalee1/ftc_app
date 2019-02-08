@@ -23,6 +23,10 @@ public class Gen2_Hang
         telemetry = telem;
         try
         {
+<<<<<<< HEAD
+            hang = hwmap.dcMotor.get("Hang");
+            hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+=======
             hang = hwmap.dcMotor.get("hang");
 //            hang.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 //            hang.setTargetPosition(hang.getCurrentPosition());
@@ -31,12 +35,15 @@ public class Gen2_Hang
             hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             hang.setPower(0.0);
 
+>>>>>>> develop
         }
         catch (Exception p_exeception)
         {
             hang = null;
             telem.addData("hang Not Found", "");
         }
+<<<<<<< HEAD
+=======
 
 
     }
@@ -49,6 +56,7 @@ public class Gen2_Hang
 //            hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 //            hang.setPower(0.0);
         }
+>>>>>>> develop
     }
 
 
@@ -85,11 +93,13 @@ public class Gen2_Hang
             }
         }
     }
-    public void hangControl(boolean dpadDown, boolean dpadUp)
+    public void hangControl(boolean down, boolean up, double power)
     {
-        if (hang != null)
+        power = Math.abs(power);
+
+        if(hang != null)
         {
-            if (dpadUp)
+            if (down)
             {
                 hang.setPower(power);
             }
@@ -111,6 +121,23 @@ public class Gen2_Hang
 
     public boolean hangDrive(double power, double distance,  HangDirection direction)
     {
+<<<<<<< HEAD
+        if (hang != null)
+        {
+            if (dpadUp)
+            {
+                hang.setPower(-.2);
+            }
+            else if (dpadDown)
+            {
+                hang.setPower(.8);
+            }
+            else
+            {
+                hang.setPower(0.0);
+            }
+            telem.addData("Hang Encoder Pos", "" + hang.getCurrentPosition());
+=======
         if(!moving)
         {
             initialPosition = hang.getCurrentPosition();
@@ -126,6 +153,7 @@ public class Gen2_Hang
         else if(direction.equals(HangDirection.OUT))
         {
             hangControl(false, true, power);
+>>>>>>> develop
         }
 
         if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance)

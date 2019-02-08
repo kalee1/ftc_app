@@ -64,8 +64,10 @@ public class RuckusBot
         depoDeposit.init(hwMap, telem);
     }
 
-    public void start() {
+    public void start()
+    {
         theEyeOfSauron.start();
+        theHang.start();
     }
 
     /** A go-between between the opmode class and the actual chassis class.
@@ -263,7 +265,15 @@ public class RuckusBot
 
     public void landerPrep() { theHang.landerPrep(); }
 
-    public void hangControl(boolean dpadDown, boolean dpadUp) { theHang.hangControl(dpadDown, dpadUp);}
+    public void hangControl(boolean down, boolean up, double power)
+    {
+        theHang.hangControl(down, up, power);
+    }
+
+    public boolean hangDrive(double power, double distance, Gen2_Hang.HangDirection direction)
+    {
+        return theHang.hangDrive(power, distance, direction);
+    }
 
 
 }
