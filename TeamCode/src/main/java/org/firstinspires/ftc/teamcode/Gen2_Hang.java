@@ -19,21 +19,20 @@ public class Gen2_Hang
         try
         {
             hang = hwmap.dcMotor.get("Hang");
+            hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         }
         catch (Exception p_exeception)
         {
             hang = null;
             telem.addData("Hang Not Found", "");
         }
-
-        hang.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 
     public enum Lift
     {
         LANDERHANG(0),
-        LANDERPREP(-2400);
+        LANDERPREP(-18500);
 
         public final double targetEncoder;
 
@@ -45,33 +44,42 @@ public class Gen2_Hang
 
    public void landerPrep()
    {
-       if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+       if (hang != null)
        {
-           hang.setPower(.3);
+           if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+           {
+               hang.setPower(.3);
+           }
        }
    }
     public void landerHang()
     {
-        if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+        if (hang != null)
         {
-            hang.setPower(.4);
+            if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+            {
+                hang.setPower(.4);
+            }
         }
     }
     public void hangControl(boolean dpadDown, boolean dpadUp)
     {
-        if (dpadDown)
+        if (hang != null)
         {
-            hang.setPower(-.2);
+            if (dpadUp)
+            {
+                hang.setPower(-.2);
+            }
+            else if (dpadDown)
+            {
+                hang.setPower(.8);
+            }
+            else
+            {
+                hang.setPower(0.0);
+            }
+            telem.addData("Hang Encoder Pos", "" + hang.getCurrentPosition());
         }
-        else if (dpadUp)
-        {
-            hang.setPower(.8);
-        }
-        else
-        {
-            hang.setPower(0.0);
-        }
-        telem.addData("Hang Encoder Pos", "" + hang.getCurrentPosition());
 
     }
 }

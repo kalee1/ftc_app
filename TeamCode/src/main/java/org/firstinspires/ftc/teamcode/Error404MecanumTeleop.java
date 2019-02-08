@@ -92,6 +92,16 @@ public class Error404MecanumTeleop extends OpMode
 
         //robot lander hang method
         robot.hangControl(dpadDown, dpadUp);
+
+        if (gamepad2.a){
+
+            robot.landerHang();
+        }
+
+        if (gamepad2.b){
+
+            robot.landerPrep();
+        }
 //
 //        if (buttonB){
 //        //robot lander hang method
