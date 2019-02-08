@@ -87,11 +87,11 @@ public class Gen2_Hang
         {
             if (down)
             {
-                hang.setPower(power);
+                hang.setPower(-power);
             }
             else if (up)
             {
-                hang.setPower(-power);
+                hang.setPower(power);
             }
             else
             {

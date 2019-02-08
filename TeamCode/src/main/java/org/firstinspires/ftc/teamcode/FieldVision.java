@@ -164,11 +164,11 @@ public class FieldVision
 //                            goldPosition = "center";
                     if(goldMineralX != -1)
                     {
-                        if(goldMineralX < 150)
+                        if(goldMineralX < 200)
                         {
                             goldPosition = "left";
                         }
-                        else if(goldMineralX > 500)
+                        else if(goldMineralX > 550)
                         {
                             goldPosition = "right";
                         }
