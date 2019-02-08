@@ -55,7 +55,7 @@ public class Gen2_Hang
 
     public enum Hang
     {
-        LAND(-18500),
+        LAND(-17500),
         LIFT(0);
 
         public final double distance;
