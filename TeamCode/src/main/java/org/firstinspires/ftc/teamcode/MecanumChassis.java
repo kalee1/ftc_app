@@ -97,6 +97,7 @@ public class MecanumChassis extends Chassis
     double directionalPower;
     /** A double variable used in pointTurn to represent the value by which the robot needs to correct.*/
     double error;
+    double resetHeading;
 
 
     /**
@@ -167,6 +168,7 @@ public class MecanumChassis extends Chassis
         try
         {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
+            resetHeading = getHeadingDbl();
         }
         catch (Exception p_exeception)
         {
@@ -545,4 +547,8 @@ public class MecanumChassis extends Chassis
         if (lRearMotor != null)  { lRearMotor.setPower(power); }
     }
 
+    public boolean reset(double power, double time)
+    {
+        return pointTurn(power, resetHeading, time);
+    }
 }

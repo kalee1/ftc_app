@@ -17,22 +17,27 @@ public class E404_CraterFace extends Error404Autonomus
     @Override
     public void init()
     {
-        mineralDriveDistanceL = 23; //done
-        mineralDriveDistanceR = 23; //done
-        mineralDriveDistanceC = 19; //done
+        leftMineral = -59;
+        rightMineral = -118;
+        centerMineral = -90;
 
-        faceDepoHeadingL = -20; //done
-        faceDepoHeadingR = 10; //done
-        faceDepoHeadingC = 0; //done
+        mineralDriveDistanceL = 25; //done
+        mineralDriveDistanceR = 25; //done
+        mineralDriveDistanceC = 21; //done
+        backup = 10;
 
-        mineralSlideDistanceL = 0;
+        faceDepoHeadingL = -90; //done
+        faceDepoHeadingR = -90; //done
+        faceDepoHeadingC = -90; //done
+
+        mineralSlideDistanceL = 10;
         mineralSlideDistanceR = 0;
-        mineralSlideDistanceC = 0;
+        mineralSlideDistanceC = 5;
 
         //Case 13
-        depoTurnHeadingL = -20;
-        depoTurnHeadingR = 10;
-        depoTurnHeadingC = 0;
+        depoTurnHeadingL = -90;
+        depoTurnHeadingR = -90;
+        depoTurnHeadingC = -90;
 
         depoSlideDistance = 0;
         directionL = right;
@@ -42,13 +47,13 @@ public class E404_CraterFace extends Error404Autonomus
         depoDriveDistanceR = 0;
         depoDriveDistanceC = 0;
 
-        markerTurnHeading = 0;
+        markerTurnHeading = -90;
         markerSlideDistance = 0;
-        faceCraterHeading = 0;
+        faceCraterHeading = -90;
 
-        headingReset = 0;
+        headingReset = -90;
         craterDriveDistance = 0;
-        craterTurnHeading = 0;
+        craterTurnHeading = -90;
         craterSlideDistance = 0;
         enterCraterDistance = 0;
 

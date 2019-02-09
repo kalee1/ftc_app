@@ -126,4 +126,9 @@ public class Chassis
         return distanceTicks;
     }
 
+    public boolean reset (double power, double time)
+    {
+        return moving;
+    }
+
 }

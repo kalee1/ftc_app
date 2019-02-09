@@ -20,7 +20,7 @@ public class Error404Autonomus extends OpMode
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     /** An int varibale that is used to record the current case the case machine is in. */
-    int state = 0 ;  // used to represent the current state in the state machine
+    int state = -1;  // used to represent the current state in the state machine
     /** An int variable that is used to record the current motor position at the beginning of a move. */
     int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
 
@@ -158,6 +158,9 @@ public class Error404Autonomus extends OpMode
     protected double directionL;
     protected double directionG;
     protected double directionFinal;
+    protected double leftMineral;
+    protected double rightMineral;
+    protected double centerMineral;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -212,13 +215,21 @@ public class Error404Autonomus extends OpMode
         switch (state)
         {
             //land
-            case 0:
-                if(robot.hangDrive(.9, 17500, Gen2_Hang.HangDirection.OUT))
+            case -1:
+                if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
                 {
                     resetStartTime();
                     state = 1;
                 }
                 break;
+
+//            case 0:
+//                if(robot.pointTurn(.1, 0, 2))
+//                {
+//                    resetStartTime();
+//                    state = 1;
+//                }
+//                break;
 
                 //back out of latch
             case 1:
@@ -248,7 +259,7 @@ public class Error404Autonomus extends OpMode
 
                 // turn to left
             case 4:
-                if(robot.pointTurn(.2, -55 , 3))
+                if(robot.pointTurn(.2, leftMineral , 3))
                 {
                     resetStartTime();
                     state = 5;
@@ -279,7 +290,7 @@ public class Error404Autonomus extends OpMode
 
                 //turn to center
             case 6:
-                if(robot.pointTurn(.2, -87, 3))
+                if(robot.pointTurn(.2, centerMineral, 3))
                 {
                     resetStartTime();
                     state = 7;
@@ -310,7 +321,7 @@ public class Error404Autonomus extends OpMode
 
                 //turn to right
             case 8:
-                if(robot.pointTurn(.2, -113, 3))
+                if(robot.pointTurn(.2, rightMineral, 3))
                 {
 
                     resetStartTime();
@@ -360,7 +371,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 11:
-                if(robot.pointTurn(.3, -90, 3))
+                if(robot.pointTurn(.3, centerMineral, 3))
                 {
                     resetStartTime();
                     state = 12;
@@ -425,7 +436,7 @@ public class Error404Autonomus extends OpMode
                 break;
 
             case 19:
-                if(getRuntime() > 1.25)
+                if(getRuntime() > 1.5)
                 {
                     resetStartTime();
                     state = 20;
@@ -462,16 +473,25 @@ public class Error404Autonomus extends OpMode
             case 23:
                 if(robot.drive(.6, right, gain, craterSlideDistance, 6))
                 {
-                    state = 24;
+                    state = 25;
                     resetStartTime();
                 }
                 break;
 
-            case 24:
+//            case 24:
+//                if(robot.drive(.5, forward, gain, enterCraterDistance, 5))
+//                {
+//                    resetStartTime();
+//                    state = 25;
+//                }
+//                break;
+
+
+            case 25:
                 if(robot.armDeploy(-5000, 7000, false))
                 {
                     resetStartTime();
-                    state = 25;
+                    state = 26;
                 }
                 break;
 

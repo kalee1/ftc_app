@@ -199,11 +199,11 @@ public class Error404MecanumTeleop extends OpMode
         double powerLimit;
 
         //If the left trigger on the primary gamepad is pressed, set the maximum drive power to 0.7
-        if (gamepad1.left_bumper)
-        {
-            powerLimit = .7;
-        }
-        else if(gamepad1.right_bumper)
+//        if (gamepad1.left_bumper)
+//        {
+//            powerLimit = .7;
+//        }
+         if(gamepad1.right_bumper)
         {
             powerLimit = 1;
         }

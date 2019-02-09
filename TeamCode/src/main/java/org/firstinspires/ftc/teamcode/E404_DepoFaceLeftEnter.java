@@ -16,6 +16,10 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
      * Initializes drive and heading values for autonomous. */
     @Override public void init()
     {
+        leftMineral = -55;
+        rightMineral = -113;
+        centerMineral = -87;
+
         //Case 8
         mineralDriveDistanceL = 45; //done
         mineralDriveDistanceR = 37; //done
@@ -49,14 +53,14 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
 
 
         //Case 15
-        faceCraterHeading = 137;
+        faceCraterHeading = 138;
 
         markerTurnHeading = 90;
         markerSlideDistance = 7;
 
         headingReset = 45;
         craterDriveDistance = 60;
-        craterTurnHeading = 135;
+        craterTurnHeading = 130;
         craterSlideDistance = 0.0;
         enterCraterDistance = 0;
         super.init();
