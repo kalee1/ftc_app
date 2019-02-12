@@ -134,9 +134,9 @@ public class FieldVision
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() > 0)
                 {
-                    int goldMineralX = -1;
-//                    int silverMineral1X = -1;
-//                    int silverMineral2X = -1;
+                    int goldMineralX = -3;
+                    int silverMineral1X = -1;
+                    int silverMineral2X = -2;
                     for (Recognition recognition : updatedRecognitions)
                     {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
@@ -266,10 +266,6 @@ public class FieldVision
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
-    }
-
-    void doTFOD ()
-    {
     }
 
     public void tfodShutdown()
