@@ -327,7 +327,68 @@ public class MotorArm
         return !moving;
     }
 
-
+//    public void armDrive(double RightStickY, double LeftStickY)
+//    {
+//        double elbowGain = 0.7;
+//        double shoulderGain = 0.8;
+//
+//
+//        //elbow limits
+//        if (elbow != null)
+//        {
+//            if (elbowBack != null)
+//            {
+//                if (elbowBack.getValue() != 1)
+//                {
+//                    elbow.setPower(-0.5);
+//                }
+//                else
+//                {
+//                    elbow.setPower(RightStickY);
+//                }
+//            }
+//            if (elbowFront != null)
+//            {
+//                if (elbowFront.isPressed())
+//                {
+//                    elbow.setPower(0.5);
+//                }
+//                else
+//                {
+//                    elbow.setPower(RightStickY);
+//                }
+//            }
+//        }
+//
+//        //shoulder limits
+//        if (shoulder != null) //check to make sure shoulder motor is good.
+//        {
+//            if (chassisTouch != null) //check to make sure the limit switch is good.
+//            {
+//                //if the limit switch is pressed, reverse the arm, otherwise run the arm as normal.
+//                if (chassisTouch.isPressed())
+//                {
+//                    shoulder.setPower(-0.7);
+//                }
+//                else
+//                {
+//                    shoulder.setPower(LeftStickY);
+//                }
+//            }
+//        }
+//
+//        telemetry.addData("elbow: ", elbow.getCurrentPosition());
+//        telemetry.addData("shoulder: ", shoulder.getCurrentPosition());
+//
+//    }
+//
+//
+//    /** Drives the arm to a target position and returns true when done.
+//     *
+//     * @param shoulderTarget  The target position for the shoulder motor.
+//     * @param elbowTarget  The target position for the elbow motor.
+//     * @param elbowSecond  A boolean that tells whether or not to move the elbow after the shoulder is done.
+//     * @return  A boolean that tells whether or not the arm is moving. */
 //    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
 //    {
 //        double shoulderValue;
@@ -350,8 +411,7 @@ public class MotorArm
 //
 //        if (elbowSecond)
 //        {
-//            if (elbow.getCurrentPosition() <= elbowTarget &&
-//                shoulder.getCurrentPosition() <= shoulderTarget)
+//            if (elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget)
 //            {
 //                elbowValue = 0.7;
 //            }
@@ -375,7 +435,7 @@ public class MotorArm
 //        armDrive(elbowValue, shoulderValue);
 //
 //        if ((elbow.getCurrentPosition() >= elbowTarget) &&
-//            (shoulder.getCurrentPosition() <= shoulderTarget))
+//                (shoulder.getCurrentPosition() <= shoulderTarget))
 //        {
 //            moving = false;
 //            timesrun = 0;
@@ -390,9 +450,80 @@ public class MotorArm
 //
 //        return !moving;
 //    }
-
-
 //
+//
+//    /** Retracts the arm to the home position (folded up on the chassis) and returns true when done.
+//     *
+//     * @param elbowFirst  A boolean that tells whether or not to move the elbow before the shoulder.
+//     * @return  A boolean that tells whether or not the arm is moving.
+//     * */
+//    public boolean armRetract(boolean elbowFirst)
+//    {
+//        double elbowTarget = elbowStart;
+//        double shoulderTarget = shoulderStart;
+//        double shoulderValue;
+//        double elbowValue;
+//
+////        if (timesrun < 1)
+////        {
+////            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+////            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
+////        }
+//
+//        if (elbowFirst)
+//        {
+//
+//            if (shoulder.getCurrentPosition() < shoulderStart && elbow.getCurrentPosition() < elbowStart)
+//            {
+//                shoulderValue = 0.8;
+//            }
+//            else
+//            {
+//                shoulderValue = 0.0;
+//            }
+//        }
+//        else
+//        {
+//            if (shoulder.getCurrentPosition() < shoulderStart)
+//            {
+//                shoulderValue = 0.8;
+//            }
+//            else
+//            {
+//                shoulderValue = 0.0;
+//            }
+//        }
+//
+//
+//        if (elbow.getCurrentPosition() > elbowStart)
+//        {
+//            elbowValue = -0.9;
+//        }
+//        else
+//        {
+//            elbowValue = 0.0;
+//        }
+//
+//        armDrive(elbowValue, shoulderValue);
+//
+//        if ((elbow.getCurrentPosition()    <= elbowStart) &&
+//                (shoulder.getCurrentPosition() >= shoulderStart))
+//        {
+//            moving = false;
+//            timesrun = 0;
+//            elbow.setPower(0.0);
+//            shoulder.setPower(0.0);
+//        }
+//        else
+//        {
+//            moving = true;
+//            timesrun = 1;
+//        }
+//
+//        return !moving;
+//    }
+//
+
 
 
 

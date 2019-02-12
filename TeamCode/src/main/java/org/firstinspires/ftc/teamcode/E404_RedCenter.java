@@ -17,11 +17,8 @@ public class E404_RedCenter extends Error404Autonomus
     @Override
     public void init()
     {
-<<<<<<< HEAD
-        // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 
-=======
->>>>>>> master
+        // values are based on my incredible guesstimating including the use of a scaled version of the field and some math.
 //        mineralDriveDistance = 15;
 //        mineralSlideDistance = 45;
 //        depoTurnHeading = 125;

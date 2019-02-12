@@ -44,13 +44,13 @@ public class Collector {
     public void intake()
     {
         theServo.setPower(1.0);
-        telem.addData("Collector Direction = Forward", "");
+        telemetry.addData("Collector Direction = Forward", "");
     }
     /** Turns the intake wheels outward to spit our minerals. */
     public void eject()
     {
         theServo.setPower(-1.0);
-        telem.addData("Collector Direction = Backward", "");
+        telemetry.addData("Collector Direction = Backward", "");
     }
     /** Stops the intake wheels. */
     public void stop()
