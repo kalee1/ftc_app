@@ -207,10 +207,10 @@ public class MotorArm
     public enum ArmPositions
     {
         ARM_HOME(0, 0),
-        LANDER_EXTEND(9165, -5630),
-        CRATER_EXTEND(7500, -6300),
-        DRIVING_EXTEND(420, 420),
-        MINERAL_COLLECT(2500, -4220);
+        LANDER_EXTEND(0,0),
+        CRATER_EXTEND(7000, -5000),
+        DRIVING_EXTEND(0, 0),
+        MINERAL_COLLECT(0, 0);
 
         public final double elbow;   // in kilograms
         public final double shoulder; // in meters
@@ -227,8 +227,8 @@ public class MotorArm
         if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
             elbow.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.elbow)
         {
-            shoulder.setPower(-0.8);
-            elbow.setPower(0.9);
+            shoulder.setPower(-0.3);
+            elbow.setPower(0.3);
         }
         else
         {
@@ -242,7 +242,7 @@ public class MotorArm
     {
         if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder)
         {
-            shoulder.setPower(0.7);
+            shoulder.setPower(0.25);
         }
         else
         {
@@ -250,7 +250,7 @@ public class MotorArm
         }
         if (elbow.getCurrentPosition() >= ArmPositions.ARM_HOME.elbow)
         {
-            elbow.setPower(-0.9);
+            elbow.setPower(-0.25);
         }
         else
         {
@@ -392,73 +392,8 @@ public class MotorArm
 //    }
 
 
-    public boolean ArmHome()
-    {
-        double shoulderValue;
-        double elbowValue;
+//
 
-        if (timesrun < 1)
-        {
-//            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
-//            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
-        }
-
-        if (shoulder.getCurrentPosition() < shoulderHome)
-        {
-            shoulderValue = 0.8;
-        }
-        else
-        {
-            shoulderValue = 0.0;
-        }
-
-
-        if (elbow.getCurrentPosition() > elbowHome)
-        {
-            elbowValue = -0.9;
-        }
-        else
-        {
-            elbowValue = 0.0;
-        }
-
-        armDrive(elbowValue, shoulderValue);
-
-        if ((elbow.getCurrentPosition() <= elbowHome) &&
-            (shoulder.getCurrentPosition() >= shoulderHome))
-        {
-            moving = false;
-            timesrun = 0;
-            elbow.setPower(0.0);
-            shoulder.setPower(0.0);
-        }
-        else
-        {
-            moving = true;
-            timesrun = 1;
-        }
-
-        return !moving;
-    }
-
-    public boolean testAutoArm(double power, double direction, double gain, double distance, double time)
-    {
-        resetStartTime();
-        if (!moving)
-        {
-
-            moving = true;
-        }
-
-        armDrive(3, 3);
-
-        if ((Math.abs(shoulder.getCurrentPosition()) > distance) || (getRuntime() > time))
-        {
-            moving = false;
-        }
-
-        return !moving;
-    }
 
 
     /**
