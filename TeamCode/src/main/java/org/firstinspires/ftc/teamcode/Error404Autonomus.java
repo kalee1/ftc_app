@@ -219,17 +219,17 @@ public class Error404Autonomus extends OpMode
                 if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
                 {
                     resetStartTime();
-                    state = 1;
+                    state = 0;
                 }
                 break;
 
-//            case 0:
-//                if(robot.pointTurn(.1, 0, 2))
-//                {
-//                    resetStartTime();
-//                    state = 1;
-//                }
-//                break;
+            case 0:
+                if(robot.reset(.2, 2))
+                {
+                    resetStartTime();
+                    state = 1;
+                }
+                break;
 
                 //back out of latch
             case 1:
