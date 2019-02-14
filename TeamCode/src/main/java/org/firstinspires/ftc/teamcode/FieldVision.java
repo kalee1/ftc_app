@@ -110,7 +110,7 @@ public class FieldVision
         tfod.activate();
     }
 
-    
+
 
     /**
      *  the tensor flow code
@@ -137,11 +137,26 @@ public class FieldVision
                     int goldMineralX = -3;
                     int silverMineral1X = -1;
                     int silverMineral2X = -2;
+
                     for (Recognition recognition : updatedRecognitions)
                     {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
                         {
-                            goldMineralX = (int) recognition.getLeft();
+                            if(recognition.getConfidence() > 50)
+                            {
+                                if((recognition.getHeight() > 40) && (recognition.getWidth() > 40))
+                                {
+                                    goldMineralX = (int) recognition.getLeft();
+                                }
+                            }
+                        }
+                        else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
+                        {
+                            if(recognition.getConfidence() > 50)
+                            {
+                                silverMineral1X = (int) recognition.getLeft();
+
+                            }
                         }
 //                        else if (silverMineral1X == -1)
 //                        {
@@ -162,7 +177,7 @@ public class FieldVision
 //                        } else {
 //                            telemetry.addData("Gold Mineral Position", "Center");
 //                            goldPosition = "center";
-                    if(goldMineralX != -1)
+                    if(goldMineralX != -3)
                     {
                         if(goldMineralX < 200)
                         {
