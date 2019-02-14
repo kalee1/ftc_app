@@ -120,10 +120,9 @@ public class FieldVision
      * in its field of vision and identifies the position of the gold mineral (LEFT, RIGHT, CENTER)
      * and returns that value as a string.
      * */
-    public int tensorFlowMineralDetection()
+    public String tensorFlowMineralDetection()
     {
         String goldPosition = "null";
-        int goldMineralX = -9;
 
         if (tfod != null)
         {
@@ -135,7 +134,7 @@ public class FieldVision
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() > 0)
                 {
-                    goldMineralX = -3;
+                    int goldMineralX = -3;
                     int silverMineral1X = -1;
                     int silverMineral2X = -2;
                     for (Recognition recognition : updatedRecognitions)
@@ -143,15 +142,6 @@ public class FieldVision
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
                         {
                             goldMineralX = (int) recognition.getLeft();
-
-
-                ///////////////////////////////////////////////////////////////////////////////
-                            silverMineral1X = (int) recognition.getConfidence();
-                            telemetry.addData("confidence", silverMineral1X);
-                //////////////////////////////////////////////////////////////////////////////
-
-
-
                         }
 //                        else if (silverMineral1X == -1)
 //                        {
@@ -172,7 +162,7 @@ public class FieldVision
 //                        } else {
 //                            telemetry.addData("Gold Mineral Position", "Center");
 //                            goldPosition = "center";
-                    if(goldMineralX != -3 && goldMineralX != -9)
+                    if(goldMineralX != -1)
                     {
                         if(goldMineralX < 200)
                         {
@@ -197,7 +187,7 @@ public class FieldVision
             }
         }
 
-        return goldMineralX;
+        return goldPosition;
     }
 
 //    public boolean goldTrack()
