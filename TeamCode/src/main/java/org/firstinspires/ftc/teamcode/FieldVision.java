@@ -149,6 +149,7 @@ public class FieldVision
                                     goldMineralX = (int) recognition.getLeft();
                                 }
                             }
+//                        telemetry.addData("recognition info: ", recognition.toString());
                         }
                         else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
                         {
@@ -166,6 +167,7 @@ public class FieldVision
 //                        {
 //                            silverMineral2X = (int) recognition.getLeft();
 //                        }
+                        telemetry.addData("recognition info: ", recognition.toString());
                     }
 //                    if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
 //                        if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
