@@ -27,7 +27,7 @@ public class MarkDeploy
     {
         try
         {
-            flag = hwMap.crservo.get( "MarkDeploy" );
+            flag = hwMap.crservo.get( "markDeploy" );
 //            flag = hwMap.servo.get("MarkDeploy");
           flag.setDirection(CRServo.Direction.FORWARD);
 //            flag.setDirection(Servo.Direction.FORWARD);
