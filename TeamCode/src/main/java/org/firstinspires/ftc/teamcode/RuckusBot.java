@@ -270,9 +270,14 @@ public class RuckusBot
         return theArm.armHome();
     }
 
-    public boolean reset( double power, double time)
+    public boolean armGoldCollect(boolean elbowSecond)
     {
-        return theChassis.reset(power, time);
+        return theArm.goldCollect(elbowSecond);
+    }
+
+    public boolean armCraterExtend()
+    {
+        return theArm.craterExtend();
     }
 
 
