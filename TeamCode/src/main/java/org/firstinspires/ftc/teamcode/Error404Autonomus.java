@@ -19,10 +19,11 @@ public class Error404Autonomus extends OpMode
 {
     /* Declare OpMode members. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
-    /** An int varibale that is used to record the current case the case machine is in. */
-    int state = -1;  // used to represent the current state in the state machine
+    /** An int varibale that is used to record the current case the case machine is in and what case
+     *  the case machine will start in. */
+    int state = -1;
     /** An int variable that is used to record the current motor position at the beginning of a move. */
-    int initialPosition = 0;  // used to grab the position of a robot at the beginning of a move
+    int initialPosition = 0;
 
     /** Used to simulate joystick commands. Drives the robot forward. */
     double forward = MecanumChassis.FORWARD;
@@ -98,6 +99,8 @@ public class Error404Autonomus extends OpMode
     protected double depoTurnHeadingC;
     protected double[] depoTurnHeading;
     protected double depoTurnHeadingFinal;
+    /** A move variable that holds the drive distance needed to back up from a mineral after pushing
+     * it across the field (so as not to snag on it). */
     protected double backup;
     /** A move variable that holds differing distances that change based on where the robot starts on the field.
      * The distance required to slide into the field wall to line up on the depo. */
@@ -219,17 +222,18 @@ public class Error404Autonomus extends OpMode
                 if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
                 {
                     resetStartTime();
-                    state = 1;
+                    state = 0;
                 }
                 break;
 
-//            case 0:
-//                if(robot.pointTurn(.1, 0, 2))
-//                {
-//                    resetStartTime();
-//                    state = 1;
-//                }
-//                break;
+                //correct robot heading
+            case 0:
+                if(robot.reset(.2, 2))
+                {
+                    resetStartTime();
+                    state = 1;
+                }
+                break;
 
                 //back out of latch
             case 1:
@@ -249,6 +253,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive forward the same amount the robot drove back in case 1
             case 3:
                 if(robot.drive(.3, forward, gain, 4, 2))
                 {
@@ -257,7 +262,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                // turn to left
+                // turn to left mineral
             case 4:
                 if(robot.pointTurn(.2, leftMineral , 3))
                 {
@@ -265,6 +270,7 @@ public class Error404Autonomus extends OpMode
                     state = 5;
                 }
                 break;
+                //look for gold
             case 5:
                 if(robot.goldPosition().equals("center"))
                 {
@@ -286,9 +292,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-
-
-                //turn to center
+                //turn to center mineral
             case 6:
                 if(robot.pointTurn(.2, centerMineral, 3))
                 {
@@ -296,6 +300,7 @@ public class Error404Autonomus extends OpMode
                     state = 7;
                 }
                 break;
+                //look for gold
             case 7:
                 if(robot.goldPosition().equals("center"))
                 {
@@ -317,9 +322,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-
-
-                //turn to right
+                //turn to right mineral
             case 8:
                 if(robot.pointTurn(.2, rightMineral, 3))
                 {
@@ -328,6 +331,7 @@ public class Error404Autonomus extends OpMode
                     state = 9;
                 }
                 break;
+                //look for gold
             case 9:
                 if(robot.goldPosition().equals("center"))
                 {
@@ -349,7 +353,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-
+                //if no gold is found, set position to center
             case 10:
                 if(goldPosition.equals("NoPosition"))
                 {
@@ -370,6 +374,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //turn to center mineral
             case 11:
                 if(robot.pointTurn(.3, centerMineral, 3))
                 {
@@ -378,6 +383,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive forward, knocking off the mineral
             case 12:
                 if(robot.drive(.3, forward, gain, mineralDriveDistanceFinal, 4))
                 {
@@ -386,6 +392,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive backward, so as to not snag on the pushed mineral
             case 13:
                 if(robot.drive(.4, backward, gain, backup, 4))
                 {
@@ -394,6 +401,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //turn to face the depo
             case 14:
                 if (robot.pointTurn(.3, faceDepoHeadingFinal, 4))
                 {
@@ -402,6 +410,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //strafe into the field wall to straighten robot
             case 15:
                 if(robot.drive(.4, directionFinal, gain, mineralSlideDistanceFinal, 4))
                 {
@@ -410,6 +419,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive into depo
             case 16:
                 if(robot.drive(.5, backward, gain, depoDriveDistanceFinal, 6))
                 {
@@ -418,6 +428,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //turn into depo
             case 17:
                 if(robot.pointTurn(.3, depoTurnHeadingFinal, 4))
                 {
@@ -426,6 +437,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //slide into left wall to straighten and deploy team marker
             case 18:
                 if(robot.drive(.4, left, gain, markerSlideDistance, 4))
                 {
@@ -435,6 +447,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //wait 1.5 seconds for the team marker to fall
             case 19:
                 if(getRuntime() > 1.5)
                 {
@@ -443,6 +456,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //turn to face the crater
             case 20:
                 if(robot.pointTurn(.3, faceCraterHeading,4))
                 {
@@ -452,6 +466,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //drive two-thirds of the way to the crater
             case 21:
                 if(robot.drive(.8, forward, gain, craterDriveDistance, 6))
                 {
@@ -487,6 +502,8 @@ public class Error404Autonomus extends OpMode
 //                break;
 
 
+            //extend arm out over the crater
+            // (gets parking points and readies arm for teleop)
             case 25:
                 if(robot.armDeploy(-5000, 7000, false))
                 {
@@ -501,8 +518,6 @@ public class Error404Autonomus extends OpMode
         }
 //        telemetry.addData("state", state);
 
-        //Post the current state value to the driver station phone.
-//        telemetry.addData("1)", "state: " + state );
     }
 
     /*

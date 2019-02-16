@@ -19,7 +19,7 @@ public class Chassis
 {
     /** An enum that us used by the tankDrive method. Has two options: FORWARD and REVERSE. */
     enum TankDirection {FORWARD, REVERSE}
-
+    /** A boolean that tells whether or not a limit switch is pressed. */
     boolean pressed = false;
     /** A boolean that tells whether or not the robot is moving. */
     boolean moving = false;
@@ -126,6 +126,15 @@ public class Chassis
         return distanceTicks;
     }
 
+    /**
+     * Takes the starting heading of the robot before landing and uses that start heading to home
+     * the robot angle after landing.
+     *
+     * @param power  The power the robot will move at.
+     * @param time  The maximum time this method can run before timing out -- prevents the robot
+     *              from stalling during autonmous.
+     * @return returns a boolean that stands for whether or not the robot is moving.
+     * */
     public boolean reset (double power, double time)
     {
         return moving;

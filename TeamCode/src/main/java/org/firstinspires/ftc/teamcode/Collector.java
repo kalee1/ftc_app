@@ -13,8 +13,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Collector
 {
 
-    /** A continuous rotation servo called theServo. */
+    /** A continuous rotation smart servo called theServoR. */
     public CRServo theServoR = null;
+    /** A continuous rotation smart servo called theServoL. */
     public CRServo theServoL = null;
     /** A telemetry object called telemtry. */
     Telemetry telemetry;
@@ -72,34 +73,34 @@ public class Collector
     }
 
 
-    /** Turns the intake wheels inward to suck in minerals. */
+    /** Turns the left intake wheel inward to suck in minerals. */
     public void intakeL()
     {
         theServoL.setPower(1.0);
     }
-    /** Turns the intake wheels outward to spit our minerals. */
+    /** Turns the left intake wheel outward to spit out minerals. */
     public void ejectL()
     {
         theServoL.setPower(-1.0);
     }
-    /** Stops the intake wheels. */
+    /** Stops the left intake wheel. */
     public void stopL()
     {
         theServoL.setPower(0.0);
     }
 
 
-    /** Turns the intake wheels inward to suck in minerals. */
+    /** Turns the right intake wheel inward to suck in minerals. */
     public void intakeR()
     {
         theServoR.setPower(1.0);
     }
-    /** Turns the intake wheels outward to spit our minerals. */
+    /** Turns the right intake wheel outward to spit our minerals. */
     public void ejectR()
     {
         theServoR.setPower(-1.0);
     }
-    /** Stops the intake wheels. */
+    /** Stops the right intake wheel. */
     public void stopR()
     {
         theServoR.setPower(0.0);

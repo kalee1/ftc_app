@@ -134,14 +134,29 @@ public class FieldVision
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() > 0)
                 {
-                    int goldMineralX = -1;
-//                    int silverMineral1X = -1;
-//                    int silverMineral2X = -1;
+                    int goldMineralX = -3;
+                    int silverMineral1X = -1;
+                    int silverMineral2X = -2;
+
                     for (Recognition recognition : updatedRecognitions)
                     {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
                         {
-                            goldMineralX = (int) recognition.getLeft();
+                            if(recognition.getConfidence() > 50)
+                            {
+                                if((recognition.getHeight() > 40) && (recognition.getWidth() > 40))
+                                {
+                                    goldMineralX = (int) recognition.getLeft();
+                                }
+                            }
+                        }
+                        else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
+                        {
+                            if(recognition.getConfidence() > 50)
+                            {
+                                silverMineral1X = (int) recognition.getLeft();
+
+                            }
                         }
 //                        else if (silverMineral1X == -1)
 //                        {
@@ -162,7 +177,7 @@ public class FieldVision
 //                        } else {
 //                            telemetry.addData("Gold Mineral Position", "Center");
 //                            goldPosition = "center";
-                    if(goldMineralX != -1)
+                    if(goldMineralX != -3)
                     {
                         if(goldMineralX < 200)
                         {
@@ -266,10 +281,6 @@ public class FieldVision
         TFObjectDetector.Parameters tfodParameters = new TFObjectDetector.Parameters(tfodMonitorViewId);
         tfod = ClassFactory.getInstance().createTFObjectDetector(tfodParameters, vuforia);
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
-    }
-
-    void doTFOD ()
-    {
     }
 
     public void tfodShutdown()
