@@ -96,7 +96,7 @@ public class Error404MecanumTeleop extends OpMode
         //robot lander hang method
         if( dpadDown || dpadUp )
         {
-            power = .8;
+            power = .9;
             if (gamepad1.left_bumper)
             {
                 power = 0.2;
@@ -106,9 +106,6 @@ public class Error404MecanumTeleop extends OpMode
         {
             power = 0;
         }
-        telemetry.addData("dpadUp: ", dpadUp);
-        telemetry.addData("dpadDown: ", dpadDown);
-        telemetry.addData("Power: ", power);
         robot.hangControl(dpadDown, dpadUp, power);
 //
 //        if (buttonB){

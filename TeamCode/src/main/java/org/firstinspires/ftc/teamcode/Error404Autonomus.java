@@ -216,7 +216,8 @@ public class Error404Autonomus extends OpMode
         {
             //land
             case -1:
-                if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
+//                if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
+                if(getRuntime() > 3)
                 {
                     resetStartTime();
                     state = 0;

@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.matrices.OpenGLMatrix;
 import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 
@@ -142,22 +143,16 @@ public class FieldVision
                     {
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
                         {
-                            if(recognition.getConfidence() > 50)
+                            if(recognition.getHeight() > 40)
                             {
-                                if((recognition.getHeight() > 40) && (recognition.getWidth() > 40))
-                                {
-                                    goldMineralX = (int) recognition.getLeft();
-                                }
+                                goldMineralX = (int) recognition.getLeft();
+
                             }
 //                        telemetry.addData("recognition info: ", recognition.toString());
                         }
                         else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
                         {
-                            if(recognition.getConfidence() > 50)
-                            {
-                                silverMineral1X = (int) recognition.getLeft();
-
-                            }
+                            silverMineral1X = (int) recognition.getLeft();
                         }
 //                        else if (silverMineral1X == -1)
 //                        {
@@ -168,17 +163,8 @@ public class FieldVision
 //                            silverMineral2X = (int) recognition.getLeft();
 //                        }
                         telemetry.addData("recognition info: ", recognition.toString());
+                        telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
                     }
-//                    if (goldMineralX != -1 && silverMineral1X != -1 && silverMineral2X != -1) {
-//                        if (goldMineralX < silverMineral1X && goldMineralX < silverMineral2X) {
-//                            telemetry.addData("Gold Mineral Position", "Left");
-//                            goldPosition = "left";
-//                        } else if (goldMineralX > silverMineral1X && goldMineralX > silverMineral2X) {
-//                            telemetry.addData("Gold Mineral Position", "Right");
-//                            goldPosition = "right";
-//                        } else {
-//                            telemetry.addData("Gold Mineral Position", "Center");
-//                            goldPosition = "center";
                     if(goldMineralX != -3)
                     {
                         if(goldMineralX < 200)

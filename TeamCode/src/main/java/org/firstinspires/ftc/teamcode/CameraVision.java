@@ -17,9 +17,15 @@ public class CameraVision extends OpMode
 
     }
 
+    public void start()
+    {
+        robot.start();
+    }
+
     public void loop()
     {
-        telemetry.addData("gold position",robot.goldPosition());
+//        telemetry.addData("gold position",robot.goldPosition());
+        robot.goldPosition();
 
     }
     public void stop()
