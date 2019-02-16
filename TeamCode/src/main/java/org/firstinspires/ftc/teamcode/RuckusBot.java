@@ -275,6 +275,11 @@ public class RuckusBot
         return theHang.hangDrive(power, distance, direction);
     }
 
+    public boolean armHome()
+    {
+        return theArm.armHome();
+    }
+
     public boolean reset( double power, double time)
     {
         return theChassis.reset(power, time);

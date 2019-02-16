@@ -132,6 +132,62 @@ public class MotorArm
         shoulderExtend = -5630;
     }
 
+    public enum ArmPositions
+    {
+        ARM_HOME(0, 0),
+        LANDER_EXTEND(0,0),
+        CRATER_EXTEND(7000, -5000),
+        DRIVING_EXTEND(0, 0),
+        MINERAL_COLLECT(0, 0);
+
+        public final double elbow;   // in kilograms
+        public final double shoulder; // in meters
+
+        ArmPositions(double theElbow, double theShoulder)
+        {
+            this.elbow = theElbow;
+            this.shoulder = theShoulder;
+        }
+    }
+
+    public boolean craterExtend()
+    {
+        if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
+                elbow.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.elbow)
+        {
+            shoulder.setPower(-0.3);
+            elbow.setPower(0.3);
+        }
+        else
+        {
+            shoulder.setPower(0.0);
+            elbow.setPower(0.0);
+        }
+        return !moving;
+    }
+
+    public boolean armHome()
+    {
+        if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder)
+        {
+            shoulder.setPower(0.25);
+        }
+        else
+        {
+            shoulder.setPower(0.0);
+        }
+        if (elbow.getCurrentPosition() >= ArmPositions.ARM_HOME.elbow)
+        {
+            elbow.setPower(-0.25);
+        }
+        else
+        {
+            elbow.setPower(0.0);
+        }
+        return !moving;
+    }
+
+
     /**
      * Sends the joystick commands to the motors, allowing the drivers to move the arm and reverses the
      * arm's movement if it hits one of the three limit switches. This prevents the arm from driving
