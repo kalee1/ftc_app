@@ -10,6 +10,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Contains the hardware and methods to run the mechanism that deploys the team marker during autonomous.
  *
  * @author Andrew, Error 404: Team Name Not Found
+ * @author  Ben, Error 404: Team Name Not Found
  * */
 public class MarkDeploy
 {
@@ -27,7 +28,7 @@ public class MarkDeploy
     {
         try
         {
-            flag = hwMap.crservo.get( "MarkDeploy" );
+            flag = hwMap.crservo.get( "markDeploy" );
 //            flag = hwMap.servo.get("MarkDeploy");
           flag.setDirection(CRServo.Direction.FORWARD);
 //            flag.setDirection(Servo.Direction.FORWARD);

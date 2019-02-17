@@ -119,6 +119,10 @@ public class FieldVision
     /** Sourced from the FIRST-provided tensor flow example code, this method recognizes minerals
      * in its field of vision and identifies the position of the gold mineral (LEFT, RIGHT, CENTER)
      * and returns that value as a string.
+     *
+     * Modified by Error 404: Looks for the gold mineral (ie, no longer needs to see silver minerals
+     * to calculate the gold mineral position). If it sees a gold mineral that matches the specified
+     * height perameter, calculate the gold position using the x-axis value of the gold mineral.
      * */
     public String tensorFlowMineralDetection()
     {
@@ -283,6 +287,8 @@ public class FieldVision
         tfod.loadModelFromAsset(TFOD_MODEL_ASSET, LABEL_GOLD_MINERAL, LABEL_SILVER_MINERAL);
     }
 
+    /** Shuts down the tensor flow algorithm. Turning it off when it's not needed preserves the
+     * robot controller's battery */
     public void tfodShutdown()
     {
         tfod.shutdown();

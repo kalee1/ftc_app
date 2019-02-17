@@ -5,19 +5,35 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.ListIterator;
 
-
+/**
+ * Contains the code for initializing the hanger hardware and for running the hanger in teleop and
+ * autonomous.
+ *
+ * @author  Ben, Error 404: Team Name Not Found
+ * */
 public class Gen2_Hang
 {
 
+    /** The DC Motor used to hang. */
     DcMotor hang = null;
 
+    /** A telemetry object. Allows for telemetry calls to be made in this class. */
     Telemetry telemetry;
 
+    /** An enum that stores the two possible directions the hanger can go: IN or OUT */
     enum HangDirection {IN, OUT}
+    /** A boolean that is used to determine whether or not the robot is moving. */
     boolean moving = false;
+    /** A double that is the starting position of the motor. */
     double initialPosition;
 
 
+    /** Initializes the hardware used in the hanger mechanism.
+     *
+     * @param hwmap  An instance of the hardware map. Used to initialize the hang motor.
+     * @param telem  An instance of Telemtry that allows for telemetry to be initialized and
+     *               therefore used in this class.
+     * */
     public void init(HardwareMap hwmap, Telemetry telem)
     {
         telemetry = telem;
@@ -41,6 +57,7 @@ public class Gen2_Hang
 
     }
 
+    /** Called when the start button on the controller is pressed. Runs once. */
     public void start()
     {
         if(hang != null)
@@ -52,6 +69,7 @@ public class Gen2_Hang
     }
 
 
+    /**  */
     public enum Lift
     {
         LANDERHANG(0),
@@ -65,13 +83,15 @@ public class Gen2_Hang
             }
     }
 
-   public void landerPrep()
-   {
-       if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
-       {
-           hang.setPower(.3);
-       }
-   }
+    /** Sends the hanger out to a preset position in preparation for hanging.*/
+    public void landerPrep()
+    {
+        if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+        {
+            hang.setPower(.3);
+        }
+    }
+    /** Pulls the hanger in to a preset position to lift the robot off the ground. */
     public void landerHang()
     {
         if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
@@ -79,6 +99,12 @@ public class Gen2_Hang
             hang.setPower(.4);
         }
     }
+    /** A generic drive method for controlling the hanger.
+     *
+     * @param down  A truth value of whether or not up is the correct direction.
+     * @param up  A truth value of whether or not down is the correct direction.
+     * @param power  The power at which the hanger will run.
+     * */
     public void hangControl(boolean down, boolean up, double power)
     {
         power = Math.abs(power);
@@ -105,6 +131,13 @@ public class Gen2_Hang
     }
 
 
+    /** Drives the hanger for a set number of encoder ticks. Used in autonomous.
+     *
+     * @param power  The power at which the hanger will run.
+     * @param distance  The number of encoders the hanger will run.
+     * @param direction  The direction the hanger will run in (there are two choices: IN or OUT).
+     * @return A boolean that is whether or not the robot is moving.
+     * */
     public boolean hangDrive(double power, double distance,  HangDirection direction)
     {
         if(!moving)
@@ -133,6 +166,7 @@ public class Gen2_Hang
         return !moving;
     }
 
+    /** Stops the hang motor. */
     public void stopHangMotor()
     {
         if(hang != null)

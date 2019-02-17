@@ -75,12 +75,11 @@ public class Error404MecanumTeleop extends OpMode
         double lStickY = gamepad1.left_stick_y;
         /** The y-axis of the right joystick on the gamepad. Used for chassis control*/
         double rStickY = gamepad1.right_stick_y;
-        /** The down & up values of the dpad on gamepad 2. Used for lander Hang control*/
+        /** The truth value of the dpad down button. Ussed for hanger control.*/
         boolean dpadDown = gamepad1.dpad_down;
+        /** The truth value of the dpad up button. Used for hanger control.*/
         boolean dpadUp = gamepad1.dpad_up;
-        /** The return value of the button a on gamepad1. Used for lander hang presets*/
-
-
+        /** The power value for the hanger. Used for hanger control.*/
         double power;
 
 //        telemetry.addData("1: leftX", lStickX);
@@ -186,8 +185,8 @@ public class Error404MecanumTeleop extends OpMode
     }
 
     /**
-     * afterburners() allows the driver to increase the robot's top speed from the default of 0.5 to
-     * 1.0 by holding down the left trigger on the gamepad. This is because it is easier to make small
+     * afterburners() allows the driver to increase the robot's top speed from the default of 0.3 to
+     * 0.8 by holding down the left trigger on the gamepad. This is because it is easier to make small
      * precise movements (like lining up on a mineral) at a lower top speed, but it is also
      * useful to drive fast when crossing the field.
      *
@@ -204,7 +203,7 @@ public class Error404MecanumTeleop extends OpMode
 //        }
          if(gamepad1.right_bumper)
         {
-            powerLimit = 1;
+            powerLimit = .8;
         }
         //If the left trigger on the primary gamepad is not pressed, set the maximum drive power to 0.3
         else
