@@ -152,7 +152,6 @@ public class MotorArm
         double elbowGain = 0.6;
         double shoulderGain = 0.7;
 
-
         //elbow limits
         if (elbow != null)
         {
@@ -200,10 +199,6 @@ public class MotorArm
 
     }
 
-
-//simple1
-
-
     public enum ArmPositions
     {
         ARM_HOME(0, 0),
@@ -224,16 +219,14 @@ public class MotorArm
 
     public boolean craterExtend()
     {
-//      CRATER_EXTEND(7000, -5000)
-
         if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
-                elbow.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.elbow)
+            elbow.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.elbow)
         {
             shoulder.setPower(-0.2);
             elbow.setPower(0.2);
         }
         else if (shoulder.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.shoulder &&
-                elbow.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.elbow)
+                 elbow.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.elbow)
         {
             shoulder.setPower(0.2);
             elbow.setPower(-0.2);
@@ -243,15 +236,14 @@ public class MotorArm
 
     public boolean armHome()
     {
-
-//        ARM_HOME(0, 0)
-
-        if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder && elbow.getCurrentPosition() >= ArmPositions.ARM_HOME.elbow)
+        if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder &&
+            elbow.getCurrentPosition() >= ArmPositions.ARM_HOME.elbow)
         {
             shoulder.setPower(0.25);
             elbow.setPower(-0.25);
         }
-        else if (shoulder.getCurrentPosition() >= ArmPositions.ARM_HOME.shoulder && elbow.getCurrentPosition() <= ArmPositions.ARM_HOME.elbow)
+        else if (shoulder.getCurrentPosition() >= ArmPositions.ARM_HOME.shoulder &&
+                 elbow.getCurrentPosition() <= ArmPositions.ARM_HOME.elbow)
         {
             shoulder.setPower(-0.25);
             elbow.setPower(0.25);
@@ -266,11 +258,8 @@ public class MotorArm
 
     public void landerExtend()
     {
-
-//                LANDER_EXTEND(9000, -4000)
-
         if (shoulder.getCurrentPosition() <= ArmPositions.LANDER_EXTEND.shoulder &&
-                elbow.getCurrentPosition() >= ArmPositions.LANDER_EXTEND.elbow)
+            elbow.getCurrentPosition() >= ArmPositions.LANDER_EXTEND.elbow)
         {
             shoulder.setPower(-0.8);
             elbow.setPower(0.9);
@@ -282,7 +271,7 @@ public class MotorArm
         }
     }
 
-    public void driveingExtend()
+    public void drivingExtend()
 
 //       DRIVING_EXTEND(4600,-3400)
     {
@@ -292,7 +281,7 @@ public class MotorArm
 
 
         if (shoulder.getCurrentPosition() <= ArmPositions.DRIVING_EXTEND.shoulder &&
-                elbow.getCurrentPosition() >= ArmPositions.DRIVING_EXTEND.elbow)
+            elbow.getCurrentPosition() >= ArmPositions.DRIVING_EXTEND.elbow)
         {
             shoulder.setPower(-0.8);
             elbow.setPower(0.9);
@@ -319,7 +308,7 @@ public class MotorArm
         if (elbowSecond)
         {
             if (elbow.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.elbow &&
-                    shoulder.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.shoulder)
+                shoulder.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.shoulder)
             {
                 elbow.setPower(0.7);
             }
@@ -538,9 +527,6 @@ public class MotorArm
 //        return !moving;
 //    }
 //
-
-
-
 
     /**
      * Get the number of seconds this op mode has been running

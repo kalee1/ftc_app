@@ -17,7 +17,6 @@ public class RuckusBot
      * team marker in autonomous. */
     MarkDeploy depoDeposit = new MarkDeploy();
     FieldVision theEyeOfSauron = new FieldVision();
-//    MineralProcessing area51 = new MineralProcessing();
 
     /** An instance of the MotorArm class. Links to the motors and the code relating to the
      * operation of the mineral arm in teleop. */
@@ -34,8 +33,10 @@ public class RuckusBot
      *
      * @param chassisType  A string that is the type of chassis the code will use.
      * */
-    public RuckusBot(String chassisType) {
-        if (chassisType.equals("MecanumChassis")) {
+    public RuckusBot(String chassisType)
+    {
+        if (chassisType.equals("MecanumChassis"))
+        {
             theChassis = new MecanumChassis();
         }
         else if (chassisType.equals("TankChassis"))
