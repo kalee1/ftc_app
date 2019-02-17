@@ -97,6 +97,8 @@ public class MecanumChassis extends Chassis
     double directionalPower;
     /** A double variable used in pointTurn to represent the value by which the robot needs to correct.*/
     double error;
+    /** A double that stores the starting heading of the robot for use in reseting the robot's
+     * heading to its start heading. */
     double resetHeading;
 
 
@@ -362,11 +364,11 @@ public class MecanumChassis extends Chassis
       * A drive method that does not utilize the mecanum wheels on the robot and therefore only
       * drives forward and backward
       *
-      * @param power
-      * @param direction
-      * @param gain
-      * @param distance
-      * @param time
+      * @param power  The power at which the robot will drive.
+      * @param direction  The direction in which the robot will drive.
+      * @param gain  The degree of which the robot will correct error.
+      * @param distance  The target number of inches the robot will move.
+      * @param time  The maximum amount of time the move can take before timing out.
       * @return A boolean that says whether or not the robot is moving
       */
      public boolean tankDrive(double power, TankDirection direction, double gain, double distance, double time)
@@ -547,6 +549,12 @@ public class MecanumChassis extends Chassis
         if (lRearMotor != null)  { lRearMotor.setPower(power); }
     }
 
+    /** Turns the robot to the initial heading it started out at.
+     *
+     * @param power  The power at which the robot will drive.
+     * @param time  The maximum amount of time the move can take before timing out.
+     * @return A boolean that is whether or not the robot is moving.
+     * */
     public boolean reset(double power, double time)
     {
         return pointTurn(power, resetHeading, time);

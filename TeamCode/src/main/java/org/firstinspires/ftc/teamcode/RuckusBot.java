@@ -281,5 +281,15 @@ public class RuckusBot
         return theArm.craterExtend();
     }
 
+    public boolean reset(double power, double time)
+    {
+        return theChassis.reset(power, time);
+    }
+
+    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
+    {
+        return theArm.armDeploy(shoulderTarget, elbowTarget, elbowSecond);
+    }
+
 
 }

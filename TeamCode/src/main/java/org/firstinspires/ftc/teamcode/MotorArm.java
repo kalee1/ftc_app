@@ -41,12 +41,12 @@ public class MotorArm
     private long startTime = 0; // in nanoseconds
 
     /**
-     * A dc Motor that moves the elbow joint on the arm.
+     * The elbow DC Motor.
      */
     private DcMotor elbow = null;
 //    private DcMotorEx ElbowEx = null;
     /**
-     * A dc motor that moves the shoulder joint on the arm.
+     * The shoulder DC Motor.
      */
     private DcMotor shoulder = null;
 
@@ -387,75 +387,76 @@ public class MotorArm
 //    }
 //
 //
-//    /** Drives the arm to a target position and returns true when done.
-//     *
-//     * @param shoulderTarget  The target position for the shoulder motor.
-//     * @param elbowTarget  The target position for the elbow motor.
-//     * @param elbowSecond  A boolean that tells whether or not to move the elbow after the shoulder is done.
-//     * @return  A boolean that tells whether or not the arm is moving. */
-//    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
-//    {
-//        double shoulderValue;
-//        double elbowValue;
-//
-//        if (timesrun < 1)
-//        {
-//            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
-//            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
-//        }
-//
-//        if (shoulder.getCurrentPosition() >= shoulderTarget)
-//        {
-//            shoulderValue = -0.7;
-//        }
-//        else
-//        {
-//            shoulderValue = 0.0;
-//        }
-//
-//        if (elbowSecond)
-//        {
-//            if (elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget)
-//            {
-//                elbowValue = 0.7;
-//            }
-//            else
-//            {
-//                elbowValue = 0.0;
-//            }
-//        }
-//        else
-//        {
-//            if (elbow.getCurrentPosition() <= elbowTarget)
-//            {
-//                elbowValue = 0.7;
-//            }
-//            else
-//            {
-//                elbowValue = 0.0;
-//            }
-//        }
-//
-//        armDrive(elbowValue, shoulderValue);
-//
-//        if ((elbow.getCurrentPosition() >= elbowTarget) &&
-//                (shoulder.getCurrentPosition() <= shoulderTarget))
-//        {
-//            moving = false;
-//            timesrun = 0;
-//            elbow.setPower(0.0);
-//            shoulder.setPower(0.0);
-//        }
-//        else
-//        {
-//            moving = true;
-//            timesrun = 1;
-//        }
-//
-//        return !moving;
-//    }
-//
-//
+
+    /** Drives the arm to a target position and returns true when done.
+     *
+     * @param shoulderTarget  The target position for the shoulder motor.
+     * @param elbowTarget  The target position for the elbow motor.
+     * @param elbowSecond  A boolean that tells whether or not to move the elbow after the shoulder is done.
+     * @return  A boolean that tells whether or not the arm is moving. */
+    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
+    {
+        double shoulderValue;
+        double elbowValue;
+
+        if (timesrun < 1)
+        {
+            shoulderTarget = shoulder.getCurrentPosition() + shoulderTarget;
+            elbowTarget = elbow.getCurrentPosition() + elbowTarget;
+        }
+
+        if (shoulder.getCurrentPosition() >= shoulderTarget)
+        {
+            shoulderValue = -0.7;
+        }
+        else
+        {
+            shoulderValue = 0.0;
+        }
+
+        if (elbowSecond)
+        {
+            if (elbow.getCurrentPosition() <= elbowTarget && shoulder.getCurrentPosition() <= shoulderTarget)
+            {
+                elbowValue = 0.7;
+            }
+            else
+            {
+                elbowValue = 0.0;
+            }
+        }
+        else
+        {
+            if (elbow.getCurrentPosition() <= elbowTarget)
+            {
+                elbowValue = 0.7;
+            }
+            else
+            {
+                elbowValue = 0.0;
+            }
+        }
+
+        armDrive(elbowValue, shoulderValue);
+
+        if ((elbow.getCurrentPosition() >= elbowTarget) &&
+                (shoulder.getCurrentPosition() <= shoulderTarget))
+        {
+            moving = false;
+            timesrun = 0;
+            elbow.setPower(0.0);
+            shoulder.setPower(0.0);
+        }
+        else
+        {
+            moving = true;
+            timesrun = 1;
+        }
+
+        return !moving;
+    }
+
+
 //    /** Retracts the arm to the home position (folded up on the chassis) and returns true when done.
 //     *
 //     * @param elbowFirst  A boolean that tells whether or not to move the elbow before the shoulder.
@@ -585,6 +586,7 @@ public class MotorArm
 
         return !moving;
     }
+
 
     public void stop()
     {

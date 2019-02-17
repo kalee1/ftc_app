@@ -93,11 +93,18 @@ public class Error404Autonomus extends OpMode
     protected double mineralSlideDistanceFinal;
 
     /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
-     * The angle required to turn towards the depo. */
+     * The angle required to turn towards the depo from the left mineral position. */
     protected double depoTurnHeadingL;
+    /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
+     * The angle required to turn towards the depo from the right mineral position. */
     protected double depoTurnHeadingR;
+    /** A turn variable that holds differing target headings that change based on where the robot starts on the field.
+     * The angle required to turn towards the depo from the center mineral position. */
     protected double depoTurnHeadingC;
+    /** An enum that stores the differing target headings needed to face the depo from any of the three mineral positions. */
     protected double[] depoTurnHeading;
+    /** The angle required to turn to face the depo from the sampling field. Assigned either left,
+     * right, or center, depending on which mineral the robot sampled. */
     protected double depoTurnHeadingFinal;
     /** A move variable that holds the drive distance needed to back up from a mineral after pushing
      * it across the field (so as not to snag on it). */
@@ -157,12 +164,20 @@ public class Error404Autonomus extends OpMode
     final int RIGHT = 1;
     /** An int that is used to decide which variable in the variable enums to use.*/
     final int CENTER = 2;
+    /** An enum that stores two direction options for strafing into the wall. */
     protected double[] direction;
+    /** The strafe direction used when the robot samples the left mineral. */
     protected double directionL;
+    /** The strafe direction used when the robot samples the center or right minerals. */
     protected double directionG;
+    /** The strafe direction used to strafe into the wall after sampling. Assigned either left or
+     * right depending on which mineral was sampled.*/
     protected double directionFinal;
+    /** The angle required to turn to the left mineral. */
     protected double leftMineral;
+    /** The angle required to turn to the right mineral. */
     protected double rightMineral;
+    /** The angle required to turn to the center mineral. */
     protected double centerMineral;
 
     /*
