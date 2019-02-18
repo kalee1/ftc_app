@@ -420,7 +420,7 @@ public class MotorArm
         double elbowPos = elbow.getCurrentPosition();
 
         // Move the arm only if it is far enough away from the desired position to be a worthwhile move.
-        // Allow for +/- 10 encoder tick dead band around the desired position.
+        // Allow for +/- 15 encoder tick dead band around the desired position.
 
         // Move the shoulder
         if (shoulderPos < (position.shoulder-15) )
