@@ -24,11 +24,17 @@ import java.util.concurrent.TimeUnit;
  */
 public class MotorArm
 {
+    /** A telemetry object that allows for telemetry to be used in this class. */
     Telemetry telemetry;
+    /** A boolean that signifies whether or not the arm is in motion. */
     boolean moving = false;
+    /** An int that holds the encoder target for the elbow to fold down. */
     int elbowHome;
+    /** An int that holds the encoder target for the shoulder to fold down. */
     int shoulderHome;
+    /** An int that holds the encoder target for the elbow to extend out. */
     int elbowExtend;
+    /** An in that holds the encoder target for the shoulder to extend out. */
     int shoulderExtend;
 
     /**
@@ -51,8 +57,9 @@ public class MotorArm
     private DcMotor shoulder = null;
 
     //    protected TouchSensor Shoulderfront = null;
-    int targetEncoder;
-    int targetEncoder2;
+//    int targetEncoder;
+//    int targetEncoder2;
+    /** An int that records the number of times a method has run. */
     int timesrun = 0;
 
     /**
@@ -199,6 +206,8 @@ public class MotorArm
 
     }
 
+    /** An enum method that contains various arm preset coordinates.
+     * */
     public enum ArmPositions
     {
         ARM_HOME(0, 0),
@@ -216,7 +225,7 @@ public class MotorArm
             this.shoulder = theShoulder;
         }
     }
-
+    
     public boolean craterExtend()
     {
         if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
