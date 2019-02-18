@@ -520,7 +520,7 @@ public class Error404Autonomus extends OpMode
             //extend arm out over the crater
             // (gets parking points and readies arm for teleop)
             case 25:
-                if(robot.armDeploy(-5000, 7000, false))
+                if(robot.armCraterExtend())
                 {
                     resetStartTime();
                     state = 26;

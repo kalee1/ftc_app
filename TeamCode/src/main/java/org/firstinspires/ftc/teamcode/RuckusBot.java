@@ -286,10 +286,6 @@ public class RuckusBot
         return theChassis.reset(power, time);
     }
 
-    public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
-    {
-        return theArm.armDeploy(shoulderTarget, elbowTarget, elbowSecond);
-    }
 
 
 }
