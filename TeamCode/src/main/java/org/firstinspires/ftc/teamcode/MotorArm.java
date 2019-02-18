@@ -24,7 +24,9 @@ import java.util.concurrent.TimeUnit;
  */
 public class MotorArm
 {
+    /** A telemetry object that allows for telemetry to be used in this class. */
     Telemetry telemetry;
+    /** A boolean that signifies whether or not the arm is in motion. */
     boolean moving = false;
 
     /**
@@ -45,6 +47,7 @@ public class MotorArm
      */
     private DcMotor shoulder = null;
 
+    /** An int that records the number of times a method has run. */
     int timesrun = 0;
 
     /**
@@ -203,6 +206,7 @@ public class MotorArm
         }
     }
 
+    /**  */
     public boolean craterExtend()
     {
 //        if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
