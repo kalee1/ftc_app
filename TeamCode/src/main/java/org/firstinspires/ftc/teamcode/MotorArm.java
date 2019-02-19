@@ -211,7 +211,10 @@ public class MotorArm
         }
     }
 
-    /**  */
+    /** Convenience method to drive the arm to the position where it is fully extended into the crater
+     * in preparation for collecting minerals.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean craterExtend()
     {
 //        if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
@@ -230,6 +233,9 @@ public class MotorArm
         return goTo(ArmPositions.CRATER_EXTEND, 0.7, 0.6);
     }
 
+    /** Convenience method to drive the arm to the home position where it is fully stowed.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean armHome()
     {
 //        if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder &&
@@ -252,6 +258,10 @@ public class MotorArm
         return goTo(ArmPositions.ARM_HOME, 0.6, 0.9);
     }
 
+    /** Convenience method to drive the arm to the position where it is up next to the lander in preparation
+     *  for putting minerals into the lander cargro hold.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean landerExtend()
     {
 //        if (shoulder.getCurrentPosition() <= ArmPositions.LANDER_EXTEND.shoulder &&
@@ -268,6 +278,10 @@ public class MotorArm
         return goTo(ArmPositions.LANDER_EXTEND, 0.7, 0.7);
     }
 
+    /** Convenience method to drive the arm to the position where it is partially extended to make it
+     *  easier to drive around between the crater and the lander.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean drivingExtend()
     {
 //        shoulder.setTargetPosition(ArmPositions.DRIVING_EXTEND.shoulder);
@@ -330,7 +344,8 @@ public class MotorArm
      * @param shoulderTarget  The target position for the shoulder motor.
      * @param elbowTarget  The target position for the elbow motor.
      * @param elbowSecond  A boolean that tells whether or not to move the elbow after the shoulder is done.
-     * @return  A boolean that tells whether or not the arm is moving. */
+     * @return  A boolean that tells whether or not the arm is moving.
+     * */
     public boolean armDeploy(int shoulderTarget, int elbowTarget, boolean elbowSecond)
     {
         double shoulderValue;
@@ -393,7 +408,6 @@ public class MotorArm
         return !moving;
     }
 
-
     /**
      * Stop all arm movement.
      */
@@ -403,6 +417,12 @@ public class MotorArm
         elbow.setPower(0.0);
     }
 
+    /**
+     * Get the number of seconds this op mode has been running
+     * <p>
+     * This method has sub millisecond accuracy.
+     * @return number of seconds this op mode has been running
+     */
     public double getRuntime()
     {
         return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
@@ -421,6 +441,7 @@ public class MotorArm
      * @param position  An enumerated value that specifies where the arm should move towards.
      * @param elbPower     The speed with which the elbow should move.
      * @param shouldPower   The speed with which the shoulder should move.
+     * @return  A boolean that tells whether or not the arm is moving.
      * */
     public boolean goTo( ArmPositions position, double elbPower , double shouldPower)
     {
@@ -429,10 +450,10 @@ public class MotorArm
         double shoulderPos = shoulder.getCurrentPosition();
         double elbowPos = elbow.getCurrentPosition();
 
-        // Move the arm only if it is far enough away from the desired position to be a worthwhile move.
-        // Allow for +/- 15 encoder tick dead band around the desired position.
-
-        // Move the shoulder
+        // Move the shoulder only if it is far enough away from the desired position to be a worthwhile move.
+        // Allow for +/- 25 encoder tick dead band around the desired position.  The deadband also
+        // reduces the back and forth alternating around the desired position when the joint slightly over
+        // shoots the target (and then overshoots the correction).
         if (shoulderPos < (position.shoulder-25) )
         {
             shoulderPower = shouldPower;
@@ -446,7 +467,10 @@ public class MotorArm
             shoulderPower = 0.0;
         }
 
-        // Move the elbow
+        // Move the elbow only if it is far enough away from the desired position to be a worthwhile move.
+        // Allow for +/- 65 encoder tick dead band around the desired position. The deadband also
+        // reduces the back and forth alternating around the desired position when the joint slightly over
+        // shoots the target (and then overshoots the correction).
         if (elbowPos < (position.elbow-65) )
         {
             elbowPower = elbPower;
@@ -460,9 +484,9 @@ public class MotorArm
             elbowPower = 0.0;
         }
 
+        // The moving flag is true if either joint has a non-zero power
         moving = (shoulderPower != 0.0) || (elbowPower != 0.0);
 
-//        armDrive(shoulderPower, elbowPower);
         elbow.setPower(elbowPower);
         shoulder.setPower(shoulderPower);
 

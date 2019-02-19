@@ -200,13 +200,9 @@ public class Error404Autonomus extends OpMode
         direction = new double[] {directionL,directionG};
         goldPosition = "NoPosition";
 
-
-
-
         // Send telemetry message to signify robot waiting;
 //        telemetry.addData("Say", "Let's Rock and Roll");
 //        telemetry.addData("initial heading: ", initialPosition);
-
     }
 
     /*
@@ -232,62 +228,61 @@ public class Error404Autonomus extends OpMode
     {
         switch (state)
         {
-            //land
+            // Land
             case -1:
-                if(robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
+                if (robot.hangDrive(.9, 18750, Gen2_Hang.HangDirection.OUT))
                 {
                     resetStartTime();
                     state = 0;
                 }
                 break;
 
-                //correct robot heading
+            // Correct robot heading
             case 0:
-                if(robot.reset(.2, 2))
+                if (robot.reset(.2, 2))
                 {
                     resetStartTime();
                     state = 1;
                 }
                 break;
 
-                //back out of latch
+            // Back out of latch
             case 1:
-                if(robot.drive(.3, backward, gain, 2, 6))
+                if (robot.drive(.3, backward, gain, 2, 6))
                 {
                     resetStartTime();
                     state = 2;
                 }
                 break;
 
-                //slide away from lander
+            // Slide away from lander
             case 2:
-                if(robot.drive(.3, right, gain, 6, 6))
+                if (robot.drive(.3, right, gain, 6, 6))
                 {
                     resetStartTime();
                     state = 3;
                 }
                 break;
 
-                //drive forward the same amount the robot drove back in case 1
+             // Drive forward the same amount the robot drove back in case 1
             case 3:
-                if(robot.drive(.3, forward, gain, 4, 2))
+                if (robot.drive(.3, forward, gain, 4, 2))
                 {
                     resetStartTime();
                     state = 4;
                 }
                 break;
-
-                // turn to left mineral
+            // Turn to left mineral
             case 4:
-                if(robot.pointTurn(.2, leftMineral , 3))
+                if (robot.pointTurn(.2, leftMineral , 3))
                 {
                     resetStartTime();
                     state = 5;
                 }
                 break;
-                //look for gold
+            // Look for gold in the left position
             case 5:
-                if(robot.goldPosition().equals("center"))
+                if (robot.goldPosition().equals("center"))
                 {
                     mineralDriveDistanceFinal = mineralDriveDistance[LEFT];
                     mineralSlideDistanceFinal = mineralSlideDistance[LEFT];
@@ -300,24 +295,24 @@ public class Error404Autonomus extends OpMode
                     resetStartTime();
                     state = 12;
                 }
-                else if(getRuntime() > 2.5)
+                else if (getRuntime() > 2.5)
                 {
                     resetStartTime();
                     state = 6;
                 }
                 break;
 
-                //turn to center mineral
+             // Turn to center mineral
             case 6:
-                if(robot.pointTurn(.2, centerMineral, 3))
+                if (robot.pointTurn(.2, centerMineral, 3))
                 {
                     resetStartTime();
                     state = 7;
                 }
                 break;
-                //look for gold
+            // Look for gold in the center position
             case 7:
-                if(robot.goldPosition().equals("center"))
+                if (robot.goldPosition().equals("center"))
                 {
                     mineralDriveDistanceFinal = mineralDriveDistance[CENTER];
                     mineralSlideDistanceFinal = mineralSlideDistance[CENTER];
@@ -330,25 +325,25 @@ public class Error404Autonomus extends OpMode
                     resetStartTime();
                     state = 12;
                 }
-                else if(getRuntime() > 2.5)
+                else if (getRuntime() > 2.5)
                 {
                     resetStartTime();
                     state = 8;
                 }
                 break;
 
-                //turn to right mineral
+            // Turn to right mineral
             case 8:
-                if(robot.pointTurn(.2, rightMineral, 3))
+                if (robot.pointTurn(.2, rightMineral, 3))
                 {
 
                     resetStartTime();
                     state = 9;
                 }
                 break;
-                //look for gold
+            // Look for gold in the right position
             case 9:
-                if(robot.goldPosition().equals("center"))
+                if (robot.goldPosition().equals("center"))
                 {
                     mineralDriveDistanceFinal = mineralDriveDistance[RIGHT];
                     mineralSlideDistanceFinal = mineralSlideDistance[RIGHT];
@@ -361,16 +356,16 @@ public class Error404Autonomus extends OpMode
                     resetStartTime();
                     state = 12;
                 }
-                else if(getRuntime() > 2.5)
+                else if (getRuntime() > 2.5)
                 {
                     resetStartTime();
                     state = 10;
                 }
                 break;
 
-                //if no gold is found, set position to center
+            // If no gold is found, set position to center
             case 10:
-                if(goldPosition.equals("NoPosition"))
+                if (goldPosition.equals("NoPosition"))
                 {
                     goldPosition = "center";
                     mineralDriveDistanceFinal = mineralDriveDistance[CENTER];
@@ -389,34 +384,34 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //turn to center mineral
+            // Turn to center mineral
             case 11:
-                if(robot.pointTurn(.3, centerMineral, 3))
+                if (robot.pointTurn(.3, centerMineral, 3))
                 {
                     resetStartTime();
                     state = 12;
                 }
                 break;
 
-                //drive forward, knocking off the mineral
+            // Drive forward, knocking off the mineral
             case 12:
-                if(robot.drive(.3, forward, gain, mineralDriveDistanceFinal, 4))
+                if (robot.drive(.3, forward, gain, mineralDriveDistanceFinal, 4))
                 {
                     resetStartTime();
                     state = 13;
                 }
                 break;
 
-                //drive backward, so as to not snag on the pushed mineral
+            // Drive backward, so as to not snag on the pushed mineral
             case 13:
-                if(robot.drive(.4, backward, gain, backup, 4))
+                if (robot.drive(.4, backward, gain, backup, 4))
                 {
                     resetStartTime();
                     state = 14;
                 }
                 break;
 
-                //turn to face the depo
+            // Turn to face the depo
             case 14:
                 if (robot.pointTurn(.3, faceDepoHeadingFinal, 4))
                 {
@@ -425,36 +420,36 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //strafe into the field wall to straighten robot
+            // Strafe into the field wall to straighten robot
             case 15:
-                if(robot.drive(.4, directionFinal, gain, mineralSlideDistanceFinal, 4))
+                if (robot.drive(.4, directionFinal, gain, mineralSlideDistanceFinal, 4))
                 {
                     resetStartTime();
                     state = 16;
                 }
                 break;
 
-                //drive into depo
+            // Drive into depo
             case 16:
-                if(robot.drive(.5, backward, gain, depoDriveDistanceFinal, 6))
+                if (robot.drive(.5, backward, gain, depoDriveDistanceFinal, 6))
                 {
                     resetStartTime();
                     state = 17;
                 }
                 break;
 
-                //turn into depo
+            // Turn into depo
             case 17:
-                if(robot.pointTurn(.3, depoTurnHeadingFinal, 4))
+                if (robot.pointTurn(.3, depoTurnHeadingFinal, 4))
                 {
                     resetStartTime();
                     state = 18;
                 }
                 break;
 
-                //slide into left wall to straighten and deploy team marker
+            // Slide into left wall to straighten and deploy team marker
             case 18:
-                if(robot.drive(.4, left, gain, markerSlideDistance, 4))
+                if (robot.drive(.4, left, gain, markerSlideDistance, 4))
                 {
                     resetStartTime();
                     robot.markDeploy();
@@ -462,18 +457,18 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //wait 1.5 seconds for the team marker to fall
+            // Wait 1.5 seconds for the team marker to fall
             case 19:
-                if(getRuntime() > 1.5)
+                if (getRuntime() > 1.5)
                 {
                     resetStartTime();
                     state = 20;
                 }
                 break;
 
-                //turn to face the crater
+            // Turn to face the crater
             case 20:
-                if(robot.pointTurn(.3, faceCraterHeading,4))
+                if (robot.pointTurn(.3, faceCraterHeading,4))
                 {
                     resetStartTime();
                     robot.markRetract();
@@ -481,27 +476,27 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-                //drive two-thirds of the way to the crater
+            // Drive two-thirds of the way to the crater
             case 21:
-                if(robot.drive(.8, forward, gain, craterDriveDistance, 6))
+                if (robot.drive(.8, forward, gain, craterDriveDistance, 6))
                 {
                     resetStartTime();
                     state = 22;
                 }
                 break;
 
-            //Turn to face the crater.
+            // Turn to face the crater.
             case 22:
-                if(robot.pointTurn(.4, craterTurnHeading, 6))
+                if (robot.pointTurn(.4, craterTurnHeading, 6))
                 {
                     state = 23;
                     resetStartTime();
                 }
                 break;
 
-            //Strafe right, around the crater.
+            // Strafe right, around the crater.
             case 23:
-                if(robot.drive(.6, right, gain, craterSlideDistance, 6))
+                if (robot.drive(.6, right, gain, craterSlideDistance, 6))
                 {
                     state = 25;
                     resetStartTime();
@@ -509,18 +504,17 @@ public class Error404Autonomus extends OpMode
                 break;
 
 //            case 24:
-//                if(robot.drive(.5, forward, gain, enterCraterDistance, 5))
+//                if (robot.drive(.5, forward, gain, enterCraterDistance, 5))
 //                {
 //                    resetStartTime();
 //                    state = 25;
 //                }
 //                break;
 
-
-            //extend arm out over the crater
+            // extend arm out over the crater
             // (gets parking points and readies arm for teleop)
             case 25:
-                if(robot.armCraterExtend())
+                if (robot.armCraterExtend())
                 {
                     resetStartTime();
                     state = 26;
@@ -532,7 +526,6 @@ public class Error404Autonomus extends OpMode
                 break;
         }
 //        telemetry.addData("state", state);
-
     }
 
     /*
@@ -543,7 +536,7 @@ public class Error404Autonomus extends OpMode
     @Override
     public void stop()
     {
-        //stop the drive motors.
+        // Stop the drive motors.
         robot.stopMotors();
     }
 }

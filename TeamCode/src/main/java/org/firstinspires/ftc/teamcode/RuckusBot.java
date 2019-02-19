@@ -266,25 +266,48 @@ public class RuckusBot
         return theHang.hangDrive(power, distance, direction);
     }
 
+    /** Drives the arm to the home position where it is fully stowed.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean armHome()
     {
         return theArm.armHome();
     }
 
+    
     public boolean armGoldCollect(boolean elbowSecond)
     {
         return theArm.goldCollect(elbowSecond);
     }
 
+    /** Drives the arm to the position where it is fully extended into the crater
+     * in preparation for collecting minerals.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean armCraterExtend()
     {
         return theArm.craterExtend();
     }
 
+    /** Drives the arm to the position where it is where it is partially extended to make it
+     *  easier to drive around between the crater and the lander.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean armDrivingExtend(){ return theArm.drivingExtend();}
 
+    /** Drives the arm to the position where it is up next to the lander in preparation
+     *  for putting minerals into the lander cargo hold.
+     * @return  A boolean that tells whether or not the arm is moving.
+     *  */
     public boolean armLanderExtend(){ return theArm.landerExtend();}
 
+    /** Turns the robot back to the initial heading it started out at.  Useful for correcting
+     *  heading errors introduced when landing in autonomous.
+     *
+     * @param power  The power at which the robot will drive.
+     * @param time  The maximum amount of time the move can take before timing out.
+     * @return A boolean that is whether or not the robot is moving.
+     * */
     public boolean reset(double power, double time)
     {
         return theChassis.reset(power, time);
