@@ -104,9 +104,9 @@ public class Error404MecanumTeleop extends OpMode
         {
             power = 0;
         }
-        telemetry.addData("dpadUp: ", dpadUp);
-        telemetry.addData("dpadDown: ", dpadDown);
-        telemetry.addData("Power: ", power);
+//        telemetry.addData("dpadUp: ", dpadUp);
+//        telemetry.addData("dpadDown: ", dpadDown);
+//        telemetry.addData("Power: ", power);
         robot.hangControl(dpadDown, dpadUp, power);
 //
 //        if (buttonB){
@@ -115,13 +115,21 @@ public class Error404MecanumTeleop extends OpMode
 //        }
 
         //mineral arm control method
-        if(gamepad2.x)
+        if(gamepad2.b)
         {
-            robot.armHome();
+            robot.armLanderExtend();
         }
         else if(gamepad2.a)
         {
+            robot.armHome();
+        }
+        else if (gamepad2.y)
+        {
             robot.armCraterExtend();
+        }
+        else if (gamepad2.x)
+        {
+            robot.armDrivingExtend();
         }
         else
         {

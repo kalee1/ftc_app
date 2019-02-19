@@ -190,12 +190,17 @@ public class MotorArm
 
     public enum ArmPositions
     {
-        ARM_HOME(0,0),
-        LANDER_EXTEND(9000, -4000),
-        CRATER_EXTEND(7000, -5000),
-        DRIVING_EXTEND(4600,-3400),
-        MINERAL_COLLECT(0, 0);
+//        ARM_HOME(0,0),
+//        LANDER_EXTEND(8000, -3500),
+//        CRATER_EXTEND(7000, -5000),
+//        DRIVING_EXTEND(5100,-5000),
+//        MINERAL_COLLECT(0, 0);
 
+        ARM_HOME(0,0),
+        LANDER_EXTEND(8000, -4025),
+        CRATER_EXTEND(8080, -7000),
+        DRIVING_EXTEND(5800,-4060),
+        MINERAL_COLLECT(0, 0);
         public final int elbow;   // in kilograms
         public final int shoulder; // in meters
 
@@ -222,7 +227,7 @@ public class MotorArm
 //            elbow.setPower(-0.2);
 //        }
 
-        return goTo(ArmPositions.CRATER_EXTEND, 0.2);
+        return goTo(ArmPositions.CRATER_EXTEND, 0.7, 0.6);
     }
 
     public boolean armHome()
@@ -244,7 +249,7 @@ public class MotorArm
 //            shoulder.setPower(0.0);
 //            elbow.setPower(0.0);
 //        }
-        return goTo(ArmPositions.ARM_HOME, 0.25);
+        return goTo(ArmPositions.ARM_HOME, 0.6, 0.9);
     }
 
     public boolean landerExtend()
@@ -260,7 +265,7 @@ public class MotorArm
 //            shoulder.setPower(0.0);
 //            elbow.setPower(0.0);
 //        }
-        return goTo(ArmPositions.LANDER_EXTEND, 0.8);
+        return goTo(ArmPositions.LANDER_EXTEND, 0.7, 0.7);
     }
 
     public boolean drivingExtend()
@@ -280,7 +285,7 @@ public class MotorArm
 //            shoulder.setPower(0.0);
 //            elbow.setPower(0.0);
 //        }
-        return goTo(ArmPositions.DRIVING_EXTEND, 0.8);
+        return goTo(ArmPositions.DRIVING_EXTEND, 0.2, 0.8);
     }
 
     public boolean goldCollect(boolean elbowSecond)
@@ -317,7 +322,7 @@ public class MotorArm
 //                elbow.setPower(0.0);
 //            }
 //        }
-        return goTo(ArmPositions.MINERAL_COLLECT, 0.7);
+        return goTo(ArmPositions.MINERAL_COLLECT, 0.3, 0.3);
     }
 
     /** Drives the arm to a target position and returns true when done.
@@ -414,9 +419,10 @@ public class MotorArm
     /** Moves the arm towards the named position.
      *
      * @param position  An enumerated value that specifies where the arm should move towards.
-     * @param power     The speed with which the arm should move.
+     * @param elbPower     The speed with which the elbow should move.
+     * @param shouldPower   The speed with which the shoulder should move.
      * */
-    public boolean goTo( ArmPositions position, double power )
+    public boolean goTo( ArmPositions position, double elbPower , double shouldPower)
     {
         double elbowPower;
         double shoulderPower;
@@ -427,13 +433,13 @@ public class MotorArm
         // Allow for +/- 15 encoder tick dead band around the desired position.
 
         // Move the shoulder
-        if (shoulderPos < (position.shoulder-15) )
+        if (shoulderPos < (position.shoulder-25) )
         {
-            shoulderPower = power;
+            shoulderPower = shouldPower;
         }
-        else if (shoulderPos > (position.shoulder+15) )
+        else if (shoulderPos > (position.shoulder+25) )
         {
-            shoulderPower = -power;
+            shoulderPower = -shouldPower;
         }
         else
         {
@@ -441,13 +447,13 @@ public class MotorArm
         }
 
         // Move the elbow
-        if (elbowPos < (position.elbow-15) )
+        if (elbowPos < (position.elbow-65) )
         {
-            elbowPower = power;
+            elbowPower = elbPower;
         }
-        else if (elbowPos > (position.elbow+15) )
+        else if (elbowPos > (position.elbow+65) )
         {
-            elbowPower = -power;
+            elbowPower = -elbPower;
         }
         else
         {
@@ -456,7 +462,14 @@ public class MotorArm
 
         moving = (shoulderPower != 0.0) || (elbowPower != 0.0);
 
-        armDrive(shoulderPower, elbowPower);
+//        armDrive(shoulderPower, elbowPower);
+        elbow.setPower(elbowPower);
+        shoulder.setPower(shoulderPower);
+
+        telemetry.addData( "Elbow target: ", position.elbow);
+        telemetry.addData( "Shoulder target: ", position.shoulder);
+        telemetry.addData("Elbow Power: ", elbowPower);
+        telemetry.addData("Shoulder Power ", shoulderPower);
 
         return !moving;
     }

@@ -281,6 +281,10 @@ public class RuckusBot
         return theArm.craterExtend();
     }
 
+    public boolean armDrivingExtend(){ return theArm.drivingExtend();}
+
+    public boolean armLanderExtend(){ return theArm.landerExtend();}
+
     public boolean reset(double power, double time)
     {
         return theChassis.reset(power, time);
