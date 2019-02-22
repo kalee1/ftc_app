@@ -188,6 +188,7 @@ public class MotorArm
 
     }
 
+
     public enum ArmPositions
     {
 //        ARM_HOME(0,0),
@@ -302,6 +303,10 @@ public class MotorArm
         return goTo(ArmPositions.DRIVING_EXTEND, 0.2, 0.8);
     }
 
+    /** Convenience method to drive the arm to the position where the shoulder is perpendicular to
+     * the robot chassis and the elbow is slight forward for knocking off the gold mineral in
+     * autonomous.
+     * @return  A boolean that tells whether or not the arm is moving. */
     public boolean goldCollect(boolean elbowSecond)
     {
 //        if (shoulder.getCurrentPosition() >= ArmPositions.MINERAL_COLLECT.shoulder)
