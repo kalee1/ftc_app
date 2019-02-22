@@ -77,7 +77,10 @@ public class Error404MecanumTeleop extends OpMode
         boolean dpadDown = gamepad1.dpad_down;
         /** The truth value of the dpad up button. Used for hanger control.*/
         boolean dpadUp = gamepad1.dpad_up;
-        /** The power value for the hanger. Used for hanger control.*/
+        /** The return value of the button a on gamepad1. Used for lander hang presets*/
+        boolean buttonB = gamepad1.b;
+
+
         double power;
 
 //        telemetry.addData("1: leftX", lStickX);
@@ -89,7 +92,7 @@ public class Error404MecanumTeleop extends OpMode
         // Robot lander hang method
         if (dpadDown || dpadUp)
         {
-            power = .8;
+            power = .9;
             if (gamepad1.left_bumper)
             {
                 power = 0.2;
