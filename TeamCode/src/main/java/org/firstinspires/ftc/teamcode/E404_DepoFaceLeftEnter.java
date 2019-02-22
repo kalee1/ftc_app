@@ -19,7 +19,7 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         //case 4
         leftMineral = -55;
         //case 8
-        rightMineral = -113;
+        rightMineral = -120;
         //case 6 & 11
         centerMineral = -87;
         //case 12
@@ -50,11 +50,11 @@ public class E404_DepoFaceLeftEnter extends Error404Autonomus
         //case 18
         markerSlideDistance = 7;
         //case 20
-        faceCraterHeading = 138;
+        faceCraterHeading = 130;
         //case 21
         craterDriveDistance = 60;
         //case 22
-        craterTurnHeading = 130;
+        craterTurnHeading = 133;
         //case 23
         craterSlideDistance = 0.0;
 

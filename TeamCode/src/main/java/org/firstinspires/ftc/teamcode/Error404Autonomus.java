@@ -239,7 +239,7 @@ public class Error404Autonomus extends OpMode
 
             // Correct robot heading
             case 0:
-                if (robot.reset(.2, 2))
+                if (robot.reset(.1, 2))
                 {
                     resetStartTime();
                     state = 1;
@@ -248,7 +248,7 @@ public class Error404Autonomus extends OpMode
 
             // Back out of latch
             case 1:
-                if (robot.drive(.3, backward, gain, 2, 6))
+                if (robot.drive(.2, backward, gain, 2, 6))
                 {
                     resetStartTime();
                     state = 2;
@@ -525,7 +525,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-//        telemetry.addData("state", state);
+        telemetry.addData("state", state);
     }
 
     /*
