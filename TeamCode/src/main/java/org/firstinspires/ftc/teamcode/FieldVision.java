@@ -161,6 +161,9 @@ public class FieldVision
                                 silverMineral1X = (int) recognition.getLeft();
 
                             }
+
+                        telemetry.addData("gold height: ", recognition.getHeight());
+                        telemetry.addData("mineral: ", recognition.getLabel());
                         }
 //                        else if (silverMineral1X == -1)
 //                        {
@@ -197,7 +200,7 @@ public class FieldVision
                         }
                     }
 
-                    telemetry.addData("gold", goldMineralX);
+                    telemetry.addData("gold: ", goldMineralX);
 //                    telemetry.addData("silver 2", silverMineral2X);
 //                    telemetry.addData("silver 1", silverMineral1X);
 
