@@ -37,11 +37,11 @@ public class MecanumChassis extends Chassis
     /** The left rear drive motor */
     private DcMotor lRearMotor = null;
 
-    /** The navx gyro. */
-    private NavxMicroNavigationSensor navx = null;
+//    /** The navx gyro. */
+//    private NavxMicroNavigationSensor navx = null;
 
     /*I The IMU sensor object */
-//    BNO055IMU imu;
+    BNO055IMU imu;
 
     /** Directional variables used to simulate joystick commands in autonomous.
      * Simulates a forward drive command.*/
@@ -167,39 +167,39 @@ public class MecanumChassis extends Chassis
             lRearMotor = null;
         }
 
-        try
-        {
-            navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
-            resetHeading = getHeadingDbl();
-        }
-        catch (Exception p_exeception)
-        {
-            telem.addData("navx not found in config file", 0);
-            navx = null;
-        }
-//
 //        try
 //        {
-//            // Set up the parameters with which we will use our IMU. Note that integration
-//            // algorithm here just reports accelerations to the logcat log; it doesn't actually
-//            // provide positional information.
-//            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-//            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
-//            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
-//            parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
-//            parameters.loggingEnabled = true;
-//            parameters.loggingTag = "IMU";
-//            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
-//
-//            // Retrieve and initialize the IMU.
-//            imu = hwMap.get(BNO055IMU.class, "imu");
-//            imu.initialize(parameters);
+//            navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
+//            resetHeading = getHeadingDbl();
 //        }
 //        catch (Exception p_exeception)
 //        {
-//            telem.addData("imu not found in config file", 0);
-//            imu = null;
+//            telem.addData("navx not found in config file", 0);
+//            navx = null;
 //        }
+//
+        try
+        {
+            // Set up the parameters with which we will use our IMU. Note that integration
+            // algorithm here just reports accelerations to the logcat log; it doesn't actually
+            // provide positional information.
+            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+            parameters.angleUnit = BNO055IMU.AngleUnit.DEGREES;
+            parameters.accelUnit = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+            parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+            parameters.loggingEnabled = true;
+            parameters.loggingTag = "IMU";
+            parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+            // Retrieve and initialize the IMU.
+            imu = hwMap.get(BNO055IMU.class, "imu");
+            imu.initialize(parameters);
+        }
+        catch (Exception p_exeception)
+        {
+            telem.addData("imu not found in config file", 0);
+            imu = null;
+        }
     }
 
 
@@ -485,13 +485,12 @@ public class MecanumChassis extends Chassis
      */
     public double getHeadingDbl()
     {
-        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-        double heading = AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+//        Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+//        double heading = AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
 //        telemetry.addData("heading", heading);
-        return heading;
-//        Orientation angles;
-//        angles   = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-//        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
+//        return heading;
+        Orientation angles = imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
     }
 
 

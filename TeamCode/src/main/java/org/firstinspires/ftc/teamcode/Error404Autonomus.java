@@ -386,7 +386,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn to center mineral
             case 11:
-                if (robot.pointTurn(.3, centerMineral, 3))
+                if (robot.pointTurn(.2, centerMineral, 3))
                 {
                     resetStartTime();
                     state = 12;
@@ -413,7 +413,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn to face the depo
             case 14:
-                if (robot.pointTurn(.3, faceDepoHeadingFinal, 4))
+                if (robot.pointTurn(.2, faceDepoHeadingFinal, 4))
                 {
                     resetStartTime();
                     state = 15;
@@ -440,7 +440,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn into depo
             case 17:
-                if (robot.pointTurn(.3, depoTurnHeadingFinal, 4))
+                if (robot.pointTurn(.2, depoTurnHeadingFinal, 4))
                 {
                     resetStartTime();
                     state = 18;
@@ -468,7 +468,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn to face the crater
             case 20:
-                if (robot.pointTurn(.3, faceCraterHeading,4))
+                if (robot.pointTurn(.2, faceCraterHeading,4))
                 {
                     resetStartTime();
                     robot.markRetract();
@@ -487,7 +487,7 @@ public class Error404Autonomus extends OpMode
 
             // Turn to face the crater.
             case 22:
-                if (robot.pointTurn(.4, craterTurnHeading, 6))
+                if (robot.pointTurn(.2, craterTurnHeading, 6))
                 {
                     state = 23;
                     resetStartTime();
@@ -496,7 +496,7 @@ public class Error404Autonomus extends OpMode
 
             // Strafe right, around the crater.
             case 23:
-                if (robot.drive(.6, right, gain, craterSlideDistance, 6))
+                if (robot.drive(.4, right, gain, craterSlideDistance, 6))
                 {
                     state = 25;
                     resetStartTime();

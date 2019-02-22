@@ -72,8 +72,9 @@ public class Gen2_Hang
     /**  */
     public enum Lift
     {
-        LANDERHANG(0),
-        LANDERPREP(-2400);
+        HANGERHANG(0.0),
+        HANGDEPLOY(-2400),
+        HANGERHOME(0.0);
 
         public final double targetEncoder;
 
@@ -84,17 +85,24 @@ public class Gen2_Hang
     }
 
     /** Sends the hanger out to a preset position in preparation for hanging.*/
-    public void landerPrep()
+    public void hangerDeploy()
     {
-        if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+        if (hang.getCurrentPosition() < Lift.HANGDEPLOY.targetEncoder)
         {
             hang.setPower(.3);
         }
     }
     /** Pulls the hanger in to a preset position to lift the robot off the ground. */
-    public void landerHang()
+    public void hangerHang()
     {
-        if (hang.getCurrentPosition() < Lift.LANDERPREP.targetEncoder)
+        if (hang.getCurrentPosition() < Lift.HANGERHANG.targetEncoder)
+        {
+            hang.setPower(.4);
+        }
+    }
+    public void hangHome()
+    {
+        if (hang.getCurrentPosition() < Lift.HANGERHOME.targetEncoder)
         {
             hang.setPower(.4);
         }

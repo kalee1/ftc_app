@@ -252,9 +252,11 @@ public class RuckusBot
 //        return theArm.armExtend();
 //    }
 
-    public void landerHang() { theHang.landerHang();}
+    public void landerHang() { theHang.hangerHang();}
 
-    public void landerPrep() { theHang.landerPrep(); }
+    public void landerPrep() { theHang.hangerDeploy(); }
+
+    public void hangerHome() { theHang.hangHome(); }
 
     public void hangControl(boolean down, boolean up, double power)
     {
