@@ -123,7 +123,7 @@ public class Gen2_Hang
             {
                 hang.setPower(0.0);
             }
-//            telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
+            telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
 //            telemetry.addData("Up: ", up);
 //            telemetry.addData("Down: ", down);
 //            telemetry.addData("Hang Power: ", power );

@@ -275,7 +275,7 @@ public class MotorArm
 //        }
 //        else
 //        {
-//            shoulder.setPower(0.0);
+//            shoul der.setPower(0.0);
 //            elbow.setPower(0.0);
 //        }
         return goTo(ArmPositions.LANDER_EXTEND, 0.7, 0.7);
