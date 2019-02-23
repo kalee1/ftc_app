@@ -220,18 +220,7 @@ public class MotorArm
      *  */
     public boolean craterExtend()
     {
-//        if (shoulder.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.shoulder &&
-//            elbow.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.elbow)
-//        {
-//            shoulder.setPower(-0.2);
-//            elbow.setPower(0.2);
-//        }
-//        else if (shoulder.getCurrentPosition() <= ArmPositions.CRATER_EXTEND.shoulder &&
-//                 elbow.getCurrentPosition() >= ArmPositions.CRATER_EXTEND.elbow)
-//        {
-//            shoulder.setPower(0.2);
-//            elbow.setPower(-0.2);
-//        }
+
 
         return goTo(ArmPositions.CRATER_EXTEND, 0.7, 0.6);
     }
@@ -241,23 +230,7 @@ public class MotorArm
      *  */
     public boolean armHome()
     {
-//        if (shoulder.getCurrentPosition() <= ArmPositions.ARM_HOME.shoulder &&
-//            elbow.getCurrentPosition() >= ArmPositions.ARM_HOME.elbow)
-//        {
-//            shoulder.setPower(0.25);
-//            elbow.setPower(-0.25);
-//        }
-//        else if (shoulder.getCurrentPosition() >= ArmPositions.ARM_HOME.shoulder &&
-//                 elbow.getCurrentPosition() <= ArmPositions.ARM_HOME.elbow)
-//        {
-//            shoulder.setPower(-0.25);
-//            elbow.setPower(0.25);
-//        }
-//        else
-//        {
-//            shoulder.setPower(0.0);
-//            elbow.setPower(0.0);
-//        }
+
         return goTo(ArmPositions.ARM_HOME, 0.6, 0.9);
     }
 
@@ -267,17 +240,7 @@ public class MotorArm
      *  */
     public boolean landerExtend()
     {
-//        if (shoulder.getCurrentPosition() <= ArmPositions.LANDER_EXTEND.shoulder &&
-//            elbow.getCurrentPosition() >= ArmPositions.LANDER_EXTEND.elbow)
-//        {
-//            shoulder.setPower(-0.8);
-//            elbow.setPower(0.9);
-//        }
-//        else
-//        {
-//            shoulder.setPower(0.0);
-//            elbow.setPower(0.0);
-//        }
+
         return goTo(ArmPositions.LANDER_EXTEND, 0.7, 0.7);
     }
 
@@ -287,21 +250,7 @@ public class MotorArm
      *  */
     public boolean drivingExtend()
     {
-//        shoulder.setTargetPosition(ArmPositions.DRIVING_EXTEND.shoulder);
-//        elbow.setTargetPosition(ArmPositions.DRIVING_EXTEND.elbow);
-//
-//
-//        if (shoulder.getCurrentPosition() <= ArmPositions.DRIVING_EXTEND.shoulder &&
-//            elbow.getCurrentPosition() >= ArmPositions.DRIVING_EXTEND.elbow)
-//        {
-//            shoulder.setPower(-0.8);
-//            elbow.setPower(0.9);
-//        }
-//        else
-//        {
-//            shoulder.setPower(0.0);
-//            elbow.setPower(0.0);
-//        }
+
         return goTo(ArmPositions.DRIVING_EXTEND, 0.2, 0.8);
     }
 
@@ -311,38 +260,7 @@ public class MotorArm
      * @return  A boolean that tells whether or not the arm is moving. */
     public boolean goldCollect(boolean elbowSecond)
     {
-//        if (shoulder.getCurrentPosition() >= ArmPositions.MINERAL_COLLECT.shoulder)
-//        {
-//            shoulder.setPower(-0.7);
-//        }
-//        else
-//        {
-//            shoulder.setPower(0.0);
-//        }
-//
-//        if (elbowSecond)
-//        {
-//            if (elbow.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.elbow &&
-//                shoulder.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.shoulder)
-//            {
-//                elbow.setPower(0.7);
-//            }
-//            else
-//            {
-//                elbow.setPower(0.0);
-//            }
-//        }
-//        else
-//        {
-//            if (elbow.getCurrentPosition() <= ArmPositions.MINERAL_COLLECT.elbow)
-//            {
-//                elbow.setPower(0.7);
-//            }
-//            else
-//            {
-//                elbow.setPower(0.0);
-//            }
-//        }
+
         return goTo(ArmPositions.MINERAL_COLLECT, 0.3, 0.3);
     }
 
