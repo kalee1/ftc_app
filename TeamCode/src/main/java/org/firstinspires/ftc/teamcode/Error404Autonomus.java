@@ -230,7 +230,7 @@ public class Error404Autonomus extends OpMode
         {
             // Land
             case -1:
-                if (robot.hangDrive(.9, 8900, Gen2_Hang.HangDirection.OUT))
+                if (robot.hangDrive(.9, 9100, Gen2_Hang.HangDirection.OUT))
                 {
                     resetStartTime();
                     state = 0;
@@ -525,7 +525,7 @@ public class Error404Autonomus extends OpMode
             default:
                 break;
         }
-        telemetry.addData("state", state);
+        telemetry.addData("state: ", state);
     }
 
     /*

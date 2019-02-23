@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import java.util.ListIterator;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Contains the code for initializing the hanger hardware and for running the hanger in teleop and
@@ -19,6 +20,11 @@ public class Gen2_Hang
 
     /** A telemetry object. Allows for telemetry calls to be made in this class. */
     Telemetry telemetry;
+
+    /** A long variable that is the internal start time. */
+    private long startTime = 0; // in nanoseconds
+    /** A double that is the number of nanoseconds per second. */
+    double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
 
     /** An enum that stores the two possible directions the hanger can go: IN or OUT */
     enum HangDirection {IN, OUT}
@@ -84,6 +90,19 @@ public class Gen2_Hang
             }
     }
 
+    public double getRuntime()
+    {
+        return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
+    }
+
+    /**
+     * Reset the internal timer to zero.
+     */
+    public void resetStartTime()
+    {
+        startTime = System.nanoTime();
+    }
+
     /** Sends the hanger out to a preset position in preparation for hanging.*/
     public void hangerDeploy()
     {
@@ -131,10 +150,10 @@ public class Gen2_Hang
             {
                 hang.setPower(0.0);
             }
-//            telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
+            telemetry.addData("Hang Encoder Pos: ", hang.getCurrentPosition());
 //            telemetry.addData("Up: ", up);
 //            telemetry.addData("Down: ", down);
-//            telemetry.addData("Hang Power: ", power );
+            telemetry.addData("Hang Power: ", power );
         }
     }
 
@@ -148,6 +167,7 @@ public class Gen2_Hang
      * */
     public boolean hangDrive(double power, double distance,  HangDirection direction)
     {
+        resetStartTime();
         if(!moving)
         {
             initialPosition = hang.getCurrentPosition();
@@ -157,7 +177,6 @@ public class Gen2_Hang
 
         if(direction.equals(HangDirection.IN))
         {
-
             hangControl(true, false, power);
         }
         else if(direction.equals(HangDirection.OUT))
@@ -165,11 +184,13 @@ public class Gen2_Hang
             hangControl(false, true, power);
         }
 
-        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance)
+        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance || getRuntime() > 4.5)
         {
             stopHangMotor();
             moving = false;
         }
+        telemetry.addData("power: ", hang.getPower());
+        telemetry.addData("encoder: ", hang.getCurrentPosition());
 
         return !moving;
     }

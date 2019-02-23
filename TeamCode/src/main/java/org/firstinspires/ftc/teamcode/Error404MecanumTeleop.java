@@ -86,8 +86,20 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("1: leftX", lStickX);
 //        telemetry.addData("2: leftY", lStickY);
 
-        // Robot chassis control method
-        robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+        // Robot chassis controls
+        if(gamepad1.x)
+        {
+            robot.reset(0.2, 10);
+        }
+        else if(gamepad1.a)
+        {
+            robot.pointTurn(.2, 180, 10);
+        }
+        else
+        {
+            robot.joystickDrive(lStickX, lStickY, rStickX, rStickY, afterburners());
+
+        }
 
         // Robot lander hang method
         if (dpadDown || dpadUp)
@@ -95,16 +107,13 @@ public class Error404MecanumTeleop extends OpMode
             power = .9;
             if (gamepad1.left_bumper)
             {
-                power = 0.2;
+                power = 0.1;
             }
         }
         else
         {
             power = 0;
         }
-//        telemetry.addData("dpadUp: ", dpadUp);
-//        telemetry.addData("dpadDown: ", dpadDown);
-//        telemetry.addData("Power: ", power);
         robot.hangControl(dpadDown, dpadUp, power);
 
         // Arm control method

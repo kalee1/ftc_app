@@ -556,6 +556,7 @@ public class MecanumChassis extends Chassis
      * */
     public boolean reset(double power, double time)
     {
+        telemetry.addData("heading: ", getHeadingDbl());
         return pointTurn(power, resetHeading, time);
     }
 }
