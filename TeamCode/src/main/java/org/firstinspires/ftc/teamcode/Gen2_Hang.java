@@ -184,7 +184,7 @@ public class Gen2_Hang
             hangControl(false, true, power);
         }
 
-        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance || getRuntime() > 4.5)
+        if(Math.abs(hang.getCurrentPosition() - initialPosition) >= distance)
         {
             stopHangMotor();
             moving = false;

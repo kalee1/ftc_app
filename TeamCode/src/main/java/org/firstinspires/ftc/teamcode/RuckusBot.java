@@ -221,6 +221,7 @@ public class RuckusBot
     {
         theChassis.stopMotors();
         theArm.stop();
+        theHang.stopHangMotor();
     }
     /** A go-between between the opmode class and the actual chassis class.
      * Used in autonomous, deposits the team marker off the side of the robot.
