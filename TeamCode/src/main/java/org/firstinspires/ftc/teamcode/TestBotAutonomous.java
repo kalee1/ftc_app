@@ -136,6 +136,6 @@ public class TestBotAutonomous extends OpMode
     public void forwardDrive(double power)
     {
         leftMotor.setPower(power);
-        rightMotor.setPower(power);
+        rightMotor.setPower(-power);
     }
 }

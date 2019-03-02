@@ -27,13 +27,12 @@ public class TestBotTeleop extends OpMode
     {
         if(gamepad1.right_stick_y != 0)
         {
-            rightMotor.setPower(gamepad1.right_stick_y);
+            rightMotor.setPower(-gamepad1.right_stick_y);
         }
         else
         {
             rightMotor.setPower(0.0);
         }
-
         if(gamepad1.left_stick_y != 0)
         {
             leftMotor.setPower(gamepad1.left_stick_y);
@@ -42,6 +41,38 @@ public class TestBotTeleop extends OpMode
         {
             leftMotor.setPower(0.0);
         }
+
+//        if(gamepad1.left_stick_y != 0)
+//        {
+//            if(gamepad1.left_stick_y > 1)
+//            {
+//                rightMotor.setPower(1);
+//                leftMotor.setPower(-1);
+//            }
+//            else
+//            {
+//                rightMotor.setPower(-1);
+//                leftMotor.setPower(1);
+//            }
+//        }
+//        else if(gamepad1.right_stick_x != 0)
+//        {
+//            if(gamepad1.right_stick_x > 1)
+//            {
+//                rightMotor.setPower(1);
+//                leftMotor.setPower(1);
+//            }
+//            else
+//            {
+//                rightMotor.setPower(-1);
+//                leftMotor.setPower(-1);
+//            }
+//        }
+//        else
+//        {
+//            leftMotor.setPower(0.0);
+//            rightMotor.setPower(0.0);
+//        }
 
     }
 
