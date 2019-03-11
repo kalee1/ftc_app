@@ -128,6 +128,8 @@ public class FieldVision
     public String tensorFlowMineralDetection()
     {
         String goldPosition = "null";
+        String silver1Position = "null";
+        String silver2Position = "null";
 
         if (tfod != null)
         {
@@ -139,37 +141,54 @@ public class FieldVision
                 telemetry.addData("# Object Detected", updatedRecognitions.size());
                 if (updatedRecognitions.size() > 0)
                 {
-                    int goldMineralX = -3;
+                    int goldMineralX = -1;
                     int silverMineral1X = -1;
                     int silverMineral2X = -2;
+                    boolean goldDetected = false;
+                    boolean silverDetected = false;
 
                     for (Recognition recognition : updatedRecognitions)
                     {
+
                         if (recognition.getLabel().equals(LABEL_GOLD_MINERAL))
                         {
                             if(recognition.getHeight() > 40)
                             {
                                 goldMineralX = (int) recognition.getLeft();
-
+                                goldDetected = true;
                             }
-//                        telemetry.addData("recognition info: ", recognition.toString());
                         }
                         else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
                         {
                             silverMineral1X = (int) recognition.getLeft();
+                            silverDetected = true;
                         }
-//                        else if (silverMineral1X == -1)
-//                        {
-//                            silverMineral1X = (int) recognition.getLeft();
-//                        }
-//                        else
-//                        {
-//                            silverMineral2X = (int) recognition.getLeft();
-//                        }
+
                         telemetry.addData("recognition info: ", recognition.toString());
                         telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
                     }
-                    if(goldMineralX != -3)
+                    if(goldDetected || silverDetected)
+                    {
+                        if(goldMineralX < 375)
+                        {
+                            goldPosition = "left";
+                        }
+                        else if(silverMineral1X < 375)
+                        {
+                            silver1Position = "left";
+                        }
+
+                        if(goldMineralX > 375)
+                        {
+                            goldPosition = "center";
+                        }
+                        else if(s)
+                        {
+
+                        }
+                    }
+
+                    if(goldMineralX != -1)
                     {
                         if(goldMineralX < 200)
                         {
@@ -187,7 +206,7 @@ public class FieldVision
 
                     telemetry.addData("gold: ", goldMineralX);
 //                    telemetry.addData("silver 2", silverMineral2X);
-//                    telemetry.addData("silver 1", silverMineral1X);
+                    telemetry.addData("silver 1", silverMineral1X);
 
                 }
 
