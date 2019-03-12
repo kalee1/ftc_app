@@ -146,6 +146,9 @@ public class FieldVision
                     int silverMineral2X = -2;
                     boolean goldDetected = false;
                     boolean silverDetected = false;
+                    String leftPosition = "null";
+                    String centerPosition = "null";
+                    String rightPosition = "null";
 
                     for (Recognition recognition : updatedRecognitions)
                     {
@@ -167,40 +170,29 @@ public class FieldVision
                         telemetry.addData("recognition info: ", recognition.toString());
                         telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
                     }
-                    if(goldDetected || silverDetected)
+
+                    if(updatedRecognitions.size() > 1)
                     {
-                        if(goldMineralX < 375)
+                        if(goldMineralX < 375 && goldDetected)
                         {
                             goldPosition = "left";
-                        }
-                        else if(silverMineral1X < 375)
-                        {
-                            silver1Position = "left";
-                        }
-
-                        if(goldMineralX > 375)
-                        {
-                            goldPosition = "center";
-                        }
-                        else if(s)
-                        {
-
-                        }
-                    }
-
-                    if(goldMineralX != -1)
-                    {
-                        if(goldMineralX < 200)
-                        {
-                            goldPosition = "left";
-                        }
-                        else if(goldMineralX > 550)
-                        {
-                            goldPosition = "right";
                         }
                         else
                         {
+                            leftPosition = "silver";
+                        }
+                        if(goldMineralX > 375 && goldDetected)
+                        {
                             goldPosition = "center";
+                        }
+                        else
+                        {
+                            centerPosition = "silver";
+                        }
+
+                        if(centerPosition.equals("silver") && leftPosition.equals("silver"))
+                        {
+                            goldPosition = "right";
                         }
                     }
 

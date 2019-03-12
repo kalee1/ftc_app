@@ -315,6 +315,10 @@ public class RuckusBot
     {
         return theChassis.reset(power, time);
     }
+    public boolean goodPitch()
+    {
+        return theChassis.goodPitch();
+    }
 
 
 

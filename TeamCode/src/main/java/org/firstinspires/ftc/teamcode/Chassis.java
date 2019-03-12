@@ -23,6 +23,7 @@ public class Chassis
     boolean pressed = false;
     /** A boolean that tells whether or not the robot is moving. */
     boolean moving = false;
+    boolean good = false;
     /** A double that is the number of nanoseconds per second. */
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
     /** An instance of Telemetry. */
@@ -138,6 +139,11 @@ public class Chassis
     public boolean reset (double power, double time)
     {
         return moving;
+    }
+
+    public boolean goodPitch()
+    {
+        return good;
     }
 
 }

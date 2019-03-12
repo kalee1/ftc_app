@@ -180,6 +180,8 @@ public class Error404Autonomus extends OpMode
     /** The angle required to turn to the center mineral. */
     protected double centerMineral;
 
+    protected double mineralTurnDistance;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -256,35 +258,51 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
-            // Slide away from lander
             case 2:
-                if (robot.drive(.3, right, gain, 6, 6))
+                if(robot.goodPitch())
                 {
                     resetStartTime();
                     state = 3;
                 }
+                else
+                {
+                    robot.stopMotors();
+                    state = 26;
+                }
                 break;
 
-             // Drive forward the same amount the robot drove back in case 1
+            // Slide away from lander
             case 3:
-                if (robot.drive(.3, forward, gain, 4, 2))
+                if (robot.drive(.3, right, gain, 6, 6))
                 {
                     resetStartTime();
                     state = 4;
                 }
                 break;
-            // Turn to left mineral
+
+             // Drive forward the same amount the robot drove back in case 1
             case 4:
-                if (robot.pointTurn(.2, leftMineral , 3))
+                if (robot.drive(.3, forward, gain, 4, 2))
                 {
                     resetStartTime();
                     state = 5;
                 }
                 break;
-            // Look for gold in the left position
+
             case 5:
-                if (robot.goldPosition().equals("center"))
+                if(robot.pointTurn(.2, -75, 3))
                 {
+                    resetStartTime();
+                    state = 6;
+                }
+                break;
+
+            case 6:
+                String goldLocation = robot.goldPosition();
+                Boolean found = false;
+                if(goldLocation.equals("left"))
+                {
+                    found = true;
                     mineralDriveDistanceFinal = mineralDriveDistance[LEFT];
                     mineralSlideDistanceFinal = mineralSlideDistance[LEFT];
                     faceDepoHeadingFinal = faceDepoHeading[LEFT];
@@ -292,29 +310,15 @@ public class Error404Autonomus extends OpMode
                     depoTurnHeadingFinal = depoTurnHeading[LEFT];
                     directionFinal = direction[LEFT];
                     goldPosition = "left";
+                    mineralTurnDistance = leftMineral;
                     robot.tfodShutdown();
                     resetStartTime();
-                    state = 12;
-                }
-                else if (getRuntime() > 2.5)
-                {
-                    resetStartTime();
-                    state = 6;
-                }
-                break;
+                    state = 11;
 
-             // Turn to center mineral
-            case 6:
-                if (robot.pointTurn(.2, centerMineral, 3))
-                {
-                    resetStartTime();
-                    state = 7;
                 }
-                break;
-            // Look for gold in the center position
-            case 7:
-                if (robot.goldPosition().equals("center"))
+                else if(goldLocation.equals("center"))
                 {
+                    found = true;
                     mineralDriveDistanceFinal = mineralDriveDistance[CENTER];
                     mineralSlideDistanceFinal = mineralSlideDistance[CENTER];
                     faceDepoHeadingFinal = faceDepoHeading[CENTER];
@@ -322,30 +326,14 @@ public class Error404Autonomus extends OpMode
                     depoTurnHeadingFinal = depoTurnHeading[CENTER];
                     directionFinal = direction[RIGHT];
                     goldPosition = "center";
+                    mineralTurnDistance = centerMineral;
                     robot.tfodShutdown();
                     resetStartTime();
-                    state = 12;
+                    state = 11;
                 }
-                else if (getRuntime() > 2.5)
+                else if (goldLocation.equals("right"))
                 {
-                    resetStartTime();
-                    state = 8;
-                }
-                break;
-
-            // Turn to right mineral
-            case 8:
-                if (robot.pointTurn(.2, rightMineral, 3))
-                {
-
-                    resetStartTime();
-                    state = 9;
-                }
-                break;
-            // Look for gold in the right position
-            case 9:
-                if (robot.goldPosition().equals("center"))
-                {
+                    found = true;
                     mineralDriveDistanceFinal = mineralDriveDistance[RIGHT];
                     mineralSlideDistanceFinal = mineralSlideDistance[RIGHT];
                     faceDepoHeadingFinal = faceDepoHeading[RIGHT];
@@ -353,41 +341,31 @@ public class Error404Autonomus extends OpMode
                     depoTurnHeadingFinal = depoTurnHeading[RIGHT];
                     directionFinal = direction[RIGHT];
                     goldPosition = "right";
+                    mineralTurnDistance = rightMineral;
                     robot.tfodShutdown();
                     resetStartTime();
-                    state = 12;
+                    state = 11;
                 }
-                else if (getRuntime() > 2.5)
-                {
-                    resetStartTime();
-                    state = 10;
-                }
-                break;
 
-            // If no gold is found, set position to center
-            case 10:
-                if (goldPosition.equals("NoPosition"))
+                if(getRuntime() > 4 && !found)
                 {
-                    goldPosition = "center";
                     mineralDriveDistanceFinal = mineralDriveDistance[CENTER];
                     mineralSlideDistanceFinal = mineralSlideDistance[CENTER];
                     faceDepoHeadingFinal = faceDepoHeading[CENTER];
                     depoDriveDistanceFinal = depoDriveDistance[CENTER];
                     depoTurnHeadingFinal = depoTurnHeading[CENTER];
                     directionFinal = direction[RIGHT];
+                    goldPosition = "center";
+                    mineralTurnDistance = centerMineral;
+                    robot.tfodShutdown();
                     resetStartTime();
                     state = 11;
                 }
-                else
-                {
-                    resetStartTime();
-                    state = 12;
-                }
                 break;
 
-            // Turn to center mineral
+            // Turn to correct mineral
             case 11:
-                if (robot.pointTurn(.2, centerMineral, 3))
+                if(robot.pointTurn(.2, mineralTurnDistance, 3))
                 {
                     resetStartTime();
                     state = 12;
