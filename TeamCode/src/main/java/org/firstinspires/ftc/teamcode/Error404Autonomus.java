@@ -181,6 +181,7 @@ public class Error404Autonomus extends OpMode
     protected double centerMineral;
 
     protected double mineralTurnDistance;
+    protected int fail = 0;
 
     /*
      * Code to run ONCE when the driver hits INIT
@@ -258,16 +259,54 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+                //check the pitch of the robot to ensure robot is not stuck
             case 2:
+                //robot is not stuck - continue with program
                 if(robot.goodPitch())
                 {
                     resetStartTime();
                     state = 3;
                 }
+                //robot is stuck - execute fail-safe
                 else
                 {
-                    robot.stopMotors();
-                    state = 26;
+                    //if robot has executed the fail-safe 3 times and is still stuck, stop executing
+                    if(fail >= 3)
+                    {
+                        resetStartTime();
+                        robot.stopMotors();
+                        state = 999;
+                    }
+                    //stop the motors and enter fail-safe
+                    else
+                    {
+                        resetStartTime();
+                        robot.stopMotors();
+                        state = 66;
+                    }
+                }
+                break;
+
+                //fail-safe step 1:
+                //   drive forward to original landing position
+            case 66:
+                if(robot.drive(.2, forward, gain, 2, 4))
+                {
+                    resetStartTime();
+                    state = 67;
+                }
+                break;
+
+                //fail-safe step 2:
+                //   extend hook for one second or 1000 encoders -- will extend the hanger all the
+                //   way out until it stalls up against the top of the hanger case then reset to
+                //   case 1 and reattempt detaching
+            case 67:
+                if(robot.hangDrive(.9, 1000, Gen2_Hang.HangDirection.OUT) || getRuntime() > 1)
+                {
+                    resetStartTime();
+                    fail++;
+                    state = 1;
                 }
                 break;
 
