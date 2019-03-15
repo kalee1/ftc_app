@@ -312,7 +312,7 @@ public class Error404Autonomus extends OpMode
             //fail-safe step 1:
             //   drive forward to original landing position
             case 66:
-                if(robot.drive(.2, forward, gain, 3, 4))
+                if(robot.drive(.2, forward, gain, 4, 4))
                 {
                     resetStartTime();
 //                    state = 67;

@@ -576,7 +576,7 @@ public class MecanumChassis extends Chassis
 
     public boolean goodPitch()
     {
-        if(getPitchDbl() > 2 || getPitchDbl() < -2.5)
+        if(getPitchDbl() > 2 || getPitchDbl() < -3)
         {
             good = false;
         }
