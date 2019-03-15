@@ -329,6 +329,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+            // turn to in between left and center
             case 5:
                 if(robot.pointTurn(.2, -75, 3))
                 {
@@ -337,6 +338,7 @@ public class Error404Autonomus extends OpMode
                 }
                 break;
 
+            // Use the two visible minerals to determine the gold location
             case 6:
                 String goldLocation = robot.goldPosition();
                 Boolean found = false;
