@@ -21,7 +21,7 @@ public class Error404Autonomus extends OpMode
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
     /** An int varibale that is used to record the current case the case machine is in and what case
      *  the case machine will start in. */
-    int state = -1;
+    int state = 1;
     /** An int variable that is used to record the current motor position at the beginning of a move. */
     int initialPosition = 0;
 
@@ -253,7 +253,18 @@ public class Error404Autonomus extends OpMode
 
             // Back out of latch
             case 1:
-                if (robot.drive(.2, backward, gain, 2, 6))
+                if (robot.drive(.3, backward, gain, 4, 6))
+                {
+
+                    resetStartTime();
+                    state = 2;
+
+
+                }
+                break;
+
+            case 70:
+                if(getRuntime() > 1)
                 {
                     resetStartTime();
                     state = 2;
@@ -284,15 +295,33 @@ public class Error404Autonomus extends OpMode
                     else
                     {
 
-                        state = 66;
+//                        state = 66;
+                        state = 71;
                     }
+                }
+                break;
+
+            case 71:
+                if(getRuntime() > 1)
+                {
+                    resetStartTime();
+                    state = 66;
                 }
                 break;
 
             //fail-safe step 1:
             //   drive forward to original landing position
             case 66:
-                if(robot.drive(.2, forward, gain, 2, 4))
+                if(robot.drive(.2, forward, gain, 3, 4))
+                {
+                    resetStartTime();
+//                    state = 67;
+                    state = 72;
+                }
+                break;
+
+            case 72:
+                if(getRuntime() > 1)
                 {
                     resetStartTime();
                     state = 67;
@@ -307,6 +336,14 @@ public class Error404Autonomus extends OpMode
                 {
                     resetStartTime();
                     fail++;
+                    state = 73;
+                }
+                break;
+
+            case 73:
+                if(getRuntime() > 1)
+                {
+                    resetStartTime();
                     state = 0;
                 }
                 break;
@@ -410,7 +447,7 @@ public class Error404Autonomus extends OpMode
                 if(robot.pointTurn(.2, mineralTurnDistance, 3))
                 {
                     resetStartTime();
-                    state = 12;
+                    state = 12222;
                 }
                 break;
 
