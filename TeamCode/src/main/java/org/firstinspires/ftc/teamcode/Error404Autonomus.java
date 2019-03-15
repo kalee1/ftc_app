@@ -299,8 +299,8 @@ public class Error404Autonomus extends OpMode
 
                 //fail-safe step 2:
                 //   extend hook for one second or 1000 encoders -- will extend the hanger all the
-                //   way out until it stalls up against the top of the hanger case then reset to
-                //   case 1 and reattempt detaching
+                //   way out until it stalls up against the top of the hanger case -- then reset to
+                //   case 1 and reattempt detaching from lander
             case 67:
                 if(robot.hangDrive(.9, 1000, Gen2_Hang.HangDirection.OUT) || getRuntime() > 1)
                 {
