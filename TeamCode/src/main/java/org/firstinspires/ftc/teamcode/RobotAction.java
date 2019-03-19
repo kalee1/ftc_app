@@ -1,9 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 import java.util.concurrent.TimeUnit;
 
+/**
+ *
+ *
+ * @author Andrew, Error 404: Team Name Not Found
+ * */
 public class RobotAction
 {
     String name = "";

@@ -11,6 +11,10 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Vector;
 
+/**
+ *
+ * @author Andrew, Error 404: Team Name Not Found
+ * */
 public class ActionMaster
 {
     Map<String, RobotAction> actionMap = new HashMap<String, RobotAction>();
