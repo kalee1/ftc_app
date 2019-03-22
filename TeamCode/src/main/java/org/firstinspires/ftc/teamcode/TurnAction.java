@@ -1,30 +1,24 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-
 /**
  *
  * @author Andrew, Error 404: Team Name Not Found
  * @see RobotAction
  * */
-public class DriveAction extends RobotAction
+public class TurnAction extends RobotAction
 {
     double power;
-    double direction;
-    double gain;
-    double distance;
+    double targetHeading;
     String id;
     String nextAction;
 
-    DriveAction(double thePower, double theDirection, double theGain, double theDistance,
-                double duration, String theId, String theNextAction)
+    TurnAction(double thePower, double theTargetHeading, double duration, String theId, String theNextAction)
     {
         power = thePower;
-        direction = theDirection;
-        gain = theGain;
-        distance = theDistance;
+        targetHeading = theTargetHeading;
         timeout = duration;
         id = theId;
+        nextAction = theNextAction;
 
         if(theNextAction.isEmpty())
         {
@@ -46,6 +40,6 @@ public class DriveAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.drive(power, direction, gain, distance, timeout) || super.execute();
+        return robot.pointTurn(power, targetHeading, timeout) || super.execute();
     }
 }

@@ -5,14 +5,15 @@ package org.firstinspires.ftc.teamcode;
  * @author Andrew, Error 404: Team Name Not Found
  * @see RobotAction
  * */
-public class WaitAction extends RobotAction
+public class MarkDeployAction extends RobotAction
 {
+    double power;
 
-
-    WaitAction(String id, double duration, String theNextAction)
+    MarkDeployAction(double thePower, double duration, String theId, String theNextAction)
     {
-        name = id;
+        power = thePower;
         timeout = duration;
+
         if(theNextAction.isEmpty())
         {
             nextAction = null;
@@ -25,11 +26,16 @@ public class WaitAction extends RobotAction
     }
 
     @Override
-    public boolean execute()
+    public void exit()
     {
-        telemetry.addData("timeout: ", timeout);
-        telemetry.addData("get run time: ", getRuntime());
-        return super.execute();
+        robot.markDeploy(0.0);
+        super.exit();
     }
 
+    @Override
+    public boolean execute()
+    {
+        robot.markDeploy(power);
+        return super.execute();
+    }
 }

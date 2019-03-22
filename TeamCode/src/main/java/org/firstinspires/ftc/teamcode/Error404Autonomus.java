@@ -183,6 +183,9 @@ public class Error404Autonomus extends OpMode
     protected double mineralTurnDistance;
     protected int fail;
 
+    protected final double ON = 1.0;
+    protected final double OFF = 0.0;
+
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -510,7 +513,7 @@ public class Error404Autonomus extends OpMode
                 if (robot.drive(.4, left, gain, markerSlideDistance, 4))
                 {
                     resetStartTime();
-                    robot.markDeploy();
+                    robot.markDeploy(ON);
                     state = 19;
                 }
                 break;
@@ -529,7 +532,7 @@ public class Error404Autonomus extends OpMode
                 if (robot.pointTurn(.2, faceCraterHeading,4))
                 {
                     resetStartTime();
-                    robot.markRetract();
+                    robot.markDeploy(OFF);
                     state = 21;
                 }
                 break;

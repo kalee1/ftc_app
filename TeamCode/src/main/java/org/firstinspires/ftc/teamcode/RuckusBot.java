@@ -226,16 +226,9 @@ public class RuckusBot
     /** A go-between between the opmode class and the actual chassis class.
      * Used in autonomous, deposits the team marker off the side of the robot.
      * */
-    public void markDeploy()
+    public void markDeploy(double power)
     {
-        depoDeposit.deploy();
-    }
-    /** A go-between between the opmode class and the actual chassis class.
-     * Used in autonomous, spins the servo that deposits the team marker the other way.
-     * */
-    public void markRetract()
-    {
-        depoDeposit.retract();
+        depoDeposit.markDeploy(power);
     }
 
     public String goldPosition()

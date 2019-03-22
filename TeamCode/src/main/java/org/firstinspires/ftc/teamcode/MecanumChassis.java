@@ -346,12 +346,6 @@ public class MecanumChassis extends Chassis
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
-//        telemetry.addData("", "" + lStickX);
-//        telemetry.addData("", "" + lStickY);
-//        telemetry.addData("", "" + correction);
-
- //       telemetry.addData("encoder", lFrontMotor.getCurrentPosition());
-
         if (((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();

@@ -40,18 +40,23 @@ public class MarkDeploy
         }
     }
 
-    /** Deploys the team marker. */
-    public void deploy()
-    {
-        flag.setPower(1.0);
-//        flag.setPosition(.5);
-    }
+//    /** Deploys the team marker. */
+//    public void deploy()
+//    {
+//        flag.setPower(1.0);
+////        flag.setPosition(.5);
+//    }
+//
+//    /** Retracts the mechanism that deploys the team marker. */
+//    public void retract()
+//    {
+//        flag.setPower(0.0);
+////        flag.setPosition(.3);
+//    }
 
-    /** Retracts the mechanism that deploys the team marker. */
-    public void retract()
+    public void markDeploy(double power)
     {
-        flag.setPower(0.0);
-//        flag.setPosition(.3);
+        flag.setPower(power);
     }
 
 
