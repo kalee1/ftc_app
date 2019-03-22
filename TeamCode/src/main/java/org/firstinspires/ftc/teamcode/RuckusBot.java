@@ -297,6 +297,11 @@ public class RuckusBot
      *  */
     public boolean armLanderExtend(){ return theArm.landerExtend();}
 
+    public boolean goTo(MotorArm.ArmPositions position, double elbPower, double shouldPower)
+    {
+        return theArm.goTo(position, elbPower, shouldPower);
+    }
+
     /** Turns the robot back to the initial heading it started out at.  Useful for correcting
      *  heading errors introduced when landing in autonomous.
      *
