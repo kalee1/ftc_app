@@ -25,12 +25,12 @@ public class BabyAutonomous extends OpMode
     {
         theMaster.init(telemetry);
 
-        WaitAction firstStep = new WaitAction("one", 3, "two");
+        WaitAction firstStep = new WaitAction(3, "one", "two");
         firstStep.init(telemetry, robot);
         theMaster.addAction(firstStep);
         theMaster.addRunAction("one");
 
-        WaitAction secondStep = new WaitAction("two",3, "three");
+        WaitAction secondStep = new WaitAction(3,"two", "three");
         secondStep.init(telemetry, robot);
         theMaster.addAction(secondStep);
 

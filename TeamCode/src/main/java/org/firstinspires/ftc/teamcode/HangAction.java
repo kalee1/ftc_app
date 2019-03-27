@@ -2,28 +2,27 @@ package org.firstinspires.ftc.teamcode;
 
 public class HangAction extends RobotAction
 {
-    double power;
-    double distance;
-    Gen2_Hang.HangDirection direction;
-    String id;
-    String nextAction;
+    double thePower;
+    double theDistance;
+    Gen2_Hang.HangDirection theDirection;
 
 
-    HangAction(double thePower, double theDistance, Gen2_Hang.HangDirection theDirection, double duration, String theId, String theNextAction)
+
+    HangAction(double power, double distance, Gen2_Hang.HangDirection direction, double duration, String id, String nextAction)
     {
-        power = thePower;
-        distance = theDistance;
-        direction = theDirection;
+        thePower = power;
+        theDistance = distance;
+        theDirection = direction;
         timeout = duration;
         theId = id;
 
-        if(theNextAction.isEmpty())
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
     }
 
@@ -37,6 +36,6 @@ public class HangAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.hangDrive(power, distance, direction) || super.execute();
+        return robot.hangDrive(thePower, theDistance, theDirection) || super.execute();
     }
 }

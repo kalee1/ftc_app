@@ -9,17 +9,18 @@ public class WaitAction extends RobotAction
 {
 
 
-    WaitAction(String id, double duration, String theNextAction)
+    WaitAction(double duration, String id, String nextAction)
     {
-        name = id;
+        theId = id;
         timeout = duration;
-        if(theNextAction.isEmpty())
+
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
 
     }

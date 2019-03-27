@@ -50,12 +50,12 @@ public class ActionMaster
             telemetry.addData("action done: ", actionDone);
             if(actionDone)
             {
-                if(action.nextAction != null)
+                if(action.theNextAction != null)
                 {
-                    nextList.add(action.nextAction);
+                    nextList.add(action.theNextAction);
                 }
                 action.exit();
-                runMap.remove(action.name);
+                runMap.remove(action.theId);
             }
         }
 
@@ -66,7 +66,7 @@ public class ActionMaster
             telemetry.addData("next action: ", nextAction);
 
             nextAction.entry();
-            addRunAction(nextAction.name);
+            addRunAction(nextAction.theId);
         }
         nextList.clear();
     }
@@ -80,7 +80,7 @@ public class ActionMaster
 
     public void addAction(RobotAction action)
     {
-        actionMap.put(action.name, action);
+        actionMap.put(action.theId, action);
     }
 
     public Set<String> keyList()

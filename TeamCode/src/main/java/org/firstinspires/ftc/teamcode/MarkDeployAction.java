@@ -7,22 +7,21 @@ package org.firstinspires.ftc.teamcode;
  * */
 public class MarkDeployAction extends RobotAction
 {
-    double power;
-    String id;
+    double thePower;
 
-    MarkDeployAction(double thePower, double duration, String theId, String theNextAction)
+    MarkDeployAction(double power, double duration, String id, String nextAction)
     {
-        power = thePower;
+        thePower = power;
         timeout = duration;
-        id = theId;
+        theId = id;
 
-        if(theNextAction.isEmpty())
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
 
     }
@@ -37,6 +36,6 @@ public class MarkDeployAction extends RobotAction
     @Override
     public void entry()
     {
-        robot.markDeploy(power);
+        robot.markDeploy(thePower);
     }
 }

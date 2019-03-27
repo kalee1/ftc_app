@@ -9,30 +9,28 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * */
 public class DriveAction extends RobotAction
 {
-    double power;
-    double direction;
-    double gain;
-    double distance;
-    String id;
-    String nextAction;
+    double thePower;
+    double theDirection;
+    double theGain;
+    double theDistance;
 
-    DriveAction(double thePower, double theDirection, double theGain, double theDistance,
-                double duration, String theId, String theNextAction)
+    DriveAction(double power, double direction, double gain, double distance,
+                double duration, String id, String nextAction)
     {
-        power = thePower;
-        direction = theDirection;
-        gain = theGain;
-        distance = theDistance;
+        thePower = power;
+        theDirection = direction;
+        theGain = gain;
+        theDistance = distance;
         timeout = duration;
-        id = theId;
+        theId = id;
 
-        if(theNextAction.isEmpty())
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
     }
 
@@ -46,6 +44,6 @@ public class DriveAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.drive(power, direction, gain, distance, timeout) || super.execute();
+        return robot.drive(thePower, theDirection, theGain, theDistance, timeout) || super.execute();
     }
 }

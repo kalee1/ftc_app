@@ -7,26 +7,23 @@ package org.firstinspires.ftc.teamcode;
  * */
 public class TurnAction extends RobotAction
 {
-    double power;
-    double targetHeading;
-    String id;
-    String nextAction;
+    double thePower;
+    double theTargetHeading;
 
-    TurnAction(double thePower, double theTargetHeading, double duration, String theId, String theNextAction)
+    TurnAction(double power, double targetHeading, double duration, String id, String nextAction)
     {
-        power = thePower;
-        targetHeading = theTargetHeading;
+        thePower = power;
+        theTargetHeading = targetHeading;
         timeout = duration;
-        id = theId;
-        nextAction = theNextAction;
+        theId = id;
 
-        if(theNextAction.isEmpty())
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
     }
 
@@ -40,6 +37,6 @@ public class TurnAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.pointTurn(power, targetHeading, timeout) || super.execute();
+        return robot.pointTurn(thePower, theTargetHeading, timeout) || super.execute();
     }
 }

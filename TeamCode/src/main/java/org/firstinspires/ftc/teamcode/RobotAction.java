@@ -10,11 +10,11 @@ import java.util.concurrent.TimeUnit;
  * */
 public class RobotAction
 {
-    String name = "";
+    String theId = "";
     double timeout = 0;
     RuckusBot robot = null;
     boolean done = false;
-    String nextAction = "";
+    String theNextAction = "";
     Telemetry telemetry;
     // internal time tracking
     private long startTime = 0; // in nanoseconds

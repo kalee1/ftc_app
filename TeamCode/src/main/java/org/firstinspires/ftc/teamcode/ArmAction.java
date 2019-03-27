@@ -1,28 +1,29 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.content.res.Resources;
+
 public class ArmAction extends RobotAction
 {
-    MotorArm.ArmPositions position;
-    double elbPower;
-    double shoulPower;
-    String id;
-    String nextAction;
+    MotorArm.ArmPositions thePosition;
+    double theElbPower;
+    double theShoulPower;
 
-    ArmAction(MotorArm.ArmPositions thePosition, double theElbPower, double theShoulPower, double duration, String theId, String theNextAction)
+
+    ArmAction(MotorArm.ArmPositions position, double elbPower, double shoulPower, double duration, String id, String nextAction)
     {
-        position = thePosition;
-        elbPower = theElbPower;
-        shoulPower = theShoulPower;
+        thePosition = position;
+        theElbPower = elbPower;
+        theShoulPower = shoulPower;
         timeout = duration;
-        id = theId;
+        theId = id;
 
-        if(theNextAction.isEmpty())
+        if(nextAction.isEmpty())
         {
-            nextAction = null;
+            theNextAction = null;
         }
         else
         {
-            nextAction = theNextAction;
+            theNextAction = nextAction;
         }
     }
 
@@ -36,6 +37,6 @@ public class ArmAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.goTo(position, elbPower, shoulPower) || super.execute();
+        return robot.goTo(thePosition, theElbPower, theShoulPower) || super.execute();
     }
 }
