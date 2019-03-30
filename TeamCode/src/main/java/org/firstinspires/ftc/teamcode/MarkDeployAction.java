@@ -9,7 +9,7 @@ public class MarkDeployAction extends RobotAction
 {
     double thePower;
 
-    MarkDeployAction(double power, double duration, String id, String nextAction)
+    MarkDeployAction(String id, String nextAction, double duration, double power )
     {
         thePower = power;
         timeout = duration;
@@ -24,6 +24,11 @@ public class MarkDeployAction extends RobotAction
             theNextAction = nextAction;
         }
 
+    }
+
+    MarkDeployAction(String[] params)
+    {
+        this(params[0], params[1], Double.parseDouble(params[2]), Double.parseDouble(params[3]));
     }
 
     @Override

@@ -9,9 +9,29 @@ public class ArmAction extends RobotAction
     double theShoulPower;
 
 
-    ArmAction(MotorArm.ArmPositions position, double elbPower, double shoulPower, double duration, String id, String nextAction)
+    ArmAction(String id, String nextAction, double duration, double elbPower, double shoulPower, String position )
     {
-        thePosition = position;
+        if(position.equals(MotorArm.ArmPositions.ARM_HOME.toString()))
+        {
+            thePosition = MotorArm.ArmPositions.ARM_HOME;
+        }
+        else if(position.equals(MotorArm.ArmPositions.CRATER_EXTEND.toString()))
+        {
+            thePosition = MotorArm.ArmPositions.CRATER_EXTEND;
+        }
+        else if(position.equals(MotorArm.ArmPositions.DRIVING_EXTEND.toString()))
+        {
+            thePosition = MotorArm.ArmPositions.DRIVING_EXTEND;
+        }
+        else if(position.equals(MotorArm.ArmPositions.LANDER_EXTEND.toString()))
+        {
+            thePosition = MotorArm.ArmPositions.LANDER_EXTEND;
+        }
+        else
+        {
+            thePosition = MotorArm.ArmPositions.CRATER_EXTEND;
+        }
+
         theElbPower = elbPower;
         theShoulPower = shoulPower;
         timeout = duration;
@@ -25,6 +45,16 @@ public class ArmAction extends RobotAction
         {
             theNextAction = nextAction;
         }
+    }
+
+    ArmAction(String[] params)
+    {
+        this(params[0],
+             params[1],
+             Double.parseDouble(params[2]),
+             Double.parseDouble(params[3]),
+             Double.parseDouble(params[4]),
+             params[5]);
     }
 
     @Override

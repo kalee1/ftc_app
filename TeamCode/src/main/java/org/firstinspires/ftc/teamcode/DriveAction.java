@@ -14,12 +14,11 @@ public class DriveAction extends RobotAction
     double theGain;
     double theDistance;
 
-    DriveAction(double power, double direction, double gain, double distance,
-                double duration, String id, String nextAction)
+    DriveAction(String id, String nextAction, double duration, double power, double direction, double distance )
     {
         thePower = power;
         theDirection = direction;
-        theGain = gain;
+        theGain = .01;
         theDistance = distance;
         timeout = duration;
         theId = id;
@@ -32,6 +31,16 @@ public class DriveAction extends RobotAction
         {
             theNextAction = nextAction;
         }
+    }
+
+    DriveAction(String[] params)
+    {
+        this(params[0],
+             params[1],
+             Double.parseDouble(params[2]),
+             Double.parseDouble(params[3]),
+             Double.parseDouble(params[4]),
+             Double.parseDouble(params[4]));
     }
 
     @Override

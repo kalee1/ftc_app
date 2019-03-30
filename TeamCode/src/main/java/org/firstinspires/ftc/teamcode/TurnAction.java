@@ -10,7 +10,7 @@ public class TurnAction extends RobotAction
     double thePower;
     double theTargetHeading;
 
-    TurnAction(double power, double targetHeading, double duration, String id, String nextAction)
+    TurnAction(String id, String nextAction, double duration, double power, double targetHeading )
     {
         thePower = power;
         theTargetHeading = targetHeading;
@@ -25,6 +25,11 @@ public class TurnAction extends RobotAction
         {
             theNextAction = nextAction;
         }
+    }
+
+    TurnAction(String[] params)
+    {
+        this(params[0], params[1], Double.parseDouble(params[2]), Double.parseDouble(params[3]), Double.parseDouble(params[4]));
     }
 
     @Override

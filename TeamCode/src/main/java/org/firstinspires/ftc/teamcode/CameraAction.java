@@ -15,6 +15,12 @@ public class CameraAction extends RobotAction
     {
         theId = id;
         theNextAction = nextAction;
+        timeout = 600;
+    }
+
+    CameraAction(String[] params)
+    {
+        this(params[0], params[1]);
     }
 
     public void entry()

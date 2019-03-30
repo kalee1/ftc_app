@@ -8,7 +8,7 @@ public class HangAction extends RobotAction
 
 
 
-    HangAction(double power, double distance, Gen2_Hang.HangDirection direction, double duration, String id, String nextAction)
+    HangAction(String id, String nextAction, double duration, double power, Gen2_Hang.HangDirection direction, double distance )
     {
         thePower = power;
         theDistance = distance;
@@ -24,6 +24,16 @@ public class HangAction extends RobotAction
         {
             theNextAction = nextAction;
         }
+    }
+
+    HangAction(String[] params)
+    {
+        this(params[0],
+             params[1],
+             Double.parseDouble(params[2]),
+             Double.parseDouble(params[3]),
+             params[4].equals("IN") ? Gen2_Hang.HangDirection.IN : Gen2_Hang.HangDirection.OUT,
+             Double.parseDouble(params[5]));
     }
 
     @Override

@@ -21,34 +21,34 @@ import java.io.InputStreamReader;
 public class FileRead extends OpMode
 {
     String fileName = "MyFile";
-    String content = "hellow world";
+    String content = "hellowww world";
     BufferedReader br = null;
     String line = "null";
 
     public void init()
     {
+//        try
+//        {
+//            FileOutputStream outputStream = null;
+//            outputStream = hardwareMap.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
+//            outputStream.write(content.getBytes());
+//            outputStream.close();
+//
+//        }
+//        catch(FileNotFoundException f)
+//        {
+//            f.printStackTrace();
+//            telemetry.addData("file not found f: ", f);
+//        }
+//        catch(IOException f)
+//        {
+//            f.printStackTrace();
+//            telemetry.addData("io exception f: ", f);
+//        }
+
         try
         {
-            FileOutputStream outputStream = null;
-            outputStream = hardwareMap.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-            outputStream.write(content.getBytes());
-            outputStream.close();
-
-        }
-        catch(FileNotFoundException f)
-        {
-            f.printStackTrace();
-            telemetry.addData("file not found f: ", f);
-        }
-        catch(IOException f)
-        {
-            f.printStackTrace();
-            telemetry.addData("io exception f: ", f);
-        }
-
-        try
-        {
-            InputStream inputStream = hardwareMap.appContext.openFileInput("testText.txt");
+                     InputStream inputStream = hardwareMap.appContext.openFileInput("textTest.txt");
             InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
 
             br = new BufferedReader(inputStreamReader);
@@ -57,6 +57,12 @@ public class FileRead extends OpMode
             {
                 telemetry.addData("line: ", line);
             }
+            for(String f : hardwareMap.appContext.fileList())
+            {
+                telemetry.addData("file list: ", f);
+            }
+            telemetry.addData("get file dir: ", hardwareMap.appContext.getFilesDir());
+
         }
         catch(FileNotFoundException e)
         {

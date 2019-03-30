@@ -18,23 +18,20 @@ public class BabyAutonomous extends OpMode
     ActionMaster theMaster = new ActionMaster();
     RuckusBot robot = new RuckusBot("MecanumChassis");
 
-    /** The amount by which the PID drive algorithms will correct error. */
-    double gain = 0.01;
-
     public void init()
     {
         theMaster.init(telemetry);
 
-        WaitAction firstStep = new WaitAction(3, "one", "two");
+        WaitAction firstStep = new WaitAction("one", "two", 3);
         firstStep.init(telemetry, robot);
         theMaster.addAction(firstStep);
         theMaster.addRunAction("one");
 
-        WaitAction secondStep = new WaitAction(3,"two", "three");
+        WaitAction secondStep = new WaitAction("two", "three", 3);
         secondStep.init(telemetry, robot);
         theMaster.addAction(secondStep);
 
-        DriveAction thirdStep = new DriveAction(.3, 0, gain, 6, 7, "three", "");
+        DriveAction thirdStep = new DriveAction("three", "", 7, .3, 0, 6);
         thirdStep.init(telemetry, robot);
         theMaster.addAction(thirdStep);
 

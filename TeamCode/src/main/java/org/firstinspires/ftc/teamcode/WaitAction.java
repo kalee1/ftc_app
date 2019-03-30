@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.hardware.ams.AMSColorSensor;
+
 /**
  *
  * @author Andrew, Error 404: Team Name Not Found
@@ -8,8 +10,7 @@ package org.firstinspires.ftc.teamcode;
 public class WaitAction extends RobotAction
 {
 
-
-    WaitAction(double duration, String id, String nextAction)
+    WaitAction(String id, String nextAction, double duration)
     {
         theId = id;
         timeout = duration;
@@ -23,6 +24,11 @@ public class WaitAction extends RobotAction
             theNextAction = nextAction;
         }
 
+    }
+
+    WaitAction(String[] params)
+    {
+        this(params[0], params[1], Double.parseDouble(params[2]));
     }
 
     @Override
