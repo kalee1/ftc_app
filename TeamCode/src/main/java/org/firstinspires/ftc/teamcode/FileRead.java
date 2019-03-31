@@ -27,44 +27,21 @@ public class FileRead extends OpMode
 
     public void init()
     {
-//        try
-//        {
-//            FileOutputStream outputStream = null;
-//            outputStream = hardwareMap.appContext.openFileOutput(fileName, Context.MODE_PRIVATE);
-//            outputStream.write(content.getBytes());
-//            outputStream.close();
-//
-//        }
-//        catch(FileNotFoundException f)
-//        {
-//            f.printStackTrace();
-//            telemetry.addData("file not found f: ", f);
-//        }
-//        catch(IOException f)
-//        {
-//            f.printStackTrace();
-//            telemetry.addData("io exception f: ", f);
-//        }
-
         try
         {
-//                     InputStream inputStream = hardwareMap.appContext.openFileInput("textTest.txt");
-//            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-
-            File theFile = new File("/storage/9016-4EF8/textTest.txt");
+            File theFile = new File("/storage/9016-4EF8/auto.csv");
             FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);
             telemetry.addData("bf: ", br);
             while((line = br.readLine()) != null)
             {
-                telemetry.addData("line: ", line);
+                String[] theItems = line.split(",");
+                for (String theData : theItems )
+                {
+                    telemetry.addData("DataItem: ", theData);
+                }
             }
-            for(String f : hardwareMap.appContext.fileList())
-            {
-                telemetry.addData("file list: ", f);
-            }
-            telemetry.addData("get file dir: ", hardwareMap.appContext.getFilesDir());
 
         }
         catch(FileNotFoundException e)
