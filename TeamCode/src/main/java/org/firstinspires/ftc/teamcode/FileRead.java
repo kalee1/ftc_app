@@ -7,8 +7,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,8 +48,11 @@ public class FileRead extends OpMode
 
         try
         {
-                     InputStream inputStream = hardwareMap.appContext.openFileInput("textTest.txt");
-            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+//                     InputStream inputStream = hardwareMap.appContext.openFileInput("textTest.txt");
+//            InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+
+            File theFile = new File("/storage/9016-4EF8/textTest.txt");
+            FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);
             telemetry.addData("bf: ", br);
