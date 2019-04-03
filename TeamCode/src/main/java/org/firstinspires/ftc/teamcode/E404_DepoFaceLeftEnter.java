@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * the crater, and enters the crater from the left side.
  *
  * @author Andrew, Error 404: Team Name Not Found
- * @see Error404Autonomus
+ * @see Error404Autonomus1
  * */
 public class E404_DepoFaceLeftEnter extends Error404Autonomus
 {

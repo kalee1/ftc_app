@@ -59,6 +59,30 @@ public class FileRead extends OpMode
                 {
                     myAction = new DriveAction(params);
                 }
+                else if(type.equalsIgnoreCase("TURNACTION"))
+                {
+                    myAction = new TurnAction(params);
+                }
+                else if(type.equalsIgnoreCase("CAMERAACTION"))
+                {
+                    myAction = new CameraAction(params);
+                }
+                else if(type.equalsIgnoreCase("HANGACTION"))
+                {
+                    myAction = new HangAction(params);
+                }
+                else if(type.equalsIgnoreCase("ARMACTION"))
+                {
+                    myAction = new ArmAction(params);
+                }
+                else if(type.equalsIgnoreCase("MARKDEPLOYACTION"))
+                {
+                    myAction = new MarkDeployAction(params);
+                }
+                else if(type.equalsIgnoreCase("GYROACTION"))
+                {
+                    myAction = new GyroAction(params);
+                }
                 else
                 {
                     myAction = null;

@@ -39,4 +39,11 @@ public class WaitAction extends RobotAction
         return super.execute();
     }
 
+    public void exit()
+    {
+        robot.stopMotors();
+        robot.collectorStop();
+        super.exit();
+    }
+
 }

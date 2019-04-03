@@ -318,6 +318,11 @@ public class RuckusBot
         return theChassis.goodPitch();
     }
 
+    public double getResetHeading()
+    {
+        return ((MecanumChassis)theChassis).resetHeading;
+    }
+
 
 
 }

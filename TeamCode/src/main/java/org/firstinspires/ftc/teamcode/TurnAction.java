@@ -29,8 +29,14 @@ public class TurnAction extends RobotAction
 
     TurnAction(String[] params)
     {
-        this(params[0], params[1], Double.parseDouble(params[2]), Double.parseDouble(params[3]), Double.parseDouble(params[4]));
+        this(params[0],
+             params[1],
+             Double.parseDouble(params[2]),
+             Double.parseDouble(params[3]),
+             Double.parseDouble(params[4]));
     }
+
+//    params[4].equals("IN") ? Gen2_Hang.HangDirection.IN : Gen2_Hang.HangDirection.OUT,
 
     @Override
     public void exit()
