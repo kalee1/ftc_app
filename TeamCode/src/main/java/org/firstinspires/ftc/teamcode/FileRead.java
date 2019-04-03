@@ -35,6 +35,9 @@ public class FileRead extends OpMode
             FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);
+
+            br.readLine();  // throw away first line by reading it and not looking at it
+
             while((line = br.readLine()) != null)
             {
                 // Get a line from the CSV file and split it on the commas
@@ -58,7 +61,7 @@ public class FileRead extends OpMode
                 }
                 else
                 {
-                    myAction = new RobotAction();
+                    myAction = null;
                 }
                 telemetry.addData("TheAction: ", myAction);
              }
