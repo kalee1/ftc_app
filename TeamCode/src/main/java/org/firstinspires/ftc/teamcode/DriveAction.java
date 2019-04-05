@@ -40,7 +40,7 @@ public class DriveAction extends RobotAction
              Double.parseDouble(params[2]),
              Double.parseDouble(params[3]),
              Double.parseDouble(params[4]),
-             Double.parseDouble(params[4]));
+             Double.parseDouble(params[5]));
     }
 
     @Override
@@ -53,6 +53,7 @@ public class DriveAction extends RobotAction
     @Override
     public boolean execute()
     {
+        telemetry.addData("distance ", theDistance);
         return robot.drive(thePower, theDirection, theGain, theDistance, timeout) || super.execute();
     }
 }

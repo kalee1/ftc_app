@@ -14,7 +14,14 @@ public class CameraAction extends RobotAction
     CameraAction(String id, String nextAction) //default nextAction to center
     {
         theId = id;
-        theNextAction = nextAction;
+        if(nextAction.isEmpty())
+        {
+            theNextAction = null;
+        }
+        else
+        {
+            theNextAction = nextAction;
+        }
         timeout = 600;
     }
 
@@ -25,8 +32,9 @@ public class CameraAction extends RobotAction
 
     public void entry()
     {
-        robot.start();
+        //robot.start();
         count = 0;
+        super.entry();
     }
 
     @Override
@@ -40,6 +48,7 @@ public class CameraAction extends RobotAction
     public boolean execute()
     {
         goldPosition = robot.goldPosition();
+        telemetry.addData("Gold Position: ", goldPosition);
 
         if(goldPosition.equals("right"))
         {

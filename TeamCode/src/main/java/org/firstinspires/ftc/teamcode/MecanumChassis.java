@@ -112,6 +112,7 @@ public class MecanumChassis extends Chassis
     @Override
     public void init(HardwareMap hwMap, Telemetry telem)
     {
+//        telem.addData("start", " init");
         super.init(hwMap, telem);
 
         try
@@ -170,13 +171,18 @@ public class MecanumChassis extends Chassis
         try
         {
             navx = hwMap.get(NavxMicroNavigationSensor.class, "navx");
-            resetHeading = getHeadingDbl();
+            if(navx != null)
+            {
+                resetHeading = getHeadingDbl();
+            }
         }
         catch (Exception p_exeception)
         {
             telem.addData("navx not found in config file", 0);
             navx = null;
         }
+
+//        telem.addData("navx", navx);
 //
 //        try
 //        {
@@ -332,6 +338,7 @@ public class MecanumChassis extends Chassis
             }
             resetStartTime();
             moving = true;
+//            telemetry.addData("initial position: ", initialPosition);
         }
 
         if (Math.abs(initialHeading) > 130  &&  actual < 0.0)
@@ -343,6 +350,8 @@ public class MecanumChassis extends Chassis
 
         double lStickX = power * Math.sin(Math.toRadians(direction));
         double lStickY = -(power * Math.cos(Math.toRadians(direction)));
+
+//        telemetry.addData("target Position: ", distance);
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 

@@ -44,6 +44,7 @@ public class ActionMaster
             firstRun = false;
         }
 
+        telemetry.addData("RunMap: ", keyList());
         for(RobotAction action : runMap.values())
         {
             Boolean actionDone = action.execute();
@@ -60,11 +61,16 @@ public class ActionMaster
             }
         }
 
+        telemetry.addData("next list: ", nextList.toString());
         for(String next : nextList)
         {
-
+//            telemetry.addData("Size of dictionary: ", actionMap.size());
+//            telemetry.addData("Keys:", actionMap.keySet());
+//            telemetry.addData("Contains Camera Key?:", actionMap.containsKey(next));
+//            telemetry.addData("string id to get from Map:", next );
             RobotAction nextAction = actionMap.get(next);
-            telemetry.addData("next action: ", nextAction);
+            telemetry.addData("Name of action got: ", nextAction.theId);
+//            telemetry.addData("next action: ", nextAction);
 
             nextAction.entry();
             addRunAction(nextAction.theId);
@@ -82,6 +88,7 @@ public class ActionMaster
     public void addAction(RobotAction action)
     {
         actionMap.put(action.theId, action);
+        telemetry.addData("Adding Action Named: ", action.theId);
     }
 
     public Set<String> keyList()
