@@ -29,8 +29,8 @@ public class BabyAutonomous extends OpMode
 
     public void init()
     {
-        theMaster.init(telemetry);
         robot.init(hardwareMap, telemetry, true);
+        theMaster.init(telemetry);
 
 //        WaitAction firstStep = new WaitAction("one", "two", 3);
 //        firstStep.init(telemetry, robot);
@@ -44,7 +44,6 @@ public class BabyAutonomous extends OpMode
 //        DriveAction thirdStep = new DriveAction("three", "", 7, .3, 0, 6);
 //        thirdStep.init(telemetry, robot);
 //        theMaster.addAction(thirdStep);
-
 
         try
         {
@@ -114,8 +113,6 @@ public class BabyAutonomous extends OpMode
                 telemetry.addData("TheAction: ", myAction);
             }
             theMaster.addRunAction("One");
-
-
         }
         catch(FileNotFoundException e)
         {
@@ -158,5 +155,8 @@ public class BabyAutonomous extends OpMode
         theMaster.execute();
     }
 
-    public void stop(){}
+    public void stop()
+    {
+        robot.stopMotors();
+    }
 }

@@ -10,20 +10,21 @@ public class HangAction extends RobotAction
 
     HangAction(String id, String nextAction, double duration, double power, Gen2_Hang.HangDirection direction, double distance )
     {
+        super( id, nextAction, duration);
         thePower = power;
         theDistance = distance;
         theDirection = direction;
-        timeout = duration;
-        theId = id;
-
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
+//        timeout = duration;
+//        theId = id;
+//
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
     }
 
     HangAction(String[] params)

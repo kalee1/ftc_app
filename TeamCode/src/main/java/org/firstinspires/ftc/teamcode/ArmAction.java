@@ -2,15 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import android.content.res.Resources;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class ArmAction extends RobotAction
 {
     MotorArm.ArmPositions thePosition;
     double theElbPower;
     double theShoulPower;
 
-
-    ArmAction(String id, String nextAction, double duration, double elbPower, double shoulPower, String position )
+    ArmAction(String id, String nextAction, double duration, double elbPower, double shoulPower, String position)
     {
+        super(id, nextAction, duration);
+
         if(position.equals(MotorArm.ArmPositions.ARM_HOME.toString()))
         {
             thePosition = MotorArm.ArmPositions.ARM_HOME;
@@ -34,17 +37,17 @@ public class ArmAction extends RobotAction
 
         theElbPower = elbPower;
         theShoulPower = shoulPower;
-        timeout = duration;
-        theId = id;
-
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
+//        timeout = duration;
+//        theId = id;
+//
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
     }
 
     ArmAction(String[] params)
@@ -58,15 +61,27 @@ public class ArmAction extends RobotAction
     }
 
     @Override
-    public void exit()
+    public void init(Telemetry telem, RuckusBot theRobot)
     {
-        robot.stopMotors();
-        super.exit();
+        super.init(telem, theRobot);
+    }
+
+    @Override
+    public void entry()
+    {
+        super.entry();
     }
 
     @Override
     public boolean execute()
     {
         return robot.goTo(thePosition, theElbPower, theShoulPower) || super.execute();
+    }
+
+    @Override
+    public void exit()
+    {
+        robot.stopMotors();
+        super.exit();
     }
 }

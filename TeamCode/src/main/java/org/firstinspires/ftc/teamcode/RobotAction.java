@@ -19,6 +19,21 @@ public class RobotAction
     // internal time tracking
     private long startTime = 0; // in nanoseconds
 
+    RobotAction( String anID, String next, double theTimeout)
+    {
+        theId = anID;
+        if(next.isEmpty())
+        {
+            theNextAction = null;
+        }
+        else
+        {
+            theNextAction = next;
+        }
+
+        timeout = theTimeout;
+    }
+
     public void init(Telemetry telem, RuckusBot theRobot)
     {
         telemetry = telem;
@@ -46,7 +61,8 @@ public class RobotAction
      * This method has sub millisecond accuracy.
      * @return number of seconds this op mode has been running
      */
-    public double getRuntime() {
+    public double getRuntime()
+    {
         final double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
         return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
     }

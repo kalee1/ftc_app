@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  *
  * @author Andrew, Error 404: Team Name Not Found
@@ -9,20 +11,21 @@ public class MarkDeployAction extends RobotAction
 {
     double thePower;
 
-    MarkDeployAction(String id, String nextAction, double duration, double power )
+    MarkDeployAction(String id, String nextAction, double duration, double power)
     {
+        super(id, nextAction, duration);
         thePower = power;
-        timeout = duration;
-        theId = id;
-
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
+//        timeout = duration;
+//        theId = id;
+//
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
 
     }
 
@@ -32,10 +35,9 @@ public class MarkDeployAction extends RobotAction
     }
 
     @Override
-    public void exit()
+    public void init(Telemetry telem, RuckusBot theRobot)
     {
-        robot.markDeploy(0.0);
-        super.exit();
+        super.init(telem, theRobot);
     }
 
     @Override
@@ -43,4 +45,18 @@ public class MarkDeployAction extends RobotAction
     {
         robot.markDeploy(thePower);
     }
+
+    @Override
+    public boolean execute()
+    {
+        return super.execute();
+    }
+
+    @Override
+    public void exit()
+    {
+        robot.markDeploy(0.0);
+        super.exit();
+    }
+
 }

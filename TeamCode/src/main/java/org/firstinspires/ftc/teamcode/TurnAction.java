@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  *
  * @author Andrew, Error 404: Team Name Not Found
@@ -10,21 +12,22 @@ public class TurnAction extends RobotAction
     double thePower;
     double theTargetHeading;
 
-    TurnAction(String id, String nextAction, double duration, double power, double targetHeading )
+    TurnAction(String id, String nextAction, double duration, double power, double targetHeading)
     {
+        super(id, nextAction, duration);
         thePower = power;
         theTargetHeading = targetHeading;
-        timeout = duration;
-        theId = id;
-
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
+//        timeout = duration;
+//        theId = id;
+//
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
     }
 
     TurnAction(String[] params)
@@ -37,17 +40,28 @@ public class TurnAction extends RobotAction
     }
 
 //    params[4].equals("IN") ? Gen2_Hang.HangDirection.IN : Gen2_Hang.HangDirection.OUT,
+    @Override
+    public void init(Telemetry telem, RuckusBot theRobot)
+    {
+        super.init(telem, theRobot);
+    }
 
     @Override
-    public void exit()
+    public void entry()
     {
-        robot.stopMotors();
-        super.exit();
+        super.entry();
     }
 
     @Override
     public boolean execute()
     {
         return robot.pointTurn(thePower, theTargetHeading, timeout) || super.execute();
+    }
+
+    @Override
+    public void exit()
+    {
+        robot.stopMotors();
+        super.exit();
     }
 }

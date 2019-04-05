@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 /**
  *
  * @author Andrew, Error 404: Team Name Not Found
@@ -13,21 +15,29 @@ public class CameraAction extends RobotAction
 
     CameraAction(String id, String nextAction) //default nextAction to center
     {
-        theId = id;
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
-        timeout = 600;
+        super( id, nextAction, 10);
+//        theId = id;
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
+//        timeout = 600;
     }
 
     CameraAction(String[] params)
     {
         this(params[0], params[1]);
+    }
+
+
+    @Override
+    public void init(Telemetry telem, RuckusBot theRobot)
+    {
+        super.init(telem, theRobot);
     }
 
     public void entry()
@@ -38,17 +48,16 @@ public class CameraAction extends RobotAction
     }
 
     @Override
-    public void exit()
-    {
-        robot.tfodShutdown();
-        super.exit();
-    }
-
-    @Override
     public boolean execute()
     {
-        goldPosition = robot.goldPosition();
-        telemetry.addData("Gold Position: ", goldPosition);
+        try
+        {
+            goldPosition = robot.goldPosition();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
 
         if(goldPosition.equals("right"))
         {
@@ -74,7 +83,18 @@ public class CameraAction extends RobotAction
         {
             done = true;
         }
+        telemetry.addData("Gold Position: ", goldPosition);
+        telemetry.addData("Camera Action done? ", done);
 
-        return done;
+        return done && super.execute();  // the super.execute is temporary so that we have time to see what is going on.
+    }
+
+    @Override
+    public void exit()
+    {
+        robot.tfodShutdown();
+        super.exit();
     }
 }
+
+

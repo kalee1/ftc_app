@@ -4,8 +4,7 @@ import com.qualcomm.robotcore.robot.Robot;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -17,8 +16,8 @@ import java.util.Vector;
  * */
 public class ActionMaster
 {
-    Map<String, RobotAction> actionMap = new HashMap<String, RobotAction>();
-    Map<String, RobotAction> runMap = new HashMap<String, RobotAction>();
+    Map<String, RobotAction> actionMap = new Hashtable<String, RobotAction>();
+    Map<String, RobotAction> runMap = new Hashtable<String, RobotAction>();
     List<String>  nextList = new Vector<String>();
     Telemetry telemetry;
     Boolean firstRun = true;
@@ -26,11 +25,6 @@ public class ActionMaster
     public void init(Telemetry telem)
     {
         telemetry = telem;
-    }
-
-    public void addRunAction(String action)
-    {
-        runMap.put(action, actionMap.get(action));
     }
 
     public void execute()
@@ -76,6 +70,11 @@ public class ActionMaster
             addRunAction(nextAction.theId);
         }
         nextList.clear();
+    }
+
+    public void addRunAction(String action)
+    {
+        runMap.put(action, actionMap.get(action));
     }
 
     public void buildActionMap()

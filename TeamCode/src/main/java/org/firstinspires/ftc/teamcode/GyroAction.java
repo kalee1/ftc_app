@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+
 public class GyroAction extends RobotAction
 {
     boolean notStuck = false;
@@ -8,14 +10,27 @@ public class GyroAction extends RobotAction
 
     GyroAction(String id, String nextAction, double duration)
     {
-        theId = id;
-        theNextAction = nextAction;
-        timeout = duration;
+        super(id, nextAction, duration);
+//        theId = id;
+//        theNextAction = nextAction;
+//        timeout = duration;
     }
 
     GyroAction(String[] params)
     {
         this(params[0], params[1], Double.parseDouble(params[2]));
+    }
+
+    @Override
+    public void init(Telemetry telem, RuckusBot theRobot)
+    {
+        super.init(telem, theRobot);
+    }
+
+    @Override
+    public void entry()
+    {
+        super.entry();
     }
 
     @Override
@@ -41,5 +56,12 @@ public class GyroAction extends RobotAction
 
         return done;
     }
+
+    @Override
+    public void exit()
+    {
+        super.exit();
+    }
+
 
 }

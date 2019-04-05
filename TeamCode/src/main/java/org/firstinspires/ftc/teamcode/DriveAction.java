@@ -14,23 +14,25 @@ public class DriveAction extends RobotAction
     double theGain;
     double theDistance;
 
-    DriveAction(String id, String nextAction, double duration, double power, double direction, double distance )
+    DriveAction(String id, String nextAction, double duration, double power, double direction, double distance)
     {
+        super(id, nextAction, duration);
+
         thePower = power;
         theDirection = direction;
         theGain = .01;
         theDistance = distance;
-        timeout = duration;
-        theId = id;
-
-        if(nextAction.isEmpty())
-        {
-            theNextAction = null;
-        }
-        else
-        {
-            theNextAction = nextAction;
-        }
+//        timeout = duration;
+//        theId = id;
+//
+//        if(nextAction.isEmpty())
+//        {
+//            theNextAction = null;
+//        }
+//        else
+//        {
+//            theNextAction = nextAction;
+//        }
     }
 
     DriveAction(String[] params)
@@ -44,10 +46,15 @@ public class DriveAction extends RobotAction
     }
 
     @Override
-    public void exit()
+    public void init(Telemetry telem, RuckusBot theRobot)
     {
-        robot.stopMotors();
-        super.exit();
+        super.init(telem, theRobot);
+    }
+
+    @Override
+    public void entry()
+    {
+        super.entry();
     }
 
     @Override
@@ -56,4 +63,13 @@ public class DriveAction extends RobotAction
         telemetry.addData("distance ", theDistance);
         return robot.drive(thePower, theDirection, theGain, theDistance, timeout) || super.execute();
     }
+
+
+    @Override
+    public void exit()
+    {
+        robot.stopMotors();
+        super.exit();
+    }
+
 }
