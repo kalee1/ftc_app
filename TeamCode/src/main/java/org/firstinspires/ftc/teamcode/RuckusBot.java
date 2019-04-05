@@ -29,6 +29,8 @@ public class RuckusBot
      * into the mineral basket on the end of the mineral arm. */
     Gen2_Hang theHang = new Gen2_Hang();
 
+    boolean theUseCamera = false;
+
     /** Determines which chassis type to use: Mecanum or Tank.
      *
      * @param chassisType  A string that is the type of chassis the code will use.
@@ -53,6 +55,7 @@ public class RuckusBot
      * */
     public void init(HardwareMap hwMap, Telemetry telem, boolean useCamera)
     {
+        theUseCamera = useCamera;
         theChassis.init(hwMap, telem);
         if(useCamera)
         {
@@ -67,7 +70,11 @@ public class RuckusBot
 
     public void start()
     {
-        theEyeOfSauron.start();
+        if(theUseCamera)
+        {
+            theEyeOfSauron.start();
+
+        }
         theHang.start();
     }
 

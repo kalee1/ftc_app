@@ -100,6 +100,10 @@ public class BabyAutonomous extends OpMode
                 {
                     myAction = new GyroAction(params);
                 }
+                else if(type.equalsIgnoreCase("RESETACTION"))
+                {
+                    myAction = new ResetHeadingAction(params);
+                }
                 else
                 {
                     myAction = null;

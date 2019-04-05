@@ -167,8 +167,8 @@ public class FieldVision
                             silverDetected = true;
                         }
 
-                        telemetry.addData("recognition info: ", recognition.toString());
-                        telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
+//                        telemetry.addData("recognition info: ", recognition.toString());
+//                        telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
                     }
 
                     if(updatedRecognitions.size() > 1)

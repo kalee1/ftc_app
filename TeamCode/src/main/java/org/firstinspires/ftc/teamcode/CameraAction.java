@@ -15,7 +15,7 @@ public class CameraAction extends RobotAction
 
     CameraAction(String id, String nextAction) //default nextAction to center
     {
-        super( id, nextAction, 10);
+        super( id, nextAction, 30);
 //        theId = id;
 //        if(nextAction.isEmpty())
 //        {
@@ -62,31 +62,30 @@ public class CameraAction extends RobotAction
         if(goldPosition.equals("right"))
         {
             theNextAction = "rightPosition";
+            telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
         else if(goldPosition.equals("center"))
         {
             theNextAction = "centerPosition";
+            telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
         else if(goldPosition.equals("left"))
         {
             theNextAction = "leftPosition";
+            telemetry.addData("Gold Position: ", goldPosition);
             done = true;
-        }
-        else if(count < 3)
-        {
-            done = false;
-            count++;
         }
         else
         {
-            done = true;
+            done = false;
         }
         telemetry.addData("Gold Position: ", goldPosition);
         telemetry.addData("Camera Action done? ", done);
 
-        return done && super.execute();  // the super.execute is temporary so that we have time to see what is going on.
+        return done || super.execute();  // the super.execute is temporary so that we have time to see what is going on.
+
     }
 
     @Override
