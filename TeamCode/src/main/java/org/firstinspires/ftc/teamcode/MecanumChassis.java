@@ -320,6 +320,11 @@ public class MecanumChassis extends Chassis
         double driveDistance = COUNTS_PER_INCH * distance;
         double correction;
         double actual = getHeadingDbl();
+        DcMotor encoderMotor = lFrontMotor;
+
+        telemetry.addData( "Is RR-Diagonal?: ", direction ==  REVERSE_RIGHT_DIAGONAL);
+        telemetry.addData("Direction: ", direction);
+        telemetry.addData("RR-Diag: ", REVERSE_RIGHT_DIAGONAL);
 
         if (!moving)
         {
@@ -328,9 +333,10 @@ public class MecanumChassis extends Chassis
             {
                 initialHeading += 360.0;
             }
-            if (direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_LEFT_DIAGONAL)
+            if (direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_RIGHT_DIAGONAL)
             {
                 initialPosition = rFrontMotor.getCurrentPosition();
+                encoderMotor = rFrontMotor;
             }
             else
             {
@@ -338,8 +344,8 @@ public class MecanumChassis extends Chassis
             }
             resetStartTime();
             moving = true;
-//            telemetry.addData("initial position: ", initialPosition);
         }
+        telemetry.addData("initial position: ", initialPosition);
 
         if (Math.abs(initialHeading) > 130  &&  actual < 0.0)
         {
@@ -351,11 +357,13 @@ public class MecanumChassis extends Chassis
         double lStickX = power * Math.sin(Math.toRadians(direction));
         double lStickY = -(power * Math.cos(Math.toRadians(direction)));
 
-//        telemetry.addData("target Position: ", distance);
+        telemetry.addData("Drive Distance: ", driveDistance);
+        double tmpDistance = Math.abs(encoderMotor.getCurrentPosition() - initialPosition);
+        telemetry.addData("Distance Driven:", tmpDistance);
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
-        if (((Math.abs(lFrontMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
+        if (((Math.abs(encoderMotor.getCurrentPosition() - initialPosition)) >= driveDistance) || (getRuntime() > time))
         {
             stopMotors();
             moving = false;
