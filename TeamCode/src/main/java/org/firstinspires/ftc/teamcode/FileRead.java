@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import android.content.Context;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -13,21 +14,31 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import com.acmerobotics.dashboard.FtcDashboard;
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+
 
 @TeleOp(name="file read test", group="alpha")
 /**
  * @author Andrew, Error 404: Team Name Not Found
  * @see OpMode
  */
+@Config
 public class FileRead extends OpMode
 {
     String fileName = "MyFile";
     String content = "hellowww world";
     BufferedReader br = null;
     String line = "null";
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    public static int MAGIC_NUMBER = 32;
+
 
     public void init()
     {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         try
         {
             RobotAction myAction;
@@ -125,6 +136,7 @@ public class FileRead extends OpMode
     public void loop()
     {
 
+        telemetry.addData("Loop RunTime", getRuntime()-MAGIC_NUMBER);
     }
 
     public void stop()
