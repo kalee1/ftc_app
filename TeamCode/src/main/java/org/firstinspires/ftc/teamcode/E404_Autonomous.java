@@ -32,6 +32,8 @@ public class E404_Autonomous extends OpMode
     String line = "null";
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    String whichFile;
+    File testFile;
 
     public void init()
     {
@@ -55,9 +57,27 @@ public class E404_Autonomous extends OpMode
 
         try
         {
+//            if(whichFile.equals("CraterFace"))
+//            {
+
+//            }
+//            else if(whichFile.equals("D_LeftEnter"))
+//            {
+//
+//            }
+//            else if(whichFile.equals("D_RightEnter"))
+//            {
+//
+//            }
+//            else if(whichFile.equals("D_OtherCrater"))
+//            {
+//
+//            }
+
+
             RobotAction myAction;
-            File theFile = new File("/storage/9016-4EF8/auto.csv");
-            FileReader inputStreamReader = new FileReader(theFile);
+//            File theFile = new File("/storage/9016-4EF8/auto.csv");
+            FileReader inputStreamReader = new FileReader(testFile);
 
             br = new BufferedReader(inputStreamReader);
 
