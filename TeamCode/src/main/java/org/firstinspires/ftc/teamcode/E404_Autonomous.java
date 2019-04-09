@@ -32,8 +32,7 @@ public class E404_Autonomous extends OpMode
     String line = "null";
     FtcDashboard dashboard = FtcDashboard.getInstance();
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
-    String whichFile;
-    File testFile;
+//    File testFile;
 
     public void init()
     {
@@ -42,42 +41,11 @@ public class E404_Autonomous extends OpMode
         robot.init(hardwareMap, telemetry, true);
         theMaster.init(telemetry);
 
-//        WaitAction firstStep = new WaitAction("one", "two", 3);
-//        firstStep.init(telemetry, robot);
-//        theMaster.addAction(firstStep);
-//        theMaster.addRunAction("one");
-//
-//        WaitAction secondStep = new WaitAction("two", "three", 3);
-//        secondStep.init(telemetry, robot);
-//        theMaster.addAction(secondStep);
-//
-//        DriveAction thirdStep = new DriveAction("three", "", 7, .3, 0, 6);
-//        thirdStep.init(telemetry, robot);
-//        theMaster.addAction(thirdStep);
-
         try
         {
-//            if(whichFile.equals("CraterFace"))
-//            {
-
-//            }
-//            else if(whichFile.equals("D_LeftEnter"))
-//            {
-//
-//            }
-//            else if(whichFile.equals("D_RightEnter"))
-//            {
-//
-//            }
-//            else if(whichFile.equals("D_OtherCrater"))
-//            {
-//
-//            }
-
-
             RobotAction myAction;
-//            File theFile = new File("/storage/9016-4EF8/auto.csv");
-            FileReader inputStreamReader = new FileReader(testFile);
+            File theFile = new File("/storage/9016-4EF8/auto.csv");
+            FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);
 

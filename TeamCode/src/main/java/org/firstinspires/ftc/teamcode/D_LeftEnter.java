@@ -4,13 +4,12 @@ import java.io.File;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 
-@Autonomous(name="D-LeftEnter", group="Zombie")
+//@Autonomous(name="D-LeftEnter", group="Zombie")
 public class D_LeftEnter extends E404_Autonomous
 {
    public void init()
    {
-       whichFile = "D_LeftEnter";
-       testFile = new File("/storage/9016-4EF8/DepoLeftEnter.csv");
+//       testFile = new File("/storage/9016-4EF8/depoleftenter.csv");
        super.init();
    }
 }
