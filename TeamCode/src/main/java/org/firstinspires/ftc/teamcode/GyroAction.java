@@ -2,6 +2,11 @@ package org.firstinspires.ftc.teamcode;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+
+/**
+ * @author Andrew, Error 404: Team Name Not Found
+ * @see RobotAction
+ * */
 public class GyroAction extends RobotAction
 {
     boolean notStuck = false;

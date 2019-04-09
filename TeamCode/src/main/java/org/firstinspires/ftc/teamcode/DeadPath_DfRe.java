@@ -1,17 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-@Autonomous(name="DepoFace (Right Enter)", group="Field Position")
+//@Autonomous(name="DepoFace (Right Enter)", group="Zombie")
 
 /** Contains the distance and heading values for the DepoFaceRightEnter autonomous drive path.
  * Starts on the silver side and drives from the lander to the alliance depo, then from the depo to
  * the crater, and enters the crater from the right side.
  *
  * @author Andrew, Error 404: Team Name Not Found
- * @see Error404Autonomus
+ * @see DeadAuto
  * */
-public class E404_DepoFaceRightEnter extends Error404Autonomus
+public class DeadPath_DfRe extends DeadAuto
 {
     /**
      * Initializes drive and heading values for autonomous. */

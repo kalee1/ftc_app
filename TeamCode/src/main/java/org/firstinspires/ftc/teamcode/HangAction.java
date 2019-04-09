@@ -1,5 +1,10 @@
 package org.firstinspires.ftc.teamcode;
 
+/**
+ *
+ * @author Andrew, Error 404: Team Name Not Found
+ * @see RobotAction
+ * */
 public class HangAction extends RobotAction
 {
     double thePower;

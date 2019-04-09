@@ -14,7 +14,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 
-@TeleOp(name="file read test", group="alpha")
+//@TeleOp(name="file read test", group="alpha")
 /**
  * @author Andrew, Error 404: Team Name Not Found
  * @see OpMode
