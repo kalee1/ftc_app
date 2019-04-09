@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import org.firstinspires.ftc.robotcontroller.internal.FtcOpModeRegister;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-@Autonomous(name="Dead Autonomus", group="Zeta")
+//@Autonomous(name="Dead Autonomus", group="Zeta")
 
 /**
  * An opmode that holds a state machine that contains the autonomous robot commands. Has three child
