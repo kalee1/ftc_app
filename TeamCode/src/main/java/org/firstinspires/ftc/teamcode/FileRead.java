@@ -19,7 +19,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 
 
-@TeleOp(name="file read test", group="alpha")
+//@TeleOp(name="file read test", group="alpha")
 /**
  * @author Andrew, Error 404: Team Name Not Found
  * @see OpMode

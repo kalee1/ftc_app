@@ -15,14 +15,16 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 
-@Autonomous(name="Baby Autonomus", group="Zeta")
+@Autonomous(name="Mother Autonomus", group="Zeta")
 
-/** A small test autonomous with a state machine to test the new autonomous structure
+/** The main autonomous class.
+ * This class loads data from a spreadsheet and uses the data to create a sequential list of robot
+ * actions.
  *
- * @auther Andrew, Error 404 Robotics
- * @see OpMode
+ * @author Andrew, Error 404: Team Name Not Found
+ * @see RobotAction
  * */
-public class BabyAutonomous extends OpMode
+public class E404_Autonomous extends OpMode
 {
     ActionMaster theMaster = new ActionMaster();
     RuckusBot robot = new RuckusBot("MecanumChassis");

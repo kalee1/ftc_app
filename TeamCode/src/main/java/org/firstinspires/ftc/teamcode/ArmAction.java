@@ -4,6 +4,10 @@ import android.content.res.Resources;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * @author Andrew, Error 404 Robotics
+ * @see RobotAction
+ *  */
 public class ArmAction extends RobotAction
 {
     MotorArm.ArmPositions thePosition;
