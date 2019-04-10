@@ -293,6 +293,8 @@ public class MecanumChassis extends Chassis
 //        telemetry.addData("6. left front power", lFrontMotor.getPower());
 //        telemetry.addData("7. right rear power", rRearMotor.getPower());
 //        telemetry.addData("8. left rear power", lRearMotor.getPower());
+        telemetry.addData("lf direction: ", lFrontMotor.getDirection());
+        telemetry.addData("rf direction: ", rFrontMotor.getDirection());
 
         telemetry.addData("Current Heading", getHeadingDbl());
         telemetry.addData("pitch heading", getPitchDbl());

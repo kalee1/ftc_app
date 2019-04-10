@@ -7,14 +7,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * @author Andrew, Error 404: Team Name Not Found
  * @see RobotAction
  * */
-public class CameraAction extends RobotAction
+public class Camera2Action extends RobotAction
 {
     String goldPosition = "null";
     Boolean done = false;
     Boolean theShutdown = false;
     int count;
 
-    CameraAction(String id, String nextAction, Boolean shutdown) //default nextAction to center
+    Camera2Action(String id, String nextAction, Boolean shutdown) //default nextAction to center
     {
 
         super( id, nextAction, 30);
@@ -22,7 +22,7 @@ public class CameraAction extends RobotAction
 
     }
 
-    CameraAction(String[] params)
+    Camera2Action(String[] params)
     {
         this(params[0], params[1], Boolean.parseBoolean(params[2]));
     }
@@ -55,19 +55,19 @@ public class CameraAction extends RobotAction
 
         if(goldPosition.equals("right"))
         {
-            theNextAction = "rightPosition";
+            theNextAction = "RightPosition";
             telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
         else if(goldPosition.equals("center"))
         {
-            theNextAction = "centerPosition";
+            theNextAction = "CenterPosition";
             telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
         else if(goldPosition.equals("left"))
         {
-            theNextAction = "leftPosition";
+            theNextAction = "LeftPosition";
             telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
@@ -92,5 +92,3 @@ public class CameraAction extends RobotAction
         super.exit();
     }
 }
-
-

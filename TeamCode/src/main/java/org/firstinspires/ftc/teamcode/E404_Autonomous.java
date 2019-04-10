@@ -56,7 +56,8 @@ public class E404_Autonomous extends OpMode
         try
         {
             RobotAction myAction;
-            File theFile = new File("/storage/9016-4EF8/auto.csv");
+//            File theFile = new File("/storage/9016-4EF8/auto.csv");
+            File theFile = new File("/storage/3338-6131/auto.csv");
             FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);
@@ -91,6 +92,10 @@ public class E404_Autonomous extends OpMode
                 else if(type.equalsIgnoreCase("CAMERAACTION"))
                 {
                     myAction = new CameraAction(params);
+                }
+                else if(type.equalsIgnoreCase("CAMERA2ACTION"))
+                {
+                    myAction = new Camera2Action(params);
                 }
                 else if(type.equalsIgnoreCase("HANGACTION"))
                 {
