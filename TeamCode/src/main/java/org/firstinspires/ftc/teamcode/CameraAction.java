@@ -81,6 +81,11 @@ public class CameraAction extends RobotAction
             }
             alreadyChecked = true;
         }
+        else if(alreadyChecked && goldPosition.equals("checkRight"))
+        {
+            theNextAction = "centerPosition";
+            done = true;
+        }
         else
         {
             done = false;

@@ -217,7 +217,7 @@ public class FieldVision
                                 goldPosition = "center";
                             }
                         }
-                        else if(silverDetected && !goldDetected)
+                        else if(silverDetected && !goldDetected && updatedRecognitions.size() > 1)
                         {
                             goldPosition = "right";
                         }
@@ -228,8 +228,8 @@ public class FieldVision
                     }
 
                     telemetry.addData("gold: ", goldMineralX);
-                    telemetry.addData("silver 2", silverMineral2X);
-                    telemetry.addData("silver 1", silverMineral1X);
+//                    telemetry.addData("silver 2", silverMineral2X);
+//                    telemetry.addData("silver 1", silverMineral1X);
 
                 }
 
