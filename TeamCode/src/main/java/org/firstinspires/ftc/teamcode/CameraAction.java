@@ -10,8 +10,8 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class CameraAction extends RobotAction
 {
     String goldPosition = "null";
-    Boolean done = false;
-    Boolean theShutdown = false;
+    boolean done = false;
+    boolean theShutdown = false;
     int count;
 
     CameraAction(String id, String nextAction, Boolean shutdown) //default nextAction to center
@@ -70,6 +70,16 @@ public class CameraAction extends RobotAction
             theNextAction = "leftPosition";
             telemetry.addData("Gold Position: ", goldPosition);
             done = true;
+        }
+        else if(goldPosition.equals("checkRight") && !alreadyChecked)
+        {
+            theNextAction = "checkRight";
+            done = true;
+            if(theShutdown)
+            {
+                theShutdown = false;
+            }
+            alreadyChecked = true;
         }
         else
         {

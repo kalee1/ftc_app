@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -22,6 +24,8 @@ public class Error404MecanumTeleop extends OpMode
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
 
     Collector theCollect = new Collector();
+    FtcDashboard dashboard = FtcDashboard.getInstance();
+    Telemetry dashboardTelemetry = dashboard.getTelemetry();
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -33,6 +37,7 @@ public class Error404MecanumTeleop extends OpMode
         // The init() method of the hardware class does all the work here
         //
         robot.init(hardwareMap, telemetry, false);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
         // Send telemetry message to signify robot waiting;
         telemetry.addData("Say", "Hello Driver. Your Mecanum Robot is Ready for Your Command.");    //

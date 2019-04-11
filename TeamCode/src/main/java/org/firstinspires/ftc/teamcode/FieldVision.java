@@ -161,43 +161,74 @@ public class FieldVision
                                 goldDetected = true;
                             }
                         }
-                        else if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
+                        else
+                        {
+                            goldDetected = false;
+                        }
+                        if(recognition.getLabel().equals(LABEL_SILVER_MINERAL))
                         {
                             silverMineral1X = (int) recognition.getLeft();
                             silverDetected = true;
+                        }
+                        else
+                        {
+                            silverDetected = false;
                         }
 
 //                        telemetry.addData("recognition info: ", recognition.toString());
 //                        telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
                     }
 
-                    if(updatedRecognitions.size() > 1)
-                    {
-                        if(goldMineralX < 375 && goldDetected)
-                        {
-                            goldPosition = "left";
-                        }
-                        else
-                        {
-                            leftPosition = "silver";
-                        }
-                        if(goldMineralX > 375 && goldDetected)
-                        {
-                            goldPosition = "center";
-                        }
-                        else
-                        {
-                            centerPosition = "silver";
-                        }
+//                    if(updatedRecognitions.size() > 1)
+//                    {
+//                        if(goldMineralX < 375 && goldDetected)
+//                        {
+//                            goldPosition = "left";
+//                        }
+//                        else if(silverDetected1 /*&& silverMineral1X < 375*/)
+//                        {
+//                            leftPosition = "silver";
+//                        }
+//                        if(goldMineralX > 375 && goldDetected)
+//                        {
+//                            goldPosition = "center";
+//                        }
+//                        else if(silverDetected2 /*&& silverMineral2X > 375*/)
+//                        {
+//                            centerPosition = "silver";
+//                        }
+//
+//                        if(centerPosition.equals("silver") && leftPosition.equals("silver"))
+//                        {
+//                            goldPosition = "right";
+//                        }
+//                    }
 
-                        if(centerPosition.equals("silver") && leftPosition.equals("silver"))
+                    if(updatedRecognitions.size() > 0)
+                    {
+                        if(goldDetected)
+                        {
+                            if(goldMineralX < 375)
+                            {
+                                goldPosition = "left";
+                            }
+                            else
+                            {
+                                goldPosition = "center";
+                            }
+                        }
+                        else if(silverDetected && !goldDetected)
                         {
                             goldPosition = "right";
+                        }
+                        else
+                        {
+                            goldPosition = "checkRight";
                         }
                     }
 
                     telemetry.addData("gold: ", goldMineralX);
-//                    telemetry.addData("silver 2", silverMineral2X);
+                    telemetry.addData("silver 2", silverMineral2X);
                     telemetry.addData("silver 1", silverMineral1X);
 
                 }

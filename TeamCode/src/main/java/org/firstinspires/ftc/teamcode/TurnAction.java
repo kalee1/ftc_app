@@ -55,7 +55,7 @@ public class TurnAction extends RobotAction
     @Override
     public boolean execute()
     {
-        return robot.pointTurn(thePower, theTargetHeading, timeout) || super.execute();
+        return robot.pointTurn(thePower, theTargetHeading, timeout);
     }
 
     @Override

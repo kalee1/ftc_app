@@ -101,6 +101,8 @@ public class MecanumChassis extends Chassis
      * heading to its start heading. */
     double resetHeading;
 
+    DcMotor encoderMotor;
+
 
     /**
      * Look for a specified set of motors in the config file. If the motors are found, give them a
@@ -181,6 +183,8 @@ public class MecanumChassis extends Chassis
             telem.addData("navx not found in config file", 0);
             navx = null;
         }
+
+        encoderMotor = lFrontMotor;
 
 //        telem.addData("navx", navx);
 //
@@ -322,11 +326,10 @@ public class MecanumChassis extends Chassis
         double driveDistance = COUNTS_PER_INCH * distance;
         double correction;
         double actual = getHeadingDbl();
-        DcMotor encoderMotor = lFrontMotor;
 
         telemetry.addData( "Is RR-Diagonal?: ", direction ==  REVERSE_RIGHT_DIAGONAL);
-        telemetry.addData("Direction: ", direction);
-        telemetry.addData("RR-Diag: ", REVERSE_RIGHT_DIAGONAL);
+//        telemetry.addData("Direction: ", direction);
+//        telemetry.addData("RR-Diag: ", REVERSE_RIGHT_DIAGONAL);
 
         if (!moving)
         {
@@ -335,7 +338,7 @@ public class MecanumChassis extends Chassis
             {
                 initialHeading += 360.0;
             }
-            if (direction == FORWARD_LEFT_DIAGONAL || direction  == REVERSE_RIGHT_DIAGONAL)
+            if( (direction == FORWARD_LEFT_DIAGONAL) || (direction  == REVERSE_RIGHT_DIAGONAL) )
             {
                 initialPosition = rFrontMotor.getCurrentPosition();
                 encoderMotor = rFrontMotor;
@@ -343,6 +346,7 @@ public class MecanumChassis extends Chassis
             else
             {
                 initialPosition = lFrontMotor.getCurrentPosition();
+                encoderMotor = lFrontMotor;
             }
             resetStartTime();
             moving = true;
@@ -359,9 +363,14 @@ public class MecanumChassis extends Chassis
         double lStickX = power * Math.sin(Math.toRadians(direction));
         double lStickY = -(power * Math.cos(Math.toRadians(direction)));
 
+        telemetry.addData("Right Motor DD: ", Math.abs(rFrontMotor.getCurrentPosition() - initialPosition));
+        telemetry.addData("Left Motor DD:", Math.abs(lFrontMotor.getCurrentPosition() - initialPosition));
+
         telemetry.addData("Drive Distance: ", driveDistance);
         double tmpDistance = Math.abs(encoderMotor.getCurrentPosition() - initialPosition);
         telemetry.addData("Distance Driven:", tmpDistance);
+        telemetry.addData("getRuntime() = ", getRuntime());
+        telemetry.addData("time = ", time);
 
         joystickDrive(lStickX, lStickY, correction, 0.0, power);
 
@@ -369,6 +378,7 @@ public class MecanumChassis extends Chassis
         {
             stopMotors();
             moving = false;
+            encoderMotor = lFrontMotor;
         }
 
         return !moving;

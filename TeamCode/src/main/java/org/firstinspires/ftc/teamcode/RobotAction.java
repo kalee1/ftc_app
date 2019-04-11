@@ -16,6 +16,7 @@ public class RobotAction
     boolean done = false;
     String theNextAction = "";
     Telemetry telemetry;
+    boolean alreadyChecked = false;
     // internal time tracking
     private long startTime = 0; // in nanoseconds
 

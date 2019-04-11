@@ -61,7 +61,7 @@ public class DriveAction extends RobotAction
     public boolean execute()
     {
         telemetry.addData("distance ", theDistance);
-        return robot.drive(thePower, theDirection, theGain, theDistance, timeout) || super.execute();
+        return robot.drive(thePower, theDirection, theGain, theDistance, timeout);
     }
 
 
