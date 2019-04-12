@@ -26,13 +26,19 @@ import java.util.Arrays;
  * */
 public class E404_Autonomous extends OpMode
 {
+    /** ActionMaster */
     ActionMaster theMaster = new ActionMaster();
+    /** RuckusBot */
     RuckusBot robot = new RuckusBot("MecanumChassis");
-    BufferedReader br = null;
-    String line = "null";
+    /** FtcDashboard */
     FtcDashboard dashboard = FtcDashboard.getInstance();
+    /** Telemetry */
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
+    /** File */
+    File autoFile = null;
 
+    /** Calls the init methods for needed classes. */
+    @Override
     public void init()
     {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
@@ -40,25 +46,14 @@ public class E404_Autonomous extends OpMode
         robot.init(hardwareMap, telemetry, true);
         theMaster.init(telemetry);
 
-//        WaitAction firstStep = new WaitAction("one", "two", 3);
-//        firstStep.init(telemetry, robot);
-//        theMaster.addAction(firstStep);
-//        theMaster.addRunAction("one");
-//
-//        WaitAction secondStep = new WaitAction("two", "three", 3);
-//        secondStep.init(telemetry, robot);
-//        theMaster.addAction(secondStep);
-//
-//        DriveAction thirdStep = new DriveAction("three", "", 7, .3, 0, 6);
-//        thirdStep.init(telemetry, robot);
-//        theMaster.addAction(thirdStep);
-
+        BufferedReader br = null;
+        String line = "null";
         try
         {
             RobotAction myAction;
-            File theFile = new File("/storage/9016-4EF8/auto.csv"); //blue phones
+//            File theFile = new File("/storage/9016-4EF8/auto.csv"); //blue phones
 //            File theFile = new File("/storage/3338-6131/auto.csv"); //red phones
-            FileReader inputStreamReader = new FileReader(theFile);
+            FileReader inputStreamReader = new FileReader(autoFile);
 
             br = new BufferedReader(inputStreamReader);
 
@@ -155,15 +150,20 @@ public class E404_Autonomous extends OpMode
                 }
             }
         }
-
     }
 
+    /** Runs once when the start button is pressed, but before
+     * the loop method starts. */
+    @Override
     public void start()
     {
         robot.start();
         resetStartTime();
     }
 
+    /** Contains the actual movement commands of the class. Runs repeatedly until the stop button is
+     *  pressed.*/
+    @Override
     public void loop()
     {
         telemetry.addData("loop time: ", getRuntime());
@@ -172,6 +172,9 @@ public class E404_Autonomous extends OpMode
         theMaster.execute();
     }
 
+    /** Runs once after the driver hits the stop button on teh drivers station phone.
+     * Stops the loop method and stops the drive motors. */
+    @Override
     public void stop()
     {
         robot.stopMotors();

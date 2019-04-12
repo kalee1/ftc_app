@@ -44,9 +44,6 @@ public class Error404MecanumTeleop extends OpMode
 
     }
 
-    /*
-     * Code to run ONCE when the driver hits PLAY
-     */
     /** Not used for anything right now, but runs once when the start button is pressed, but before
      * the loop method starts. */
     @Override
@@ -55,10 +52,7 @@ public class Error404MecanumTeleop extends OpMode
 
     }
 
-    /*
-     * Code to run REPEATEDLY after the driver hits PLAY but before they hit STOP
-     */
-    /** Contains the actual movement commands of the class. Runs repeatedly until the stop button is
+    /** Contains the actual movement commands of the class. Runs repeatedly after the driver hits play and until the stop button is
      *  pressed.*/
     @Override
     public void loop()

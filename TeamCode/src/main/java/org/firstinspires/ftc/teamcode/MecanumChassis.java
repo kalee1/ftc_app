@@ -611,6 +611,11 @@ public class MecanumChassis extends Chassis
         return pointTurn(power, resetHeading, time);
     }
 
+    /** Checks the imu to determine if the robot is flat and level.  If it is stuck on the latch,
+     * the robot tips and turns.  This method will tell you if you are OK by looking at the pitch.
+     *
+     * @return A boolean which tells you if the robot's pitch reading is good or not.
+     * */
     public boolean goodPitch()
     {
         if(getPitchDbl() > 2 || getPitchDbl() < -3)
