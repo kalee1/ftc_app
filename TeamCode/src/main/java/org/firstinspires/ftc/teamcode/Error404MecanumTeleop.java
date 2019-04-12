@@ -92,13 +92,17 @@ public class Error404MecanumTeleop extends OpMode
 //        telemetry.addData("2: leftY", lStickY);
 
         // Robot chassis controls
-        if(gamepad1.x)
+        if(gamepad1.a)
         {
-            robot.reset(0.2, 10);
+            robot.reset(0.5, 10);
         }
-        else if(gamepad1.a)
+        else if(gamepad1.x)
         {
-            robot.pointTurn(.2, 180, 10);
+            robot.pointTurn(.5, -90, 10);
+        }
+        else if(gamepad1.b)
+        {
+            robot.pointTurn(.5, 90, 10);
         }
         else
         {

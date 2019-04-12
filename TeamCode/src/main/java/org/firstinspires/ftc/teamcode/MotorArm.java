@@ -222,7 +222,7 @@ public class MotorArm
     {
 
 
-        return goTo(ArmPositions.CRATER_EXTEND, 0.7, 0.6);
+        return goTo(ArmPositions.CRATER_EXTEND, 1.0, 0.85);
     }
 
     /** Convenience method to drive the arm to the home position where it is fully stowed.
@@ -231,7 +231,7 @@ public class MotorArm
     public boolean armHome()
     {
 
-        return goTo(ArmPositions.ARM_HOME, 0.6, 0.9);
+        return goTo(ArmPositions.ARM_HOME, 1.0, 0.8);
     }
 
     /** Convenience method to drive the arm to the position where it is up next to the lander in preparation
@@ -241,7 +241,7 @@ public class MotorArm
     public boolean landerExtend()
     {
 
-        return goTo(ArmPositions.LANDER_EXTEND, 0.7, 0.7);
+        return goTo(ArmPositions.LANDER_EXTEND, 1.0, 1.0);
     }
 
     /** Convenience method to drive the arm to the position where it is partially extended to make it
@@ -251,7 +251,7 @@ public class MotorArm
     public boolean drivingExtend()
     {
 
-        return goTo(ArmPositions.DRIVING_EXTEND, 0.2, 0.8);
+        return goTo(ArmPositions.DRIVING_EXTEND, 0.4, 1.0);
     }
 
     /** Convenience method to drive the arm to the position where the shoulder is perpendicular to

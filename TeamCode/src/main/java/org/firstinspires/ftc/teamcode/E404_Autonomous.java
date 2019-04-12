@@ -56,8 +56,8 @@ public class E404_Autonomous extends OpMode
         try
         {
             RobotAction myAction;
-//            File theFile = new File("/storage/9016-4EF8/auto.csv");
-            File theFile = new File("/storage/3338-6131/auto.csv");
+            File theFile = new File("/storage/9016-4EF8/auto.csv"); //blue phones
+//            File theFile = new File("/storage/3338-6131/auto.csv"); //red phones
             FileReader inputStreamReader = new FileReader(theFile);
 
             br = new BufferedReader(inputStreamReader);

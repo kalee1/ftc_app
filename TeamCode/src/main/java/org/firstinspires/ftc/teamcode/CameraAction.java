@@ -17,7 +17,7 @@ public class CameraAction extends RobotAction
     CameraAction(String id, String nextAction, Boolean shutdown) //default nextAction to center
     {
 
-        super( id, nextAction, 30);
+        super( id, nextAction, 2);
         theShutdown = shutdown;
 
     }
@@ -71,21 +71,33 @@ public class CameraAction extends RobotAction
             telemetry.addData("Gold Position: ", goldPosition);
             done = true;
         }
-        else if(goldPosition.equals("checkRight") && !alreadyChecked)
+        else if(goldPosition.equals("tweakRight"))
         {
-            theNextAction = "checkRight";
-            done = true;
-            if(theShutdown)
-            {
-                theShutdown = false;
-            }
-            alreadyChecked = true;
+            theNextAction = "tweakRight";
+            done = false;
         }
-        else if(alreadyChecked && goldPosition.equals("checkRight"))
+        else if(goldPosition.equals("tweakLeft"))
         {
-            theNextAction = "centerPosition";
-            done = true;
+            theNextAction = "tweakLeft";
+            done  =  false;
         }
+//        else if(goldPosition.equals("checkRight") && !alreadyChecked)
+//        {
+//            theNextAction = "checkRight";
+//            telemetry.addData("Gold Position: ", goldPosition);
+//            done = true;
+//            if(theShutdown)
+//            {
+//                theShutdown = false;
+//            }
+//            alreadyChecked = true;
+//        }
+//        else if(alreadyChecked && goldPosition.equals("checkRight"))
+//        {
+//            telemetry.addData("Gold Position: ", goldPosition);
+//            theNextAction = "centerPosition";
+//            done = true;
+//        }
         else
         {
             done = false;

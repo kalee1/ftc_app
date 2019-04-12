@@ -169,11 +169,16 @@ public class FieldVision
                         {
                             silverMineral1X = (int) recognition.getLeft();
                             silverDetected = true;
+
                         }
                         else
                         {
                             silverDetected = false;
                         }
+                        telemetry.addData("gold detected", goldDetected);
+                        telemetry.addData("silver detected", silverDetected);
+
+
 
 //                        telemetry.addData("recognition info: ", recognition.toString());
 //                        telemetry.addData("angle", recognition.estimateAngleToObject(AngleUnit.DEGREES));
@@ -221,9 +226,20 @@ public class FieldVision
                         {
                             goldPosition = "right";
                         }
+                        else if(silverDetected && updatedRecognitions.size() == 1)
+                        {
+                            if(silverMineral1X < 375)
+                            {
+                                goldPosition = "tweakRight";
+                            }
+                            else
+                            {
+                                goldPosition = "tweakLeft";
+                            }
+                        }
                         else
                         {
-                            goldPosition = "checkRight";
+                            goldPosition = "null";
                         }
                     }
 

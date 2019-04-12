@@ -49,13 +49,13 @@ public class GyroAction extends RobotAction
         }
         else if(count > 3)
         {
-            theNextAction = "allDone";
+            theNextAction = "AllDone";
             done = true;
         }
         else
         {
             done = true;
-            theNextAction = "failS1";
+            theNextAction = "FailS1";
             count++;
         }
 
