@@ -75,7 +75,7 @@ public class Gen2_Hang
     }
 
 
-    /**  */
+    /** Contains the allowed preset values for the hanger. */
     public enum Lift
     {
         HANGERHANG(0.0),
@@ -90,6 +90,10 @@ public class Gen2_Hang
             }
     }
 
+    /** Sources the current time in seconds from the internal timer.
+     *
+     * @return the current time.
+     * */
     public double getRuntime()
     {
         return (System.nanoTime() - startTime) / NANOSECONDS_PER_SECOND;
@@ -119,6 +123,7 @@ public class Gen2_Hang
             hang.setPower(.4);
         }
     }
+    /** Pulls the hanger down to the home position. */
     public void hangHome()
     {
         if (hang.getCurrentPosition() < Lift.HANGERHOME.targetEncoder)

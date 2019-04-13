@@ -20,6 +20,7 @@ public class RobotAction
     // internal time tracking
     private long startTime = 0; // in nanoseconds
 
+    /** Creates a new object from the supplied parameters. */
     RobotAction( String anID, String next, double theTimeout)
     {
         theId = anID;
@@ -35,25 +36,29 @@ public class RobotAction
         timeout = theTimeout;
     }
 
+    /** Placeholder for initialization. Currently only calls the parent init method. */
     public void init(Telemetry telem, RuckusBot theRobot)
     {
         telemetry = telem;
         robot = theRobot;
     }
 
+    /** Sets the start time variable equal to the in-system timer.  */
     public void entry()
     {
         startTime = System.nanoTime();
     }
 
-    public void exit()
-    {
-
-    }
-
+    /** The body of the action to execute. */
     public boolean execute()
     {
         return (getRuntime() >= timeout);
+    }
+
+    /** Called at the end of an action. */
+    public void exit()
+    {
+
     }
 
     /**

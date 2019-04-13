@@ -14,11 +14,16 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * */
 public class CraterFace extends E404_Autonomous
 {
-    /** Calls the init methods for needed classes. */
+    /** Calls the init methods for needed classes and locates the correct file path to the CSV file
+     * for the crater face drive path. */
     @Override
     public void init()
     {
         autoFile = new File("/storage/9016-4EF8/CraterFace.csv");
+        if (!autoFile.exists())
+        {
+            autoFile = new File("/storage/3338-6131/CraterFace.csv");
+        }
         super.init();
     }
 }

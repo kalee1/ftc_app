@@ -6,6 +6,9 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 
 /**
+ * Defines the robot. Has class objects for each mechanism in use on the robot and contains the all
+ * the methods used by the robot (sourced from each individual mechanism class.
+ *
  * @author Andrew, Error 404: Team Name Not Found
  */
 public class RuckusBot
@@ -16,6 +19,8 @@ public class RuckusBot
     /** An instance of the MarkDeploy class. Links to the mechanism and the code that deploys the
      * team marker in autonomous. */
     MarkDeploy depoDeposit = new MarkDeploy();
+    /** In instance of the FieldVision class. Links to the code that locates the gold minerals on
+     * the sampling field. */
     FieldVision theEyeOfSauron = new FieldVision();
 
     /** An instance of the MotorArm class. Links to the motors and the code relating to the
@@ -29,6 +34,7 @@ public class RuckusBot
      * into the mineral basket on the end of the mineral arm. */
     Gen2_Hang theHang = new Gen2_Hang();
 
+    /** The truth value that is whether or not to initialize the camera in init. */
     boolean theUseCamera = false;
 
     /** Determines which chassis type to use: Mecanum or Tank.
@@ -47,7 +53,7 @@ public class RuckusBot
         }
     }
 
-    /** Triggers the initilization of the selected classes.
+    /** Triggers the initialization of the selected classes.
      *
      * @param hwMap  An instance of the FIRST-provided HardwareMap which is passed onto more
      *               specific classes for initilizng hardware.
@@ -68,6 +74,7 @@ public class RuckusBot
         depoDeposit.init(hwMap, telem);
     }
 
+    /** Runs once when start is hit: starts the camera and the hang mechanism. */
     public void start()
     {
         if(theUseCamera)
@@ -243,6 +250,7 @@ public class RuckusBot
         return theEyeOfSauron.tensorFlowMineralDetection();
     }
 
+    /** Shuts down the camera and tensorflow algorithm */
     public void tfodShutdown()
     {
         theEyeOfSauron.tfodShutdown();
@@ -253,17 +261,28 @@ public class RuckusBot
 //        return theArm.armExtend();
 //    }
 
-    public void landerHang() { theHang.hangerHang();}
+//    public void landerHang() { theHang.hangerHang();}
+//
+//    public void landerPrep() { theHang.hangerDeploy(); }
+//
+//    public void hangerHome() { theHang.hangHome(); }
 
-    public void landerPrep() { theHang.hangerDeploy(); }
-
-    public void hangerHome() { theHang.hangHome(); }
-
+    /** Used to move the hanger up and down with d-pad controls.
+     *
+     * @param down  A boolean that is whether or not to move up.
+     * @param up  A boolean that is whether or not to move down.
+     * @param power  The power that the hanger will move at.
+     * */
     public void hangControl(boolean down, boolean up, double power)
     {
         theHang.hangControl(down, up, power);
     }
 
+    /** Drives the hanger a set distance.
+     * @param power  The power that the hanger will move at.
+     * @param distance  The distance the hanger will move.
+     * @param direction  The direction the hanger will move in (two options: IN or OUT).
+     * */
     public boolean hangDrive(double power, double distance, Gen2_Hang.HangDirection direction)
     {
         return theHang.hangDrive(power, distance, direction);
@@ -304,6 +323,12 @@ public class RuckusBot
      *  */
     public boolean armLanderExtend(){ return theArm.landerExtend();}
 
+    /** Drives the arm to the position specified by the parameter.
+     *
+     * @param position  The target position to drive the arm to.
+     * @param elbPower  The power to drive the elbow at.
+     * @param shouldPower  The power to drive the shoulder at.
+     * */
     public boolean goTo(MotorArm.ArmPositions position, double elbPower, double shouldPower)
     {
         return theArm.goTo(position, elbPower, shouldPower);
@@ -320,11 +345,15 @@ public class RuckusBot
     {
         return theChassis.reset(power, time);
     }
+    /** Determines whether or not the robot is stuck on the lander using the pitch of the robot.
+     * @return A boolean that is whether or not the robot is stuck.
+     * */
     public boolean goodPitch()
     {
         return theChassis.goodPitch();
     }
 
+    /** Turns the chassis to the original heading caputred during init.*/
     public double getResetHeading()
     {
         return ((MecanumChassis)theChassis).resetHeading;

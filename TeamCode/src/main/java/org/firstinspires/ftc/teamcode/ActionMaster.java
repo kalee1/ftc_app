@@ -11,22 +11,32 @@ import java.util.Set;
 import java.util.Vector;
 
 /**
+ * ActionMaster is responsible for managing the run list of actions and moving each action to the
+ * run map and then removing it in sequence.
  *
  * @author Andrew, Error 404: Team Name Not Found
  * */
 public class ActionMaster
 {
+    /** The dictionary of all possible actions loaded from the CSV file. */
     Map<String, RobotAction> actionMap = new Hashtable<String, RobotAction>();
+    /** The list of actions to be executed for a given step. */
     Map<String, RobotAction> runMap = new Hashtable<String, RobotAction>();
+    /** The list of actions to be executed next. */
     List<String>  nextList = new Vector<String>();
+    /** A telemetry object that is used to display information. */
     Telemetry telemetry;
+    /** A truth value is is whether or not a method has run before or not. */
     Boolean firstRun = true;
 
+    /** Initializes telemetry. */
     public void init(Telemetry telem)
     {
         telemetry = telem;
     }
 
+    /** The body of the code to execute: Creates a run list of actions to do, executes the current
+     * action, and then deletes each action from the run list as it is completed. */
     public void execute()
     {
         if(firstRun)
@@ -72,11 +82,13 @@ public class ActionMaster
         nextList.clear();
     }
 
+    /** Adds an action to the run map. */
     public void addRunAction(String action)
     {
         runMap.put(action, actionMap.get(action));
     }
 
+    /** Clears the action map, run map, and next list of actions.*/
     public void buildActionMap()
     {
         actionMap.clear();
@@ -84,17 +96,23 @@ public class ActionMaster
         nextList.clear();
     }
 
+    /** Adds the action listed in the parameter to the action map.*/
     public void addAction(RobotAction action)
     {
         actionMap.put(action.theId, action);
         telemetry.addData("Adding Action Named: ", action.theId);
     }
 
+    /** Lists which actions currently running.  */
     public Set<String> keyList()
     {
         return runMap.keySet();
     }
 
+    /**
+     * Returns the number of objects in the run map.
+     * @return  the number of objects in the run map.
+     * */
     public int getRunListSize()
     {
         return runMap.size();

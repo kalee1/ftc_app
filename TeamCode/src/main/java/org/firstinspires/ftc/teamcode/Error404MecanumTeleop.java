@@ -21,10 +21,13 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 public class Error404MecanumTeleop extends OpMode
 {
     /* Declare OpMode members. */
+    /** The robot type. */
     RuckusBot robot = new RuckusBot("MecanumChassis"); // use the class created to define a Testbot's hardware
-
+    /** The collector. */
     Collector theCollect = new Collector();
+    /** The FTC Dashboard (displays telemetry to a web interface.  */
     FtcDashboard dashboard = FtcDashboard.getInstance();
+    /** A telemetry object that uses the ftc dahsbaord. */
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
     /*
      * Code to run ONCE when the driver hits INIT
@@ -58,9 +61,9 @@ public class Error404MecanumTeleop extends OpMode
     public void loop()
     {
         /* Arm Control */
-        /* The y-axis of the right joystick on the gamepad. Used for mineral arm control. */
+        /** The y-axis of the right joystick on the gamepad. Used for mineral arm control. */
         double RightStickY = gamepad2.right_stick_y;
-        /* The y-axis of the left joystick on the gamepad. Used for mineral arm control. */
+        /** The y-axis of the left joystick on the gamepad. Used for mineral arm control. */
         double LeftStickY = gamepad2.left_stick_y;
 
         /* Chassis Control */
@@ -78,8 +81,7 @@ public class Error404MecanumTeleop extends OpMode
         boolean dpadUp = gamepad1.dpad_up;
         /** The return value of the button a on gamepad1. Used for lander hang presets*/
         boolean buttonB = gamepad1.b;
-
-
+        /** A double that is used to hold a power value. */
         double power;
 
 //        telemetry.addData("1: leftX", lStickX);

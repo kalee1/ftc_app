@@ -26,18 +26,20 @@ import java.util.Arrays;
  * */
 public class E404_Autonomous extends OpMode
 {
-    /** ActionMaster */
+    /** Loads and executes each autonomous action in turn. */
     ActionMaster theMaster = new ActionMaster();
-    /** RuckusBot */
+    /** The robot used in autonomous. */
     RuckusBot robot = new RuckusBot("MecanumChassis");
-    /** FtcDashboard */
+    /** The FTC Dashboard (displays telemetry to a web interface.  */
     FtcDashboard dashboard = FtcDashboard.getInstance();
-    /** Telemetry */
+    /** A telemetry object that uses the ftc dahsbaord. */
     Telemetry dashboardTelemetry = dashboard.getTelemetry();
-    /** File */
+    /** The file that the CSV file sourced from the phone is assigned to. */
     File autoFile = null;
 
-    /** Calls the init methods for needed classes. */
+    /** Initializes the robot and telemetry and creates all the actions defined in the appropriate
+     * CSV file.
+     * */
     @Override
     public void init()
     {
@@ -87,10 +89,6 @@ public class E404_Autonomous extends OpMode
                 else if(type.equalsIgnoreCase("CAMERAACTION"))
                 {
                     myAction = new CameraAction(params);
-                }
-                else if(type.equalsIgnoreCase("CAMERA2ACTION"))
-                {
-                    myAction = new Camera2Action(params);
                 }
                 else if(type.equalsIgnoreCase("HANGACTION"))
                 {

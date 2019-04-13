@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 /**
+ * Loaded into the run map as an action that turns the robot. Each action is parameterized by the CSV file.
  *
  * @author Andrew, Error 404: Team Name Not Found
  * @see RobotAction
@@ -12,6 +13,7 @@ public class TurnAction extends RobotAction
     double thePower;
     double theTargetHeading;
 
+    /** Creates a new object from the supplied parameters. */
     TurnAction(String id, String nextAction, double duration, double power, double targetHeading)
     {
         super(id, nextAction, duration);
@@ -30,6 +32,8 @@ public class TurnAction extends RobotAction
 //        }
     }
 
+    /** Takes the parameters from the CSV file, converts them appropriately, and calls the
+     * parameterized constructor */
     TurnAction(String[] params)
     {
         this(params[0],
@@ -39,25 +43,28 @@ public class TurnAction extends RobotAction
              Double.parseDouble(params[4]));
     }
 
-//    params[4].equals("IN") ? Gen2_Hang.HangDirection.IN : Gen2_Hang.HangDirection.OUT,
+    /** Placeholder for initialization. Currently only calls the parent init method. */
     @Override
     public void init(Telemetry telem, RuckusBot theRobot)
     {
         super.init(telem, theRobot);
     }
 
+    /** Placeholder for entry. Currently only calls the parent entry method.  */
     @Override
     public void entry()
     {
         super.entry();
     }
 
+    /** Calls the pointTurn() method in MecanumChassis. */
     @Override
     public boolean execute()
     {
         return robot.pointTurn(thePower, theTargetHeading, timeout);
     }
 
+    /** Stops all the motors and calls the parent exit method. */
     @Override
     public void exit()
     {

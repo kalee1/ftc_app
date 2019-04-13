@@ -12,7 +12,7 @@ public class HangAction extends RobotAction
     Gen2_Hang.HangDirection theDirection;
 
 
-
+    /** Creates a new object from the supplied parameters. */
     HangAction(String id, String nextAction, double duration, double power, Gen2_Hang.HangDirection direction, double distance )
     {
         super( id, nextAction, duration);
@@ -32,6 +32,8 @@ public class HangAction extends RobotAction
 //        }
     }
 
+    /** Takes the parameters from the CSV file, converts them appropriately, and calls the
+     * parameterized constructor */
     HangAction(String[] params)
     {
         this(params[0],
@@ -42,6 +44,14 @@ public class HangAction extends RobotAction
              Double.parseDouble(params[5]));
     }
 
+    /** The body of the action to be executed: Calls the hangDrive() method in MotorArm. */
+    @Override
+    public boolean execute()
+    {
+        return robot.hangDrive(thePower, theDistance, theDirection) || super.execute();
+    }
+
+    /** Stops all the motors and calls the parent exit method. */
     @Override
     public void exit()
     {
@@ -49,9 +59,5 @@ public class HangAction extends RobotAction
         super.exit();
     }
 
-    @Override
-    public boolean execute()
-    {
-        return robot.hangDrive(thePower, theDistance, theDirection) || super.execute();
-    }
+
 }

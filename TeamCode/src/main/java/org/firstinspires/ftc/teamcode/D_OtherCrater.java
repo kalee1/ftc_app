@@ -15,11 +15,17 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
  * */
 public class D_OtherCrater extends E404_Autonomous
 {
-    /** Calls the init methods for needed classes. */
+    /** Calls the init methods for needed classes and locates the pathway to the CSV file for the
+     * depo face other crater drive path. */
     @Override
     public void init()
     {
         autoFile = new File("/storage/9016-4EF8/D_OtherCrater.csv");
+        if (!autoFile.exists())
+        {
+            autoFile = new File("/storage/3338-6131/D_OtherCrater.csv");
+        }
+
         super.init();
     }
 }

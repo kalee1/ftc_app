@@ -37,7 +37,7 @@ public class MecanumChassis extends Chassis
     /** The left rear drive motor */
     private DcMotor lRearMotor = null;
 
-//    /** The navx gyro. */
+    /** The navx gyro. */
     private NavxMicroNavigationSensor navx = null;
 
     /*I The IMU sensor object */
@@ -101,6 +101,7 @@ public class MecanumChassis extends Chassis
      * heading to its start heading. */
     double resetHeading;
 
+    /** The dc motor whose encoder is being used for distance measurements. */
     DcMotor encoderMotor;
 
 
@@ -520,7 +521,7 @@ public class MecanumChassis extends Chassis
     /**
      * Used to get the robot's heading.
      *
-     * @return  the robtot's heading as an double
+     * @return  the robot's heading as an double
      */
     public double getHeadingDbl()
     {
@@ -532,12 +533,16 @@ public class MecanumChassis extends Chassis
         return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.firstAngle));
     }
 
+    /** Used to get the robot's pitch.
+     * @return the robot's pitch as a double. */
     public double getPitchDbl()
     {
         Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         return AngleUnit.DEGREES.normalize(AngleUnit.DEGREES.fromUnit(angles.angleUnit, angles.secondAngle));
     }
 
+    /** Used to get the robot's roll.
+     * @return the robot's roll as a double. */
     public double getRollDbl()
     {
         Orientation angles = navx.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);

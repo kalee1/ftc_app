@@ -119,11 +119,13 @@ public class FieldVision
      */
     /** Sourced from the FIRST-provided tensor flow example code, this method recognizes minerals
      * in its field of vision and identifies the position of the gold mineral (LEFT, RIGHT, CENTER)
-     * and returns that value as a string.
+     * by using the positions of the silver minerals and returns that value as a string.
      *
      * Modified by Error 404: Looks for the gold mineral (ie, no longer needs to see silver minerals
      * to calculate the gold mineral position). If it sees a gold mineral that matches the specified
-     * height perameter, calculate the gold position using the x-axis value of the gold mineral.
+     * height perameter, it then calculates the gold position using the x-axis value of the gold mineral.
+     *
+     * @return The gold location on the field.
      * */
     public String tensorFlowMineralDetection()
     {
@@ -222,21 +224,21 @@ public class FieldVision
                                 goldPosition = "center";
                             }
                         }
-                        else if(silverDetected && !goldDetected && updatedRecognitions.size() > 1)
-                        {
-                            goldPosition = "right";
-                        }
-                        else if(silverDetected && updatedRecognitions.size() == 1)
-                        {
-                            if(silverMineral1X < 375)
-                            {
-                                goldPosition = "tweakRight";
-                            }
-                            else
-                            {
-                                goldPosition = "tweakLeft";
-                            }
-                        }
+//                        else if(silverDetected && !goldDetected && updatedRecognitions.size() > 1)
+//                        {
+//                            goldPosition = "right";
+//                        }
+//                        else if(silverDetected && updatedRecognitions.size() == 1)
+//                        {
+//                            if(silverMineral1X < 375)
+//                            {
+//                                goldPosition = "tweakRight";
+//                            }
+//                            else
+//                            {
+//                                goldPosition = "tweakLeft";
+//                            }
+//                        }
                         else
                         {
                             goldPosition = "null";

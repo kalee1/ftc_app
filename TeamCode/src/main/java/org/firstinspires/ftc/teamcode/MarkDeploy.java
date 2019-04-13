@@ -13,6 +13,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * @author  Ben, Error 404: Team Name Not Found
  * */
 public class MarkDeploy
+
 {
 
     /** A continuous rotation servo called flag. */
@@ -26,7 +27,7 @@ public class MarkDeploy
      * */
     public void init(HardwareMap hwMap, Telemetry telem)
     {
-        try
+         try
         {
             flag = hwMap.crservo.get( "markDeploy" );
 //            flag = hwMap.servo.get("MarkDeploy");
@@ -54,6 +55,9 @@ public class MarkDeploy
 ////        flag.setPosition(.3);
 //    }
 
+    /** Turns the mark deploy servo one and off.
+     *
+     * @param power  the power that the servo will run at (1 or 0). */
     public void markDeploy(double power)
     {
         flag.setPower(power);

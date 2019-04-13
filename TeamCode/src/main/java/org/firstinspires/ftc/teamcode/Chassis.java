@@ -23,6 +23,7 @@ public class Chassis
     boolean pressed = false;
     /** A boolean that tells whether or not the robot is moving. */
     boolean moving = false;
+    /** A boolean that tells whether or not the robot is stuck. */
     boolean good = false;
     /** A double that is the number of nanoseconds per second. */
     double NANOSECONDS_PER_SECOND = TimeUnit.SECONDS.toNanos(1);
@@ -114,6 +115,7 @@ public class Chassis
      * Converts inches to encoder ticks.
      *
      * @param distanceInch  A double that is the number of inches to convert to encoder ticks
+     * @return  A double that is the converted number of ticks.
      */
     public double inchesToTicks(double distanceInch)
     {
@@ -141,6 +143,10 @@ public class Chassis
         return moving;
     }
 
+    /** Measures the robot's pitch and determines whether or not the robot is stuck on the lander.
+     *
+     * @return  A booleans that is whether or not the robot is stuck.
+     * */
     public boolean goodPitch()
     {
         return good;
