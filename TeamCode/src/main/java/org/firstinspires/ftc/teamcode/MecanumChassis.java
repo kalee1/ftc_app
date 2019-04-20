@@ -301,9 +301,9 @@ public class MecanumChassis extends Chassis
 //        telemetry.addData("lf direction: ", lFrontMotor.getDirection());
 //        telemetry.addData("rf direction: ", rFrontMotor.getDirection());
 //
-        telemetry.addData("Current Heading", getHeadingDbl());
+//        telemetry.addData("Current Heading", getHeadingDbl());
         telemetry.addData("pitch heading", getPitchDbl());
-        telemetry.addData("roll heading", getRollDbl());
+//        telemetry.addData("roll heading", getRollDbl());
 
     }
 
@@ -623,7 +623,7 @@ public class MecanumChassis extends Chassis
      * */
     public boolean goodPitch()
     {
-        if(getPitchDbl() > 2 || getPitchDbl() < -3)
+        if(getPitchDbl() > 4 || getPitchDbl() < -2.9)
         {
             good = false;
         }

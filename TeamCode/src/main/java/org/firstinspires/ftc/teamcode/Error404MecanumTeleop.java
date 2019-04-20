@@ -109,7 +109,7 @@ public class Error404MecanumTeleop extends OpMode
         // Robot lander hang method
         if (dpadDown || dpadUp)
         {
-            power = .9;
+            power = 1;
             if (gamepad1.left_bumper)
             {
                 power = 0.1;
@@ -201,7 +201,7 @@ public class Error404MecanumTeleop extends OpMode
 
         if(gamepad1.right_bumper)
         {
-            powerLimit = .8;
+            powerLimit = 1;
         }
         // If the left trigger on the primary gamepad is not pressed, set the maximum drive power to the normal limit
         else

@@ -22,7 +22,7 @@ public class CameraAction extends RobotAction
     /** Creates a new object from the supplied parameters. */
     CameraAction(String id, String nextAction, Boolean shutdown) //default nextAction to center
     {
-        super( id, nextAction, 2);
+        super( id, nextAction, 2.5);
         theShutdown = shutdown;
     }
 
@@ -30,7 +30,7 @@ public class CameraAction extends RobotAction
      * parameterized constructor */
     CameraAction(String[] params)
     {
-        this(params[0], params[1], Boolean.parseBoolean(params[2]));
+        this(params[0], params[1], Boolean.parseBoolean(params[3]));
     }
 
 

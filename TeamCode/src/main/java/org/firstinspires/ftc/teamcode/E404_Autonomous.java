@@ -48,6 +48,8 @@ public class E404_Autonomous extends OpMode
         robot.init(hardwareMap, telemetry, true);
         theMaster.init(telemetry);
 
+        telemetry.addData("gyro heading", robot.getHeadingDbl());
+
         BufferedReader br = null;
         String line = "null";
         try
@@ -148,6 +150,7 @@ public class E404_Autonomous extends OpMode
                 }
             }
         }
+
     }
 
     /** Runs once when the start button is pressed, but before
@@ -157,6 +160,7 @@ public class E404_Autonomous extends OpMode
     {
         robot.start();
         resetStartTime();
+        telemetry.addData("gyro heading: ",robot.getHeadingDbl());
     }
 
     /** Contains the actual movement commands of the class. Runs repeatedly until the stop button is
@@ -164,9 +168,7 @@ public class E404_Autonomous extends OpMode
     @Override
     public void loop()
     {
-        telemetry.addData("loop time: ", getRuntime());
-        telemetry.addData("run list size: ", theMaster.getRunListSize());
-        telemetry.addData("get keys: ", theMaster.keyList());
+        telemetry.addData("gyro heading: ",robot.getHeadingDbl());
         theMaster.execute();
     }
 

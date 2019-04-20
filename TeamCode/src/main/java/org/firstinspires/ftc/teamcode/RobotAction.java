@@ -76,7 +76,8 @@ public class RobotAction
     /**
      * Reset the start time to zero.
      */
-    public void resetStartTime() {
+    public void resetStartTime()
+    {
         startTime = System.nanoTime();
     }
 

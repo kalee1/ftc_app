@@ -45,6 +45,7 @@ public class GyroAction extends RobotAction
     @Override
     public void entry()
     {
+        telemetry.addData("count", count);
         super.entry();
     }
 
@@ -57,6 +58,7 @@ public class GyroAction extends RobotAction
 
         if(notStuck)
         {
+            theNextAction = "SlideAway";
             done = true;
         }
         else if(count > 3)
@@ -70,6 +72,7 @@ public class GyroAction extends RobotAction
             theNextAction = "FailS1";
             count++;
         }
+        telemetry.addData("count", count);
 
         return done;
     }
@@ -78,6 +81,7 @@ public class GyroAction extends RobotAction
     @Override
     public void exit()
     {
+        telemetry.addData("count", count);
         super.exit();
     }
 

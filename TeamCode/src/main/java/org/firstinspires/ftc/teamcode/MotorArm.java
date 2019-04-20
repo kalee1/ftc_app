@@ -417,10 +417,11 @@ public class MotorArm
         elbow.setPower(elbowPower);
         shoulder.setPower(shoulderPower);
 
+        telemetry.addData("Elbow Position:", elbow.getCurrentPosition());
         telemetry.addData( "Elbow target: ", position.elbow);
-        telemetry.addData( "Shoulder target: ", position.shoulder);
+        //telemetry.addData( "Shoulder target: ", position.shoulder);
         telemetry.addData("Elbow Power: ", elbowPower);
-        telemetry.addData("Shoulder Power ", shoulderPower);
+        //telemetry.addData("Shoulder Power ", shoulderPower);
 
         return !moving;
     }

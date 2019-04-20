@@ -27,7 +27,7 @@ public class ActionMaster
     /** A telemetry object that is used to display information. */
     Telemetry telemetry;
     /** A truth value is is whether or not a method has run before or not. */
-    Boolean firstRun = true;
+    boolean firstRun = true;
 
     /** Initializes telemetry. */
     public void init(Telemetry telem)

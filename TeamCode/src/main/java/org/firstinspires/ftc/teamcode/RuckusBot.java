@@ -359,6 +359,11 @@ public class RuckusBot
         return ((MecanumChassis)theChassis).resetHeading;
     }
 
+    public double getHeadingDbl()
+    {
+        return ((MecanumChassis)theChassis).getHeadingDbl();
+    }
+
 
 
 }
